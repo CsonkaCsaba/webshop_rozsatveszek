@@ -33,12 +33,13 @@
                     </ul>
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">
-                    <li>Kezdőlap</li>
-                    <li>Rólunk</li>
-                    <li>Galéria</li>
-                    <li>Termékek</li>
-                    <li>Kapcsolat</li>
-                    <li>Tanácsok</li>
+                    <li><a href="/laravel-vue/webshop/public/">Kezdőlap</a></li> <!--átírandó-->
+                    <li><a href="#rolunk">Rólunk</a></li>
+                    <li><a href="#hirek">Hírek</a></li>
+                    <li><a href="galeria">Galéria</a></li>
+                    <li><a href="termekek">Termékek</a></li>
+                    <li><a href="#kapcsolat">Kapcsolat</a></li>
+                    <li><a href="tanacsok">Tanácsok</a></li>
                 </ul>
             </div>
                            
@@ -47,12 +48,13 @@
             </div>
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="dropdown-nav">
-                    <li> Kezdőlap</li>
-                    <li>Rólunk</li>
-                    <li>Galéria</li>
-                    <li>Termékek</li>
-                    <li>>Kapcsolat</li>
-                    <li>Tanácsok</li>
+                    <li><a href="/laravel-vue/webshop/public/">Kezdőlap</a></li><!--átírandó-->
+                    <li><a href="#rolunk">Rólunk</a></li>
+                    <li><a href="#hirek">Hírek</a></li>
+                    <li><a href="galeria">Galéria</a></li>
+                    <li><a href="termekek">Termékek</a></li>
+                    <li><a href="#kapcsolat">Kapcsolat</a></li>
+                    <li><a href="tanacsok">Tanácsok</a></li>
                 </ul>
             </transition> <!--animációhoz-->
         </nav>
@@ -134,11 +136,13 @@ header
         color: #656565
         list-style: none
         text-decoration: none
+        
 
     li
         text-transform: uppercase
         padding: 16px
         margin-left: 16px
+        
 
     .up li
         text-transform: none
@@ -188,6 +192,7 @@ header
         background-color: #656565
         top: 0
         left: 0
+        
 
         li
             margin-left: 0
@@ -209,9 +214,11 @@ header
 .scrolled-nav
     background-color: #d3d3d3
     box-shadow: 0 4px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -0px rgba(0, 0, 0, 0.06)
+    
 
     .navigation li
         padding: 0.5rem
+        
 
     nav
         padding: 3px 0

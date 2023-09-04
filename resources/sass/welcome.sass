@@ -1,36 +1,34 @@
-
+$extra-small: 320px
+$small: 576px
+$medium: 780px
+$large: 1025px
+$extra-large: 1280px
+    
 .under-header
-  margin: 190px 0px 0px 0px
   background-image: url('../assets/kepek/kezdokep.jpg')
   background-size: 100%
-  min-height: 600px
 
   p
-    padding: 180px 100px 0px 120px
     color: #787878
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
     font-family: Inria Serif
-    font-size: 30px
     font-style: normal
     font-weight: 700
     line-height: normal
-  
+
+  hr
+    height: 1px
+    color: #E4A0B7
+    border-top: 3px #E4A0B7 solid
+
   .btn-vasarlas
     border-radius: 18px
     background: #E4A0B7
-    margin-left: 120px
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25)
     color: #fff
     &:hover
       background: #d95f88
       transition: .5s ease all
-
-  hr
-    width: 150px
-    height: 1px
-    color: #E4A0B7
-    margin-left: 120px
-    border-top: 3px #E4A0B7 solid
 
 a
  text-decoration: none
@@ -40,6 +38,85 @@ a
       transition: .5s ease all
   
 .noimage
-  margin: 190px 0px 0px 0px
   min-height: 600px
   font-size: 50px
+
+@media(max-width: $extra-small)
+  .under-header
+    min-height: 280px
+
+    p
+      font-size: 25px
+      padding: 10px 0px 0px 20px
+
+    hr
+      width: 50px
+      margin-left: 20px
+    
+    .btn-vasarlas
+      font-size: 18px
+      margin-left: 20px
+
+@media((min-width: $extra-small) and (max-width: $small))
+  .under-header
+    min-height: 240px
+
+    p
+      font-size: 16px
+      padding: 10px 0px 0px 20px
+
+    hr
+      width: 90px
+      margin-left: 20px
+    
+    .btn-vasarlas
+      margin-left: 20px
+
+@media((min-width: $small) and (max-width: $medium))
+  .under-header
+    min-height: 480px
+
+    p
+      font-size: 25px
+      padding: 45px 0px 0px 20px
+
+    hr
+      width: 120px
+      margin-left: 20px
+    
+    .btn-vasarlas
+      margin-left: 20px
+      font-size: 20px
+
+@media((min-width: $medium) and (max-width: $large))
+  .under-header
+    min-height: 480px
+
+    p
+      font-size: 35px
+      padding: 45px 0px 0px 20px
+
+    hr
+      width: 120px
+      margin-left: 20px
+    
+    .btn-vasarlas
+      margin-left: 20px
+      font-size: 23px
+
+@media((min-width: $large) and (max-width: $extra-large))
+  .under-header
+    min-height: 650px
+
+    p
+      font-size: 50px
+      padding: 100px 0px 0px 60px
+
+    hr
+      width: 120px
+      margin-left: 60px
+      border-top: 8px #E4A0B7 solid
+    
+    .btn-vasarlas
+      margin-left: 60px
+      font-size: 30px

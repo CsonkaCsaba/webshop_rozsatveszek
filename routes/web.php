@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/')->name('welcome');;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,5 +27,11 @@ Route::get('/tanacsok', function () {
 Route::get('/galeria', function () {
     return view('galeria');
 });
+Route::get('/home', function () {
+    return redirect()->route('welcome');;
+});
 
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

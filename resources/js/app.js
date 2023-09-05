@@ -7,17 +7,22 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
  * to use in your application's views. An example is included for you.
  */
 
+
 const app = createApp({});
 
 
 import Navigation from './components/Navigation.vue';
 app.component('navigation', Navigation);
+
+import Navigation_log from './components/Navigation_log.vue';
+app.component('navigation_log', Navigation_log);
 
 import { createRouter, createWebHistory } from 'vue-router'
 

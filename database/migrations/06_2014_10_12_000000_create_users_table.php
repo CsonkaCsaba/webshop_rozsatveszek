@@ -13,27 +13,28 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('userName');
+            $table->string('name');
+            $table->string('userName')->nullable();
             $table->string('password');
-            $table->string('lastName');
-            $table->string('firstName');
-            $table->string('address');
-            $table->date('birthDate');
-            $table->date('lastLogin');
-            $table->boolean('admin');
+            $table->string('lastName')->nullable();
+            $table->string('firstName')->nullable();
+            $table->string('address')->nullable();
+            $table->date('birthDate')->nullable();
+            $table->date('lastLogin')->nullable();
+            $table->boolean('admin')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreignId('dolgozoId')
+            $table->foreignId('dolgozoId')->nullable()
             ->constrained(
                 table: 'dolgozo', indexName: 'dolgozoId'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
-            $table->foreignId('vasarloId')
+            $table->foreignId('vasarloId')->nullable()
             ->constrained(
                 table: 'vasarlo', indexName: 'vasarloId'
             )

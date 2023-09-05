@@ -16,8 +16,8 @@
                         <li class="nav-item dropdown p-1 m-0">
                             <a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
                             <ul class="dropdown-menu position-absolute dropdown-menu-right">
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="login">Bejelentkezés</a></li>
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="register">Regisztráció</a></li>
+                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="login" data-bs-toggle="modal" data-bs-target="#LoginModal">Bejelentkezés</a></li>  
+                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#RegistModal">Regisztráció</a></li>
                                 <li class="p-0"><a class="dropdown-item p-1" href="#" id="admin">Dolgozói felület</a></li>
                             </ul>
                         </li>
@@ -59,9 +59,30 @@
             </transition> <!--animációhoz-->
         </nav>
     </header>
+
+<!-- <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->
 </template>
 
 <script>
+
 export default{
     name: "navigation",
     data(){

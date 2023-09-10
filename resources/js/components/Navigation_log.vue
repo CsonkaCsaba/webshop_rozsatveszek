@@ -51,13 +51,13 @@
             </div>
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="dropdown-nav">
-                    <li><a href="/laravel-vue/webshop/public/">Kezdőlap</a></li><!--átírandó-->
-                    <li><a href="#rolunk">Rólunk</a></li>
-                    <li><a href="#hirek">Hírek</a></li>
-                    <li><a href="galeria">Galéria</a></li>
-                    <li><a href="termekek">Termékek</a></li>
-                    <li><a href="#kapcsolat">Kapcsolat</a></li>
-                    <li><a href="tanacsok">Tanácsok</a></li>
+                    <li><a class="link" href="/laravel-vue/webshop/public/">Kezdőlap</a></li><!--átírandó-->
+                    <li><a class="link" href="#rolunk">Rólunk</a></li>
+                    <li><a class="link" href="#hirek">Hírek</a></li>
+                    <li><a class="link" href="galeria">Galéria</a></li>
+                    <li><a class="link" href="termekek">Termékek</a></li>
+                    <li><a class="link" href="#kapcsolat">Kapcsolat</a></li>
+                    <li><a class="link" href="tanacsok">Tanácsok</a></li>
                 </ul>
             </transition> <!--animációhoz-->
         </nav>

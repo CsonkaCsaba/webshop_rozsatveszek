@@ -48,13 +48,13 @@
             </div>
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="dropdown-nav">
-                    <li><a href="/laravel-vue/webshop/public/">Kezdőlap</a></li><!--átírandó-->
-                    <li><a href="#rolunk">Rólunk</a></li>
-                    <li><a href="#hirek">Hírek</a></li>
-                    <li><a href="galeria">Galéria</a></li>
-                    <li><a href="termekek">Termékek</a></li>
-                    <li><a href="#kapcsolat">Kapcsolat</a></li>
-                    <li><a href="tanacsok">Tanácsok</a></li>
+                    <li><a class="link" href="/laravel-vue/webshop/public/">Kezdőlap</a></li><!--átírandó-->
+                    <li><a class="link" href="#rolunk">Rólunk</a></li>
+                    <li><a class="link" href="#hirek">Hírek</a></li>
+                    <li><a class="link" href="galeria">Galéria</a></li>
+                    <li><a class="link" href="termekek">Termékek</a></li>
+                    <li><a class="link" href="#kapcsolat">Kapcsolat</a></li>
+                    <li><a class="link" href="tanacsok">Tanácsok</a></li>
                 </ul>
             </transition> <!--animációhoz-->
         </nav>
@@ -141,6 +141,7 @@ header
     top: 0
     transition: .5s ease all
     color: #656565
+    align-items: center
 
     nav
         position: relative
@@ -149,6 +150,7 @@ header
         padding: 12px 0
         width: 90%
         margin: 0 auto
+
         @media(min-width: 1140px)
             max-width: 1140px
     
@@ -180,7 +182,7 @@ header
         align-items: center
 
         img
-            width: 110px
+            width: 130px
             transition: .5s ease all
         
     .navigation
@@ -190,15 +192,14 @@ header
         justify-content: center
     .icon
         display: flex
-        alig-items: center
+        align-items: center
         position: absolute
-        top: 0
         right: 24px
         height: 100%
 
         i
             cursor: pointer
-            font-size: 24px
+            font-size: 40px
             transition: .8s ease all
 
     .dropdown-toggle
@@ -219,6 +220,9 @@ header
             margin-left: 0
             .link
                 color: white
+                &:hover
+                    color: #E4A0B7
+                    border-color: #E4A0B7
     
     .mobile-nav-enter-active,
     .mobile-nav-leave-active
@@ -246,7 +250,7 @@ header
 
         .branding
             img
-                width: 90px
+                width: 120px
                 box-shadow: 0 4px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -0px rgba(0, 0, 0, 0.06)
 
 

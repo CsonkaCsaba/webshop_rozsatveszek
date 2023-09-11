@@ -24,6 +24,9 @@ app.component('navigation', Navigation);
 import Navigation_log from './components/Navigation_log.vue';
 app.component('navigation_log', Navigation_log);
 
+import About from './components/About.vue';
+app.component('about', About);
+
 import { createRouter, createWebHistory } from 'vue-router'
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";

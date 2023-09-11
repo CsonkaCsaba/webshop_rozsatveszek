@@ -5,5 +5,7 @@
         <hr>
         <button type="button" class="btn btn-vasarlas">Vásárlás</button>
     </div>
+    <about>
+    </about>
 @endsection
 

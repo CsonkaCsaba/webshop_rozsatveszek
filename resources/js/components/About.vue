@@ -6,6 +6,9 @@
             <h3 class="pt-2 text-center">Üdvözöljük webshopunkban!</h3>
         </div>
     </div>
+    <div>
+
+    </div>
 </template>
 
 <script>

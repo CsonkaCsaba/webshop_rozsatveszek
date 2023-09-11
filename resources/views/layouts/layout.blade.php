@@ -10,7 +10,19 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         <link rel="icon" href="../assets/kepek/logo.png">
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+        function openLogin() {
+            $(document).ready(function(){
+                $('#LoginModal').modal('show');
+            });
+        }
+        function openRegist(){
+            $(document).ready(function(){
+                $('#RegistModal').modal('show');
+            });
+        }
+     </script>
         <!-- Styles -->
         <style>
           
@@ -54,6 +66,9 @@
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
+                            <script>
+                                openLogin()
+                            </script>
                         @enderror
                     </div>
                 </div>
@@ -68,6 +83,9 @@
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
+                            <script>
+                             openLogin()
+                            </script>
                         @enderror
                     </div>
                 </div>
@@ -157,12 +175,15 @@
                         <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                         <div class="col-md-6">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                            <input id="name" type="text" class="form-control @error('name', 'saveUser') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
-                            @error('name')
+                            @error('name', 'saveUser')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
+                                <script>
+                                    openRegist()
+                            </script>
                             @enderror
                         </div>
                     </div>
@@ -171,26 +192,34 @@
                         <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                         <div class="col-md-6">
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                            <input id="email" type="email" class="form-control @error('email', 'saveUser') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
-                            @error('email')
+                            @error('email', 'saveUser')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
+                                <script>
+                                    openRegist()
+                            </script>
                             @enderror
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                        <label for="password" class="col-md-4 col-form-label text-md-end" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">{{ __('Password') }}</label>
+                        
 
                         <div class="col-md-6">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                            <input id="password" type="password" class="form-control @error('password', 'saveUser') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                            @error('password')
+                            @error('password','saveUser')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
+                                <script>
+
+                                    openRegist()
+                                </script>
                             @enderror
                         </div>
                     </div>
@@ -213,15 +242,17 @@
                 </form>
             </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Bezár</button>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 
        <footer>
         <h1>Ez lesz a lábléc</h1>
        </footer>
+    
     </body>
 </html>

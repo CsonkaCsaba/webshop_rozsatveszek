@@ -1,19 +1,20 @@
-@extends('layouts.app')
-
+@extends('layouts.layout')
 @section('content')
-<div class="container">
+<div class="container mt-8">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="background-color: white;">
                 <div class="card-header">{{ __('Verify Your Email Address') }}</div>
 
-                <div class="card-body">
+                <div class="card-body d-flex flex-column align-items-center">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
                             {{ __('A fresh verification link has been sent to your email address.') }}
                         </div>
                     @endif
-
+                    <div>
+                    <img src="../../resources/assets/kepek/email.gif" alt="email" height="300">
+                    </div>
                     {{ __('Before proceeding, please check your email for a verification link.') }}
                     {{ __('If you did not receive the email') }},
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">

@@ -33,8 +33,8 @@
                     </ul>
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">
-                    <li><a href="/laravel-vue/webshop/public/">Kezdőlap</a></li> <!--átírandó-->
-                    <li><a href="#rolunk">Rólunk</a></li>
+                    <li><a href="#">Kezdőlap</a></li> <!--átírandó-->
+                    <li><router-link class="link" :to="{name: 'About'}">Rólunk</router-link></li>
                     <li><a href="#hirek">Hírek</a></li>
                     <li><a href="galeria">Galéria</a></li>
                     <li><a href="termekek">Termékek</a></li>

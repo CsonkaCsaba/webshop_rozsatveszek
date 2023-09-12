@@ -20,6 +20,7 @@
     <body>
     <div id="app">
         @guest
+        <router-view></router-view>
         <navigation>
         </navigation>
         @else

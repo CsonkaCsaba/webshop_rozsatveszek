@@ -1,8 +1,8 @@
 $extra-small: 320px
 $small: 576px
-$medium: 780px
-$large: 1025px
-$extra-large: 1280px
+$medium: 768px
+$large: 992px
+$extra-large: 1200px
 $szurke: #5A5A5A
 
 .btn-primary,
@@ -23,7 +23,18 @@ $szurke: #5A5A5A
   color:#FFFFFF
 
 
-    
+#underheader-about-container
+  position: relative
+
+.under-header
+  display: block
+
+#cover-box
+  left: 0
+  right: 0
+  margin: auto
+  position: absolute
+
 .under-header
   background-image: url('../assets/kepek/kezdokep.jpg')
   background-size: 100%
@@ -63,19 +74,22 @@ a
 
 @media(max-width: $extra-small)
   .under-header
-    min-height: 280px
+    min-height: 185px
 
     p
-      font-size: 25px
-      padding: 10px 0px 0px 20px
+      font-size: 13px
+      padding: 7px 0px 0px 14px
 
     hr
       width: 50px
       margin-left: 20px
     
     .btn-vasarlas
-      font-size: 18px
-      margin-left: 20px
+      font-size: 12px
+      margin-left: 14px
+
+  #cover-box
+    display: none !important
 
 @media((min-width: $extra-small) and (max-width: $small))
   .under-header
@@ -92,9 +106,12 @@ a
     .btn-vasarlas
       margin-left: 20px
 
+  #cover-box
+    display: none !important
+
 @media((min-width: $small) and (max-width: $medium))
   .under-header
-    min-height: 480px
+    min-height: 400px
 
     p
       font-size: 25px
@@ -107,6 +124,16 @@ a
     .btn-vasarlas
       margin-left: 20px
       font-size: 20px
+    
+  .services
+    width: 25%
+
+  #cover-box
+    margin-top: 170px
+
+    p
+      font-size: 15px
+      padding: 5px 0px 0px 8px
 
 @media((min-width: $medium) and (max-width: $large))
   .under-header
@@ -123,13 +150,23 @@ a
     .btn-vasarlas
       margin-left: 20px
       font-size: 23px
+  
+  .services
+    width: 28%
+
+  #cover-box
+    margin-top: 190px
+
+    p
+      font-size: 25px
+      padding: 25px 0px 0px 8px
 
 @media(min-width: $large)
   .under-header
     min-height: 650px
 
     p
-      font-size: 50px
+      font-size: 40px
       padding: 100px 0px 0px 60px
 
     hr
@@ -140,3 +177,13 @@ a
     .btn-vasarlas
       margin-left: 60px
       font-size: 30px
+
+  .services
+    width: 28%
+
+  #cover-box
+    margin-top: 250px
+
+    p
+      font-size: 25px
+      padding: 25px 0px 0px 8px

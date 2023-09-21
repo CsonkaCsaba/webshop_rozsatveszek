@@ -252,7 +252,8 @@
 
 
        <footer>
-        <h1>Ez lesz a lábléc</h1>
+        <foot>
+        </foot>
        </footer>
     
     </body>

@@ -8,6 +8,8 @@ import './bootstrap';
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
 import About from './components/About.vue';
+import News from './components/News.vue';
+import Foot from './components/Foot.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -15,6 +17,9 @@ const router = createRouter({
         { path: '/About',
         name: 'About',
         component: About},
+        { path: '/News',
+        name: 'News',
+        component: News},
     ]
 });
 
@@ -27,8 +32,10 @@ app.component('navigation', Navigation);
 import Navigation_log from './components/Navigation_log.vue';
 app.component('navigation_log', Navigation_log);
 
-// import About from './components/About.vue';
-// app.component('about', About);
+// import components from './components/';
+app.component('about', About);
+app.component('news', News);
+app.component('foot', Foot);
 
 //import flags
 import "/node_modules/flag-icons/css/flag-icons.min.css";
@@ -45,13 +52,22 @@ import {
     faUser
 } from '@fortawesome/free-solid-svg-icons'
 
+import{
+    faFacebook,
+    faInstagram,
+    faYoutube
+} from '@fortawesome/free-brands-svg-icons'
+
 library.add(
     faBars,
     faCartShopping,
-    faMagnifyingGlass,
     faEnvelope,
+    faFacebook,
+    faInstagram,
+    faMagnifyingGlass,
     faPhone,
-    faUser
+    faUser,
+    faYoutube
 )
 
 app.use(router);

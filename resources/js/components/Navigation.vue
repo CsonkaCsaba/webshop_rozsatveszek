@@ -48,6 +48,47 @@
             </div>
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="dropdown-nav">
+                    <li class="text-white"><font-awesome-icon :icon="['fas', 'phone']"/><a class="link p-1" href="tel:+36301234567">+36301234567</a></li>
+                    <li class="text-white"><font-awesome-icon :icon="['fas', 'envelope']"/><a class="link p-1" href="mailto:info@info.hu">info@info.hu</a></li>
+                    <li class="text-white"><font-awesome-icon :icon="['fas', 'magnifying-glass']" class="link p-1"/>Keresés</li>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col col-2">
+                                <font-awesome-icon :icon="['fas', 'user']" class="p-1 m-0 text-white"/>
+                            </div>
+                            <div class="col col-2">
+                                <li class="text-white nav-item dropdown m-0 p-0">
+                                    <a class="text-white dropdown-toggle link" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                                    <ul class="dropdown-menu position-absolute dropdown-menu-right">
+                                        <li class="p-0"><a class="dropdown-item p-1" href="#" id="login" data-bs-toggle="modal" data-bs-target="#LoginModal">Bejelentkezés</a></li>  
+                                        <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#RegistModal">Regisztráció</a></li>
+                                        <li class="p-0"><a class="dropdown-item p-1" href="#" id="admin">Dolgozói felület</a></li>
+                                    </ul>
+                                </li>
+                            </div>
+                            <div class="col col-8">
+                                <li class="text-white pl-2 pt-0"><font-awesome-icon :icon="['fas', 'cart-shopping']"/></li>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col col-3 m-0 p-0">
+                                <ul class="p-0">
+                                    <li class="text-white nav-item dropdown m-0">Nyelv</li>
+                                </ul>
+                            </div>
+                            <div class="col col-9">
+                                <li class="text-white nav-item dropdown">
+                                    <a class="dropdown-toggle link" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="p-0 d-inline-block"><a class="dropdown-item p-1" href="#" id="hu"><span class="fi fi-hu m-1"></span>HU</a></li>
+                                        <li class="p-0 d-inline-block"><a class="dropdown-item p-1" href="#" id="en"><span class="fi fi-gb m-1"></span>EN</a></li>
+                                    </ul>
+                                </li>
+                            </div>
+                        </div>
+                    </div>
                     <li><a class="link" href="/laravel-vue/webshop/public/">Kezdőlap</a></li><!--átírandó-->
                     <li><a class="link" href="#rolunk">Rólunk</a></li>
                     <li><a class="link" href="#hirek">Hírek</a></li>
@@ -204,6 +245,13 @@ header
                 &:hover
                     color: #E4A0B7
                     border-color: #E4A0B7
+        
+        svg
+            font-size: 16px
+            transition: .5s ease all
+            &:hover
+                color: #E4A0B7
+                border-color: #E4A0B7
     
     .mobile-nav-enter-active,
     .mobile-nav-leave-active
@@ -233,8 +281,6 @@ header
             img
                 width: 120px
                 box-shadow: 0 4px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -0px rgba(0, 0, 0, 0.06)
-
-
         
 
 </style>

@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('uzlet', function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nev');
-            $table->text('bemutatkozasHu');
-            $table->text('bemutatkozasEn');
-            $table->string('email');
-            $table->string('tel');
-            $table->string('adoszam');
-            $table->string('iranyitoszam');
-            $table->string('telepules');
-            $table->string('hazszam');
-            $table->string('utca'); 
+            $table->string('nev')->nullable();
+            $table->text('bemutatkozasHu')->nullable();
+            $table->text('bemutatkozasEn')->nullable();
+            $table->string('email')->nullable();
+            $table->string('tel')->nullable();
+            $table->string('adoszam')->nullable();
+            $table->string('iranyitoszam')->nullable();
+            $table->string('telepules')->nullable();
+            $table->string('hazszam')->nullable();
+            $table->string('utca')->nullable(); 
         });
     }
 

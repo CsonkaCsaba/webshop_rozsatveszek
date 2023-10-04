@@ -31,6 +31,12 @@ Route::get('/galeria', function () {
 // Route::get('/home', function () {
 //     return redirect()->route('welcome');;
 // });
+Route::get('/dolgozoi', function () {
+    return view('dolgozoi', [UzletController::class,'index']);
+});
+
+
+Route::put('/uzlet/{id}', [UzletController::class, 'update']);
 
 Route::get('/email/verify', function () {
     return view('auth.verify');

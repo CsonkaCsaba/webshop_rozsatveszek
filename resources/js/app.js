@@ -10,6 +10,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import About from './components/About.vue';
 import News from './components/News.vue';
 import Foot from './components/Foot.vue';
+import { createPinia } from 'pinia';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -31,6 +32,10 @@ app.component('navigation', Navigation);
 
 import Navigation_log from './components/Navigation_log.vue';
 app.component('navigation_log', Navigation_log);
+
+import CompanyData from './components/CompanyData.vue';
+app.component('companydata', CompanyData);
+
 
 // import components from './components/';
 app.component('about', About);
@@ -71,4 +76,5 @@ library.add(
 )
 
 app.use(router);
+app.use(createPinia());
 app.component('font-awesome-icon', FontAwesomeIcon).mount('#app');

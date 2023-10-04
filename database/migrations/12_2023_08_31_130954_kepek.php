@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('kepek', function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('kepNev');
-            $table->string('kepUtvonal');
-            $table->string('kepLeiras');
+            $table->string('kepNev')->nullable();
+            $table->string('kepUtvonal')->nullable();
+            $table->string('kepLeiras')->nullable();
 
             $table->foreignId('termekId')
             ->constrained(

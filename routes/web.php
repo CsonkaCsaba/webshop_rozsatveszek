@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UzletController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;

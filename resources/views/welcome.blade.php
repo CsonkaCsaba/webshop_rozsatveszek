@@ -2,7 +2,7 @@
 @section('content')
 <div id="underheader-about-container">
 
-    <div class="under-header mt-7">
+    <div class="under-header mt-8">
         @if (\Session::has('hiba'))
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <h4>{!! \Session::get('hiba') !!}</h4>  

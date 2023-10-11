@@ -35,8 +35,6 @@ Route::get('/galeria', function () {
 // });
 
 
-
-
 Route::put('/uzlet/{id}', [UzletController::class, 'update']);
 
 Route::get('/email/verify', function () {

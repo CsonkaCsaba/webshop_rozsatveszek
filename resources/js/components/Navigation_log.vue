@@ -36,6 +36,21 @@
                     </ul>
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">
+                    <li><a href="/webshop_rozsatveszek/public/">Kezdőlap</a></li> <!--átírandó-->
+                    <li><a href="#rolunk">Rólunk</a></li>
+                    <li><a href="#hirek">Hírek</a></li>
+                    <li><a href="galeria">Galéria</a></li>
+                    <li><a href="termekek">Termékek</a></li>
+                    <li><a href="#kapcsolat">Kapcsolat</a></li>
+                    <li><a href="tanacsok">Tanácsok</a></li>
+                </ul>
+            </div>
+                           
+            <div class="icon">
+                <i @click="toggleMobileNav" v-show="mobile" :class="{ 'icon-active': mobileNav }"><font-awesome-icon :icon="['fas', 'bars']" class="p-3"/></i>
+            </div>
+            <transition name="mobile-nav">
+                <ul v-show="mobileNav" class="dropdown-nav">
                     <li class="text-white"><font-awesome-icon :icon="['fas', 'phone']"/><a class="link p-1" href="tel:+36301234567">+36301234567</a></li>
                     <li class="text-white"><font-awesome-icon :icon="['fas', 'envelope']"/><a class="link p-1" href="mailto:info@info.hu">info@info.hu</a></li>
                     <li class="text-white"><font-awesome-icon :icon="['fas', 'magnifying-glass']" class="link p-1"/>Keresés</li>
@@ -50,7 +65,6 @@
                                     <ul class="dropdown-menu position-absolute dropdown-menu-right">
                                         <li class="p-0"><a class="dropdown-item p-1" href="#" id="login" data-bs-toggle="modal" data-bs-target="#LoginModal">Bejelentkezés</a></li>  
                                         <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#RegistModal">Regisztráció</a></li>
-                                       
                                     </ul>
                                 </li>
                             </div>
@@ -77,22 +91,7 @@
                             </div>
                         </div>
                     </div>
-                    <li><a href="/laravel-vue/webshop/public/">Kezdőlap</a></li> <!--átírandó-->
-                    <li><a href="#rolunk">Rólunk</a></li>
-                    <li><a href="#hirek">Hírek</a></li>
-                    <li><a href="galeria">Galéria</a></li>
-                    <li><a href="termekek">Termékek</a></li>
-                    <li><a href="#kapcsolat">Kapcsolat</a></li>
-                    <li><a href="tanacsok">Tanácsok</a></li>
-                </ul>
-            </div>
-                           
-            <div class="icon">
-                <i @click="toggleMobileNav" v-show="mobile" :class="{ 'icon-active': mobileNav }"><font-awesome-icon :icon="['fas', 'bars']" class="p-3"/></i>
-            </div>
-            <transition name="mobile-nav">
-                <ul v-show="mobileNav" class="dropdown-nav">
-                    <li><a class="link" href="/laravel-vue/webshop/public/">Kezdőlap</a></li><!--átírandó-->
+                    <li><a class="link" href="/webshop_rozsatveszek/public/">Kezdőlap</a></li><!--átírandó-->
                     <li><a class="link" href="#rolunk">Rólunk</a></li>
                     <li><a class="link" href="#hirek">Hírek</a></li>
                     <li><a class="link" href="galeria">Galéria</a></li>

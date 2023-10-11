@@ -1,7 +1,23 @@
 @extends('layouts.layout')
 @section('content')
 <div id="underheader-about-container">
+
     <div class="under-header mt-7">
+        @if (\Session::has('hiba'))
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <h4>{!! \Session::get('hiba') !!}</h4>  
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+            </div>
+        @endif
+        @if (Auth::user())
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <h4> Üdvözlünk @auth {{auth()->user()->name}} @endauth!</h4>  
+                {{ session('status') }}
+                {{ __('You are logged in!') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+        </div>
+        @endif
+
         <p>Vásároljon rózsát<br> közvetlen a termelőtől!</p>
         <hr>
         <button type="button" class="btn btn-vasarlas">Vásárlás</button>

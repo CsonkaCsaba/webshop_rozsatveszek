@@ -50,7 +50,7 @@
                                     <ul class="dropdown-menu position-absolute dropdown-menu-right">
                                         <li class="p-0"><a class="dropdown-item p-1" href="#" id="login" data-bs-toggle="modal" data-bs-target="#LoginModal">Bejelentkezés</a></li>  
                                         <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#RegistModal">Regisztráció</a></li>
-                                        <li class="p-0"><a class="dropdown-item p-1" href="#" id="admin">Dolgozói felület</a></li>
+                                       
                                     </ul>
                                 </li>
                             </div>

@@ -18,7 +18,7 @@
                             <ul class="dropdown-menu position-absolute dropdown-menu-right">
                                 <li class="p-0"><a class="dropdown-item p-1" href="#" id="login" data-bs-toggle="modal" data-bs-target="#LoginModal">Bejelentkezés</a></li>  
                                 <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#RegistModal">Regisztráció</a></li>
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="admin">Dolgozói felület</a></li>
+                                
                             </ul>
                         </li>
                         <li><font-awesome-icon :icon="['fas', 'cart-shopping']" class="p-3"/></li>
@@ -33,7 +33,7 @@
                     </ul>
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">
-                    <li><a href="#">Kezdőlap</a></li> <!--átírandó-->
+                    <li><a href="/webshop_rozsatveszek/public/">Kezdőlap</a></li> <!--átírandó-->
                     <li><router-link class="link" :to="{name: 'About'}">Rólunk</router-link></li>
                     <li><a href="#hirek">Hírek</a></li>
                     <li><a href="galeria">Galéria</a></li>
@@ -62,7 +62,6 @@
                                     <ul class="dropdown-menu position-absolute dropdown-menu-right">
                                         <li class="p-0"><a class="dropdown-item p-1" href="#" id="login" data-bs-toggle="modal" data-bs-target="#LoginModal">Bejelentkezés</a></li>  
                                         <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#RegistModal">Regisztráció</a></li>
-                                        <li class="p-0"><a class="dropdown-item p-1" href="#" id="admin">Dolgozói felület</a></li>
                                     </ul>
                                 </li>
                             </div>
@@ -89,7 +88,7 @@
                             </div>
                         </div>
                     </div>
-                    <li><a class="link" href="/laravel-vue/webshop/public/">Kezdőlap</a></li><!--átírandó-->
+                    <li><a class="link" href="/webshop_rozsatveszek/public/">Kezdőlap</a></li><!--átírandó-->
                     <li><a class="link" href="#rolunk">Rólunk</a></li>
                     <li><a class="link" href="#hirek">Hírek</a></li>
                     <li><a class="link" href="galeria">Galéria</a></li>

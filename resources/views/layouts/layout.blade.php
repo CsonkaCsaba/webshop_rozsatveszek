@@ -39,6 +39,12 @@
         <navigation_log>
         </navigation_log>
         @endguest
+        @if(Auth::check() && Auth::user()->admin == 1)
+        <navigation_admin>
+        </navigation_admin>
+        @endif
+        
+
        @yield('content')
     </div>
 

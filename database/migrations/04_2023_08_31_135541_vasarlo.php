@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('cegId')
             ->constrained(
                 table: 'ceg', indexName: 'cegId'
-            )
+            )->nullable()
             ->onUpdate('cascade')
             ->onDelete('cascade');
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UzletController;
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -32,9 +33,8 @@ Route::get('/galeria', function () {
 // Route::get('/home', function () {
 //     return redirect()->route('welcome');;
 // });
-Route::get('/dolgozoi', function () {
-    return view('dolgozoi', [UzletController::class,'index']);
-});
+
+
 
 
 Route::put('/uzlet/{id}', [UzletController::class, 'update']);
@@ -50,5 +50,11 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Auth::routes(['verify' => true]);
+
+
+Route::get('dolgozoi', function () {
+    return view('dolgozoi', [UzletController::class,'index']);
+})->middleware('admin')->name('admin');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

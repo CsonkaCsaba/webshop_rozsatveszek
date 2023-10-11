@@ -33,6 +33,9 @@ app.component('navigation', Navigation);
 import Navigation_log from './components/Navigation_log.vue';
 app.component('navigation_log', Navigation_log);
 
+import Navigation_admin from './components/Navigation_admin.vue';
+app.component('navigation_admin', Navigation_admin);
+
 import CompanyData from './components/CompanyData.vue';
 app.component('companydata', CompanyData);
 

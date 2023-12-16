@@ -9,4 +9,6 @@
 
         <companydata>
         </companydata>
+        <gallery>
+        </gallery>
 @endsection

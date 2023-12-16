@@ -14,6 +14,9 @@
         <h4> Üdvözlünk @auth {{auth()->user()->name}} @endauth!</h4>  
                 {{ session('status') }}
                 {{ __('You are logged in!') }}
+                @if(Auth::user()->admin == 1)<br>
+                <a class="link" href="dolgozoi" id="admin">Tovább a dolgozói felületre</a>
+                @endif
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
         </div>
         @endif

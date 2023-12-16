@@ -12,6 +12,7 @@ import News from './components/News.vue';
 import Foot from './components/Foot.vue';
 import { createPinia } from 'pinia';
 
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -39,6 +40,8 @@ app.component('navigation_admin', Navigation_admin);
 import CompanyData from './components/CompanyData.vue';
 app.component('companydata', CompanyData);
 
+import Gallery from './components/Gallery.vue';
+app.component('gallery', Gallery);
 
 // import components from './components/';
 app.component('about', About);

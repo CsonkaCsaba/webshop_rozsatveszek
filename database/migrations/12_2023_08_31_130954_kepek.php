@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kepek', function(Blueprint $table) {
+        Schema::create('kepeks', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('kepNev')->nullable();
             $table->string('kepUtvonal')->nullable();
             $table->string('kepLeiras')->nullable();
 
-            $table->foreignId('termekId')
+            $table->foreignId('termekId')->nullable()
             ->constrained(
                 table: 'termek', indexName: 'terId'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');
             
-            $table->foreignId('kategoriaId')
+            $table->foreignId('kategoriaId')->nullable()
             ->constrained(
                 table: 'kategoria', indexName: 'kategId'
             )
@@ -36,9 +36,7 @@ return new class extends Migration
                 table: 'uzlet', indexName: 'uzlId'
             )
             ->onUpdate('cascade')
-            ->onDelete('cascade');
-            
-            
+            ->onDelete('cascade');          
         });
     }
 

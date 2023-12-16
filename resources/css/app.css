@@ -1,0 +1,5 @@
+
+@import '../../node_modules/swiper/swiper';
+@import '../../node_modules/swiper/modules/navigation-element.min.css';
+@import '../../node_modules/swiper/modules/pagination-element.min.css';
+@import '../../node_modules/swiper/swiper-bundle.css'

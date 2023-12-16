@@ -82,63 +82,15 @@ fetchStore();
                     
                 </button>
                 </div>
-            
             </form>
           </ol>
         </ul>
-
-
-       
     </div>
-</div>
-<div class="container fontcolor">
-<div class="justify-content-center text-center p-2">
-    <div class="divider fontcolor"><span></span><span>GALÉRIA</span><span></span></div>
-</div>
 </div>
 </template>
 
 <style lang="sass" scoped>
-
-.divider 							
-    display: table 
-    font-size: 24px
-    text-align: center 
-    width: 100% 						
-    margin: 40px auto
-    span 
-        display: table-cell
-        position: relative
-.divider span:first-child, 
-.divider span:last-child 
-    width: 40%
-    top: 13px							
-    -moz-background-size: 100% 2px 	
-    background-size: 100% 2px		
-    background-position: 0 0, 0 100%
-    background-repeat: no-repeat
-.divider span:first-child 				
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(#000))
-    background-image: -webkit-linear-gradient(180deg, transparent, #000)
-    background-image: -moz-linear-gradient(180deg, transparent, #000)
-    background-image: -o-linear-gradient(180deg, transparent, #000)
-    background-image: linear-gradient(90deg, transparent, #000)
-        
-.divider span:nth-child(2) 
-    color: #656565
-    padding: 0px 5px 
-    width: auto
-    white-space: nowrap     
-.divider span:last-child 				
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#000), to(transparent))
-    background-image: -webkit-linear-gradient(180deg, #000, transparent)
-    background-image: -moz-linear-gradient(180deg, #000, transparent)
-    background-image: -o-linear-gradient(180deg, #000, transparent)
-    background-image: linear-gradient(90deg, #000, transparent)
-
 input
     background: #D9D9D9CC !important
- 
-
 </style>
 

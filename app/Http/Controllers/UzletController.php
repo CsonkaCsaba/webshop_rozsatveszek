@@ -17,7 +17,7 @@ class UzletController extends Controller
 
     public function index()
     {
-       $posts = Uzlet::orderBy('id', 'DESC')->get();
+       $posts = Uzlet::limit(1)->get();
        return response()->json($posts);
     }
 

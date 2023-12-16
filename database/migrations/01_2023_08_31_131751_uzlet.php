@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('uzlet', function(Blueprint $table) {
+        Schema::create('uzlets', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nev')->nullable();
             $table->text('bemutatkozasHu')->nullable();

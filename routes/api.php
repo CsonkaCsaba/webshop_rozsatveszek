@@ -21,4 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::resource('/uzlet', UzletController::class);
 Route::resource('/galeria', KepekController::class);
+Route::post('/galeria/upload', [KepekController::class, 'upload']);
 

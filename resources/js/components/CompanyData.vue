@@ -78,7 +78,7 @@ fetchStore();
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                <button class="btn lilagomb col-1" type="submit">Módosít
+                <button class="btn lilagombKicsi col-1" type="submit">Módosít
                     
                 </button>
                 </div>

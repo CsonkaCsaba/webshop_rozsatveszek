@@ -43,6 +43,15 @@ app.component('companydata', CompanyData);
 import Gallery from './components/Gallery.vue';
 app.component('gallery', Gallery);
 
+import Swiper from './components/Swiper.vue';
+app.component('swiper', Swiper);
+
+import Swiper_front from './components/Swiper_front.vue';
+app.component('swiper_front', Swiper_front);
+
+import News_admin from './components/News_admin.vue';
+app.component('news_admin', News_admin);
+
 // import components from './components/';
 app.component('about', About);
 app.component('news', News);
@@ -60,7 +69,14 @@ import {
     faEnvelope,
     faMagnifyingGlass,
     faPhone,
-    faUser
+    faUser,
+    faTrash,
+    faPen,
+    faPlus,
+    faFloppyDisk,
+    faDownload, 
+    faCloudArrowUp,
+    faExclamation
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -78,7 +94,14 @@ library.add(
     faMagnifyingGlass,
     faPhone,
     faUser,
-    faYoutube
+    faYoutube,
+    faTrash,
+    faPen,
+    faPlus,
+    faFloppyDisk,
+    faDownload,
+    faCloudArrowUp,
+    faExclamation
 )
 
 app.use(router);

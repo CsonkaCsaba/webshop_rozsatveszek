@@ -1,0 +1,160 @@
+import { defineStore } from 'pinia'
+import axios from 'axios'
+import {ref } from 'vue'
+
+export const NewsStore = defineStore("NewsStore",{
+    state: () => {
+      return {
+        news: [
+           
+        ],
+        messageDelete: "A fotó törlése sikeres!",
+        messageUpdate: "Sikeres módosítás!",
+        messageUpload: "Sikeres feltöltés!",
+        updateSuccessful: false,
+        deleteSuccessful: false,
+        baseUrl: window.location.origin,
+        edit_id: null,
+        file: '',
+        uploadSuccessful: false,
+        oldPhotoName: null,
+        noFile: false,
+        message : "",
+        }
+    },
+    getters: {
+
+    },
+    actions: {
+
+        async fetchNews(){
+            let news = [];
+            try {
+                    await axios.get('api/hirek').then(function(response){
+                        news = response.data
+                    });
+                for(const element of news){
+                        this.news.push(element);
+                    }
+                }
+                 catch(error){
+                    console.log(error.response.data)
+                }
+        },
+        deleteNews(id, uzletId, name){
+            try{
+                if (id<= 4){
+                answer = confirm("Figyelem! A kiválasztott fotó törlése befolyásolhatja a kezdőoldal megjelenését! Biztos bene, hogy törölni szeretné a(z) " +name+" elnevezésű fotót?");
+                } else {
+                answer = confirm("Biztos bene, hogy törölni szeretné a(z) " +name+" elnevezésű fotót?");
+                }
+                if(answer != false){
+                axios.delete('api/galeria/'+id).then(res=>{
+                    let index = this.gallery.findIndex(gall=>gall.id == id);
+                    this.gallery.splice(index, 1)
+                    this.deleteSuccessful=true;
+                    answer = false;
+                    }).catch(console.error)
+                }
+            }catch(error){
+                console.log(error)
+            }
+
+        },
+        // downloadPhoto(kepUtvonal){
+        //         axios({
+        //             url: kepUtvonal,
+        //             method: 'GET',
+        //             responseType: 'blob'
+        //         })
+        //           .then((response) => {
+        //             let fileUrl = window.URL.createObjectURL(new Blob([response.data]))
+        //             let fileLink = document.createElement('a')
+        //             fileLink.href = fileUrl
+        //             fileLink.setAttribute('download','image.jpg')
+        //             document.body.appendChild(fileLink)
+        //             fileLink.click()
+        //           }).catch(console.error)
+        // },
+        updateNews(id){
+            let photo = this.gallery.find(gallery=>gallery.id == id)
+            if(photo){ 
+                this.uzletId = photo.uzletId,
+                this.kepNev = photo.kepNev,
+                this.kepLeiras = photo.kepLeiras
+                this.edit_id = photo.id
+            }
+               
+                let form_data ={
+                id : this.id,    
+                kepNev : this.kepNev,
+                kepLeiras : this.kepLeiras,
+                uzletId: this.uzletId,
+                }
+                axios.put('api/galeria/'+this.edit_id, form_data, this.oldPhotoName).then(res=>{
+                    console.log(res);
+                    this.updateSuccessful = true;
+                }).catch(console.error)
+        }, 
+        onChange(e){
+            let file;
+            file = e.target.files[0];
+            this.file = file;
+
+        },
+        uploadPoto(e){
+            e.preventDefault();
+            const config = {
+                headers: {
+                    'content-type':'multipart/form-data'
+                }
+            }
+            
+            let data = new FormData();
+            if(this.file != ""){
+                this.noFile = false;
+                this.message = "";
+                data.append('file', this.file);
+                axios.post('api/galeria/upload', data, config)
+                .then((response) => {
+                    if(response.data.message == "Sikeres feltöltés!"){
+                        this.uploadSuccessful = true;
+                       location.reload();
+                       //showSwiper +=1
+                    } else {
+                        this.message = response.data.message;
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                    if(error.response.status === 422){
+                        this.message = "Csak .jpg, .jpeg, .png kiterjesztésű fotók tölthetők fel!"
+                    }
+                    //if(error.message == "Request failed with status code 422")
+                    //this.message = "error";        
+                });
+            } else {
+                this.noFile = true
+            }
+            
+        },
+
+        oldPhotoName(e){
+            this.oldPhotoName = e
+        },
+        
+        updateStatusChange(){
+            this.updateSuccessful = false
+        }, 
+
+        deleteStatusChange(){
+            this.deleteSuccessful = false
+        },
+        uploadStatusChange(){
+            this.uploadSuccessful = false
+        }
+
+     },
+     methods:{
+     }
+  
+})

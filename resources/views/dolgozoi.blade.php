@@ -11,4 +11,6 @@
         </companydata>
         <gallery>
         </gallery>
+        <news_admin>
+        </news_admin>
 @endsection

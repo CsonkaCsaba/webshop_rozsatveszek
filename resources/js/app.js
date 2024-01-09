@@ -7,9 +7,6 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
-import About from './components/About.vue';
-import News from './components/News.vue';
-import Foot from './components/Foot.vue';
 import { createPinia } from 'pinia';
 
 
@@ -27,6 +24,14 @@ const router = createRouter({
 
 const app = createApp({});
 
+import About from './components/About.vue';
+app.component('about', About);
+
+import News from './components/News.vue';
+app.component('news', News);
+
+import Foot from './components/Foot.vue';
+app.component('foot', Foot);
 
 import Navigation from './components/Navigation.vue';
 app.component('navigation', Navigation);
@@ -52,10 +57,8 @@ app.component('swiper_front', Swiper_front);
 import News_admin from './components/News_admin.vue';
 app.component('news_admin', News_admin);
 
-// import components from './components/';
-app.component('about', About);
-app.component('news', News);
-app.component('foot', Foot);
+import Termekek from './components/Termekek.vue';
+app.component('termekek', Termekek);
 
 //import flags
 import "/node_modules/flag-icons/css/flag-icons.min.css";
@@ -64,10 +67,13 @@ import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
+    faAngleUp,
+    faAngleDown,
     faBars,
     faCartShopping,
     faEnvelope,
     faMagnifyingGlass,
+    faMinus,
     faPhone,
     faUser,
     faTrash,
@@ -86,13 +92,17 @@ import{
 } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
+    faAngleUp,
+    faAngleDown,
     faBars,
     faCartShopping,
     faEnvelope,
     faFacebook,
     faInstagram,
     faMagnifyingGlass,
+    faMinus,
     faPhone,
+    faPlus,
     faUser,
     faYoutube,
     faTrash,

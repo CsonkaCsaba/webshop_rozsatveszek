@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\KepekController;
 use App\Http\Controllers\UzletController;
+use App\Http\Controllers\TermekController;
+use App\Http\Controllers\KategoriaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,5 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::resource('/uzlet', UzletController::class);
 Route::resource('/galeria', KepekController::class);
+Route::resource('/termekek', TermekController::class);
 Route::post('/galeria/upload', [KepekController::class, 'upload']);
 

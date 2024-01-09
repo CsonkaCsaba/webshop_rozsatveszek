@@ -16,7 +16,7 @@ return new class extends Migration
             
             $table->foreignId('uzletId')
             ->constrained(
-                table: 'uzlet', indexName: 'uzletId'
+                table: 'uzlets', indexName: 'uzletId'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');

@@ -23,6 +23,7 @@
         "flag-icons": "^6.11.0",
         "pinia": "^2.1.6",
         "swiper": "^11.0.1",
+        "vue-numeric-input": "^2.0.0",
         "vue-router": "^4.0.13"
     }
 }

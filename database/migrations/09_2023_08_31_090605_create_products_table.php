@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('termek', function (Blueprint $table) {
+        Schema::create('termeks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nevHu');
             $table->string('nevEn');
             $table->integer('ar');
+            $table->string('img');
             $table->string('url');
             $table->text('leirasHu');
             $table->text('leirasEn');
             $table->string('szin');
+            $table->string('color');
             $table->integer('keszlet');
             $table->timestamps();
         });

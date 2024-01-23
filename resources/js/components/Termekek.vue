@@ -3,12 +3,14 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
-import SetNumber from './SetNumber.vue';
+import { ShoppingCart } from './store/ShoppingCart';
 
 const { products } = storeToRefs(ProductStore())
 const { update, editStore, fetchProduct } = ProductStore()
 fetchProduct();
 
+//get store
+const cartData = ShoppingCart();
 
 </script>
 
@@ -16,22 +18,27 @@ fetchProduct();
 export default {
     data() {
         return{
-            szin : ' ',
-            nevHu: ' ',
-            img: ' ',
+            termek: {
+                type: Object
+            },
+            num: 1
         }
     },
     methods: {
-      toModal (prodszin,prodnevHu,prodimg) {
-        this.szin = prodszin,
-        this.nevHu = prodnevHu,
-        this.img = prodimg
-      }
+      toModal (prod) {
+        this.termek = prod,
+        this.num=1
+      },
+      increment(){
+        this.$refs.customNum.stepUp()
+        this.num = this.$refs.customNum.value
+      },
+        decrement(){
+            this.$refs.customNum.stepDown()
+            this.num = this.$refs.customNum.value
+      },
     },
-    components: {
-        SetNumber
-    }
-  }
+}
 
 </script>
 
@@ -54,7 +61,7 @@ export default {
                     <div class="szin">{{ prod.szin }}</div>
                     <div class="nev">{{ prod.nevHu }}</div>
                     <div class="col ar m-1">{{ prod.ar }} Ft</div>
-                    <button v-if="prod.keszlet > 0" class="col kosarba kosarba-active text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal" v-on:click="toModal(prod.szin,prod.nevHu,prod.img)">
+                    <button v-if="prod.keszlet > 0" class="col kosarba kosarba-active text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal" v-on:click="toModal(prod)">
                         <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pe-1"/>
                         Kosárba
                     </button> 
@@ -79,16 +86,29 @@ export default {
                 </div>
                 <div id="KosarbaModalBody" class="modal-body">
                     <div class="termek-kep">
-                        <img :src="img" class="img-fluid img-max">
+                        <img :src="termek.img" class="img-fluid img-max">
                     </div>
-                    <div class="szin">{{ szin }}</div>
-                    <div class="nev">{{ nevHu }}</div>
+                    <div class="szin">{{ termek.szin }}</div>
+                    <div class="nev">{{ termek.nevHu }}</div>
                 </div>
                 <div class="d-flex d-row justify-content-center">
-                    <SetNumber :min="1" :max="10" :value="1"/>
+                    <div class="custom-num d-flex justify-content-center p-2" >
+                        <font-awesome-icon class="minusSign" :icon="['fas', 'minus']" @click="decrement"/>        
+                        <input 
+                            type="number"  
+                            class="num-input" 
+                            min=1 
+                            :max=termek.keszlet
+                            v-model="num"
+                            ref="customNum" />
+                        <font-awesome-icon class="plusSign" :icon="['fas', 'plus']" @click="increment"/>
+                    </div>
+                </div>
+                <div class="ModalKeszletUzenet d-flex justify-content-center p-2">
+                        Készleten: {{ termek.keszlet }} db
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Kosárba</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="cartData.addToCart(termek,num)">Kosárba</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>                    
                 </div>
             </div>
@@ -135,7 +155,7 @@ export default {
 }
 
 
-.szin{
+.szin, .ModalKeszletUzenet{
     font-size: 16px;
     color: #000;
 }
@@ -177,5 +197,39 @@ export default {
 
 .img-max{
     max-width: 35%
+}
+
+/* setNumber */
+.custom-num{
+    margin: 0.5em;
+    width: fit-content;
+    border-radius: 1em;
+    align-items: center;
+    background-color: #d1ecf1;
+}
+
+.num-input{
+    font-size: 1em;
+    text-align: center;
+    background: none;
+    border: none;
+    font-weight: bold;
+    width: 100%;
+}
+
+.num-input::-webkit-outer-spin-button,
+.num-input::-webkit-inner-spin-button {
+    display: none;
+}
+
+.plusSign, .minusSign{
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.num-max, .num-min{
+    padding-top: 0.8em;
+    height: 5em;
+    padding-bottom: 0;
 }
 </style>

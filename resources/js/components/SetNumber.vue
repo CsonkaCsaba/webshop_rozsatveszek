@@ -25,9 +25,8 @@ export default{
 </script>
 
 <template>
-    <div class="custom-num d-flex justify-content-center p-2" 
-        :class="[maxReached && 'num-max', minReached && 'num-min']">
-        <font-awesome-icon class="minusSign" :icon="['fas', 'minus']" @click="decrement" :style="[minReached && {'display':'none'}]"/>        
+    <div class="custom-num d-flex justify-content-center p-2" >
+        <font-awesome-icon class="minusSign" :icon="['fas', 'minus']" @click="decrement"/>        
         <input 
             type="number"  
             class="num-input" 

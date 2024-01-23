@@ -23,7 +23,7 @@
 
         <p>Vásároljon rózsát<br> közvetlen a termelőtől!</p>
         <hr>
-        <button type="button" class="btn btn-vasarlas">Vásárlás</button>
+        <a href="termekek"><button type="button" class="btn btn-vasarlas">Vásárlás</button></a>
         <div id="cover-box" class="w-75 d-flex bg-white border-secondary">
             <div class="container">
                 <div class="row justify-content-around m-2">
@@ -50,5 +50,6 @@
     <news>
     </news>
 <div>
+
 @endsection
 

@@ -8,6 +8,7 @@ import './bootstrap';
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 
 const router = createRouter({
@@ -59,6 +60,9 @@ app.component('news_admin', News_admin);
 
 import Termekek from './components/Termekek.vue';
 app.component('termekek', Termekek);
+
+import Kosar from './components/Kosar.vue';
+app.component('kosar', Kosar);
 
 //import flags
 import "/node_modules/flag-icons/css/flag-icons.min.css";
@@ -114,6 +118,10 @@ library.add(
     faExclamation
 )
 
+const pinia = createPinia();
+
 app.use(router);
-app.use(createPinia());
+pinia.use(piniaPluginPersistedstate);
+app.use(pinia);
 app.component('font-awesome-icon', FontAwesomeIcon).mount('#app');
+

@@ -30,6 +30,9 @@ Route::get('/tanacsok', function () {
 Route::get('/galeria', function () {
     return view('galeria');
 });
+Route::get('/kosar', function () {
+    return view('kosar');
+});
 // Route::get('/home', function () {
 //     return redirect()->route('welcome');;
 // });

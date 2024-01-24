@@ -22,7 +22,10 @@
         "@fortawesome/vue-fontawesome": "^3.0.3",
         "flag-icons": "^6.11.0",
         "pinia": "^2.1.6",
+        "pinia-plugin-persistedstate": "^3.2.1",
         "swiper": "^11.0.1",
-        "vue-router": "^4.0.13"
+        "vue-numeric-input": "^2.0.0",
+        "vue-router": "^4.0.13",
+        "vuex": "^4.1.0"
     }
 }

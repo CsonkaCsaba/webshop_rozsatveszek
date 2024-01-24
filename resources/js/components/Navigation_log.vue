@@ -1,3 +1,56 @@
+<script setup>
+
+import { ShoppingCart } from './store/ShoppingCart';
+const cartData = ShoppingCart();
+
+</script>
+
+<script>
+
+export default {
+    data(){
+        return{
+            scrolledNav: null,
+            mobile: null,
+            mobileNav: null,
+            windowWidth: null,
+        }
+    },
+    created(){
+        window.addEventListener('resize', this.checkScreen);
+        
+    },
+    mounted(){
+        window.addEventListener("scroll", this.updateScroll);
+    },
+    methods: {
+        toggleMobileNav(){
+            this.mobileNav = !this.mobileNav;            
+        },
+
+        updateScroll(){
+            const scrollPosition = window.scrollY;
+            if (scrollPosition > 50){
+                this.scrolledNav =true;
+                return;
+            }
+            this.scrolledNav = false;
+        },
+
+        checkScreen(){
+            this.windowWidth = window.innerWidth;
+            if(this.windowWidth <= 930){
+                this.mobile = true;
+                return;
+            }
+            this.mobile = false;
+            this.mobileNav = false;
+        }
+    }
+}
+
+</script>
+
 <template>
     <header :class="{ 'scrolled-nav': scrolledNav }">
         <nav>
@@ -11,10 +64,10 @@
                         <li class="p-0 center"><font-awesome-icon :icon="['fas', 'envelope']"/><a class="link p-2" href="mailto:info@info.hu">info@info.hu</a></li>
                     </ul>
                     <ul v-show="!mobile" class="navigation m-0 p-0 justify-content-end">
-                        <li><font-awesome-icon :icon="['fas', 'magnifying-glass']" class="p-2"/></li>
-                        <font-awesome-icon :icon="['fas', 'user']" class="p-1"/>
+                        <li><font-awesome-icon :icon="['fas', 'magnifying-glass']" class="p-2 ikon-size"/></li>
+                        <font-awesome-icon :icon="['fas', 'user']" class="p-1 ikon-size"/>
                         <li class="nav-item dropdown p-1 m-0">
-                            <a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                            <a class="dropdown-toggle ikon-size" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
                             <ul class="dropdown-menu position-absolute dropdown-menu-right">
                                 <li class="p-0"><a class="dropdown-item p-1" href="#" id="account">Fiókom</a></li>
                                 <li class="p-0"><a class="dropdown-item p-1" href="#" id="data">Adataim</a></li>
@@ -24,7 +77,14 @@
                                 
                             </ul>
                         </li>
-                        <li><font-awesome-icon :icon="['fas', 'cart-shopping']" class="p-3"/></li>
+                        <li class="p-1 m-2">
+                            <a href="kosar">
+                                <div class="d-flex flex-row m-1 center align-items-center">
+                                    <font-awesome-icon :icon="['fas', 'cart-shopping']" class="p-1 ikon-size"/>
+                                    <div class="countItem">{{ cartData.countCartItems }}</div>
+                                </div>
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             Nyelv
                             <a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
@@ -69,7 +129,14 @@
                                 </li>
                             </div>
                             <div class="col col-8">
-                                <li class="text-white pl-2 pt-0"><font-awesome-icon :icon="['fas', 'cart-shopping']"/></li>
+                                <li class="text-white pl-2 pt-0">
+                                    <a href="kosar">
+                                        <div class="d-flex flex-row m-1 center align-items-center">
+                                            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="p-1 ikon-size"/>
+                                            <div class="countItem">{{ cartData.countCartItems }}</div>
+                                        </div>
+                                    </a>
+                                </li>
                             </div>
                         </div>
                     </div>
@@ -104,57 +171,6 @@
     </header>
 
 </template>
-<script>
-
-
-export default{
-    name: "navigation",
-    data(){
-        return{
-            scrolledNav: null,
-            mobile: null,
-            mobileNav: null,
-            windowWidth: null,
-        };
-    },
-    created(){
-        window.addEventListener('resize', this.checkScreen);
-        
-    },
-    mounted(){
-        window.addEventListener("scroll", this.updateScroll);
-    },
-    methods: {
-        toggleMobileNav(){
-            this.mobileNav = !this.mobileNav;            
-        },
-
-        updateScroll(){
-            const scrollPosition = window.scrollY;
-            if (scrollPosition > 50){
-                this.scrolledNav =true;
-                return;
-            }
-            this.scrolledNav = false;
-        },
-
-        checkScreen(){
-            this.windowWidth = window.innerWidth;
-            if(this.windowWidth <= 930){
-                this.mobile = true;
-                return;
-            }
-            this.mobile = false;
-            this.mobileNav = false;
-        },
-    }
-  
-};
-
-
-  
-
-</script>
 
 <style lang="sass" scoped>
 
@@ -165,6 +181,7 @@ header
     top: 0
     transition: .5s ease all
     color: #656565
+    align-items: center
 
     nav
         position: relative
@@ -173,6 +190,7 @@ header
         padding: 12px 0
         width: 90%
         margin: 0 auto
+
         @media(min-width: 1140px)
             max-width: 1140px
     
@@ -204,7 +222,7 @@ header
         align-items: center
 
         img
-            width: 110px
+            width: 130px
             transition: .5s ease all
         
     .navigation
@@ -214,15 +232,14 @@ header
         justify-content: center
     .icon
         display: flex
-        alig-items: center
+        align-items: center
         position: absolute
-        top: 0
         right: 24px
         height: 100%
 
         i
             cursor: pointer
-            font-size: 24px
+            font-size: 40px
             transition: .8s ease all
 
     .dropdown-toggle
@@ -243,6 +260,9 @@ header
             margin-left: 0
             .link
                 color: white
+                &:hover
+                    color: #E4A0B7
+                    border-color: #E4A0B7
 
         svg
             font-size: 16px
@@ -277,10 +297,15 @@ header
 
         .branding
             img
-                width: 90px
+                width: 120px
                 box-shadow: 0 4px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -0px rgba(0, 0, 0, 0.06)
 
+.countItem
+    background: rgba(228, 160, 183, 0.47)
+    border-radius: 20px
+    padding: 1px 6px 1px 6px
 
-        
+.ikon-size
+    font-size: 20px
 
 </style>

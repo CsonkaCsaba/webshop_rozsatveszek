@@ -1,0 +1,107 @@
+<script setup>
+import { ShoppingCart } from './store/ShoppingCart';
+
+const cartData = ShoppingCart();
+
+</script>
+
+<template>
+    <div class="mt-8 mb-4 pt-2 container-fluid select-container">
+        Kosár
+    </div>
+    <div v-if="cartData.cartItems.length > 0 " class="container">
+        <div v-for="item in cartData.cartItems" class="row product-container m-2">
+            <img :src="item.img" class="img-fluid img-max m-2 col">
+            <div class="product-name col d-flex align-items-center">{{ item.nevHu }}</div>
+            <div class="col egysegar d-flex align-items-center flex-column m-auto">
+                <div>Egységár</div>
+                <div>{{ item.ar }} Ft</div>
+            </div>
+            <div class="custom-num d-inline-flex align-items-center p-2 m-auto mx-lg-5 col" >
+                <font-awesome-icon class="minusSign" :icon="['fas', 'minus']" @click="cartData.decrement(item)"/>
+                <input type="number" min="1" :max="item.keszlet" :value="item.quantity" class="num-input"/>      
+                <font-awesome-icon class="plusSign" :icon="['fas', 'plus']" @click="cartData.increment(item)"/>
+            </div>
+            <div class="col d-flex align-items-center justify-content-center trash">
+                <font-awesome-icon :icon="['fas', 'trash']" class="trash" @click="cartData.removeFromCart(item)" />
+            </div>
+        </div>
+        <div class="container">
+            <div class="vegosszeg d-flex justify-content-end">
+                Végösszeg: {{ cartData.countTotal() }} Ft
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6 d-flex justify-content-start"><a href="termekek"><button type="button" class="btn btn-vasarlas m-0">Tovább vásárolok</button></a></div>
+                <div class="col-6 d-flex justify-content-end"><a href="#"><button type="button" class="btn btn-vasarlas m-0">Tovább a pénztárhoz</button></a></div>
+            </div>
+        </div>        
+    </div>
+    <div v-else class="container m-auto">
+        <div class="row kosar-ures">A kosár üres.</div>
+        <div class="row vasarlas">
+            <a href="termekek"><button type="button" class="btn btn-vasarlas m-0">Vásárlás</button></a>
+        </div>
+    </div>
+</template>
+
+<style>
+.select-container, .vegosszeg{
+    font-size: 25px;
+    color: #787878;
+}
+
+.btn-vasarlas{
+    font-size: 20px;
+    border-radius: 18px;
+    background: #E4A0B7;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #fff;
+}
+
+.btn-vasarlas:hover{
+    background: #e7e7e7;
+}
+
+.kosar-ures{
+    font-size: 20px;
+    justify-content: center;
+}
+
+.vasarlas{
+    justify-content: center;
+}
+
+.img-max{
+    max-width: 20%
+}
+
+.product-container{
+    border: solid #e7e7e7 2px;
+}
+
+.egysegar{
+    font-size: 20px;
+}
+
+.product-name{
+    font-size: 20px;
+}
+
+.custom-num{
+    font-size: 20px;
+}
+
+.trash{
+    font-size: 30px;
+}
+
+.trash{
+    cursor: pointer;
+}
+
+.trash:hover{
+    color: red;
+}
+</style>

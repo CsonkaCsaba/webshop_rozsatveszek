@@ -1,3 +1,4 @@
+
 @extends('layouts.layout')
 @section('content')
         <div class="content">
@@ -11,6 +12,7 @@
         </companydata>
         <gallery>
         </gallery>
-        <news_admin>
+        <news_admin :news="{{json_encode($news)}}">
         </news_admin>
+        
 @endsection

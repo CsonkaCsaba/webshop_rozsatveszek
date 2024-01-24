@@ -37,7 +37,7 @@
                     </div>
                     <div class="col text-center">
                         <img class="services" src="../resources/assets/kepek/cover-box-discount.png">
-                        <p class="m-1">Rendszeres<br> kedvezmények</p>  
+                        <p class="m-1">Rendszeres<br> kedvezményekasfasfsaf</p>  
                     </div>
                 </div>
             </div>
@@ -47,8 +47,11 @@
     </div>
     <about>
     </about>
-    <news>
-    </news>
+    {{-- <news>
+    </news> --}}
+     <News_front>
+        {{-- :news="{{json_encode($news)}}" --}}
+    </News_front>
 <div>
 @endsection
 

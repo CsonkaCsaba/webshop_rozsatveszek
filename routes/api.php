@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HirekController;
 use App\Http\Controllers\KepekController;
 use App\Http\Controllers\UzletController;
 use Illuminate\Http\Request;
@@ -22,4 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('/uzlet', UzletController::class);
 Route::resource('/galeria', KepekController::class);
 Route::post('/galeria/upload', [KepekController::class, 'upload']);
+Route::resource('/hirek', HirekController::class);
 

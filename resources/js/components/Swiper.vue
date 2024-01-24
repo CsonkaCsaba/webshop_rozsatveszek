@@ -61,28 +61,4 @@ import { Pagination, Navigation } from 'swiper/modules';
 </template>
 
 <style lang="sass" scoped>
-.galleryphoto
-    max-width: 350px
-    max-height:250px
-    box-shadow: rgba(149, 157, 165, 0.6) 0px 8px 24px
-    &:hover
-        opacity: 0.5
-        transition: .5s ease
-        
-.swiper-slide
-    max-width: 400px
-    max-height:350px
-    padding: 30px
-    margin-bottom: 350px
-
-.swipercontainer
-    margin-bottom: 100px
-   
-.photosettings
-    margin-bottom: 25px
-.card
-    box-shadow: rgba(149, 157, 165, 0.6) 0px 4px 12px
-    &:hover
-        box-shadow: rgba(149, 157, 165, 0.6) 0px 8px 24px
-        transition: .5s ease
 </style>

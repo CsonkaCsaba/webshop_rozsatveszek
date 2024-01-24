@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hirek', function(Blueprint $table) {
+        Schema::create('hireks', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('cim');
             $table->text('leiras');
@@ -23,6 +23,14 @@ return new class extends Migration
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');
+
+            $table->foreignId('kepId')
+            ->constrained(
+                table: 'kepeks', indexName: 'id'
+            )
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            
 
         });
     }

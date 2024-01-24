@@ -2,13 +2,19 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import {ref } from 'vue'
 
+
 export const NewsStore = defineStore("NewsStore",{
     state: () => {
       return {
-        news: [
-           
-        ],
-        messageDelete: "A fotó törlése sikeres!",
+        news: [{
+            id : null,
+            cim : null,
+            leiras : null,
+            uzletId : null,
+            edit_id : null,
+            foto : null,
+        }],
+        messageDelete: "A hír törlése sikeres!",
         messageUpdate: "Sikeres módosítás!",
         messageUpload: "Sikeres feltöltés!",
         updateSuccessful: false,
@@ -20,6 +26,8 @@ export const NewsStore = defineStore("NewsStore",{
         oldPhotoName: null,
         noFile: false,
         message : "",
+
+
         }
     },
     getters: {
@@ -27,33 +35,14 @@ export const NewsStore = defineStore("NewsStore",{
     },
     actions: {
 
-        async fetchNews(){
-            let news = [];
-            try {
-                    await axios.get('api/hirek').then(function(response){
-                        news = response.data
-                    });
-                for(const element of news){
-                        this.news.push(element);
-                    }
-                }
-                 catch(error){
-                    console.log(error.response.data)
-                }
-        },
-        deleteNews(id, uzletId, name){
+        deleteNews(id, cim){
             try{
-                if (id<= 4){
-                answer = confirm("Figyelem! A kiválasztott fotó törlése befolyásolhatja a kezdőoldal megjelenését! Biztos bene, hogy törölni szeretné a(z) " +name+" elnevezésű fotót?");
-                } else {
-                answer = confirm("Biztos bene, hogy törölni szeretné a(z) " +name+" elnevezésű fotót?");
-                }
+                let answer = confirm("Biztos bene, hogy törölni szeretné a(z) " +cim+" című hírt?");          
                 if(answer != false){
-                axios.delete('api/galeria/'+id).then(res=>{
-                    let index = this.gallery.findIndex(gall=>gall.id == id);
-                    this.gallery.splice(index, 1)
-                    this.deleteSuccessful=true;
+                axios.delete('api/hirek/'+id).then(res=>{
                     answer = false;
+                    location.reload();
+                    this.deleteSuccessful=true;
                     }).catch(console.error)
                 }
             }catch(error){
@@ -76,25 +65,28 @@ export const NewsStore = defineStore("NewsStore",{
         //             fileLink.click()
         //           }).catch(console.error)
         // },
-        updateNews(id){
-            let photo = this.gallery.find(gallery=>gallery.id == id)
-            if(photo){ 
-                this.uzletId = photo.uzletId,
-                this.kepNev = photo.kepNev,
-                this.kepLeiras = photo.kepLeiras
-                this.edit_id = photo.id
-            }
-               
+        updateNews(id, cim, leiras, uzletId, foto){
+            try{
+                this.id = id;
+                this.edit_id = id;
+                this.cim = cim;
+                this.leiras = leiras;
+                this.uzletId = uzletId;
+                this.foto = foto;
+                
                 let form_data ={
                 id : this.id,    
-                kepNev : this.kepNev,
-                kepLeiras : this.kepLeiras,
+                cim : this.cim,
+                leiras : this.leiras,
                 uzletId: this.uzletId,
                 }
-                axios.put('api/galeria/'+this.edit_id, form_data, this.oldPhotoName).then(res=>{
+                axios.put('api/hirek/'+this.edit_id, form_data).then(res=>{
                     console.log(res);
                     this.updateSuccessful = true;
                 }).catch(console.error)
+            }catch(error){
+                console.log(error)
+            }
         }, 
         onChange(e){
             let file;

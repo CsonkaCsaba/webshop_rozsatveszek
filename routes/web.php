@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\UzletController;
 use App\Http\Middleware\IsAdmin;
+use App\Models\Hirek;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\HirekController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +59,7 @@ Route::get('dolgozoi', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/dolgozoi', [HirekController::class, 'index']);
+
+//Route::get('/', [HirekController::class, 'show']);

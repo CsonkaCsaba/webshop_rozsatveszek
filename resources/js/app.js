@@ -13,6 +13,7 @@ import Foot from './components/Foot.vue';
 import { createPinia } from 'pinia';
 
 
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -51,6 +52,9 @@ app.component('swiper_front', Swiper_front);
 
 import News_admin from './components/News_admin.vue';
 app.component('news_admin', News_admin);
+
+import News_front from './components/News_front.vue';
+app.component('News_front', News_front);
 
 // import components from './components/';
 app.component('about', About);
@@ -103,6 +107,7 @@ library.add(
     faCloudArrowUp,
     faExclamation
 )
+
 
 app.use(router);
 app.use(createPinia());

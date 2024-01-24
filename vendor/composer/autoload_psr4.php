@@ -75,6 +75,7 @@ return array(
     'LaravelLang\\Lang\\' => array($vendorDir . '/laravel-lang/lang/src'),
     'LaravelLang\\HttpStatuses\\' => array($vendorDir . '/laravel-lang/http-statuses/src'),
     'LaravelLang\\Attributes\\' => array($vendorDir . '/laravel-lang/attributes/src'),
+    'Inertia\\' => array($vendorDir . '/inertiajs/inertia-laravel/src'),
     'Illuminate\\Support\\' => array($vendorDir . '/laravel/framework/src/Illuminate/Macroable', $vendorDir . '/laravel/framework/src/Illuminate/Collections', $vendorDir . '/laravel/framework/src/Illuminate/Conditionable'),
     'Illuminate\\Foundation\\Auth\\' => array($vendorDir . '/laravel/ui/auth-backend'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),

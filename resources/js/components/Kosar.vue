@@ -6,8 +6,11 @@ const cartData = ShoppingCart();
 </script>
 
 <template>
-    <div class="mt-8 mb-4 pt-2 container-fluid select-container">
-        Kosár
+    <div class="mt-8 mb-5 mx-auto p-2 row container nav-container">
+        <div class="col nav-item active">Kosár</div>
+        <div class="col nav-item">Számlázás</div>
+        <div class="col nav-item">Szállítás</div>
+        <div class="col nav-item">Fizetés</div>
     </div>
     <div v-if="cartData.cartItems.length > 0 " class="container">
         <div v-for="item in cartData.cartItems" class="row product-container m-2">
@@ -34,7 +37,7 @@ const cartData = ShoppingCart();
         <div class="container">
             <div class="row">
                 <div class="col-6 d-flex justify-content-start"><a href="termekek"><button type="button" class="btn btn-vasarlas m-0">Tovább vásárolok</button></a></div>
-                <div class="col-6 d-flex justify-content-end"><a href="#"><button type="button" class="btn btn-vasarlas m-0">Tovább a pénztárhoz</button></a></div>
+                <div class="col-6 d-flex justify-content-end"><a href="szamlazas"><button type="button" class="btn btn-vasarlas m-0">Folytatás<font-awesome-icon :icon="['fas', 'angle-right']" class="ps-1" /></button></a></div>
             </div>
         </div>        
     </div>
@@ -47,9 +50,27 @@ const cartData = ShoppingCart();
 </template>
 
 <style>
-.select-container, .vegosszeg{
-    font-size: 25px;
+.nav-container, .vegosszeg{
+    font-size: 20px;
     color: #787878;
+}
+
+.nav-container .nav-item{
+    background: #b1b3b3;
+    color: white;
+    clip-path: polygon(calc(100% - 1.5rem) 0,100% 50%,calc(100% - 1.5rem) 100%,0 100%,1.5rem 50%,0 0);
+}
+
+.nav-container .nav-item:first-of-type{
+    clip-path: polygon(calc(100% - 1.5rem) 0,100% 50%,calc(100% - 1.5rem) 100%,0 100%,0 50%,0 0);
+}
+
+.nav-container .nav-item:last-of-type{
+    clip-path: polygon(100% 0,100% 50%,100% 100%,0 100%,1.5rem 50%,0 0);
+}
+
+.nav-container .active{
+    background: #E4A0B7;
 }
 
 .btn-vasarlas{
@@ -104,4 +125,17 @@ const cartData = ShoppingCart();
 .trash:hover{
     color: red;
 }
+
+@media only screen and (max-width: 768px) {
+    .product-name, .egysegar, .custom-num, .trash{
+        font-size: 17px;
+    }
+}
+
+@media only screen and (max-width: 462px) {
+    .egysegar{
+        display: none !important;
+    }
+}
+
 </style>

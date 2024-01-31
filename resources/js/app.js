@@ -64,6 +64,18 @@ app.component('termekek', Termekek);
 import Kosar from './components/Kosar.vue';
 app.component('kosar', Kosar);
 
+import ShoppingCartSide from './components/ShoppingCartSide.vue';
+app.component('ShoppingCartSide', ShoppingCartSide);
+
+import Szamlazas from './components/Szamlazas.vue';
+app.component('szamlazas', Szamlazas);
+
+import Szallitas from './components/Szallitas.vue';
+app.component('szallitas', Szallitas);
+
+import Megrendeles from './components/Megrendeles.vue';
+app.component('megrendeles', Megrendeles);
+
 //import flags
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
@@ -73,8 +85,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
     faAngleUp,
     faAngleDown,
+    faAngleRight,
     faBars,
     faCartShopping,
+    faCheck,
     faEnvelope,
     faMagnifyingGlass,
     faMinus,
@@ -98,8 +112,10 @@ import{
 library.add(
     faAngleUp,
     faAngleDown,
+    faAngleRight,
     faBars,
     faCartShopping,
+    faCheck,
     faEnvelope,
     faFacebook,
     faInstagram,

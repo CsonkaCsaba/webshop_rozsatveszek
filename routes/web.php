@@ -36,6 +36,15 @@ Route::get('/galeria', function () {
 Route::get('/kosar', function () {
     return view('kosar');
 });
+Route::get('/szamlazas', function () {
+    return view('szamlazas');
+});
+Route::get('/szallitas', function () {
+    return view('szallitas');
+});
+Route::get('/megrendeles', function () {
+    return view('megrendeles');
+});
 // Route::get('/home', function () {
 //     return redirect()->route('welcome');;
 // });

@@ -78,7 +78,6 @@ app.component('termekek', Termekek);
 import Kosar from './components/Kosar.vue';
 app.component('kosar', Kosar);
 
-
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 //Import FontAwesome
@@ -87,6 +86,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
     faBars,
     faCartShopping,
+    faCheck,
     faEnvelope,
     faMagnifyingGlass,
     faPhone,
@@ -109,6 +109,7 @@ import{
 library.add(
     faBars,
     faCartShopping,
+    faCheck,
     faEnvelope,
     faFacebook,
     faInstagram,

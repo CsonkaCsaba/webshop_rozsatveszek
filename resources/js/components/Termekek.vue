@@ -3,21 +3,20 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
-import { ShoppingCart } from './store/ShoppingCart';
 
 const { products } = storeToRefs(ProductStore())
 const { update, editStore, fetchProduct } = ProductStore()
 fetchProduct();
 
-//get store
-const cartData = ShoppingCart();
-
 </script>
 
 <script>
+import { ShoppingCart } from './store/ShoppingCart';
+
 export default {
     data() {
         return{
+            cartData: ShoppingCart(),
             termek: {
                 type: Object
             },
@@ -34,9 +33,15 @@ export default {
         this.num = this.$refs.customNum.value
       },
         decrement(){
-            this.$refs.customNum.stepDown()
-            this.num = this.$refs.customNum.value
+        this.$refs.customNum.stepDown()
+        this.num = this.$refs.customNum.value
       },
+      addtocart(termek,num){
+        this.cartData.addToCart(termek,num)
+        if(this.cartData.kosarban){
+            $('#KosarbaHelyezveModal').modal('show');
+        }
+      }
     },
 }
 
@@ -49,8 +54,8 @@ export default {
     </div>
     <div class="container-fluid">
         <div class="row justify-content-center g-0">
-            <div class="col-lg-4 col-md-4 col-sm-5 col-8 m-2 product" v-for="prod in products" key="prod.id">
-                <a href="#">
+            <div class="col-lg-4 col-md-4 col-sm-5 col-8 m-2 product position-relative" v-for="prod in products" key="prod.id">
+                <a href="#" class="row">
                     <div class="termek-kep">
                         <img :src="prod.img" class="img-fluid">
                         <div v-if="prod.keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
@@ -108,8 +113,30 @@ export default {
                         Készleten: {{ termek.keszlet }} db
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="cartData.addToCart(termek,num)">Kosárba</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="addtocart(termek,num)">Kosárba</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kosárba helyezve Modal-->
+    <div class="modal fade" id="KosarbaHelyezveModal" tabindex="-1" role="dialog" aria-labelledby="KosarbaHelyezveModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="KosarbaHelyezveModalLabel">Kosárba helyezve</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="KosarbaModalBody" class="modal-body">
+                    <font-awesome-icon :icon="['fas', 'check']" />
+                    A termék sikeresen bekerült a kosárba
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tovább vásárolok</button>
+                    <a href="kosar"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tovább a kosárhoz</button></a>                    
                 </div>
             </div>
         </div>
@@ -125,7 +152,6 @@ export default {
 
 .product{
     background: rgba(228, 160, 183, 0.47);
-    position: relative;
 }
 
 .termek-kep{
@@ -191,7 +217,7 @@ export default {
     background-color: #c9c9c9;
 }
 
-#KosarbaModal{
+#KosarbaModal, #KosarbaHelyezveModal{
     font-size: medium;
 }
 

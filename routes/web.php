@@ -65,4 +65,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/dolgozoi', [HirekController::class, 'index']);
 
-//Route::get('/', [HirekController::class, 'show']);
+Route::get('/welcome', [HirekController::class, 'index']);

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('cim');
             $table->text('leiras');
-            $table->timestamp('datum')->nullable();
+            $table->date('datum')->nullable();
 
             $table->foreignId('uzletId')
             ->constrained(
@@ -26,7 +26,7 @@ return new class extends Migration
 
             $table->foreignId('kepId')
             ->constrained(
-                table: 'kepeks', indexName: 'id'
+                table: 'kepeks', indexName: 'photoId'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');

@@ -15,16 +15,19 @@ class HirekController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return Hirek::all();
+       
     }
 
     public function index()
     {
-        $news = Hirek::with('photo')->get();;
+        $news = Hirek::all()::with('photo');
+        return response()->json($news);
+
+        // $news = Hirek::with('photo')->orderBy('id', 'desc')->limit(3)->get();
         
-        return view('dolgozoi', [
-            'news' => $news
-        ]);
+        // return view('welcome', [
+        //     'news' => $news
+        // ]);
     }
 
     /**
@@ -48,7 +51,11 @@ class HirekController extends Controller
      */
     public function show(Hirek $hirek)
     {
-        $news = Hirek::all();
+        $query = Hirek::query();
+
+        $newsall = $query->with(['photo'])->orderBy('id', 'desc')->limit(3)->get();
+        //$newsWithPhoto = Hirek::with('photo');
+        return response()->json($newsall);
 
     
     }

@@ -12,18 +12,14 @@ export const GalleryStore = defineStore("Gallery",{
         gallery: [
            
         ],
-        messageDelete: "A fotó törlése sikeres!",
-        messageUpdate: "Sikeres módosítás!",
-        messageUpload: "Sikeres feltöltés!",
-        updateSuccessful: false,
-        deleteSuccessful: false,
+        modalStatus: false,
+        message : "",
+        message_button: "" ,
         baseUrl: window.location.origin,
         edit_id: null,
         file: '',
-        uploadSuccessful: false,
         oldPhotoName: null,
         noFile: false,
-        message : "",
         }
     },
     getters: {
@@ -47,6 +43,7 @@ export const GalleryStore = defineStore("Gallery",{
         },
         deletePhoto(id, uzletId, name){
             try{
+                console.log(id, name)
                 if (id<= 4){
                 answer = confirm("Figyelem! A kiválasztott fotó törlése befolyásolhatja a kezdőoldal megjelenését! Biztos bene, hogy törölni szeretné a(z) " +name+" elnevezésű fotót?");
                 } else {
@@ -56,7 +53,8 @@ export const GalleryStore = defineStore("Gallery",{
                 axios.delete('api/galeria/'+id).then(res=>{
                     let index = this.gallery.findIndex(gall=>gall.id == id);
                     this.gallery.splice(index, 1)
-                    this.deleteSuccessful=true;
+                    this.modalStatus = true;
+                    this.message = "A fotó törlése sikeres!",
                     answer = false;
                     }).catch(console.error)
                 }
@@ -97,7 +95,8 @@ export const GalleryStore = defineStore("Gallery",{
                 }
                 axios.put('api/galeria/'+this.edit_id, form_data, this.oldPhotoName).then(res=>{
                     console.log(res);
-                    this.updateSuccessful = true;
+                    this.message = "A fotó adatainak módosítása sikeres!";
+                    this.modalStatus=true;
                 }).catch(console.error)
         }, 
         onChange(e){
@@ -122,16 +121,17 @@ export const GalleryStore = defineStore("Gallery",{
                 axios.post('api/galeria/upload', data, config)
                 .then((response) => {
                     if(response.data.message == "Sikeres feltöltés!"){
-                        this.uploadSuccessful = true;
-                       location.reload();
+                        this.modalStatus=true;
+                        this.message = "A fotó feltöltése sikeres!";
+                       //location.reload();
                        //showSwiper +=1
                     } else {
-                        this.message = response.data.message;
+                        this.message_button = response.data.message;
                     }
                 }).catch((error) => {
                     console.log(error)
                     if(error.response.status === 422){
-                        this.message = "Csak .jpg, .jpeg, .png kiterjesztésű fotók tölthetők fel!"
+                        this.message_button = "Csak .jpg, .jpeg, .png kiterjesztésű fotók tölthetők fel!"
                     }
                     //if(error.message == "Request failed with status code 422")
                     //this.message = "error";        
@@ -155,7 +155,10 @@ export const GalleryStore = defineStore("Gallery",{
         },
         uploadStatusChange(){
             this.uploadSuccessful = false
-        }
+        },
+        receiveEmit(){
+            this.modalStatus = false
+        },
 
      },
      methods:{

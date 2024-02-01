@@ -15,7 +15,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('email')->unique();
             $table->string('telefonszam');
-
+            $table->string('vezetéknev')->nullable();
+            $table->string('keresztnev')->nullable();
             $table->foreignId('cegId')
             ->constrained(
                 table: 'ceg', indexName: 'cegId'

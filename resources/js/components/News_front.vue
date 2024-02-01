@@ -1,80 +1,123 @@
 <script setup>
-import { register } from 'swiper/element/bundle';
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination, Navigation } from 'swiper/modules';
+import { storeToRefs } from 'pinia';
+import { NewsStore } from './store/NewsStore';
+const  { news, modalStatus } = storeToRefs(NewsStore())
 
-// define your modules list here
+const { fetchNews} = NewsStore()
+fetchNews();
 
-const modules = [Pagination, Navigation]
-
-const props = defineProps({
-      news: {
-        type: Array,
-        required: true
-      }
-});
-
-console.log(props.news)
 </script>
+
 <template>
-
-<div class="container fontcolor">
-<div class="justify-content-center text-center p-2">
-    <div class="divider fontcolor"><span></span><span>HÍREK</span><span></span></div>
-</div>
-</div>
-
-<swiper :slides-per-view="2"  :navigation="true" :pagination="true" >
-    <swiper-slide v-for="ne in news">
-        <div class="card">
-        <!-- <img :src="gall.kepUtvonal" :alt="gall.kepLeiras" class="card-img-top galleryphoto"/> -->
-        <div class="card-header">
-        <div class="d-flex justify-content-center">
-                
-            </div>
+<div class="tartalom pb-5">
+    <div id="fejlec d-flex flex-column justify-content-center">
+            <h2 class="pb-2 text-center">Legfrisebb híreink</h2>
+            <hr class="m-auto">
         </div>
-        <div class="card-body">
-        <div class="d-flex justify-content-center">
-            <form method="POST" @submit.prevent="updatenews(ne.id)" >
-              <div class="p-2">
-                  <h5 class="d-flex justify-content-center"><font-awesome-icon :icon="['fas', 'pen']" class="fa-solid fa-fw"/> Hír szerkesztése </h5>
-                      <input type="hidden" class="form-control" :placeholder="ne.id" v-model="ne.id" name="id"/>
-                      <input type="hidden" class="form-control" :placeholder="ne.uzletId" v-model="ne.uzletId" name="uzlet_id"/>
-                      <label class="form-label form-label-top text-secondary" for="cim">Cím</label>
-                      <input type="" class="form-control" :placeholder=" ne.cim " v-model=" ne.cim " name="cim"/>
-                      <label class="form-label form-label-top text-secondary" for="leiras">Leírás</label>
-                      <textarea type="" cols="40" rows="5" class="form-control" :placeholder=" ne.leiras " v-model=" ne.leiras " name="leiras"></textarea>
-              </div>
-              <div class="d-flex justify-content-center">
-                  <button class="btn lilagombKicsi" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Módosítások mentése"><font-awesome-icon :icon="['fas', 'floppy-disk']" class="fa-fw"/>  Mentés</button>
-                  <button type="button" class="btn lilagombKicsi"  @click="deleteNews( ne.id, ne.uzletId)" data-bs-toggle="tooltip" data-bs-placement="top" title="Hír törlése"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>
+        <div class="container-fluid">
+            <div class="row mt-3">
+                <div class="col news-item m-4" v-for="ne in news[0]">
+                    <div class="news-img">
+                        <img :src="ne.photo.kepUtvonal" :alt="ne.photo.kepLeiras" class="img-fluid"/>
+                    </div>
+                    <div class="text-sec">
+                        <div class="publisher-info d-flex align-item-center">
+                            <div class="info">
+                                <span class="publisher-date">{{ne.datum}}</span>
+                            </div>
+                        </div>
+                        <h5 class="news-title">{{ne.cim}}</h5>
+                        <button type="button" class="btn btn-vasarlas"  @click="modalStatus = true">Bővebben</button>
                 </div>
-  
-            </form>
-        </div>
+                <v-dialog width="auto" v-model="modalStatus">
+                <v-card>
+                    <v-container>
+                            <v-row>
+                                <v-col>
+                                    <img :src="ne.photo.kepUtvonal" :alt="ne.photo.kepLeiras" class=""/>
+                                    <v-divider color="info" vertical></v-divider>
+                                </v-col>
+                                <v-col>
+                                    <h3 class="news-title m-4">{{ne.cim}}</h3>
+                                    <p class="m-1"> {{ne.datum}}</p> 
+                                    <p class="m-1"> {{ne.leiras}}</p>
+                                    <v-card-actions>
+                                    <button type="button" class="btn btn-vasarlas mt-3" block @click="modalStatus = false">Bezár</button>
+                                    </v-card-actions>
+                                </v-col>
+                            </v-row>
+                    </v-container>
+                </v-card>
+            </v-dialog>
         </div>
     </div>
-    </swiper-slide>
-</swiper>
+ </div>
+</div>
+
 </template>
 
 
 <style lang="sass" scoped>
 
-.swiper-slide
-    max-width: 400px
-    max-height:350px
-    padding: 30px
-    margin-bottom: 350px
+$extra-small: 320px
+$small: 576px
+$medium: 768px
+$large: 992px
+$extra-large: 1200px
+$szurke_szoveg: #787878
+$rozsaszin: #E4A0B7
+.tartalom
+    color: $szurke_szoveg
+    //display: block
 
-.swipercontainer
-    margin-bottom: 100px
-   
-.photosettings
-    margin-bottom: 25px
-.card
-    box-shadow: rgba(149, 157, 165, 0.6) 0px 4px 12px
-    &:hover
-        box-shadow: rgba(149, 157, 165, 0.6) 0px 8px 24px
-        transition: .5s ease
+    #fejlec
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+        font-family: Inria Serif
+
+    hr
+        border: solid 0.2rem $rozsaszin
+        width: 10rem
+
+    .heading-sec 
+        margin: 3.75rem 0
+        
+        h1
+            font-family: "Pirata One", cursive
+            text-transform: capitalize
+            color: #2d2d2d
+            font-size: 48px
+    .news-item 
+        border-radius: 7px
+        box-shadow: 0 0 20px 5px #00000008
+        margin-bottom: 30px
+        color: #2b2b2b
+        display: block
+        .news-img img 
+            border-radius: 7px 7px 0 0
+            height: 300px
+            width: 100%
+            object-fit: cover
+        .news-title
+            font-weight: bold
+    
+        .text-sec
+            background-color: #fff
+            padding: 27px 25px
+            border-radius: 0 0 7px 7px
+            border-bottom: $rozsaszin 2px solid
+            
+            h5 
+                line-height: 28px
+                margin-bottom: 1rem
+            
+            p
+                font-size: 14px
+                opacity: 70%
+                margin-bottom: 22px
+
+            .publisher-date 
+                opacity: 70%
+                font-size: 13px
+            
+
 </style>

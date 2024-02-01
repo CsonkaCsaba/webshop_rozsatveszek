@@ -5,13 +5,23 @@
  */
 
 import './bootstrap';
+
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
 import About from './components/About.vue';
-import News from './components/News.vue';
+import News_front from './components/News_front.vue';
 import Foot from './components/Foot.vue';
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+const vuetify = createVuetify({
+  components,
+  directives,
+})
 
 const router = createRouter({
     history: createWebHistory(),
@@ -20,8 +30,8 @@ const router = createRouter({
         name: 'About',
         component: About},
         { path: '/News',
-        name: 'News',
-        component: News},
+        name: 'News_front',
+        component: News_front},
     ]
 });
 
@@ -43,8 +53,11 @@ app.component('companydata', CompanyData);
 import Gallery from './components/Gallery.vue';
 app.component('gallery', Gallery);
 
-import Swiper from './components/Swiper.vue';
-app.component('swiper', Swiper);
+import Swiper_gallery from './components/Swiper_gallery.vue';
+app.component('swiper_gallery', Swiper_gallery);
+
+import Swiper_news from './components/Swiper_news.vue';
+app.component('swiper_news', Swiper_news);
 
 import Swiper_front from './components/Swiper_front.vue';
 app.component('swiper_front', Swiper_front);
@@ -52,12 +65,20 @@ app.component('swiper_front', Swiper_front);
 import News_admin from './components/News_admin.vue';
 app.component('news_admin', News_admin);
 
+import Modal from './components/Modal.vue';
+app.component('Modal', Modal);
+
 // import components from './components/';
 app.component('about', About);
-app.component('news', News);
+app.component('News_front', News_front);
 app.component('foot', Foot);
 
-//import flags
+import Termekek from './components/Termekek.vue';
+app.component('termekek', Termekek);
+import Kosar from './components/Kosar.vue';
+app.component('kosar', Kosar);
+
+
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 //Import FontAwesome
@@ -104,6 +125,10 @@ library.add(
     faExclamation
 )
 
+const pinia = createPinia();
+
 app.use(router);
-app.use(createPinia());
+pinia.use(piniaPluginPersistedstate);
+app.use(pinia);
+app.use(vuetify);
 app.component('font-awesome-icon', FontAwesomeIcon).mount('#app');

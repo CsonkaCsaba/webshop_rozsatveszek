@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 trait RegistersUsers
 {
     use RedirectsUsers;
-    protected $errorBag = 'saveUser';
+
     /**
      * Show the application registration form.
      *
@@ -29,12 +29,11 @@ trait RegistersUsers
      */
     public function register(Request $request)
     {
-        $this->validator($request->all())->validateWithBag('saveUser');
+        $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
 
         $this->guard()->login($user);
-
 
         if ($response = $this->registered($request, $user)) {
             return $response;

@@ -2,32 +2,21 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import {ref } from 'vue'
 
-
 export const NewsStore = defineStore("NewsStore",{
     state: () => {
       return {
-        news: [{
-            id : null,
-            cim : null,
-            leiras : null,
-            uzletId : null,
-            edit_id : null,
-            foto : null,
-        }],
-        messageDelete: "A hír törlése sikeres!",
-        messageUpdate: "Sikeres módosítás!",
-        messageUpload: "Sikeres feltöltés!",
-        updateSuccessful: false,
-        deleteSuccessful: false,
+        news: [
+            
+        ],
+        
+        modalStatus: false,
+        showSwiper: ref(0),
         baseUrl: window.location.origin,
         edit_id: null,
         file: '',
-        uploadSuccessful: false,
         oldPhotoName: null,
         noFile: false,
         message : "",
-
-
         }
     },
     getters: {
@@ -35,14 +24,35 @@ export const NewsStore = defineStore("NewsStore",{
     },
     actions: {
 
+        async fetchNews(){
+            let news = [];
+            try {
+                   await axios.get('api/hirek').then(function(response){
+                   news = response.data;
+                   console.log(news);
+                    });
+                        this.news.push(news);
+                }
+                 catch(error){
+                    console.log(error)
+                }
+        },
+
         deleteNews(id, cim){
             try{
+                console.log(id,cim)
                 let answer = confirm("Biztos bene, hogy törölni szeretné a(z) " +cim+" című hírt?");          
                 if(answer != false){
                 axios.delete('api/hirek/'+id).then(res=>{
+                    console.log(res);
+                    if(res.status == 200){
+                        //location.reload();
+                        this.modalStatus = true;
+                        this.message = "A hír törlése sikeres!";
+                        this.showSwiper +=1;
+                    }
                     answer = false;
-                    location.reload();
-                    this.deleteSuccessful=true;
+                    
                     }).catch(console.error)
                 }
             }catch(error){
@@ -65,14 +75,14 @@ export const NewsStore = defineStore("NewsStore",{
         //             fileLink.click()
         //           }).catch(console.error)
         // },
-        updateNews(id, cim, leiras, uzletId, foto){
+        updateNews(id, cim, leiras, uzletId, kepId){
             try{
                 this.id = id;
                 this.edit_id = id;
                 this.cim = cim;
                 this.leiras = leiras;
                 this.uzletId = uzletId;
-                this.foto = foto;
+                this.kepId = kepId;
                 
                 let form_data ={
                 id : this.id,    
@@ -82,7 +92,9 @@ export const NewsStore = defineStore("NewsStore",{
                 }
                 axios.put('api/hirek/'+this.edit_id, form_data).then(res=>{
                     console.log(res);
-                    this.updateSuccessful = true;
+                    this.message = "A hír módosítása sikeres!";
+                    this.modalStatus = true;
+                    this.showSwiper +=1;
                 }).catch(console.error)
             }catch(error){
                 console.log(error)
@@ -143,10 +155,15 @@ export const NewsStore = defineStore("NewsStore",{
         },
         uploadStatusChange(){
             this.uploadSuccessful = false
-        }
+        },
+        receiveEmit(){
+            this.modalStatus = false
+            
+        },
 
      },
      methods:{
+       
      }
   
 })

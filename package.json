@@ -26,6 +26,7 @@
         "swiper": "^11.0.1",
         "vue-numeric-input": "^2.0.0",
         "vue-router": "^4.0.13",
+        "vuetify": "^3.5.2",
         "vuex": "^4.1.0"
     }
 }

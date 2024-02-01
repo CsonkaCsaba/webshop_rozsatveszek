@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('userName')->nullable();
             $table->string('password');
-            $table->string('lastName')->nullable();
-            $table->string('firstName')->nullable();
             $table->string('address')->nullable();
             $table->date('birthDate')->nullable();
             $table->date('lastLogin')->nullable();

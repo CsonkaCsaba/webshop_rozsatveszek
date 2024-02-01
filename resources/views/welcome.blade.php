@@ -47,10 +47,7 @@
     </div>
     <about>
     </about>
-    {{-- <news>
-    </news> --}}
      <News_front>
-        {{-- :news="{{json_encode($news)}}" --}}
     </News_front>
 <div>
 

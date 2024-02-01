@@ -12,7 +12,7 @@
         </companydata>
         <gallery>
         </gallery>
-        <news_admin :news="{{json_encode($news)}}">
+        <news_admin>
         </news_admin>
         
 @endsection

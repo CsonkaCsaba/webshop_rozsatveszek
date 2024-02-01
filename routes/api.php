@@ -26,5 +26,5 @@ Route::resource('/uzlet', UzletController::class);
 Route::resource('/galeria', KepekController::class);
 Route::resource('/termekek', TermekController::class);
 Route::post('/galeria/upload', [KepekController::class, 'upload']);
-Route::resource('/hirek', HirekController::class);
+Route::get('/hirek', [HirekController::class, 'show']);
 

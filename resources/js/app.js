@@ -132,6 +132,7 @@ library.add(
     faCartShopping,
     faCheck,
     faEnvelope,
+    faMinus,
     faFacebook,
     faInstagram,
     faMagnifyingGlass,

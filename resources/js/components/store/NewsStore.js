@@ -8,6 +8,9 @@ export const NewsStore = defineStore("NewsStore",{
         news: [
             
         ],
+        modalElements: [
+            
+        ],
         
         modalStatus: false,
         showSwiper: ref(0),
@@ -160,6 +163,17 @@ export const NewsStore = defineStore("NewsStore",{
             this.modalStatus = false
             
         },
+        modalOpen(cim, datum, leiras, kepUtvonal){
+            this.modalStatus = true;
+            this.modalElements = [
+            this.modalCim = cim,
+            this.modalDatum = datum,
+            this.modalLeiras = leiras,
+            this.modalKepUtvonal = kepUtvonal
+            ];
+            
+            return modalElements;
+        }
 
      },
      methods:{

@@ -1,10 +1,12 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { NewsStore } from './store/NewsStore';
-const  { news, modalStatus } = storeToRefs(NewsStore())
+const  { news, modalStatus, modalElements } = storeToRefs(NewsStore())
 
-const { fetchNews} = NewsStore()
+const { fetchNews, modalOpen} = NewsStore()
 fetchNews();
+
+
 
 </script>
 
@@ -27,20 +29,20 @@ fetchNews();
                             </div>
                         </div>
                         <h5 class="news-title">{{ne.cim}}</h5>
-                        <button type="button" class="btn btn-vasarlas"  @click="modalStatus = true">Bővebben</button>
+                        <button type="button" class="btn btn-vasarlas"  @click="modalOpen(ne.cim, ne.datum, ne.leiras, ne.photo.kepUtvonal)">Bővebben</button>
                 </div>
                 <v-dialog width="auto" v-model="modalStatus">
                 <v-card>
                     <v-container>
                             <v-row>
                                 <v-col>
-                                    <img :src="ne.photo.kepUtvonal" :alt="ne.photo.kepLeiras" class=""/>
+                                    <img :src="modalElements[3]" class=""/>
                                     <v-divider color="info" vertical></v-divider>
                                 </v-col>
                                 <v-col>
-                                    <h3 class="news-title m-4">{{ne.cim}}</h3>
-                                    <p class="m-1"> {{ne.datum}}</p> 
-                                    <p class="m-1"> {{ne.leiras}}</p>
+                                    <h3 class="news-title m-4">{{modalElements[0]}}</h3>
+                                    <p class="m-1"> {{modalElements[1]}}</p> 
+                                    <p class="m-1"> {{modalElements[2]}}</p>
                                     <v-card-actions>
                                     <button type="button" class="btn btn-vasarlas mt-3" block @click="modalStatus = false">Bezár</button>
                                     </v-card-actions>

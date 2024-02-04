@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import {ref } from 'vue'
+import {ref} from 'vue'
+
+export let showSwiper = 0;
 
 export const NewsStore = defineStore("NewsStore",{
     state: () => {
@@ -11,9 +13,7 @@ export const NewsStore = defineStore("NewsStore",{
         modalElements: [
             
         ],
-        
         modalStatus: false,
-        showSwiper: ref(0),
         baseUrl: window.location.origin,
         edit_id: null,
         file: '',
@@ -32,7 +32,20 @@ export const NewsStore = defineStore("NewsStore",{
             try {
                    await axios.get('api/hirek').then(function(response){
                    news = response.data;
-                   console.log(news);
+                   //console.log(news);
+                    });
+                        this.news.push(news);
+                }
+                 catch(error){
+                    console.log(error)
+                }
+        },
+        async fetchNewsadmin(){
+            let news = [];
+            try {
+                   await axios.get('api/hirekadmin').then(function(response){
+                   news = response.data;
+                   //console.log(news);
                     });
                         this.news.push(news);
                 }
@@ -44,15 +57,16 @@ export const NewsStore = defineStore("NewsStore",{
         deleteNews(id, cim){
             try{
                 console.log(id,cim)
-                let answer = confirm("Biztos bene, hogy törölni szeretné a(z) " +cim+" című hírt?");          
+                let answer = confirm("Biztos benne, hogy törölni szeretné a(z) " +cim+" című hírt?");          
                 if(answer != false){
-                axios.delete('api/hirek/'+id).then(res=>{
+                axios.delete('api/hirekadmin/'+id).then(res=>{
                     console.log(res);
                     if(res.status == 200){
-                        //location.reload();
+                        let index = this.news.findIndex(news=>news.id == id);
+                        this.news.splice(index, 1)
                         this.modalStatus = true;
                         this.message = "A hír törlése sikeres!";
-                        this.showSwiper +=1;
+                        showSwiper +=1
                     }
                     answer = false;
                     
@@ -93,7 +107,7 @@ export const NewsStore = defineStore("NewsStore",{
                 leiras : this.leiras,
                 uzletId: this.uzletId,
                 }
-                axios.put('api/hirek/'+this.edit_id, form_data).then(res=>{
+                axios.put('api/hirekadmin/'+this.edit_id, form_data).then(res=>{
                     console.log(res);
                     this.message = "A hír módosítása sikeres!";
                     this.modalStatus = true;
@@ -177,7 +191,7 @@ export const NewsStore = defineStore("NewsStore",{
 
      },
      methods:{
-       
+   
      }
   
 })

@@ -4,25 +4,22 @@ import { NewsStore } from './store/NewsStore';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation } from 'swiper/modules';
 
+
+
 const modules = [Pagination, Navigation]
 
-const  { modalStatus, message  } = storeToRefs(NewsStore())
-const { deleteNews, updateNews, deleteStatusChange, createNews, showSwiper, receiveEmit } = NewsStore()
-
-const props = defineProps({
-      news: {
-        type: Array,
-        required: true
-      }
-});
+const  { news } = storeToRefs(NewsStore())
+const { deleteNews, updateNews, deleteStatusChange, createNews, receiveEmit, fetchNewsadmin } = NewsStore()
+fetchNewsadmin();
 </script>
 
 <template>
 <div class="container swipercontainer">
-    <swiper :slides-per-view="2"  :navigation="true" :pagination="true" >
-        <swiper-slide v-for="ne in news" :key="ne.id">
+    <swiper :slides-per-view="2"  :navigation="true" :pagination="true">
+        <swiper-slide v-for="ne in news[0]">
             <div class="card" >
                 <img :src="ne.photo.kepUtvonal" :alt="ne.photo.kepLeiras" class="card-img-top galleryphoto"/>
+                <p class="m-3">{{ne.datum}}</p>
             <div class="card-body">
             <div class="d-flex justify-content-center">
                 <form method="POST" @submit.prevent="updateNews(ne.id, ne.cim, ne.leiras, ne.uzletId, ne.photo.kepUtvonal)" >

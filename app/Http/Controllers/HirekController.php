@@ -20,8 +20,14 @@ class HirekController extends Controller
 
     public function index()
     {
-        $news = Hirek::all()::with('photo');
+        $query = Hirek::query();
+
+        $news = $query->with(['photo'])->get();
+        //$newsWithPhoto = Hirek::with('photo');
         return response()->json($news);
+
+        // $news = Hirek::with('photo');
+        // return json($news);
 
         // $news = Hirek::with('photo')->orderBy('id', 'desc')->limit(3)->get();
         

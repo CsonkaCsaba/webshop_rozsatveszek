@@ -27,4 +27,6 @@ Route::resource('/galeria', KepekController::class);
 Route::resource('/termekek', TermekController::class);
 Route::post('/galeria/upload', [KepekController::class, 'upload']);
 Route::get('/hirek', [HirekController::class, 'show']);
+Route::resource('/hirekadmin', HirekController::class);
+//Route::get('/hirekadmin', [HirekController::class, 'index']);
 

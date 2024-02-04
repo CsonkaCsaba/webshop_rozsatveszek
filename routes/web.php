@@ -72,6 +72,3 @@ Route::get('dolgozoi', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/dolgozoi', [HirekController::class, 'index']);
-
-Route::get('/welcome', [HirekController::class, 'index']);

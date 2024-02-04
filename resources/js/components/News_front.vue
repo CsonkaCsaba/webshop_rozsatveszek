@@ -18,7 +18,7 @@ fetchNews();
         </div>
         <div class="container-fluid">
             <div class="row mt-3">
-                <div class="col news-item m-4" v-for="ne in news[0]">
+                <div class="col news-item m-5" v-for="ne in news[0]">
                     <div class="news-img">
                         <img :src="ne.photo.kepUtvonal" :alt="ne.photo.kepLeiras" class="img-fluid"/>
                     </div>
@@ -36,11 +36,11 @@ fetchNews();
                     <v-container>
                             <v-row>
                                 <v-col>
-                                    <img :src="modalElements[3]" class=""/>
+                                    <img :src="modalElements[3]" class="rounded float-left modalkep"/>
                                     <v-divider color="info" vertical></v-divider>
                                 </v-col>
                                 <v-col>
-                                    <h3 class="news-title m-4">{{modalElements[0]}}</h3>
+                                    <h3 class="news-title mt-4">{{modalElements[0]}}</h3>
                                     <p class="m-1"> {{modalElements[1]}}</p> 
                                     <p class="m-1"> {{modalElements[2]}}</p>
                                     <v-card-actions>
@@ -121,5 +121,9 @@ $rozsaszin: #E4A0B7
                 opacity: 70%
                 font-size: 13px
             
+.modalkep
+    max-width: $small
+    height: auto
+    padding-top: 5%
 
 </style>

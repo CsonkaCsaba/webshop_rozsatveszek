@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kategorizal', function(Blueprint $table) {
+        Schema::create('kategorizals', function(Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->foreignId('termekId')
@@ -23,7 +23,7 @@ return new class extends Migration
             
             $table->foreignId('kategoriaId')
             ->constrained(
-                table: 'kategoria', indexName: 'katId'
+                table: 'kategorias', indexName: 'katId'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kategorizal');
+        Schema::dropIfExists('kategorizals');
     }
 };

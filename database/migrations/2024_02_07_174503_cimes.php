@@ -11,24 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('valaszts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('mennyiseg');
-            $table->integer('kedvezmeny');
-
-            $table->foreignId('rendelesId')
+        Schema::create('cimes', function (Blueprint $table) {
+            $table->foreignId('fk_cimId')
             ->constrained(
-                table: 'rendeles', indexName: 'id'
-            )
+                table: 'cims', indexName: 'fk_cimid'
+            )->nullable()
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
-            $table->foreignId('termekId')
+            $table->foreignId('vasarloId_fk')
             ->constrained(
-                table: 'termeks', indexName: 'termekid'
-            )
+                table: 'vasarlos', indexName: 'vasarloid_fk'
+            )->nullable()
             ->onUpdate('cascade')
             ->onDelete('cascade');
+            
+            $table->boolean('szallitasi');
+            $table->boolean('szamlazasi');
+
         });
     }
 
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('valaszts');
+        Schema::dropIfExists('cimes');
     }
 };

@@ -27,14 +27,14 @@ return new class extends Migration
 
             $table->foreignId('dolgozoId')->nullable()
             ->constrained(
-                table: 'dolgozo', indexName: 'dolgozoId'
+                table: 'dolgozo', indexName: 'dolgozoid'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
             $table->foreignId('vasarloId')->nullable()
             ->constrained(
-                table: 'vasarlo', indexName: 'vasarloId'
+                table: 'vasarlos', indexName: 'vasarloid'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');

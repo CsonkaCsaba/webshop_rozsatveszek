@@ -1,16 +1,22 @@
 <script setup>
+import { onServerPrefetch } from 'vue'
 import { storeToRefs } from 'pinia';
 import { NewsStore } from './store/NewsStore';
+const store = NewsStore()
+onServerPrefetch(async () => {
+  await store.fetchData()
+})
+
 const  { news, modalStatus, modalElements } = storeToRefs(NewsStore())
+
 
 const { fetchNews, modalOpen} = NewsStore()
 fetchNews();
 
-
-
 </script>
 
 <template>
+<Suspense>
 <div class="tartalom pb-5">
     <div id="fejlec d-flex flex-column justify-content-center">
             <h2 class="pb-2 text-center">Legfrisebb híreink</h2>
@@ -34,20 +40,17 @@ fetchNews();
                 <v-dialog width="auto" v-model="modalStatus">
                 <v-card>
                     <v-container>
-                            <v-row>
-                                <v-col>
-                                    <img :src="modalElements[3]" class="rounded float-left modalkep"/>
-                                    <v-divider color="info" vertical></v-divider>
-                                </v-col>
-                                <v-col>
-                                    <h3 class="news-title mt-4">{{modalElements[0]}}</h3>
-                                    <p class="m-1"> {{modalElements[1]}}</p> 
-                                    <p class="m-1"> {{modalElements[2]}}</p>
-                                    <v-card-actions>
+                        <div class="upper-left-cell">
+                            <img :src="modalElements[3]" class="rounded modalkep"/>
+                        </div>   
+                            <h3 class="news-title mt-4">{{modalElements[0]}}</h3>
+                            <p class="m-1"> {{modalElements[1]}}</p> 
+                            <span class="text">
+                                {{modalElements[2]}}
+                            </span>
+                        <v-card-actions>
                                     <button type="button" class="btn btn-vasarlas mt-3" block @click="modalStatus = false">Bezár</button>
-                                    </v-card-actions>
-                                </v-col>
-                            </v-row>
+                        </v-card-actions>
                     </v-container>
                 </v-card>
             </v-dialog>
@@ -55,7 +58,7 @@ fetchNews();
     </div>
  </div>
 </div>
-
+</Suspense>
 </template>
 
 
@@ -124,6 +127,15 @@ $rozsaszin: #E4A0B7
 .modalkep
     max-width: $small
     height: auto
-    padding-top: 5%
+    padding: 5%
+    float: left
+    margin: 5px
+
+.upper-left-cell
+    img: 
+        float: left
+    p:
+        float: none
+        text-align: justify
 
 </style>

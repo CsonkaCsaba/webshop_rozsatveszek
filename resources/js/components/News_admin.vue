@@ -1,4 +1,5 @@
 <script setup>
+import { onServerPrefetch } from 'vue'
 import { storeToRefs } from 'pinia';
 import { NewsStore } from './store/NewsStore';
 import { register } from 'swiper/element/bundle';
@@ -6,11 +7,18 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation } from 'swiper/modules';
 import { showSwiper } from './store/NewsStore';
 
+const store = NewsStore()
+onServerPrefetch(async () => {
+  await store.fetchData()
+})
+
   // define your modules list here
 const modules = [Pagination, Navigation]
 
 const { modalStatus, message} = storeToRefs(NewsStore())
 const { receiveEmit} = NewsStore()
+
+
 
 </script>
 

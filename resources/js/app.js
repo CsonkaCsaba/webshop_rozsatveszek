@@ -6,11 +6,12 @@
 
 import './bootstrap';
 
-import { createApp } from 'vue';
+import { createApp, defineAsyncComponent } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
-import About from './components/About.vue';
-import News_front from './components/News_front.vue';
+
+
 import Foot from './components/Foot.vue';
+
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
@@ -26,12 +27,15 @@ const vuetify = createVuetify({
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: '/About',
-        name: 'About',
-        component: About},
         { path: '/News',
         name: 'News_front',
-        component: News_front},
+        component: () => import('./components/News_front.vue')},
+        { path: '/About',
+        name: 'About',
+        component: () => import('./components/About.vue')},
+        { path: '/foot',
+        name: 'foot',
+        component: () => import('./components/Foot.vue')},
     ]
 });
 
@@ -64,6 +68,7 @@ app.component('swiper_front', Swiper_front);
 
 import News_admin from './components/News_admin.vue';
 app.component('news_admin', News_admin);
+
 import ShoppingCartSide from './components/ShoppingCartSide.vue';
 app.component('ShoppingCartSide', ShoppingCartSide);
 
@@ -76,15 +81,32 @@ app.component('szallitas', Szallitas);
 import Megrendeles from './components/Megrendeles.vue';
 app.component('megrendeles', Megrendeles);
 
+
+const AboutAsync = defineAsyncComponent({
+    loader:() => import('./components/About.vue')
+})
+app.component('About', AboutAsync);
+
+const News_frontAsync = defineAsyncComponent({
+    loader:() => import('./components/News_front.vue')
+})
+app.component('News_front', News_frontAsync);
+
+
+const Footer = defineAsyncComponent({
+    loader:() => import('./components/Footer.vue')
+})
+app.component('Footer', Footer);
 //import flags
+
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 import Modal from './components/Modal.vue';
 app.component('Modal', Modal);
 
 // import components from './components/';
-app.component('about', About);
-app.component('News_front', News_front);
+//app.component('About', About);
+//app.component('News_front', News_front);
 app.component('foot', Foot);
 
 import Termekek from './components/Termekek.vue';

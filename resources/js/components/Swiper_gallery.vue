@@ -1,9 +1,15 @@
 <script setup>
+import { onServerPrefetch } from 'vue'
 import { storeToRefs } from 'pinia';
 import { GalleryStore } from './store/Gallery';
-import { register } from 'swiper/element/bundle';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation } from 'swiper/modules';
+
+const store = NewsStore()
+onServerPrefetch(async () => {
+  await store.fetchData()
+})
+
   // define your modules list here
   const modules = [Pagination, Navigation]
 

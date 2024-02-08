@@ -6,7 +6,6 @@ const props = defineProps({
       }
 });
 
-
 const emit = defineEmits(['modalStatus']);
 emit('modalStatus');
 
@@ -16,8 +15,7 @@ function modalStatus() {
 
 </script>
 <template>
-
-    <v-dialog  width="500">
+    <v-dialog  width="500" class="transition">
       <v-card class="rounded border border-1 p-4 ">
       <v-card-text class="text-center">
           <h3>{{ message }}</h3>
@@ -27,10 +25,8 @@ function modalStatus() {
       </v-card-actions>
       </v-card>
   </v-dialog>
-
 </template>
 
 <style lang="sass" scoped>
-
 
 </style>

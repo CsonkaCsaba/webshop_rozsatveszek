@@ -37,7 +37,7 @@ fetchNews()
                 
         </div>
     </div>
-    <v-dialog width="auto" v-model="modalStatus">
+    <v-dialog width="auto" v-model="modalStatus" class="transition">
             <v-card>
                 <v-container class="container">
                     <div class="row">

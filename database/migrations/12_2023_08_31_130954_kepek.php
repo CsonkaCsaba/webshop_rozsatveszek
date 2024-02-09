@@ -26,7 +26,7 @@ return new class extends Migration
             
             $table->foreignId('kategoriaId')->nullable()
             ->constrained(
-                table: 'kategoria', indexName: 'kategId'
+                table: 'kategorias', indexName: 'kategId'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');
@@ -45,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kepek');
+        Schema::dropIfExists('kepeks');
     }
 };

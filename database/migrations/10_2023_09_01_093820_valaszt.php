@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('valaszt', function (Blueprint $table) {
+        Schema::create('valaszts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('mennyiseg');
             $table->integer('kedvezmeny');
 
             $table->foreignId('rendelesId')
             ->constrained(
-                table: 'rendeles', indexName: 'rendelId'
+                table: 'rendeles', indexName: 'id'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
             $table->foreignId('termekId')
             ->constrained(
-                table: 'termeks', indexName: 'termId'
+                table: 'termeks', indexName: 'termekid'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('valaszt');
+        Schema::dropIfExists('valaszts');
     }
 };

@@ -5,7 +5,7 @@ import { GalleryStore } from './store/Gallery';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation } from 'swiper/modules';
 
-const store = NewsStore()
+const store = GalleryStore()
 onServerPrefetch(async () => {
   await store.fetchData()
 })

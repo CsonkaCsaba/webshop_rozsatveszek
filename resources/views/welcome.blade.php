@@ -37,7 +37,7 @@
                     </div>
                     <div class="col text-center">
                         <img class="services" src="../resources/assets/kepek/cover-box-discount.png">
-                        <p class="m-1">Rendszeres<br> kedvezményekasfasfsaf</p>  
+                        <p class="m-1">Rendszeres<br> kedvezmények</p>  
                     </div>
                 </div>
             </div>
@@ -45,10 +45,9 @@
             </div>
         </div>
     </div>
-    <about>
-    </about>
-     <News_front>
-    </News_front>
+    <Home>
+    </Home>
+    
 <div>
 
 @endsection

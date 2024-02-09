@@ -11,23 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vasarlo', function (Blueprint $table) {
+        Schema::create('vasarlos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nev')->nullable();
             $table->string('email')->unique();
             $table->string('telefonszam');
-            $table->string('vezetéknev')->nullable();
-            $table->string('keresztnev')->nullable();
             $table->foreignId('cegId')
             ->constrained(
-                table: 'ceg', indexName: 'cegId'
+                table: 'cegs', indexName: 'cegid'
             )->nullable()
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-
-            $table->foreignId('cimId')
-            ->constrained(
-                table: 'cim', indexName: 'cimId'
-            )
             ->onUpdate('cascade')
             ->onDelete('cascade');
         });
@@ -38,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vasarlo');
+        Schema::dropIfExists('vasarlos');
     }
 };

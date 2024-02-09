@@ -20,27 +20,12 @@ return new class extends Migration
             $table->timestamp('rogzitDatum')->nullable();
             $table->integer('vegosszeg');
 
-            $table->foreignId('vasarloId')
+            $table->foreignId('fk_vasarloId')
             ->constrained(
-                table: 'vasarlo', indexName: 'vasarId'
+                table: 'vasarlos', indexName: 'fk_vasarloid'
             )
             ->onUpdate('cascade')
-            ->onDelete('cascade');
-
-            $table->foreignId('szamlazasicimId')
-            ->constrained(
-                table: 'cim', indexName: 'szamlazasiId'
-            )
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-
-            $table->foreignId('szallitasicimId')
-            ->constrained(
-                table: 'cim', indexName: 'szallitasiId'
-            )
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-            
+            ->onDelete('cascade');            
         });
     }
 

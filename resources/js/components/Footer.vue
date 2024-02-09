@@ -4,7 +4,7 @@
 </script>
 
     <template>
-       
+     
         <div>
             <div class="google-map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2760.6048311213435!2d20.18591267536137!3d46.21831558280945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47448911b86082f7%3A0xd609714de957a1f3!2zU3plZ2VkLCBLaXMtU3rFkWzFkSB1LiAxMCwgNjc3MQ!5e0!3m2!1shu!2shu!4v1695311152683!5m2!1shu!2shu" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

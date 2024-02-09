@@ -9,8 +9,7 @@ import './bootstrap';
 import { createApp, defineAsyncComponent } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
 
-
-import Foot from './components/Foot.vue';
+//import LoadingComponent from './components/LoadingComponent.vue';
 
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
@@ -29,90 +28,193 @@ const router = createRouter({
     routes: [
         { path: '/News',
         name: 'News_front',
-        component: () => import('./components/News_front.vue')},
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/News_front.vue')},
         { path: '/About',
         name: 'About',
-        component: () => import('./components/About.vue')},
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/About.vue')},
         { path: '/foot',
         name: 'foot',
-        component: () => import('./components/Foot.vue')},
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Foot.vue')},
+        { path: '/navigation',
+        name: 'navigation',
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Navigation.vue')},
+        { path: '/kosar',
+        name: 'kosar',
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Kosar.vue')},
+        { path: '/companydata',
+        name: 'companydata',
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/CompanyData.vue')},
+        { path: '/gallery',
+        name: 'gallery',
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Gallery.vue')},
     ]
 });
 
 const app = createApp({});
 
-
-import Navigation from './components/Navigation.vue';
-app.component('navigation', Navigation);
-
-import Navigation_log from './components/Navigation_log.vue';
-app.component('navigation_log', Navigation_log);
-
-import Navigation_admin from './components/Navigation_admin.vue';
-app.component('navigation_admin', Navigation_admin);
-
-import CompanyData from './components/CompanyData.vue';
-app.component('companydata', CompanyData);
-
-import Gallery from './components/Gallery.vue';
-app.component('gallery', Gallery);
-
-import Swiper_gallery from './components/Swiper_gallery.vue';
-app.component('swiper_gallery', Swiper_gallery);
-
-import Swiper_news from './components/Swiper_news.vue';
-app.component('swiper_news', Swiper_news);
-
-import Swiper_front from './components/Swiper_front.vue';
-app.component('swiper_front', Swiper_front);
-
-import News_admin from './components/News_admin.vue';
-app.component('news_admin', News_admin);
-
-import ShoppingCartSide from './components/ShoppingCartSide.vue';
-app.component('ShoppingCartSide', ShoppingCartSide);
-
-import Szamlazas from './components/Szamlazas.vue';
-app.component('szamlazas', Szamlazas);
-
-import Szallitas from './components/Szallitas.vue';
-app.component('szallitas', Szallitas);
-
-import Megrendeles from './components/Megrendeles.vue';
-app.component('megrendeles', Megrendeles);
-
-
-const AboutAsync = defineAsyncComponent({
-    loader:() => import('./components/About.vue')
+const NavigationAsync = defineAsyncComponent({
+    loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Navigation.vue'),
+    //loadingComponent: LoadingComponent /* shows while loading */,
+    // delay: 1000 /* delay in ms before showing loading component */,
+    // timeout: 3000 /* timeout after this many ms */,
 })
-app.component('About', AboutAsync);
+app.component('navigation', NavigationAsync);
 
-const News_frontAsync = defineAsyncComponent({
-    loader:() => import('./components/News_front.vue')
+const Navigation_log_Async = defineAsyncComponent({
+    loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Navigation_log.vue'),
+    //loadingComponent: LoadingComponent /* shows while loading */,
+    // delay: 1000 /* delay in ms before showing loading component */,
+    // timeout: 3000 /* timeout after this many ms */,
 })
-app.component('News_front', News_frontAsync);
+app.component('Navigation_log', Navigation_log_Async);
 
-
-const Footer = defineAsyncComponent({
-    loader:() => import('./components/Footer.vue')
+const News_front_child_Async = defineAsyncComponent({
+    loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/News_front_child.vue')
 })
-app.component('Footer', Footer);
+app.component('News_front_child', News_front_child_Async);
+
+const KosarAsync = defineAsyncComponent({
+    loader:() => import('./components/Kosar.vue')
+})
+app.component('Kosar', KosarAsync);
+
+const CompanyDataAsync = defineAsyncComponent({
+    loader:() => import('./components/CompanyData.vue')
+})
+app.component('companydata', CompanyDataAsync);
+
+const GalleryAsync = defineAsyncComponent({
+    loader:() => import('./components/Gallery.vue')
+})
+app.component('gallery', GalleryAsync);
+
+const SwiperGalleryAsync = defineAsyncComponent({
+    loader:() => import('./components/Swiper_gallery.vue')
+})
+app.component('swiper_gallery', SwiperGalleryAsync);
+
+const News_admin_Async = defineAsyncComponent({
+    loader:() => import('./components/News_admin.vue')
+})
+app.component('news_admin', News_admin_Async);
+
+const Swiper_news_Async = defineAsyncComponent({
+    loader:() => import('./components/Swiper_news.vue')
+})
+app.component('swiper_news', Swiper_news_Async);
+
+const Modal_Async = defineAsyncComponent({
+    loader:() => import('./components/Modal.vue')
+})
+app.component('Modal', Modal_Async);
+
+const Szamlazas_Async = defineAsyncComponent({
+    loader:() => import('./components/Szamlazas.vue')
+})
+app.component('Szamlazas', Szamlazas_Async);
+
+const Szallitas_Async = defineAsyncComponent({
+    loader:() => import('./components/Szallitas.vue')
+})
+app.component('Szallitas', Szallitas_Async);
+
+const Megrendeles_Async = defineAsyncComponent({
+    loader:() => import('./components/Megrendeles.vue')
+})
+app.component('Megrendeles', Megrendeles_Async);
+
+const ShoppingCartSide_Async = defineAsyncComponent({
+    loader:() => import('./components/ShoppingCartSide.vue')
+})
+app.component('ShoppingCartSide', ShoppingCartSide_Async);
+
+const Termekek_Async = defineAsyncComponent({
+    loader:() => import('./components/Termekek.vue')
+})
+app.component('Termekek', Termekek_Async);
+
+
+
+ import Home from './components/Home.vue';
+ app.component('Home', Home);
+
+ import About from './components/About.vue';
+ app.component('About', About);
+
+ import News_front from './components/News_front.vue';
+ app.component('News_front', News_front);
+ 
+
+ import Foot from './components/Foot.vue';
+ app.component('Foot', Foot);
+
+// import Navigation_log from './components/Navigation_log.vue';
+// app.component('navigation_log', Navigation_log);
+
+// import Navigation_admin from './components/Navigation_admin.vue';
+// app.component('navigation_admin', Navigation_admin);
+
+// import CompanyData from './components/CompanyData.vue';
+// app.component('companydata', CompanyData);
+
+// import Gallery from './components/Gallery.vue';
+// app.component('gallery', Gallery);
+
+// import Swiper_gallery from './components/Swiper_gallery.vue';
+// app.component('swiper_gallery', Swiper_gallery);
+
+// import Swiper_news from './components/Swiper_news.vue';
+// app.component('swiper_news', Swiper_news);
+
+// import Swiper_front from './components/Swiper_front.vue';
+// app.component('swiper_front', Swiper_front);
+
+// import News_admin from './components/News_admin.vue';
+// app.component('news_admin', News_admin);
+
+// import ShoppingCartSide from './components/ShoppingCartSide.vue';
+// app.component('ShoppingCartSide', ShoppingCartSide);
+
+
+
+
+// const AboutAsync = defineAsyncComponent({
+//     loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/About.vue')
+// })
+// app.component('About', AboutAsync);
+
+// const News_frontAsync = defineAsyncComponent({
+//     loader:() => import('./components/News_front.vue')
+// })
+// app.component('News_front', News_frontAsync);
+
+
+
+// const Footer = defineAsyncComponent({
+//     loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Footer.vue')
+// })
+// app.component('Footer', Footer);
+
+// const Foot = defineAsyncComponent({
+//     loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Foot.vue')
+// })
+// app.component('Foot', Foot);
 //import flags
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
-import Modal from './components/Modal.vue';
-app.component('Modal', Modal);
+// import Modal from './components/Modal.vue';
+// app.component('Modal', Modal);
 
 // import components from './components/';
 //app.component('About', About);
 //app.component('News_front', News_front);
-app.component('foot', Foot);
+//app.component('foot', Foot);
 
-import Termekek from './components/Termekek.vue';
-app.component('termekek', Termekek);
-import Kosar from './components/Kosar.vue';
-app.component('kosar', Kosar);
+// import Termekek from './components/Termekek.vue';
+// app.component('termekek', Termekek);
+// import Kosar from './components/Kosar.vue';
+// app.component('kosar', Kosar);
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 

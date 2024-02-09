@@ -256,12 +256,6 @@
     </div>
   </div>
 </div>
-
-
-       <footer>
-        <foot>
-        </foot>
-       </footer>
     
     </body>
 </html>

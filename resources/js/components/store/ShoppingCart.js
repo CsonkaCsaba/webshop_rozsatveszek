@@ -17,13 +17,14 @@ export const ShoppingCart = defineStore("ShoppingCart",{
                 house: ''
             },
             shippingAddress: {
-                new: '',
+                new: 'no',
                 name: '',
                 zipCode: '',
                 city: '',
                 street: '',
                 house: ''
-            }
+            },
+            payment: 'delivery'
         }
     },
 

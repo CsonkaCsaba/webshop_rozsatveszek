@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ceg', function (Blueprint $table) {
+        Schema::create('cegs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('cegnev');
             $table->string('adoszam');
 
             $table->foreignId('cimId')
             ->constrained(
-                table: 'cim', indexName: 'id'
+                table: 'cims', indexName: 'cimid'
             )
             ->onUpdate('cascade')
             ->onDelete('cascade');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ceg');
+        Schema::dropIfExists('cegs');
     }
 };

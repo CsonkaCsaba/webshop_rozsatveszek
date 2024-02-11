@@ -39,9 +39,20 @@ class HirekController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $todayDate = date("Y-m-d");
+
+        Hirek::create([
+            'cim'=> $request->cim,
+            'leiras'=> $request-> leiras,
+            'datum'=>$todayDate,
+            'uzletId'=> $request-> uzletId,
+            'kepId'=> $request-> kepId,
+            
+        ]);
+
+        return response()->json('created');
     }
 
     /**

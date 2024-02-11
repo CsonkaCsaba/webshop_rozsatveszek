@@ -29,7 +29,7 @@ fetchNewsadmin();
                           <input type="hidden" class="form-control" :placeholder="ne.uzletId" v-model="ne.uzletId" name="uzlet_id"/>
                           <label class="form-label form-label-top text-secondary" for="cim">Cím</label>
                           <input type="" class="form-control" :placeholder=" ne.cim " v-model=" ne.cim " name="cim"/>
-                          <label class="form-label form-label-top text-secondary" for="leiras">Leírás</label>
+                          <label class="form-label form-label-top text-secondary pt-2" for="leiras">Leírás</label>
                           <textarea type="" cols="40" rows="5" class="form-control" :placeholder=" ne.leiras " v-model=" ne.leiras " name="leiras"></textarea>
                   </div>
                   <div class="d-flex justify-content-center">
@@ -44,6 +44,7 @@ fetchNewsadmin();
         </swiper-slide>
     </swiper>
     </div>
+
 </template>
 <style>
 </style>

@@ -9,10 +9,13 @@ import './bootstrap';
 import { createApp, defineAsyncComponent } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
 
+
 //import LoadingComponent from './components/LoadingComponent.vue';
 
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+
+
 
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -47,6 +50,9 @@ const router = createRouter({
         { path: '/gallery',
         name: 'gallery',
         component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Gallery.vue')},
+        { path: '/dolgozoi',
+        name: 'dolgozoi',
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Dolgozoi.vue')},
     ]
 });
 
@@ -133,7 +139,15 @@ const Termekek_Async = defineAsyncComponent({
 })
 app.component('Termekek', Termekek_Async);
 
+const Dolgozoi_Async = defineAsyncComponent({
+    loader:() => import('./components/Dolgozoi.vue')
+})
+app.component('dolgozoi', Dolgozoi_Async);
 
+const AddNews_Async = defineAsyncComponent({
+    loader:() => import('./components/AddNews.vue')
+})
+app.component('addnews', AddNews_Async);
 
  import Home from './components/Home.vue';
  app.component('Home', Home);

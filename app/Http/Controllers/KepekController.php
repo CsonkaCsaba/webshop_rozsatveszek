@@ -123,7 +123,8 @@ class KepekController extends Controller
                 $media->kepUtvonal = '../public/img/uploads/'.$file_name;
                 $media->uzletId = $uzletId;
                 $media->save();
-                return response()->json(['message' => 'Sikeres feltöltés!']);
+                $media->id;
+                return response()->json(array('message' => 'Sikeres feltöltés!', 'last_insert_id'=> $media->id),200);
             }
         }
 

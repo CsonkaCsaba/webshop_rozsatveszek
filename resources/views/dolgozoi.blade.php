@@ -8,11 +8,7 @@
             </div>
         </div>
 
-        <companydata>
-        </companydata>
-        <gallery>
-        </gallery>
-        <news_admin>
-        </news_admin>
+       <dolgozoi>
+       </dolgozoi>
         
 @endsection

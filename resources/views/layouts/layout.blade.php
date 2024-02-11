@@ -34,15 +34,15 @@
         
         @guest
         <router-view></router-view>
-        <navigation>
+        <navigation v-once>
         </navigation>
         @else
-        <navigation_log>
+        <navigation_log v-once>
         </navigation_log>
         @endguest
 {{-- 
         @if(Auth::check() && Auth::user()->admin == 1)
-        <navigation_admin>
+        <navigation_admin v-once>
         </navigation_admin>
         @endif --}}
  

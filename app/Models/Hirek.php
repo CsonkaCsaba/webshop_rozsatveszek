@@ -19,7 +19,8 @@ class Hirek extends Model
         'cim',
         'leiras',
         'datum',
-        'uzletId'
+        'uzletId',
+        'kepId'
     ];
     public $timestamps = false;
 

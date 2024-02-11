@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import {ref} from 'vue'
 
-export let showSwiper = 0;
+export let showSwiper = ref(0);
 
 export const NewsStore = defineStore("NewsStore",{
     state: () => {
@@ -20,6 +20,7 @@ export const NewsStore = defineStore("NewsStore",{
         oldPhotoName: null,
         noFile: false,
         message : "",
+        photo: {}
         }
     },
     getters: {
@@ -32,7 +33,7 @@ export const NewsStore = defineStore("NewsStore",{
             try {
                    await axios.get('api/hirek').then(function(response){
                    news = response.data;
-                   //console.log(news);
+                   
                     });
                         this.news.push(news);
                 }
@@ -45,7 +46,6 @@ export const NewsStore = defineStore("NewsStore",{
             try {
                    await axios.get('api/hirekadmin').then(function(response){
                    news = response.data;
-                   //console.log(news);
                     });
                         this.news.push(news);
                 }
@@ -56,11 +56,9 @@ export const NewsStore = defineStore("NewsStore",{
 
         deleteNews(id, cim){
             try{
-                console.log(id,cim)
                 let answer = confirm("Biztos benne, hogy törölni szeretné a(z) " +cim+" című hírt?");          
                 if(answer != false){
                 axios.delete('api/hirekadmin/'+id).then(res=>{
-                    console.log(res);
                     if(res.status == 200){
                         let index = this.news.findIndex(news=>news.id == id);
                         this.news.splice(index, 1)
@@ -77,21 +75,7 @@ export const NewsStore = defineStore("NewsStore",{
             }
 
         },
-        // downloadPhoto(kepUtvonal){
-        //         axios({
-        //             url: kepUtvonal,
-        //             method: 'GET',
-        //             responseType: 'blob'
-        //         })
-        //           .then((response) => {
-        //             let fileUrl = window.URL.createObjectURL(new Blob([response.data]))
-        //             let fileLink = document.createElement('a')
-        //             fileLink.href = fileUrl
-        //             fileLink.setAttribute('download','image.jpg')
-        //             document.body.appendChild(fileLink)
-        //             fileLink.click()
-        //           }).catch(console.error)
-        // },
+
         updateNews(id, cim, leiras, uzletId, kepId){
             try{
                 this.id = id;
@@ -108,7 +92,6 @@ export const NewsStore = defineStore("NewsStore",{
                 uzletId: this.uzletId,
                 }
                 axios.put('api/hirekadmin/'+this.edit_id, form_data).then(res=>{
-                    console.log(res);
                     this.message = "A hír módosítása sikeres!";
                     this.modalStatus = true;
                     this.showSwiper +=1;
@@ -123,6 +106,74 @@ export const NewsStore = defineStore("NewsStore",{
             this.file = file;
 
         },
+
+        createNew(cim, leiras, uzletId) {
+
+            this.cim = cim;
+            this.leiras = leiras;
+            this.kepId = 0;
+            this.uztletId = uzletId;
+
+            const config = {
+                headers: {
+                    'content-type':'multipart/form-data'
+                }
+            }
+            let photoData = new FormData();
+            // this.uzletId = 1;
+            // this.cim = cim;
+            // this.leiras = leiras;
+
+            
+            // formData.append('cim', this.cim);
+            // formData.append('leiras', this.leiras);
+            // formData.append('id', this.uzletId);
+
+            if(this.file != ""){
+                photoData.append('file', this.file);
+                axios.post('api/galeria/upload', photoData, config)
+                .then((response) => {
+                    if(response.data.message == "Sikeres feltöltés!"){
+                        this.kepId = parseInt(response.data.last_insert_id);
+                        let form_data ={ 
+                            cim : cim,
+                            leiras : leiras,
+                            uzletId : this.uztletId,
+                            kepId: this.kepId,
+                            }
+                            console.log(form_data);
+                            axios.post('api/hirekadmin/create',form_data).then(res=>{
+                                //this.message = "A hír módosítása sikeres!";
+                                //this.modalStatus = true;
+                                //this.showSwiper +=1;
+                            }).catch(console.error)
+                            
+                        //this.uploadSuccessful = true;
+                       //location.reload();
+                       //showSwiper +=1
+                    } else {
+                        this.message = response.data.message;
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                    if(error.response.status === 422){
+                        this.message = "Csak .jpg, .jpeg, .png kiterjesztésű fotók tölthetők fel!"
+                    }
+                    //if(error.message == "Request failed with status code 422")
+                    //this.message = "error";        
+                });
+            } else {
+                this.message = "Nem választott ki fájlt a feltöltéshez!";
+            }
+
+
+    
+            // PostService.createPost(formdata)
+            // .then(() => {
+            //     console.log('success');
+            //         });
+            },
+
         uploadPoto(e){
             e.preventDefault();
             const config = {
@@ -139,9 +190,8 @@ export const NewsStore = defineStore("NewsStore",{
                 axios.post('api/galeria/upload', data, config)
                 .then((response) => {
                     if(response.data.message == "Sikeres feltöltés!"){
-                        this.uploadSuccessful = true;
-                       location.reload();
-                       //showSwiper +=1
+                       //location.reload();
+                       showSwiper +=1
                     } else {
                         this.message = response.data.message;
                     }

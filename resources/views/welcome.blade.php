@@ -45,7 +45,7 @@
             </div>
         </div>
     </div>
-    <Home>
+    <Home v-once>
     </Home>
     
 <div>

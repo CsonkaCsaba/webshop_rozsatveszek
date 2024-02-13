@@ -103,9 +103,11 @@ export const GalleryStore = defineStore("Gallery",{
             let file;
             file = e.target.files[0];
             this.file = file;
+            file = null;
 
         },
         uploadPoto(e){
+            this.message = "";
             e.preventDefault();
             const config = {
                 headers: {
@@ -116,25 +118,41 @@ export const GalleryStore = defineStore("Gallery",{
             let data = new FormData();
             if(this.file != ""){
                 this.noFile = false;
-                this.message = "";
                 data.append('file', this.file);
                 axios.post('api/galeria/upload', data, config)
                 .then((response) => {
                     if(response.data.message == "Sikeres feltöltés!"){
-                        this.modalStatus=true;
+                        this.modalStatus= true;
                         this.message = "A fotó feltöltése sikeres!";
-                       //location.reload();
-                       //showSwiper +=1
-                    } else {
-                        this.message_button = response.data.message;
+                        uploadinput.value = null;
+
+                        console.log(response.data.kepNev, response.data.kepLeiras, response.data.last_insert_id, response.data.kepUtvonal, response.data.uzletId);
+                        let newPhoto = {
+                            id: response.data.last_insert_id,
+                            kepLeiras : response.data.kepLeiras,
+                            kepNev : response.data.kepNev, 
+                            kepUtvonal: response.data.kepUtvonal,
+                            uzletId: response.data.uzletId
+                          }
+                          this.gallery.push(newPhoto);
+                          newPhoto = {};
+                          this.file = null;
+
+                    } else if (response.data.error === 422)
+                    {
+                         this.modalStatus= true;
+                         this.message = response.data.message;
+                         uploadinput.value = null;
+                         this.file = null;
                     }
                 }).catch((error) => {
                     console.log(error)
                     if(error.response.status === 422){
-                        this.message_button = "Csak .jpg, .jpeg, .png kiterjesztésű fotók tölthetők fel!"
+                        this.modalStatus= true;
+                        this.message = "Kérjük ellenőrizze, hogy jelölt-e ki fájlt! "+error.response.data.message;
+                        this.file = null;
                     }
-                    //if(error.message == "Request failed with status code 422")
-                    //this.message = "error";        
+      
                 });
             } else {
                 this.noFile = true

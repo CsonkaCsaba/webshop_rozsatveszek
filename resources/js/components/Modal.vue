@@ -21,7 +21,9 @@ function modalStatus() {
           <h3>{{ message }}</h3>
       </v-card-text>
       <v-card-actions>
-          <v-btn class="btn btn-primary" size="x-large" block @click="modalStatus()"> OK </v-btn>
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button class="btn btn-primary btn-lg w100" @click="modalStatus()"> OK </button>
+        </div>
       </v-card-actions>
       </v-card>
   </v-dialog>

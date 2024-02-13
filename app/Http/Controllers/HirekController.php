@@ -43,7 +43,7 @@ class HirekController extends Controller
     {
         $todayDate = date("Y-m-d");
 
-        Hirek::create([
+       $new = Hirek::create([
             'cim'=> $request->cim,
             'leiras'=> $request-> leiras,
             'datum'=>$todayDate,
@@ -52,7 +52,10 @@ class HirekController extends Controller
             
         ]);
 
-        return response()->json('created');
+        $lastInsertId = $new->id;
+
+
+        return response()->json(array('last_id' => $lastInsertId, 'datum' => $todayDate));
     }
 
     /**

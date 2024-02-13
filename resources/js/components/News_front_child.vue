@@ -21,7 +21,7 @@ fetchNews()
     </div>
         <div class="container-fluid">
             <div class="row mt-3">
-                <div class="col news-item m-5" v-for="ne in news[0]">
+                <div class="col news-item m-3" v-for="ne in news[0]">
                     <div class="news-img">
                         <img :src="ne.photo.kepUtvonal" :alt="ne.photo.kepLeiras" class="img-fluid"/>
                     </div>
@@ -32,7 +32,7 @@ fetchNews()
                             </div>
                         </div>
                         <h5 class="news-title">{{ne.cim}}</h5>
-                        <button type="button" class="btn btn-vasarlas"  @click="modalOpen(ne.cim, ne.datum, ne.leiras, ne.photo.kepUtvonal)">Bővebben</button>
+                        <button type="button" class="btn rozsaszingomb"  @click="modalOpen(ne.cim, ne.datum, ne.leiras, ne.photo.kepUtvonal)">Bővebben <font-awesome-icon :icon="['fas', 'angle-right']" class="fa-fw"/></button>
                 </div>
                 
         </div>
@@ -45,12 +45,13 @@ fetchNews()
                             <br>
                             <img :src="modalElements[3]" class="float-start m-4 modalkep img-fluid rounded mx-auto d-block"/>
                             <h3 class="news-title mt-4">{{modalElements[0]}}</h3>
+                            <hr class="m-auto hr float-start"/><br>
                             <p class="m-1"> {{modalElements[1]}}</p> 
                             <span class="text ">
                                 {{modalElements[2]}}
                             </span>
                             <v-card-actions>
-                                        <button type="button" class="btn btn-vasarlas mt-3" block @click="modalStatus = false">Bezár</button>
+                                        <button type="button" class="btn rozsaszingomb mt-3" block @click="modalStatus = false">Bezár</button>
                             </v-card-actions>
                         </div>
                     </div>
@@ -79,6 +80,7 @@ $rozsaszin: #E4A0B7
     #fejlec
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
         font-family: Inria Serif
+        
 
     hr
         border: solid 0.2rem $rozsaszin
@@ -98,6 +100,10 @@ $rozsaszin: #E4A0B7
         margin-bottom: 30px
         color: #2b2b2b
         display: block
+        &:hover
+            box-shadow: rgba(149, 157, 165, 0.6) 0px 8px 24px
+            transition: .5s ease
+
         .news-img img 
             border-radius: 7px 7px 0 0
             height: 300px
@@ -132,4 +138,7 @@ $rozsaszin: #E4A0B7
 .modalszoveg
     text-align: justify
 
+.hr
+    border: solid 0.2rem $rozsaszin
+    width: 10rem
 </style>

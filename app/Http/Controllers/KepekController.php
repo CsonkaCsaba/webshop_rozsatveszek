@@ -113,7 +113,7 @@ class KepekController extends Controller
             $file_name = $request->file->getClientOriginalName();
             if(Kepek::where('kepNev', 'LIKE', $file_name)->exists()){
                 $exist_image = Kepek::where('kepNev', 'LIKE', $file_name)->get();
-                return response()->json(['message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezze át vagy válasszon másikat!']); 
+                return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezze át vagy válasszon másikat!', 'error' => 422)); 
 
             } else {
                 $request->file('file')->move(public_path('img/uploads/'), $request->file('file')->getClientOriginalName());
@@ -124,7 +124,7 @@ class KepekController extends Controller
                 $media->uzletId = $uzletId;
                 $media->save();
                 $media->id;
-                return response()->json(array('message' => 'Sikeres feltöltés!', 'last_insert_id'=> $media->id),200);
+                return response()->json(array('message' => 'Sikeres feltöltés!', 'last_insert_id'=> $media->id, 'kepUtvonal'=>$media->kepUtvonal, 'uzletId'=>$uzletId, 'kepNev'=>$media->kepNev, 'kepLeiras'=>$media->kepLeiras),200);
             }
         }
 

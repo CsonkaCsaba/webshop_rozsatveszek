@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import {ref} from 'vue'
 
+
 export let showSwiper = ref(0);
 
 export const NewsStore = defineStore("NewsStore",{
@@ -20,6 +21,7 @@ export const NewsStore = defineStore("NewsStore",{
         oldPhotoName: null,
         noFile: false,
         message : "",
+        photoMessage : "",
         photo: {}
         }
     },
@@ -108,11 +110,14 @@ export const NewsStore = defineStore("NewsStore",{
         },
 
         createNew(cim, leiras, uzletId) {
-
+            if(this.photoMessage != ""){
+                this.photoMessage = "";
+            };
             this.cim = cim;
             this.leiras = leiras;
             this.kepId = 0;
             this.uztletId = uzletId;
+            this.kepUtvonal ="";
 
             const config = {
                 headers: {
@@ -120,14 +125,6 @@ export const NewsStore = defineStore("NewsStore",{
                 }
             }
             let photoData = new FormData();
-            // this.uzletId = 1;
-            // this.cim = cim;
-            // this.leiras = leiras;
-
-            
-            // formData.append('cim', this.cim);
-            // formData.append('leiras', this.leiras);
-            // formData.append('id', this.uzletId);
 
             if(this.file != ""){
                 photoData.append('file', this.file);
@@ -135,43 +132,46 @@ export const NewsStore = defineStore("NewsStore",{
                 .then((response) => {
                     if(response.data.message == "Sikeres feltöltés!"){
                         this.kepId = parseInt(response.data.last_insert_id);
+                        this.kepUtvonal = response.data.kepUtvonal
                         let form_data ={ 
                             cim : cim,
                             leiras : leiras,
                             uzletId : this.uztletId,
                             kepId: this.kepId,
                             }
-                            console.log(form_data);
                             axios.post('api/hirekadmin/create',form_data).then(res=>{
-                                //this.message = "A hír módosítása sikeres!";
-                                //this.modalStatus = true;
-                                //this.showSwiper +=1;
+                                this.message = "Az új hír létrehozása sikeres!";
+                                let last_id = res.data.last_id
+                                let datum = res.data.datum
+                                this.modalStatus = true;
+                                this.showSwiper +=1;
+                                let news = {
+                                  id:  last_id, 
+                                  cim : cim,
+                                  leiras : leiras,
+                                  datum: datum,
+                                  kepId: this.kepId,
+                                  photo: {
+                                        kepUtvonal: this.kepUtvonal
+                                    }
+                                }
+                                this.news[0].push(news);
+                                addNewForm.reset();
                             }).catch(console.error)
-                            
-                        //this.uploadSuccessful = true;
-                       //location.reload();
-                       //showSwiper +=1
                     } else {
-                        this.message = response.data.message;
+                        this.photoMessage = response.data.message;
                     }
                 }).catch((error) => {
                     console.log(error)
                     if(error.response.status === 422){
-                        this.message = "Csak .jpg, .jpeg, .png kiterjesztésű fotók tölthetők fel!"
+                        this.photoMessage = "Csak .jpg, .jpeg, .png kiterjesztésű fotók tölthetők fel!"
                     }
                     //if(error.message == "Request failed with status code 422")
                     //this.message = "error";        
                 });
             } else {
-                this.message = "Nem választott ki fájlt a feltöltéshez!";
-            }
-
-
-    
-            // PostService.createPost(formdata)
-            // .then(() => {
-            //     console.log('success');
-            //         });
+                this.photoMessage = "Nem választott ki fájlt a feltöltéshez!";
+                }
             },
 
         uploadPoto(e){

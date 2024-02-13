@@ -12,7 +12,7 @@ onServerPrefetch(async () => {
 
 const modules = [Pagination, Navigation]
 
-const { modalStatus, message} = storeToRefs(NewsStore())
+const { modalStatus, message, photoMessage} = storeToRefs(NewsStore())
 const { receiveEmit} = NewsStore()
 
 
@@ -36,7 +36,7 @@ const { receiveEmit} = NewsStore()
 <swiper_news :key="showSwiper">
 </swiper_news>
 
-<addnews :key="showSwiper" :message="message">
+<addnews :key="showSwiper" :photoMessage="photoMessage">
 </addnews>
 
 </template>

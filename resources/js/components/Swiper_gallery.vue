@@ -49,9 +49,9 @@ onServerPrefetch(async () => {
                 <h5 class="d-flex justify-content-center"><font-awesome-icon :icon="['fas', 'pen']" class="fa-solid fa-fw"/> Fotó szerkesztése </h5>
                     <input type="hidden" class="form-control" :placeholder="gall.id" v-model="gall.id" name="id"/>
                     <input type="hidden" class="form-control" :placeholder="gall.uzletId" v-model="gall.uzletId" name="uzlet_id"/>
-                    <label class="form-label form-label-top text-secondary" for="nev">Elnevezés</label>
+                    <label class="form-label form-label-top text-muted pt-2 mb-0" for="nev">Elnevezés</label>
                     <input type="" class="form-control" :placeholder="gall.kepNev" v-model="gall.kepNev" name="nev" @focus="oldPhotoName(gall.kepNev)"/>
-                    <label class="form-label form-label-top text-secondary" for="leiras">Leírás</label>
+                    <label class="form-label form-label-top text-muted pt-2 mb-0" for="leiras">Leírás</label>
                     <input type="" class="form-control" :placeholder="gall.kepLeiras" v-model="gall.kepLeiras" name="leiras"/>
             </div>
             <div class="d-flex justify-content-center">

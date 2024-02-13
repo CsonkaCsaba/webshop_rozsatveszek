@@ -28,7 +28,7 @@ import {showSwiper} from './store/Gallery';
     <form enctype="multipart/form-data" @submit.prevent ="uploadPoto">
         <div class="form-group p-3">
             <h3>Fotó hozzáadása a galériához</h3>
-            <input type="file" @change="onChange" class="form-control" accept="image/jpg, image/png, image/jpeg"/>
+            <input type="file" @change="onChange" class="form-control" accept="image/jpg, image/png, image/jpeg" id="uploadinput"/>
             <p v-if="noFile" class="text-danger">Nem választott ki fájlt a feltöltéshez!</p>
             <p v-if="message" class="text-danger">{{ message_button }}</p>
         </div>

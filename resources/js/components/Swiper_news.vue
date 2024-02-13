@@ -15,7 +15,7 @@ fetchNewsadmin();
 
 <template>
 <div class="container swipercontainer">
-    <swiper :slides-per-view="2"  :navigation="true" :pagination="true">
+    <swiper :slides-per-view="1"  :navigation="true" :pagination="true">
         <swiper-slide v-for="ne in news[0]">
             <div class="card" >
                 <img :src="ne.photo.kepUtvonal" :alt="ne.photo.kepLeiras" class="card-img-top galleryphoto"/>
@@ -27,9 +27,9 @@ fetchNewsadmin();
                       <h5 class="d-flex justify-content-center"><font-awesome-icon :icon="['fas', 'pen']" class="fa-solid fa-fw"/> Hír szerkesztése </h5>
                           <input type="hidden" class="form-control" :placeholder="ne.id" v-model="ne.id" name="id"/>
                           <input type="hidden" class="form-control" :placeholder="ne.uzletId" v-model="ne.uzletId" name="uzlet_id"/>
-                          <label class="form-label form-label-top text-secondary" for="cim">Cím</label>
+                          <label class="form-label form-label-top text-muted pt-2 mb-0 " for="cim">Cím</label>
                           <input type="" class="form-control" :placeholder=" ne.cim " v-model=" ne.cim " name="cim"/>
-                          <label class="form-label form-label-top text-secondary pt-2" for="leiras">Leírás</label>
+                          <label class="form-label form-label-top text-muted pt-2 mb-0 " for="leiras">Leírás</label>
                           <textarea type="" cols="40" rows="5" class="form-control" :placeholder=" ne.leiras " v-model=" ne.leiras " name="leiras"></textarea>
                   </div>
                   <div class="d-flex justify-content-center">

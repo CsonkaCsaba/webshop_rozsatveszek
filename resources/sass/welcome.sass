@@ -36,6 +36,24 @@ $rozsaszin: #E4A0B7
   &:hover
     color: #867EE5 !important
 
+.rozsaszingomb
+  border-radius: 1.75rem
+  background: $rozsaszin
+  color:#FFFFFF !important
+  margin-right: 7rem
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25)
+  &:hover
+    color: $rozsaszin !important
+    transition-duration: 1s
+    transform: scale(1.1)
+    //animation-timing-function: ease-in-out
+    letter-spacing: .1rem
+    transition: all .2s ease-in
+
+.modal-footer
+
+
+
 .lilagombKicsi
   
   border-radius: 1.75rem
@@ -47,6 +65,7 @@ $rozsaszin: #E4A0B7
   &:hover
     color: #007aff !important
     background: #FFFFFF
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.55)
   &:disabled
     background: #FFFFFF !important
     color: #C0C0C0 !important
@@ -255,7 +274,7 @@ a
     background-image: linear-gradient(90deg, #000, transparent)
 
 .galleryphoto
-    max-width: 350px
+    max-width: auto
     max-height:250px
     box-shadow: rgba(149, 157, 165, 0.6) 0px 8px 24px
     &:hover
@@ -263,13 +282,14 @@ a
         transition: .5s ease
         
 .swiper-slide
-    max-width: 400px
+    max-width: 500px
     max-height:450px
     padding: 30px
     margin-bottom: 350px
 
 .swipercontainer
     margin-bottom: 80px
+
 
    
 .photosettings

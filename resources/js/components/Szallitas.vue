@@ -79,7 +79,41 @@ const cartData = ShoppingCart();
 </template>
 
 <style scoped>
+.btn-vasarlas{
+    font-size: 20px;
+    border-radius: 18px;
+    background: #E4A0B7;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #fff;
+}
 
+.btn-vasarlas:hover{
+    color: #fff;
+    background: #d95f88;
+    transition: .5s ease all;
+}
+.nav-container, .vegosszeg{
+    font-size: 20px;
+    color: #787878;
+}
+
+.nav-container .nav-item{
+    background: #b1b3b3;
+    color: white;
+    clip-path: polygon(calc(100% - 1.5rem) 0,100% 50%,calc(100% - 1.5rem) 100%,0 100%,1.5rem 50%,0 0);
+}
+
+.nav-container .nav-item:first-of-type{
+    clip-path: polygon(calc(100% - 1.5rem) 0,100% 50%,calc(100% - 1.5rem) 100%,0 100%,0 50%,0 0);
+}
+
+.nav-container .nav-item:last-of-type{
+    clip-path: polygon(100% 0,100% 50%,100% 100%,0 100%,1.5rem 50%,0 0);
+}
+
+.nav-container .active{
+    background: #E4A0B7;
+}
 #szallitas-content .szallitasi-adatok,
 #szallitas-content .title{
     font-size: 20px;

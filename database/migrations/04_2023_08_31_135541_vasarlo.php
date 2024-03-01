@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nev')->nullable();
             $table->string('email')->unique();
             $table->string('telefonszam');
-            $table->foreignId('cegId')
+            $table->foreignId('cegId')->nullable()
             ->constrained(
                 table: 'cegs', indexName: 'cegid'
             )->nullable()

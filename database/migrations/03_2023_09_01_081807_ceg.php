@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('cegnev');
             $table->string('adoszam');
 
-            $table->foreignId('cimId')
+            $table->foreignId('cimId')->nullable()
             ->constrained(
                 table: 'cims', indexName: 'cimid'
             )

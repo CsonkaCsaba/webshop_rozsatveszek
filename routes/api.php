@@ -5,6 +5,7 @@ use App\Http\Controllers\KepekController;
 use App\Http\Controllers\UzletController;
 use App\Http\Controllers\TermekController;
 use App\Http\Controllers\KategoriaController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,5 @@ Route::get('/hirek', [HirekController::class, 'show']);
 Route::resource('/hirekadmin', HirekController::class);
 Route::post('/hirekadmin/create', [HirekController::class,'create']);
 //Route::get('/hirekadmin', [HirekController::class, 'index']);
+Route::post('/megrendeles/storeOrder', [OrderController::class, 'storeOrder']);
 

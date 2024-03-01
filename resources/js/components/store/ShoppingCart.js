@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import axios from 'axios';
 
 export const ShoppingCart = defineStore("ShoppingCart",{
     state: () => {
@@ -24,7 +25,12 @@ export const ShoppingCart = defineStore("ShoppingCart",{
                 street: '',
                 house: ''
             },
-            payment: 'delivery'
+            payment: 'delivery',
+            db_data: {
+                billingAddress: {},
+                shippingAddress: {},
+                payment: '',
+            }
         }
     },
 
@@ -83,6 +89,20 @@ export const ShoppingCart = defineStore("ShoppingCart",{
         },
         clearBillingAddress(){
             this.billingAddress = [];
+        },
+        storeToDB(){
+            this.db_data.billingAddress = this.billingAddress;
+            this.db_data.shippingAddress = this.shippingAddress;
+            this.db_data.payment = this.payment;
+
+            //Billing address is always stored
+            axios.post('api/megrendeles/storeOrder', this.db_data)
+            .then((response) => {
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            });
         }
     },                                                               
     

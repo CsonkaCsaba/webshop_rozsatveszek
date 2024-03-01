@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('valaszts', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->integer('mennyiseg');
             $table->integer('kedvezmeny');
 

@@ -12,22 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cimes', function (Blueprint $table) {
-            $table->foreignId('fk_cimId')
-            ->constrained(
-                table: 'cims', indexName: 'fk_cimid'
-            )->nullable()
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-
-            $table->foreignId('vasarloId_fk')
-            ->constrained(
-                table: 'vasarlos', indexName: 'vasarloid_fk'
-            )->nullable()
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
+            $table->foreignId('cim_id')->references('id')->on('cims')->onUpdate('cascade')->onDelete('cascade');   
+            $table->foreignId('vasarlo_id')->references('id')->on('vasarlos')->onUpdate('cascade')->onDelete('cascade');
             
-            $table->boolean('szallitasi');
-            $table->boolean('szamlazasi');
+            $table->boolean('szallitasi')->default(0);
+            $table->boolean('szamlazasi')->default(0);
 
         });
     }

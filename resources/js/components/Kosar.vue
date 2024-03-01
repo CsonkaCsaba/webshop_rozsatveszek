@@ -82,7 +82,9 @@ const cartData = ShoppingCart();
 }
 
 .btn-vasarlas:hover{
-    background: #e7e7e7;
+    color: #fff;
+    background: #d95f88;
+    transition: .5s ease all;
 }
 
 .kosar-ures{
@@ -110,8 +112,39 @@ const cartData = ShoppingCart();
     font-size: 20px;
 }
 
+/* setNumber */
 .custom-num{
     font-size: 20px;
+    margin: 0.5em;
+    width: fit-content;
+    border-radius: 1em;
+    align-items: center;
+    background-color: #d1ecf1;
+}
+
+.num-input{
+    font-size: 1em;
+    text-align: center;
+    background: none;
+    border: none;
+    font-weight: bold;
+    width: 100%;
+}
+
+.num-input::-webkit-outer-spin-button,
+.num-input::-webkit-inner-spin-button {
+    display: none;
+}
+
+.plusSign, .minusSign{
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.num-max, .num-min{
+    padding-top: 0.8em;
+    height: 5em;
+    padding-bottom: 0;
 }
 
 .trash{

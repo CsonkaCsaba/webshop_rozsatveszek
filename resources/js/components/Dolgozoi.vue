@@ -15,7 +15,7 @@ register();
             <a class="nav-link" id="simple-tab-2" data-bs-toggle="tab" href="#simple-tabpanel-2" role="tab" aria-controls="simple-tabpanel-2" aria-selected="false">Hírek</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link disabled " id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-3" role="tab" aria-controls="simple-tabpanel-3" aria-selected="false">Termékek</a>
+            <a class="nav-link " id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-3" role="tab" aria-controls="simple-tabpanel-3" aria-selected="false">Termékek</a>
         </li>
         <li class="nav-item " role="presentation">
             <a class="nav-link disabled" id="simple-tab-4" data-bs-toggle="tab" href="#simple-tabpanel-4" role="tab" aria-controls="simple-tabpanel-4" aria-selected="false">Rendelések</a>
@@ -38,10 +38,9 @@ register();
             </Suspense>
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-3" role="tabpanel" aria-labelledby="simple-tab-3">
-            <!-- <Suspense>
-                <news_admin></news_admin>
-            </Suspense> -->
-            <p>Termékek</p>
+            <Suspense>
+                <products_admin></products_admin>
+            </Suspense>
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-4" role="tabpanel" aria-labelledby="simple-tab-4">
             <!-- <Suspense>

@@ -1,0 +1,139 @@
+<script setup>
+import axios from 'axios';
+import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { ProductStore } from './store/Product';
+const { products } = storeToRefs(ProductStore())
+const { update, editStore, fetchProduct } = ProductStore()
+fetchProduct();
+</script>
+
+<template>
+<div class="container fontcolor">
+    <div class="justify-content-center text-center p-2">
+        <div class="divider fontcolor"><span></span><span>TERMÉKEK</span><span></span></div>
+    </div>
+</div>
+<div class="container">
+    <div class="d-flex addNewBtn mb-4">
+      <button type="button" class="btn btn-primary" @click="addNewUserBtn" :disabled="disableBtnAdd"><font-awesome-icon :icon="['fas', 'plus']" /> Új termék hozzáadás</button>
+    </div>
+</div>
+<div class="container fw-bold mb-4 justify-content-center text-center">
+  <div class="row">
+    <div class="col-sm">
+        Termék
+    </div>
+    <div class="col-sm artop">
+        Ár
+    </div>
+    <div class="col-sm">
+        Szerkesztés
+    </div>
+  </div>
+</div>
+
+
+<div class="container mb-4">
+<ul class="list">
+    <li class="text-left" v-for="prod in products" key="prod.id">
+        <div class="row ">
+            <div class="col-5 ">
+                <img :src="prod.img" class="rounded image">
+            </div>
+            <div class="col-2 mt-5 keszlet">
+                <p v-if="prod.keszlet <= 0" class="elfogyott">Elfogyott</p>
+                <p v-else class="keszleten ">Készleten</p>
+            </div>
+            <div class="col-2">
+                <p class="name">{{ prod.nevHu }}</p><br>
+                <p class="color">{{ prod.szin }}</p>
+            </div>
+            <div class="col-sm ar">
+                {{ prod.ar }} Ft
+            </div>
+            <div class="col-sm buttons">
+                <button type="button" class="btn btn-outline-secondary btn-lg m-4" @click="user.editUser = true; disableBtnAdd = true; disableBtn = true "><font-awesome-icon :icon="['fas', 'pen']" /></button>
+                <button type="button" class="btn btn-outline-secondary btn-lg" @click="deleteUser(user.id, user.name)"><font-awesome-icon :icon="['fas', 'trash']" /></button>
+            </div>
+            
+        </div>
+    </li>
+</ul>
+</div>
+
+<!-- <div class="d-flex flex-row justify-content-center" v-for="prod in products" key="prod.id">
+    <img :src="prod.img" class="rounded image">
+    <p class="m-4">{{ prod.nevHu }}</p>
+    <p v-if="prod.keszlet <= 0" class="elfogyott">Elfogyott</p>
+    <p v-else class="keszleten ">Készleten</p>
+    <p class="m-4 ">{{ prod.szin }}</p>
+    <p class="m-4">{{ prod.ar }} Ft</p>
+</div> -->
+
+
+</template>
+<style lang="sass" scoped>
+
+.list
+    list-style-type: none
+    width: 100%
+    height: auto
+    font-size: 18px
+    li
+        &:hover
+            box-shadow: rgba(149, 157, 165, 0.6) 0px 8px 24px
+
+
+.image
+    max-width: 60%
+    max-height: auto
+    padding: 10px
+    border-radius: 25%
+.elfogyott
+    background: linear-gradient(to right top, #CA212B 40%, transparent)
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
+
+.keszleten
+    background: linear-gradient(to right top, #60A448 40%, transparent)
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
+.keszlet
+    position: absolute
+    width: 150px
+    margin-top: 150px
+    font-size: 20px
+    color: #000
+    font-weight: 400
+.name
+    font-size: 19px
+    color: black
+    text-align: start
+    text-transform: uppercase
+    font-weight: bold
+    margin-left: -200px
+    margin-top: 70px
+.color
+    font-size: 16px
+    color: grey
+    text-align: start
+    text-transform: uppercase
+    font-weight: light
+    margin-left: -200px
+    margin-top: -45px
+.ar
+    font-size: 21px
+    color: black
+    text-align: start
+    text-transform: uppercase
+    margin-left: -130px
+    margin-top: 70px
+
+.buttons
+    margin-top: 40px
+
+.artop
+    margin-left: 45px
+.addNewBtn
+    margin-left: 50px
+    font-size: 21px 
+</style>

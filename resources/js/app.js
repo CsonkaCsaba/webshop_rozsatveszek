@@ -147,6 +147,11 @@ const AddNews_Async = defineAsyncComponent({
 })
 app.component('addnews', AddNews_Async);
 
+const Products_admin_Async = defineAsyncComponent({
+    loader:() => import('./components/Products_admin.vue')
+})
+app.component('products_admin', Products_admin_Async);
+
  import Home from './components/Home.vue';
  app.component('Home', Home);
 

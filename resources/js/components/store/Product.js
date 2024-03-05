@@ -7,6 +7,9 @@ export const ProductStore = defineStore("Product",{
         products: [
 
         ],
+        addNewProduct: false,
+        disableBtnAdd: false,
+        photoMessage : "",
 //        uzenet: "Sikeres mentés ",
         updateSuccessful: false
        
@@ -31,6 +34,17 @@ export const ProductStore = defineStore("Product",{
                  catch(error){
                     console.log(error.response.data)
                 }
+        },
+        addNewProductBtn(){
+            this.addNewProduct = true
+            this.disableBtnAdd = true;
+            
+        },
+        onChange(e){
+            let file;
+            file = e.target.files[0];
+            this.file = file;
+
         },
 
     //     update(){

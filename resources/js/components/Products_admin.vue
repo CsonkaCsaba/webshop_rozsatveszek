@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
 const { products, addNewProduct, disableBtnAdd, photoMessage } = storeToRefs(ProductStore())
-const { update, editStore, fetchProduct, addNewProductBtn, onChange } = ProductStore()
+const { update, editStore, fetchProduct, addNewProductBtn, onChange, createProduct } = ProductStore()
 fetchProduct();
 </script>
 
@@ -22,17 +22,17 @@ fetchProduct();
 
 <div class="addNewProduct p-2" v-if="addNewProduct">
  <!--show if Add New Product button clicked-->
- <form method="POST" @submit.prevent="createProduct(nev, szin, ar, keszlet, uzletId=1)" id="addNewproductForm">
+ <form method="POST" @submit.prevent="createProduct(name, color, price, stock, description)" id="addNewproductForm">
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-4">
                     <label for="name" class="p-1 col">Név</label>
-                    <input id="nameInput" type="text" class="form-control fw-light" required placeholder="Név megadása" name="nameInput"/>
+                    <input id="nameInput" type="text" class="form-control fw-light" required placeholder="Név megadása" name="nameInput" v-model="name"/>
                 </div>
                 <div class="col-4">
                 <div>
                     <label for="color" class="p-1 col">Szín</label>
-                    <input id="color" type="text" class="form-control fw-light" required placeholder="Szín megadása" name="colorInput"/>
+                    <input id="color" type="text" class="form-control fw-light" required placeholder="Szín megadása" name="colorInput" v-model="color"/>
                 </div>
                 </div>
             </div>
@@ -41,19 +41,24 @@ fetchProduct();
                 <div class="col-4">
                     <label for="price" class="p-1 col">Ár</label>
                     <div class="input-group mb-3">
-                        <input id="price" type="number" value="0" class="form-control fw-light" required placeholder="Ár megadása" name="priceInput"/>
+                        <input id="price" type="number"  class="form-control fw-light" required placeholder="Ár megadása" name="priceInput" v-model="price"/>
                         <span class="input-group-text">-Ft</span> 
                     </div>
                 </div>
                 <div class="col-4">
                     <label for="stock" class="p-1 col">Készlet</label>
                     <div class="input-group mb-3">
-                        <input id="stock" type="number" value="0" class="form-control fw-light" required placeholder="Készlet megadása" name="stockInput"/>
+                        <input id="stock" type="number"  class="form-control fw-light" required placeholder="Készlet megadása" name="stockInput" v-model="stock"/>
                         <span class="input-group-text">db</span>  
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center text-center">
+                <div class="col-4">
+                    <label for="description" class="p-1 col">Leírás</label>
+                        <textarea id="description"  class="form-control fw-light" required placeholder="Leírás megadása" name="descriptionInput" v-model="description" rows="8">
+                        </textarea>
+                </div>
                 <div class=" col-4 form-floating mb-3">
                     <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó hozzáadása</p> 
                     <input id="uploadInput" type="file" @change="onChange" class="form-control" accept="image/*" name="photo"/>
@@ -62,7 +67,7 @@ fetchProduct();
             </div>
                 <div class="justify-content-center text-center">
                 <div class="d-inline-flex p-4 mt-2">
-                    <button type="button" class="btn btn-primary m-1 saveBtn" @click="saveNewUser" :disabled="disableBtn">Hozzáadás</button>
+                    <button type="submit" class="btn btn-primary m-1 saveBtn" :disabled="disableBtn">Hozzáadás</button>
                     <button type="button" class="btn btn-outline-secondary m-1 cancelBtn" @click="addNewProduct = false; disableBtnAdd = false">Mégsem</button>
                 </div>
                 </div>

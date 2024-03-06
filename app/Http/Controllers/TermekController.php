@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Termek;
+use App\Models\Kepek;
 use Illuminate\Http\Request;
 
 class TermekController extends Controller
@@ -25,9 +26,29 @@ class TermekController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        
+        app('App\Http\Controllers\KepekController')->upload($request->photo);
+        
+        // $photo = Kepek::create([
+
+        // ]);
+        
+        
+        $product = Termek::create([
+            'nevHu'=> $request->nev,
+            'szin'=> $request-> szin,
+            'ar'=> $request-> ar,
+            'leirasHU' =>$request->leiras,
+            'keszlet'=> $request-> keszlet,
+            
+        ]);
+
+        // $lastInsertId = $product->id;
+
+
+        // return response()->json(array('last_id' => $lastInsertId));
     }
 
     /**

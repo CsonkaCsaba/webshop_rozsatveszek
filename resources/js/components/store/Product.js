@@ -10,8 +10,14 @@ export const ProductStore = defineStore("Product",{
         addNewProduct: false,
         disableBtnAdd: false,
         photoMessage : "",
+        file: '',
+        photoMessage : "",
+
 //        uzenet: "Sikeres mentés ",
-        updateSuccessful: false
+        updateSuccessful: false,
+        db_data: {
+            photo: {},
+        }
        
         }
     },
@@ -46,6 +52,42 @@ export const ProductStore = defineStore("Product",{
             this.file = file;
 
         },
+        createProduct(nev, szin, ar, keszlet, leiras){
+            this.nev = nev,
+            this.szin = szin,
+            this.ar = ar,
+            this.keszlet = keszlet
+            this.leiras = leiras
+            console.log(nev, szin, ar, keszlet, leiras)
+
+            const config = {
+                headers: {
+                    'content-type':'multipart/form-data'
+                }
+            }
+            let photoData = new FormData();
+
+            if(this.file != ""){
+                photoData.append('file', this.file);
+                this.db_data.photo = photoData;
+                let form_data ={ 
+                    nev : this.nev,
+                    szin : this.szin,
+                    ar : this.ar,
+                    keszlet: this.keszlet,
+                    leiras: this.leiras,
+                    photo: this.db_data.photo
+                    }
+                    console.log(form_data)
+                    axios.post('api/termekadmin/create',form_data, config).then(res=>{
+                    // this.message = "A hír módosítása sikeres!";
+                    // this.modalStatus = true;
+                    // this.showSwiper +=1;
+                    }).catch(console.error)
+
+            }
+
+        }
 
     //     update(){
 

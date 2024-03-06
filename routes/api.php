@@ -32,4 +32,5 @@ Route::resource('/hirekadmin', HirekController::class);
 Route::post('/hirekadmin/create', [HirekController::class,'create']);
 //Route::get('/hirekadmin', [HirekController::class, 'index']);
 Route::post('/megrendeles/storeOrder', [OrderController::class, 'storeOrder']);
+Route::post('/termekadmin/create', [TermekController::class,'create']);
 

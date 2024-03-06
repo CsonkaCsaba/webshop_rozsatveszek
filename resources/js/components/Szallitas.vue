@@ -38,8 +38,8 @@ const cartData = ShoppingCart();
                                     </div>
                                     <div class="row d-inline-flex center mb-2">
                                         <label for="cart-zipcode" class="p-1 col text-end">Irányítószám</label>
-                                        <input id="cart-zipcode" v-if="cartData.shippingAddress.new == 'no'" type="number" v-model="cartData.billingAddress.zipCode" class="form-control ms-3 col" disabled required/>
-                                        <input id="cart-zipcode" v-else type="number" v-model="cartData.shippingAddress.zipCode" class="form-control ms-3 col" required/>
+                                        <input id="cart-zipcode" v-if="cartData.shippingAddress.new == 'no'" type="text" v-model="cartData.billingAddress.zipCode" class="form-control ms-3 col" disabled required/>
+                                        <input id="cart-zipcode" v-else type="text" v-model="cartData.shippingAddress.zipCode" class="form-control ms-3 col" required/>
                                     </div>
                                     <div class="row d-inline-flex center mb-2">
                                         <label for="cart-city" class="p-1 col text-end">Település</label>

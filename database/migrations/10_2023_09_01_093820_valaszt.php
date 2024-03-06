@@ -12,22 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('valaszts', function (Blueprint $table) {
-            $table->integer('mennyiseg');
-            $table->integer('kedvezmeny');
+            $table->integer('mennyiseg')->nullable();
+            $table->integer('kedvezmeny')->nullable();
 
-            $table->foreignId('rendelesId')
-            ->constrained(
-                table: 'rendeles', indexName: 'id'
-            )
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-
-            $table->foreignId('termekId')
-            ->constrained(
-                table: 'termeks', indexName: 'termekid'
-            )
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
+            $table->foreignId('rendeles_id')->references('id')->on('rendeles')->onUpdate('cascade')->onDelete('cascade');   
+            $table->foreignId('termek_id')->references('id')->on('termeks')->onUpdate('cascade')->onDelete('cascade');   
         });
     }
 

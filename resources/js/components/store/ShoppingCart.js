@@ -4,10 +4,10 @@ import axios from 'axios';
 export const ShoppingCart = defineStore("ShoppingCart",{
     state: () => {
         return {
-            cartItems: [],
             kosarban: false,
+            cartItems: [],
             billingAddress: {
-                company: '',
+                company: 'no',
                 name: '',
                 taxNumber: '',
                 email: '',
@@ -26,10 +26,15 @@ export const ShoppingCart = defineStore("ShoppingCart",{
                 house: ''
             },
             payment: 'delivery',
+            comment: 'Egyéb megjegyzés...',
+            vegosszeg: 0,
             db_data: {
+                items: {},
                 billingAddress: {},
                 shippingAddress: {},
                 payment: '',
+                comments: '',
+                vegosszeg: 0
             }
         }
     },
@@ -85,15 +90,19 @@ export const ShoppingCart = defineStore("ShoppingCart",{
             let total = 0;
             for (let i = 0; i < this.cartItems.length; i++)
             total += this.cartItems[i].quantity * this.cartItems[i].ar;
+            this.vegosszeg = total;
             return total;
         },
         clearBillingAddress(){
             this.billingAddress = [];
         },
         storeToDB(){
+            this.db_data.items = this.cartItems;
             this.db_data.billingAddress = this.billingAddress;
             this.db_data.shippingAddress = this.shippingAddress;
             this.db_data.payment = this.payment;
+            this.db_data.comments = this.comment;
+            this.db_data.vegosszeg = this.vegosszeg;
 
             //Billing address is always stored
             axios.post('api/megrendeles/storeOrder', this.db_data)

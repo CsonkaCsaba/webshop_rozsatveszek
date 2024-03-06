@@ -36,8 +36,8 @@ const cartData = ShoppingCart();
                                             <input id="cart-lastname" type="text" v-model="cartData.billingAddress.name" class="form-control ms-3 col" required/>
                                         </div>
                                         <div v-if="cartData.billingAddress.company == 'yes'" class="row d-inline-flex center mb-2">
-                                            <label for="cart-taxnumber" class="p-1 col text-end">Adószám</label>
-                                            <input id="cart-taxnumber" type="number" v-model="cartData.billingAddress.taxNumber" class="form-control ms-3 col" required/>
+                                            <label for="cart-taxnumber" class="p-1 col text-end">Adószám (cég esetén kötelező)</label>
+                                            <input id="cart-taxnumber" type="text" v-model="cartData.billingAddress.taxNumber" class="form-control ms-3 col" required/>
                                         </div>
                                         <div class="row d-inline-flex center mb-2">
                                             <label for="cart-email" class="p-1 col text-end">E-mail cím</label>
@@ -51,7 +51,7 @@ const cartData = ShoppingCart();
                                     <div class="d-inline-flex flex-column">
                                         <div class="row d-inline-flex center mb-2">
                                             <label for="cart-zipcode" class="p-1 col text-end">Irányítószám</label>
-                                            <input id="cart-zipcode" type="number" v-model="cartData.billingAddress.zipCode" class="form-control ms-3 col" required/>
+                                            <input id="cart-zipcode" type="text" v-model="cartData.billingAddress.zipCode" class="form-control ms-3 col" required/>
                                         </div>
                                         <div class="row d-inline-flex center mb-2">
                                             <label for="cart-city" class="p-1 col text-end">Település</label>

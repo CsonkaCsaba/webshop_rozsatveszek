@@ -25,7 +25,7 @@ const cartData = ShoppingCart();
                     <div class="ms-5 text-start font-15"><b>Házszám: </b> {{ cartData.billingAddress.house }}</div>
                 </div>
                 <div v-if="cartData.shippingAddress.new == 'no'" class="my-3"><b>Szállítási adatok</b>
-                    <div class="font-15">A számlázási adatokkal megegyezik.</div>
+                    <div class="font-15">A számlázási adatokkal megegyeznek.</div>
                 </div>
                 <div v-else class="my-3"><b>Szállítási adatok</b>
                     <div class="ms-5 text-start font-15"><b>Név: </b> {{ cartData.shippingAddress.name }}</div>
@@ -33,6 +33,12 @@ const cartData = ShoppingCart();
                     <div class="ms-5 text-start font-15"><b>Település: </b> {{ cartData.shippingAddress.city }}</div>
                     <div class="ms-5 text-start font-15"><b>Utca: </b> {{ cartData.shippingAddress.street }}</div>
                     <div class="ms-5 text-start font-15"><b>Házszám: </b> {{ cartData.shippingAddress.house }}</div>
+                </div>
+                <div class="comments container">
+                    <b>Egyéb megjegyzések</b>
+                    <form>
+                        <textarea class="mt-2" v-model="cartData.comment"></textarea>
+                    </form>
                 </div>
                 <div class="my-3"><b>Fizetési mód</b>
                     <label class="container" for="delivery">
@@ -105,6 +111,18 @@ const cartData = ShoppingCart();
 }
 .font-15{
     font-size: 15px;
+}
+
+#megrendeles-content textarea{
+  width: 100%;
+  height: 100px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
 }
 
 </style>

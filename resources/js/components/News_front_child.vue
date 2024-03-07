@@ -47,7 +47,7 @@ fetchNews()
                             <h3 class="news-title mt-4">{{modalElements[0]}}</h3>
                             <hr class="m-auto hr float-start"/><br>
                             <p class="m-1"> {{modalElements[1]}}</p> 
-                            <span class="text ">
+                            <span class="text modalszoveg">
                                 {{modalElements[2]}}
                             </span>
                             <v-card-actions>
@@ -135,8 +135,10 @@ $rozsaszin: #E4A0B7
     max-width: 60%
     height: auto
     padding: 2%
+
 .modalszoveg
-    text-align: justify
+    hyphens: auto
+
 
 .hr
     border: solid 0.2rem $rozsaszin

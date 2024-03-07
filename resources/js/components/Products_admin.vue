@@ -92,7 +92,7 @@ fetchProduct();
 
 <div class="container mb-4">
 <ul class="list">
-    <li class="text-left" v-for="prod in products" key="prod.id">
+    <li class="text-left" v-for="prod in products" :key="prod.id">
         <div class="row ">
             <div class="col-5 ">
                 <img :src="prod.img" class="rounded image">

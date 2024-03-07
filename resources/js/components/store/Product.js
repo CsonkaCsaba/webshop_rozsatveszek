@@ -10,7 +10,7 @@ export const ProductStore = defineStore("Product",{
         addNewProduct: false,
         disableBtnAdd: false,
         photoMessage : "",
-        file: '',
+        file: null,
         photoMessage : "",
 
 //        uzenet: "Sikeres mentés ",
@@ -58,28 +58,29 @@ export const ProductStore = defineStore("Product",{
             this.ar = ar,
             this.keszlet = keszlet
             this.leiras = leiras
-            console.log(nev, szin, ar, keszlet, leiras)
-
+            
             const config = {
                 headers: {
                     'content-type':'multipart/form-data'
                 }
             }
-            let photoData = new FormData();
+            let formData = new FormData();
 
             if(this.file != ""){
-                photoData.append('file', this.file);
-                this.db_data.photo = photoData;
-                let form_data ={ 
+                formData.append('file', this.file);
+                
+                let form_data = JSON.stringify({
                     nev : this.nev,
                     szin : this.szin,
                     ar : this.ar,
                     keszlet: this.keszlet,
                     leiras: this.leiras,
-                    photo: this.db_data.photo
-                    }
-                    console.log(form_data)
-                    axios.post('api/termekadmin/create',form_data, config).then(res=>{
+                  });
+
+                  formData.append('form_data', form_data)
+
+                 
+                    axios.post('api/termekadmin/create',formData, config).then(res=>{
                     // this.message = "A hír módosítása sikeres!";
                     // this.modalStatus = true;
                     // this.showSwiper +=1;

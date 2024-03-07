@@ -128,6 +128,7 @@ export const NewsStore = defineStore("NewsStore",{
 
             if(this.file != ""){
                 photoData.append('file', this.file);
+                console.log(photoData);
                 axios.post('api/galeria/upload', photoData, config)
                 .then((response) => {
                     if(response.data.message == "Sikeres feltöltés!"){

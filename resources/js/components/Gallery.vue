@@ -12,7 +12,8 @@ import {showSwiper} from './store/Gallery';
 <template>
 <div class="container fontcolor">
 <div class="justify-content-center text-center p-2">
-    <div class="divider fontcolor"><span></span><span>GALÉRIA</span><span></span></div>
+    <div class="divider fontcolor"><span></span><span> <font-awesome-icon :icon="['fas', 'camera']" /> GALÉRIA</span><span></span></div>
+    <img src="../../assets/kepek/gallery.png" alt="desk" width="60" height="60"> 
 </div>
 </div>
 

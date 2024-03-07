@@ -32,9 +32,9 @@ fetchNewsadmin();
                           <label class="form-label form-label-top text-muted pt-2 mb-0 " for="leiras">Leírás</label>
                           <textarea type="" cols="40" rows="5" class="form-control" :placeholder=" ne.leiras " v-model=" ne.leiras " name="leiras"></textarea>
                   </div>
-                  <div class="d-flex justify-content-center">
-                      <button class="btn lilagombKicsi" type="submit" title="Módosítások mentése"><font-awesome-icon :icon="['fas', 'floppy-disk']" class="fa-fw"/>  Mentés</button>
-                      <button type="button" class="btn lilagombKicsi"  @click="deleteNews( ne.id, ne.cim)" title="Hír törlése"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>
+                  <div class="d-flex justify-content-center m-2">
+                      <button class="btn secoundaryBtna m-2" type="submit" title="Módosítások mentése"><font-awesome-icon :icon="['fas', 'floppy-disk']" class="fa-fw"/>  Mentés</button>
+                      <button type="button" class="btn secoundaryBtnb m-2"  @click="deleteNews( ne.id, ne.cim)" title="Hír törlése"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>
                     </div>
       
                 </form>

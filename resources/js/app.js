@@ -256,7 +256,10 @@ import {
     faFloppyDisk,
     faDownload, 
     faCloudArrowUp,
-    faExclamation
+    faExclamation,
+    faCamera,
+    faNewspaper,
+    faShop
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -286,7 +289,10 @@ library.add(
     faFloppyDisk,
     faDownload,
     faCloudArrowUp,
-    faExclamation
+    faExclamation,
+    faCamera,
+    faNewspaper,
+    faShop
 )
 
 const pinia = createPinia();

@@ -31,10 +31,10 @@ onServerPrefetch(async () => {
         <div class="card-header">
         <div class="d-flex justify-content-center">
                 <div class="form-group">
-                    <button type="button" class="btn lilagombKicsi"  @click="deletePhoto(gall.id, gall.uzletId, gall.kepNev)" data-bs-toggle="tooltip" data-bs-placement="top" title="Fotó törlése"  :disabled="gall.id <= 4"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>
+                    <button type="button" class="btn secoundaryBtna m-2"  @click="deletePhoto(gall.id, gall.uzletId, gall.kepNev)" data-bs-toggle="tooltip" data-bs-placement="top" title="Fotó törlése"  :disabled="gall.id <= 4"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>
                 </div>
                 <div class="form-group">
-                    <a :href="gall.kepUtvonal" @click.prevent="downloadPhoto(gall.kepUtvonal)"><button type="button" class="btn lilagombKicsi" data-bs-toggle="tooltip" data-bs-placement="top" title="Fotó letöltése"><font-awesome-icon :icon="['fas', 'download']" class="fa-fw"/>  Letölt</button></a>
+                    <a :href="gall.kepUtvonal" @click.prevent="downloadPhoto(gall.kepUtvonal)"><button type="button" class="btn secoundaryBtnb m-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Fotó letöltése"><font-awesome-icon :icon="['fas', 'download']" class="fa-fw"/>  Letölt</button></a>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@ onServerPrefetch(async () => {
                     <input type="" class="form-control" :placeholder="gall.kepLeiras" v-model="gall.kepLeiras" name="leiras"/>
             </div>
             <div class="d-flex justify-content-center">
-                    <button class="btn lilagombKicsi" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Módosítások mentése"><font-awesome-icon :icon="['fas', 'floppy-disk']" class="fa-fw"/>  Mentés</button>
+                    <button class="btn secoundaryBtna" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Módosítások mentése"><font-awesome-icon :icon="['fas', 'floppy-disk']" class="fa-fw"/>  Mentés</button>
                 </div>
         </form>
         </div>

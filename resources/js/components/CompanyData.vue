@@ -12,12 +12,12 @@ fetchStore();
 
 
 <template>
-    <div class="container fontcolor">
+    <div class="container fontcolor pb-8">
         <div class="justify-content-center text-center p-2">
-            <div class="divider fontcolor"><span></span><span>CÉGADATOK</span><span></span></div>
+            <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'shop']" /> CÉGADATOK</span><span></span></div>
+            <img src="../../assets/kepek/desk.png" alt="desk" width="90" height="60"> 
         </div>
-
-    <div>
+    <div>  
 
     <div class="container" v-if="updateSuccessful">
         <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -26,7 +26,7 @@ fetchStore();
         </div>
     </div>
 
-    <ul>
+    <ul class="mt-4">
         <ol v-for="post in posts" key="post.id">
         <form method="POST" @submit.prevent="update()" >
             <div class="d-flex flex-row justify-content-around">
@@ -77,8 +77,8 @@ fetchStore();
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-end">
-                <button class="btn lilagombKicsi col-1" type="submit">Módosít
+                <div class="d-flex justify-content-center">
+                <button class="btn lilagombKicsi col-1 " type="submit">Módosít
                     
                 </button>
                 </div>
@@ -92,5 +92,6 @@ fetchStore();
 <style lang="sass" scoped>
 input
     background: #D9D9D9CC !important
+
 </style>
 

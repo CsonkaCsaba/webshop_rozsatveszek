@@ -11,12 +11,13 @@ fetchProduct();
 <template>
 <div class="container fontcolor">
     <div class="justify-content-center text-center p-2">
-        <div class="divider fontcolor"><span></span><span>TERMÉKEK</span><span></span></div>
+        <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'bars']" /> TERMÉKEK</span><span></span></div>
+        <img src="../../assets/kepek/products.png" alt="desk" width="80" height="80">
     </div>
 </div>
 <div class="container">
-    <div class="d-flex addNewBtn mb-4">
-      <button type="button" class="btn btn-primary" @click="addNewProductBtn" :disabled="disableBtnAdd"><font-awesome-icon :icon="['fas', 'plus']" /> Új termék hozzáadás</button>
+    <div class="d-flex addNewBtn mb-4 ">
+      <button type="button" class="btn secoundaryBtnb" @click="addNewProductBtn" :disabled="disableBtnAdd"><font-awesome-icon :icon="['fas', 'plus']" /> Új termék hozzáadás</button>
     </div>
 </div>
 
@@ -67,8 +68,8 @@ fetchProduct();
             </div>
                 <div class="justify-content-center text-center">
                 <div class="d-inline-flex p-4 mt-2">
-                    <button type="submit" class="btn btn-primary m-1 saveBtn" :disabled="disableBtn">Hozzáadás</button>
-                    <button type="button" class="btn btn-outline-secondary m-1 cancelBtn" @click="addNewProduct = false; disableBtnAdd = false">Mégsem</button>
+                    <button type="submit" class="btn m-1 secoundaryBtna" :disabled="disableBtn">Hozzáadás</button>
+                    <button type="button" class="btn secoundaryBtnb m-1" @click="addNewProduct = false; disableBtnAdd = false">Mégsem</button>
                 </div>
                 </div>
             </div>

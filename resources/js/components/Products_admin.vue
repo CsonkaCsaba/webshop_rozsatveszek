@@ -12,7 +12,7 @@ fetchProduct();
 <div class="container fontcolor">
     <div class="justify-content-center text-center p-2">
         <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'bars']" /> TERMÉKEK</span><span></span></div>
-        <img src="../../assets/kepek/products.png" alt="desk" width="80" height="80">
+        <img src="../../assets/kepek/products1.png" alt="desk" width="80" height="80">
     </div>
 </div>
 <div class="container">

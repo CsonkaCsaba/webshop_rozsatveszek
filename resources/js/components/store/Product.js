@@ -16,6 +16,7 @@ export const ProductStore = defineStore("Product",{
         file: null,
         message : "",
         modalStatus: false,
+        lastInsertproductId: 0,
 
 //        uzenet: "Sikeres mentés ",
         updateSuccessful: false,
@@ -58,6 +59,7 @@ export const ProductStore = defineStore("Product",{
         },
         createProduct(nev, szin, ar, keszlet, leiras){
             let formNewProduct = document.getElementById('addNewproductForm');
+
             this.nev = nev,
             this.szin = szin,
             this.ar = ar,
@@ -84,16 +86,15 @@ export const ProductStore = defineStore("Product",{
 
                   formData.append('form_data', form_data)
                  
-                    axios.post('api/termekadmin/create',formData, config).then(res=>{
+                    axios.post('api/termekadmin/create',formData, config).then((response)=>{
+                    this.lastInsertproductId = response.data.product_Id;
                     this.message = "Új termék létrehozása sikeres!";
                     this.modalStatus = true;
-                    }).catch(console.error)
                     const formDataObj = {};
                     formData.forEach((value, key) => (formDataObj[key] = value));
-                    
-                    
                     let productPush = {
-                        nev : this.nev,
+                        id: this.lastInsertproductId,
+                        nevHu : this.nev,
                         szin : this.szin,
                         ar : this.ar,
                         keszlet: this.keszlet,
@@ -102,26 +103,37 @@ export const ProductStore = defineStore("Product",{
                     }
                    this.products.push(productPush);
                    formNewProduct.reset();
-                    //reload += 1
-
-                   
-
-            }
+                   this.disableBtnAdd = false
+                   this.addNewProduct = false
+                    }).catch(console.error) 
+            }else {
+                this.photoMessage = "Nem választott ki fájlt a feltöltéshez!";
+                }
 
         }, deleteProduct(id){
-            axios.delete('api/termekadmin/'+id).then(res=>{
+            let answer = confirm("Biztos benne, hogy törölni szeretné a terméket?"); 
+            console.log(id)
+            if(answer != false){
+                console.log(id)
+                axios.delete('api/termekadmin/'+id).then(res=>{
                 let index = this.products.findIndex(termek=>termek.id == id);
                 this.products.splice(index, 1)
                 this.modalStatus = true;
-                this.message = "A hír törlése sikeres!",
-                answer = false;
+                this.message = "A terméket töröltük!";
                 }).catch(console.error)
+            }
         },
 
         receiveEmit(){
             this.modalStatus = false
             
         },
+        // orderByProducts(){
+        //     function compareByName(a, b) {
+        //         return a.name.localeCompare(b.name);
+        //       }
+        //     this.products.sort(compareByName)
+        // }
 
     //     update(){
 

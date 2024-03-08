@@ -64,7 +64,7 @@ class TermekController extends Controller
                 $media->termekId = $productId;
                 $media->save();
                 $media->id;
-                return response()->json(array('message' => 'Sikeres feltöltés!', 'last_insert_id'=> $media->id, 'kepUtvonal'=>$media->kepUtvonal, 'kepNev'=>$media->kepNev, 'kepLeiras'=>$media->kepLeiras),200);
+                return response()->json(array('message' => 'Sikeres feltöltés!', 'last_insert_id'=> $media->id, 'kepUtvonal'=>$media->kepUtvonal, 'kepNev'=>$media->kepNev, 'kepLeiras'=>$media->kepLeiras, 'product_Id' =>$productId),200);
                 }
             }
     }
@@ -104,8 +104,9 @@ class TermekController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Termek $termek)
+    public function destroy($id)
     {
-        //
+        $hirek = Termek::find($id);
+        $hirek->delete();
     }
 }

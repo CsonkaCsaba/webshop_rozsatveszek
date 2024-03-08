@@ -265,7 +265,8 @@ import {
     faExclamation,
     faCamera,
     faNewspaper,
-    faShop
+    faShop,
+    faArrowDown
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -298,7 +299,8 @@ library.add(
     faExclamation,
     faCamera,
     faNewspaper,
-    faShop
+    faShop,
+    faArrowDown
 )
 
 const pinia = createPinia();

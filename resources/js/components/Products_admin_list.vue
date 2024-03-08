@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
 const { products, addNewProduct, disableBtnAdd, photoMessage} = storeToRefs(ProductStore())
-const { update, editStore, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct } = ProductStore()
+const { update, editStore, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProducts } = ProductStore()
 fetchProduct();
 </script>
 
@@ -56,7 +56,7 @@ fetchProduct();
                 </div>
                 <div class=" col-4 form-floating mb-3">
                     <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó hozzáadása</p> 
-                    <input id="uploadInput" type="file" @change="onChange" class="form-control" accept="image/*" name="photo"/>
+                    <input id="uploadInput" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" required/>
                     <p class="text-danger">{{ photoMessage }}</p>
                 </div>
             </div>
@@ -74,6 +74,9 @@ fetchProduct();
   <div class="row">
     <div class="col-sm">
         Termék
+        <button class="btn" @click="orderByProducts">
+        <font-awesome-icon :icon="['fas', 'arrow-down']" />
+        </button>
     </div>
     <div class="col-sm artop">
         Ár
@@ -87,10 +90,10 @@ fetchProduct();
 
 <div class="container mb-4">
     <ul class="list">
-        <li class="text-left" v-for="prod in products" :key="prod">
+        <li class="text-left" v-for="prod in products" :key="prod.id">
             <div class="row ">
                 <div class="col-5 ">
-                    <img :src="prod.img" class="rounded image">
+                    <img :src="prod.img" class="image">
                 </div>
                 <div class="col-2 mt-5 keszlet">
                     <p v-if="prod.keszlet <= 0" class="elfogyott">Elfogyott</p>
@@ -105,7 +108,7 @@ fetchProduct();
                 </div>
                 <div class="col-sm buttons">
                     <button type="button" class="btn btn-primary btn-lg m-4" @click=""><font-awesome-icon :icon="['fas', 'pen']" /></button>
-                    <button type="button" class="btn btn-outline-secondary btn-lg" @click="deleteProduct"><font-awesome-icon :icon="['fas', 'trash']" /></button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg" @click="deleteProduct(prod.id)"><font-awesome-icon :icon="['fas', 'trash']" /></button>
                 </div>
                 
             </div>
@@ -132,18 +135,16 @@ fetchProduct();
                 -o-transition: all 1s ease
                 -ms-transition: all 1s ease
                 transition: all 1s ease
-            
-            
+                border-radius: 0%
+            .keszlet
+                filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.65))
             
 .image
     max-width: 60%
     max-height: auto
     padding: 10px
-    border-radius: 25%
-    -webkit-filter: brightness(70%)
-    
-    
-
+    border-radius: 10%
+    -webkit-filter: brightness(75%)
 
 .elfogyott
     background: linear-gradient(to right top, #CA212B 40%, transparent)

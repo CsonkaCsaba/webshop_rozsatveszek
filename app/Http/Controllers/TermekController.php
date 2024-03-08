@@ -45,6 +45,7 @@ class TermekController extends Controller
                 $form_data = json_decode($request->form_data);
                 $product = Termek::create([
                     'nevHu'=> $form_data->nev,
+                    'nevEn'=> $form_data->nev,
                     'szin'=> $form_data->szin,
                     'ar'=> $form_data->ar,
                     'leirasHu' =>$form_data->leiras,

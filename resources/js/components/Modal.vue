@@ -22,7 +22,7 @@ function modalStatus() {
       </v-card-text>
       <v-card-actions>
         <div class="d-grid gap-2 col-6 mx-auto">
-          <button class="btn btn-primary btn-lg w100" @click="modalStatus()"> OK </button>
+          <button class="btn lilagombKicsi w100" @click="modalStatus()"> OK </button>
         </div>
       </v-card-actions>
       </v-card>

@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
+import {ref } from 'vue'
+
+export let reload = ref(0);
 
 export const ProductStore = defineStore("Product",{
     state: () => {
@@ -11,7 +14,8 @@ export const ProductStore = defineStore("Product",{
         disableBtnAdd: false,
         photoMessage : "",
         file: null,
-        photoMessage : "",
+        message : "",
+        modalStatus: false,
 
 //        uzenet: "Sikeres mentés ",
         updateSuccessful: false,
@@ -53,12 +57,13 @@ export const ProductStore = defineStore("Product",{
 
         },
         createProduct(nev, szin, ar, keszlet, leiras){
+            let formNewProduct = document.getElementById('addNewproductForm');
             this.nev = nev,
             this.szin = szin,
             this.ar = ar,
             this.keszlet = keszlet
             this.leiras = leiras
-            
+
             const config = {
                 headers: {
                     'content-type':'multipart/form-data'
@@ -78,17 +83,45 @@ export const ProductStore = defineStore("Product",{
                   });
 
                   formData.append('form_data', form_data)
-
                  
                     axios.post('api/termekadmin/create',formData, config).then(res=>{
-                    // this.message = "A hír módosítása sikeres!";
-                    // this.modalStatus = true;
-                    // this.showSwiper +=1;
+                    this.message = "Új termék létrehozása sikeres!";
+                    this.modalStatus = true;
                     }).catch(console.error)
+                    const formDataObj = {};
+                    formData.forEach((value, key) => (formDataObj[key] = value));
+                    
+                    
+                    let productPush = {
+                        nev : this.nev,
+                        szin : this.szin,
+                        ar : this.ar,
+                        keszlet: this.keszlet,
+                        leiras: this.leiras,
+                        img: "../public/img/uploads/"+formDataObj.file.name
+                    }
+                   this.products.push(productPush);
+                   formNewProduct.reset();
+                    //reload += 1
+
+                   
 
             }
 
-        }
+        }, deleteProduct(id){
+            axios.delete('api/termekadmin/'+id).then(res=>{
+                let index = this.products.findIndex(termek=>termek.id == id);
+                this.products.splice(index, 1)
+                this.modalStatus = true;
+                this.message = "A hír törlése sikeres!",
+                answer = false;
+                }).catch(console.error)
+        },
+
+        receiveEmit(){
+            this.modalStatus = false
+            
+        },
 
     //     update(){
 

@@ -152,6 +152,12 @@ const Products_admin_Async = defineAsyncComponent({
 })
 app.component('products_admin', Products_admin_Async);
 
+const Products_admin_list_Async = defineAsyncComponent({
+    loader:() => import('./components/Products_admin_list.vue')
+})
+app.component('products_admin_list', Products_admin_list_Async);
+
+
  import Home from './components/Home.vue';
  app.component('Home', Home);
 

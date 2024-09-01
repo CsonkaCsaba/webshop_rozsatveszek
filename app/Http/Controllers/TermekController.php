@@ -30,7 +30,8 @@ class TermekController extends Controller
      */
     public function create(Request $request)
     {
-        
+     
+
         if ($request->hasFile('file')) {
             $files = $request->file('file'); 
             $file_name = $files->getClientOriginalName();
@@ -96,10 +97,64 @@ class TermekController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Termek $termek)
+    public function update(Request $request)
     {
-        //
-    }
+        $file = $request->file('upload_file');
+        if($file !== "" || $file !== null){
+        return response()->json(array('message' => $file['name']));
+        }else{
+        return response()->json(array('message' => 'NINCS!'));
+        }
+
+        
+        // if ($request->hasFile('upload_file')) {
+        //     return response()->json(array('message' => 'VAN!'));
+            // $files = $request->file('file'); 
+            // $file_name = $files->getClientOriginalName();
+            
+            // if (Kepek::where('kepNev', 'LIKE', $file_name)->exists()){
+            //     $exist_image = Kepek::where('kepNev', 'LIKE', $file_name)->get();
+            //     return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezze át vagy válasszon másikat!', 'error' => 422)); 
+
+            // } else {
+            //     $form_data = json_decode($request->formData_update);
+            //     $product = Termek::find($form_data->id);
+            //     $imgUrl = '../public/img/uploads/'.$file_name;
+            //     $product->nevHu = $form_data->nev;
+            //     $product->nevEn = $form_data->nev;
+            //     $product->szin = $form_data->szin;
+            //     $product->ar = $form_data->ar;
+            //     $product->leirasHu = $form_data->leiras;
+            //     $product->keszlet = $form_data->keszlet;
+            //     $product->img = $imgUrl;
+            //     $product->save();
+            //     $productId = $product->id;
+
+            //     $media = new Kepek;
+
+            //     $files->storeAs('img/uploads/', $file_name);
+            //     $media->kepNev = $file_name;
+            //     $media->kepLeiras = $file_name;
+            //     $media->kepUtvonal = '../public/img/uploads/'.$file_name;
+            //     $media->uzletId = 1;
+            //     $media->termekId = $productId;
+            //     $media->save();
+            //     $media->id;
+            //         return response()->json(array('message' => 'Sikeres feltöltés!', 'last_insert_id'=> $media->id, 'kepUtvonal'=>$media->kepUtvonal, 'kepNev'=>$media->kepNev, 'kepLeiras'=>$media->kepLeiras, 'product_Id' =>$productId),200);
+            //         }
+            // } else {
+            //     return response()->json(array('message' => 'NINCS!'));
+                // $id = $request['id'];
+                // $product = Termek::find($id);
+                // $product->nevHu = $request->nev;
+                // $product->nevEn = $request->nev;
+                // $product->szin = $request->szin;
+                // $product->ar = $request->ar;
+                // $product->leirasHu = $request->leiras;
+                // $product->keszlet = $request->keszlet;
+                // $product->save();
+            // }
+}
 
     /**
      * Remove the specified resource from storage.

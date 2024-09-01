@@ -17,6 +17,9 @@ export const ProductStore = defineStore("Product",{
         message : "",
         modalStatus: false,
         lastInsertproductId: 0,
+        showDown : true,
+        showUp : false,
+        edit_id: null,
 
 //        uzenet: "Sikeres mentés ",
         updateSuccessful: false,
@@ -38,8 +41,8 @@ export const ProductStore = defineStore("Product",{
                         termekek = response.data
                     });
                     for(const termek of termekek){
+                        termek.edit = false
                         this.products.push(termek);
-
                     }
                 }
                  catch(error){
@@ -73,7 +76,7 @@ export const ProductStore = defineStore("Product",{
             }
             let formData = new FormData();
 
-            if(this.file != ""){
+            if(this.file !== null){
                 formData.append('file', this.file);
                 
                 let form_data = JSON.stringify({
@@ -87,6 +90,7 @@ export const ProductStore = defineStore("Product",{
                   formData.append('form_data', form_data)
                  
                     axios.post('api/termekadmin/create',formData, config).then((response)=>{
+                    if(response.status == 200){
                     this.lastInsertproductId = response.data.product_Id;
                     this.message = "Új termék létrehozása sikeres!";
                     this.modalStatus = true;
@@ -105,6 +109,7 @@ export const ProductStore = defineStore("Product",{
                    formNewProduct.reset();
                    this.disableBtnAdd = false
                    this.addNewProduct = false
+                    }
                     }).catch(console.error) 
             }else {
                 this.photoMessage = "Nem választott ki fájlt a feltöltéshez!";
@@ -112,14 +117,14 @@ export const ProductStore = defineStore("Product",{
 
         }, deleteProduct(id){
             let answer = confirm("Biztos benne, hogy törölni szeretné a terméket?"); 
-            console.log(id)
             if(answer != false){
-                console.log(id)
-                axios.delete('api/termekadmin/'+id).then(res=>{
+                axios.delete('api/termekadmin/'+id).then((response)=>{
+                if(response.status == 200){
                 let index = this.products.findIndex(termek=>termek.id == id);
                 this.products.splice(index, 1)
                 this.modalStatus = true;
                 this.message = "A terméket töröltük!";
+                }
                 }).catch(console.error)
             }
         },
@@ -128,12 +133,98 @@ export const ProductStore = defineStore("Product",{
             this.modalStatus = false
             
         },
-        // orderByProducts(){
-        //     function compareByName(a, b) {
-        //         return a.name.localeCompare(b.name);
-        //       }
-        //     this.products.sort(compareByName)
-        // }
+        orderByProductsAz(){
+            function compareByName(a, b) {
+                return a.nevHu.localeCompare(b.nevHu);
+              }
+            this.products.sort(compareByName)
+            this.showDown = false,
+            this.showUp = true
+        },
+        orderByProductsZa(){
+
+            function compareByName(a, b) {
+                return b.nevHu.localeCompare(a.nevHu);
+              }
+            this.products.sort(compareByName)
+
+            this.showDown = true,
+            this.showUp = false
+        },
+
+        editProduct(id){
+            this.edit_id = id
+            // let form_data_update = []
+            this.products.forEach(function(element) {
+                if(element.id === id){
+                    let form_data_update = {
+                    id : element.id,
+                    nev : element.nevHu,
+                    szin : element.szin,
+                    ar : element.ar,
+                    keszlet : element.keszlet,
+                    leiras : element.leirasHu
+                    }
+                    //form_data_update.push(element)
+                    axios.put('api/termekadmin/'+id, form_data_update).then((response)=>{
+                        if(response.status == 200){
+                        this.message = "A termék módosítása sikeres!";
+                        this.modalStatus = true;
+                        this.products.forEach(function(element) {
+                        if(element.id === id){
+                            element.edit = false
+                                }
+                            })    
+                        }
+                        }).catch(console.error) 
+                }
+            })
+
+            if(this.file !== null){
+               
+                const conf = {
+                    headers: {
+                        'Content-type':'multipart/form-data',
+                        'enctype':"multipart/form-data"
+                    }
+                };
+                let formData_update = new FormData();
+                formData_update.append('upload_file',  document.getElementById('upload_file').files[0]);
+                formData_update.append('form_data_update', JSON.stringify(form_data_update));
+                for (let [key, value] of formData_update) {
+                    console.log(`${key}: ${value}`)
+                  }
+                axios.put('api/termekadmin/'+id, formData_update, conf).then((response)=>{
+                    if(response.status == 200){
+                    this.message = "A termék módosítása sikeres!";
+                    this.modalStatus = true;
+                    }
+                    }).catch(console.error)
+
+            } else {
+                    
+                }
+
+            
+
+            
+
+                  //     const formDataObj = {};
+                //     formData.forEach((value, key) => (formDataObj[key] = value));
+                //     let productPush = {
+                //         id: this.lastInsertproductId,
+                //         nevHu : this.nev,
+                //         szin : this.szin,
+                //         ar : this.ar,
+                //         keszlet: this.keszlet,
+                //         leiras: this.leiras,
+                //         img: "../public/img/uploads/"+formDataObj.file.name
+                //     }
+                //    this.products.push(productPush);
+                //    formNewProduct.reset();
+                //    this.disableBtnAdd = false
+                //    this.addNewProduct = false
+        }
 
     //     update(){
 

@@ -97,14 +97,14 @@ class TermekController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $file = $request->file('upload_file');
-        if($file !== "" || $file !== null){
-        return response()->json(array('message' => $file['name']));
-        }else{
-        return response()->json(array('message' => 'NINCS!'));
-        }
+        // $file = $request->file('upload_file');
+        // if($file !== "" || $file !== null){
+        // return response()->json(array('message' => $file['name']));
+        // }else{
+        // return response()->json(array('message' => 'NINCS!'));
+        // }
 
         
         // if ($request->hasFile('upload_file')) {
@@ -117,18 +117,18 @@ class TermekController extends Controller
             //     return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezze át vagy válasszon másikat!', 'error' => 422)); 
 
             // } else {
-            //     $form_data = json_decode($request->formData_update);
-            //     $product = Termek::find($form_data->id);
-            //     $imgUrl = '../public/img/uploads/'.$file_name;
-            //     $product->nevHu = $form_data->nev;
-            //     $product->nevEn = $form_data->nev;
-            //     $product->szin = $form_data->szin;
-            //     $product->ar = $form_data->ar;
-            //     $product->leirasHu = $form_data->leiras;
-            //     $product->keszlet = $form_data->keszlet;
-            //     $product->img = $imgUrl;
-            //     $product->save();
-            //     $productId = $product->id;
+                // $form_data = json_decode($request->formData_update);
+                $product = Termek::find($id);
+                // $imgUrl = '../public/img/uploads/'.$file_name;
+                $product->nevHu = $request->nevHu;
+                $product->nevEn = $request->nevHu;
+                $product->szin = $request->szin;
+                $product->ar = $request->ar;
+                $product->leirasHu = $request->leirasHu;
+                $product->keszlet = $request->keszlet;
+                // $product->img = $imgUrl;
+                $product->save();
+                // $productId = $product->id;
 
             //     $media = new Kepek;
 

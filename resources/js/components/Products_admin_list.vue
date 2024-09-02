@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
 const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown} = storeToRefs(ProductStore())
-const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, editProduct } = ProductStore()
+const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct } = ProductStore()
 fetchProduct();
 </script>
 
@@ -125,7 +125,7 @@ fetchProduct();
                 </div>
                 <Transition>
                 <div class="row editProductForm" v-if="prod.edit">
-                    <form class="col ml-8" method="PUT" @submit.prevent="editProduct(prod.id)">
+                    <form class="col ml-8" method="PUT" @submit.prevent="updateProduct(prod.id, prod.nevHu, prod.szin, prod.ar, prod.keszlet, prod.leirasHu)">
                         <div class="container">
                             <div class="row justify-content-center text-center">
                                 <div class="col-4">
@@ -162,11 +162,11 @@ fetchProduct();
                                         <textarea id="description"  class="form-control fw-light" required :placeholder=prod.leirasHu v-model="prod.leirasHu" rows="8">
                                         </textarea>
                                 </div>
-                                <div class=" col-4 form-floating mb-3">
+                                <!-- <div class=" col-4 form-floating mb-3">
                                     <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó módosítás</p> 
                                     <input name="upload_file" id="upload_file" type="file" @change="onChange" class="form-control" accept="image/*"/>
                                     <p class="text-danger">{{ photoMessage }}</p>
-                                </div>
+                                </div> -->
                             </div>
                                 <div class="justify-content-center text-center">
                                 <div class="d-inline-flex p-4 mt-2">

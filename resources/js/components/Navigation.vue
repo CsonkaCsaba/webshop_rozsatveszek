@@ -69,8 +69,8 @@ export default {
                         <li class="nav-item dropdown p-1 m-0">
                             <a class="dropdown-toggle ikon-size" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
                             <ul class="dropdown-menu position-absolute dropdown-menu-right">
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="login" data-bs-toggle="modal" data-bs-target="#LoginModal">Bejelentkezés</a></li>  
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#RegistModal">Regisztráció</a></li>
+                                <li class="p-0"><a class="dropdown-item p-1" href="login" id="login">Bejelentkezés</a></li>  
+                                <li class="p-0"><a class="dropdown-item p-1" href="register#" id="register">Regisztráció</a></li>
                                 
                             </ul>
                         </li>
@@ -120,8 +120,8 @@ export default {
                                 <li class="text-white nav-item dropdown m-0 p-0">
                                     <a class="text-white dropdown-toggle link" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
                                     <ul class="dropdown-menu position-absolute dropdown-menu-right">
-                                        <li class="p-0"><a class="dropdown-item p-1" href="#" id="login" data-bs-toggle="modal" data-bs-target="#LoginModal">Bejelentkezés</a></li>  
-                                        <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#RegistModal">Regisztráció</a></li>
+                                        <li class="p-0"><a class="dropdown-item p-1" href="#" id="login">Bejelentkezés</a></li>  
+                                        <li class="p-0"><a class="dropdown-item p-1" href="#" id="register">Regisztráció</a></li>
                                     </ul>
                                 </li>
                             </div>

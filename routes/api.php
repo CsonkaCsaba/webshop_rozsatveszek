@@ -34,5 +34,5 @@ Route::post('/hirekadmin/create', [HirekController::class,'create']);
 Route::post('/megrendeles/storeOrder', [OrderController::class, 'storeOrder']);
 Route::post('/termekadmin/create', [TermekController::class,'create']);
 Route::resource('/termekadmin', TermekController::class);
-//Route::put('/termekadmin/{id}', [TermekController::class,'update']);
+Route::put('/termekadmin/{id}', [TermekController::class,'update']);
 

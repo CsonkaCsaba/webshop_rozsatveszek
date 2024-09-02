@@ -152,58 +152,64 @@ export const ProductStore = defineStore("Product",{
             this.showUp = false
         },
 
-        editProduct(id){
+        updateProduct(id, nevHu, szin, ar, keszlet, leirasHu){
             this.edit_id = id
-            // let form_data_update = []
-            this.products.forEach(function(element) {
+            let product = this.products.find(product=>product.id == id)
+            if(product != null){ 
+                this.id = id,
+                this.nevHu = nevHu,
+                this.szin = szin,
+                this.ar = ar,
+                this.keszlet = keszlet,
+                this.leirasHu = leirasHu
+            }
+            let form_data_update = {
+                id: this.id,
+                nevHu : this.nevHu,
+                szin : this.szin,
+                ar : this.ar,
+                keszlet: this.keszlet,
+                leirasHu: this.leirasHu
+            }
+            //form_data_update.push(element)
+            axios.put('api/termekadmin/'+id, form_data_update).then((response)=>{
+                if(response.status == 200){
+                this.message = "A termék módosítása sikeres!";
+                this.modalStatus = true;
+                this.products.forEach(function(element) {
                 if(element.id === id){
-                    let form_data_update = {
-                    id : element.id,
-                    nev : element.nevHu,
-                    szin : element.szin,
-                    ar : element.ar,
-                    keszlet : element.keszlet,
-                    leiras : element.leirasHu
-                    }
-                    //form_data_update.push(element)
-                    axios.put('api/termekadmin/'+id, form_data_update).then((response)=>{
-                        if(response.status == 200){
-                        this.message = "A termék módosítása sikeres!";
-                        this.modalStatus = true;
-                        this.products.forEach(function(element) {
-                        if(element.id === id){
-                            element.edit = false
-                                }
-                            })    
+                    element.edit = false
                         }
-                        }).catch(console.error) 
+                    })    
                 }
-            })
+                }).catch(console.error) 
+            
+            
 
-            if(this.file !== null){
+            // if(this.file !== null){
                
-                const conf = {
-                    headers: {
-                        'Content-type':'multipart/form-data',
-                        'enctype':"multipart/form-data"
-                    }
-                };
-                let formData_update = new FormData();
-                formData_update.append('upload_file',  document.getElementById('upload_file').files[0]);
-                formData_update.append('form_data_update', JSON.stringify(form_data_update));
-                for (let [key, value] of formData_update) {
-                    console.log(`${key}: ${value}`)
-                  }
-                axios.put('api/termekadmin/'+id, formData_update, conf).then((response)=>{
-                    if(response.status == 200){
-                    this.message = "A termék módosítása sikeres!";
-                    this.modalStatus = true;
-                    }
-                    }).catch(console.error)
+            //     const conf = {
+            //         headers: {
+            //             'Content-type':'multipart/form-data',
+            //             'enctype':"multipart/form-data"
+            //         }
+            //     };
+            //     let formData_update = new FormData();
+            //     formData_update.append('upload_file',  document.getElementById('upload_file').files[0]);
+            //     formData_update.append('form_data_update', JSON.stringify(form_data_update));
+            //     for (let [key, value] of formData_update) {
+            //         console.log(`${key}: ${value}`)
+            //       }
+            //     axios.put('api/termekadmin/'+id, formData_update, conf).then((response)=>{
+            //         if(response.status == 200){
+            //         this.message = "A termék módosítása sikeres!";
+            //         this.modalStatus = true;
+            //         }
+            //         }).catch(console.error)
 
-            } else {
+            // } else {
                     
-                }
+            //     }
 
             
 

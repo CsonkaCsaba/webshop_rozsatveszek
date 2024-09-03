@@ -28,7 +28,7 @@ onServerPrefetch(async () => {
     <swiper-slide v-for="gall in gallery">
         <div class="card">
         <img :src="gall.kepUtvonal" :alt="gall.kepLeiras" class="card-img-top galleryphoto"/>
-        <div class="card-header">
+        <div class="">
         <div class="d-flex justify-content-center">
                 <div class="form-group">
                     <button type="button" class="btn secoundaryBtna m-2"  @click="deletePhoto(gall.id, gall.uzletId, gall.kepNev)" data-bs-toggle="tooltip" data-bs-placement="top" title="Fotó törlése"  :disabled="gall.id <= 4"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>

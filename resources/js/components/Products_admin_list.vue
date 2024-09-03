@@ -1,6 +1,4 @@
 <script setup>
-import axios from 'axios';
-import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
 const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown} = storeToRefs(ProductStore())

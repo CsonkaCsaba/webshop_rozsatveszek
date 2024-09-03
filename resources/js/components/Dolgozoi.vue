@@ -18,7 +18,7 @@ register();
             <a class="nav-link " id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-3" role="tab" aria-controls="simple-tabpanel-3" aria-selected="false"> <font-awesome-icon :icon="['fas', 'bars']" /> Termékek</a>
         </li>
         <li class="nav-item " role="presentation">
-            <a class="nav-link disabled" id="simple-tab-4" data-bs-toggle="tab" href="#simple-tabpanel-4" role="tab" aria-controls="simple-tabpanel-4" aria-selected="false"><font-awesome-icon :icon="['fas', 'cart-shopping']" /> Rendelések</a>
+            <a class="nav-link " id="simple-tab-4" data-bs-toggle="tab" href="#simple-tabpanel-4" role="tab" aria-controls="simple-tabpanel-4" aria-selected="false"><font-awesome-icon :icon="['fas', 'cart-shopping']" /> Rendelések</a>
         </li>
     </ul>
     <div class="tab-content" id="tab-content">
@@ -43,9 +43,9 @@ register();
             </Suspense>
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-4" role="tabpanel" aria-labelledby="simple-tab-4">
-            <!-- <Suspense>
-                <news_admin></news_admin>
-            </Suspense> -->
+            <Suspense>
+                <orders_admin></orders_admin>
+            </Suspense>
             <p>Rendelések</p>
         </div>
     </div>

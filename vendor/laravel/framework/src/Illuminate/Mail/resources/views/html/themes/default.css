@@ -64,10 +64,12 @@ p {
     line-height: 1.5em;
     margin-top: 0;
     text-align: left;
+    color: black;
 }
 
 p.sub {
     font-size: 12px;
+    color: black;
 }
 
 img {
@@ -170,13 +172,13 @@ img {
 }
 
 .footer p {
-    color: #b0adc5;
+    color: #222222;
     font-size: 12px;
     text-align: center;
 }
 
 .footer a {
-    color: #b0adc5;
+    color: #222222;
     text-decoration: underline;
 }
 

@@ -24,7 +24,7 @@ width: 100% !important;
 }
 </style>
 </head>
-<body>
+<body style="background-color: #6e6e6e;">
 
     <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
     <tr>
@@ -34,8 +34,8 @@ width: 100% !important;
 
     <!-- Email Body -->
     <tr>
-    <td class="body" width="100%" cellpadding="0" cellspacing="0" style="border: hidden !important;">
-    <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
+    <td class="body" width="100%" cellpadding="0" cellspacing="0" style="border: hidden !important;background-color: #eedbdd; background-image: url('https://renoma.hu/wp-content/uploads/2024/09/kezdokep.jpg'); background-repeat: no-repeat;background-position: center;">
+    <table class="inner-body" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border: 2px solid rgb(36, 36, 36);border-radius: 15px;">
     <!-- Body content -->
     <tr>
     <td class="content-cell">

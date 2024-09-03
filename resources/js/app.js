@@ -51,6 +51,10 @@ const router = createRouter({
         { path: '/dolgozoi',
         name: 'dolgozoi',
         component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Dolgozoi.vue')},
+        { path: '/rendelesek',
+        name: 'orders_admin',
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Orders_admin.vue')},
+        
     ]
 });
 

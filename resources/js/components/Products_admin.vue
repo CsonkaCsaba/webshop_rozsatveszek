@@ -1,16 +1,16 @@
 <script setup>
 import { onServerPrefetch } from 'vue'
 import { storeToRefs } from 'pinia';
-import { ProductStore } from './store/Product';
+import { OrdersStore } from './store/Orders';
 import { reload } from './store/Product';
 
-const store = ProductStore()
+const store = OrdersStore()
 onServerPrefetch(async () => {
   await store.fetchData()
 })
 
-const { modalStatus, message} = storeToRefs(ProductStore())
-const { receiveEmit} = ProductStore()
+const { modalStatus, message} = storeToRefs(OrdersStore())
+const { receiveEmit} = OrdersStore()
 </script>
 
 <template>

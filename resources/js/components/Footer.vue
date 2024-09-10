@@ -11,7 +11,7 @@
             </div>
     <div class="container-fluid p-4 m-0 text-center text-white bg-dark">
         <div class="row p-3 border-bottom border-secondary">
-            <div class="col">
+            <div class="col" id="kapcsolat">
                 <h4>Fiókom</h4>
                 <a>Felhasználói fiók</a><br>
                 <a>Kosár</a><br>

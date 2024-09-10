@@ -31,7 +31,7 @@ fetchStore();
         <form method="POST" @submit.prevent="update()" >
             <div class="d-flex flex-row justify-content-around">
                 <div class="p-2">
-                    <h5>Cím</h5>
+                    <h5 class="fw-bold fs-5">Cím</h5>
                    
                     <input type="hidden" class="form-control" :placeholder="post.id" v-model="post.id" name="id"/>
                     <input type="hidden" class="form-control" :placeholder="post.nev" v-model="post.nev" name="nev"/>
@@ -55,7 +55,7 @@ fetchStore();
                         </div>
                 </div>
                 <div class="p-2">
-                    <h5>Elérhetőség</h5>
+                    <h5 class="fw-bold fs-5">Elérhetőség</h5>
                     <div class="col-12 mb-3">
                             <label class="form-label form-label-top" for="tel">Telefonszám</label>
                             <input type="text" class="form-control" :placeholder="post.tel" v-model="post.tel" name="tel"/>
@@ -66,7 +66,7 @@ fetchStore();
                         </div>
                 </div>
                     <div class="p-2">
-                        <h5>Egyéb</h5>
+                        <h5 class="fw-bold fs-5">Egyéb</h5>
                         <div class="col-12 mb-3">
                             <label class="form-label form-label-top" for="adoszam">Adószám</label>
                             <input type="text" class="form-control" :placeholder="post.adoszam" v-model="post.adoszam" name="adoszam"/>

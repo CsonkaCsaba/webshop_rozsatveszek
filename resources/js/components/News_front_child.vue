@@ -14,7 +14,7 @@ fetchNews()
 </script>
 
 <template>
-<div class="tartalom pb-5">
+<div class="tartalom pb-5" id="hirek">
     <div id="fejlec d-flex flex-column justify-content-center">
             <h2 class="pb-2 text-center">Legfrisebb híreink</h2>
             <hr class="m-auto">

@@ -4,7 +4,7 @@ import {ref } from 'vue'
 
 export let reload = ref(0);
 
-export const OrdersStore = defineStore("Product",{
+export const OrdersStore = defineStore("OrdersStore",{
     state: () => {
       return {
         orders: [
@@ -12,21 +12,22 @@ export const OrdersStore = defineStore("Product",{
         ],
         addNewProduct: false,
         disableBtnAdd: false,
-        photoMessage : "",
-        file: null,
         message : "",
         modalStatus: false,
+        modalStatusAccept: false,
+        save: false,
         lastInsertproductId: 0,
-        showDown : true,
-        showUp : false,
+        showDown : false,
         edit_id: null,
-
-//        uzenet: "Sikeres mentés ",
+        selectedValue: "",
+        optionsStatus:[ {"id": 1, "option":"Feldolgozás alatt"},
+                        {"id": 2, "option":"Kiszállítás alatt"}, 
+                        {"id": 3, "option":"Teljesítve"},
+                        {"id": 4, "option":"Visszamondott"},
+                        {"id": 5, "option":"Sikertelen kézbesítés"}],
+        optionsFinal:[],
         updateSuccessful: false,
-        db_data: {
-            photo: {},
-        }
-       
+        accepted: false,
         }
     },
     getters: {
@@ -35,30 +36,33 @@ export const OrdersStore = defineStore("Product",{
     actions: {
 
         async fetchOrders(){
-            let termekek = [];
+            let rendelesek = [];
             try {
-                    await axios.get('api/termekek').then(function(response){
-                        termekek = response.data
+                    await axios.get('api/rendelesek').then(function(response){
+                        rendelesek = response.data
                     });
-                    for(const termek of termekek){
-                        termek.edit = false
-                        this.products.push(termek);
+                    for(const rendeles of rendelesek){
+                        const spl = rendeles.rogzitDatum.split('T');
+                        const rendelesDate = spl[0];
+                        rendeles.rogzitDatum = rendelesDate;
+                        rendeles.optionsFinal = this.optionsStatus.filter(option => option.option !== rendeles.allapot);
+                        for(const product of rendeles.termek) {
+                            const db = product.pivot.mennyiseg;
+                            const price = product.ar
+                            product.subTotal = db * price
+                        }
+                        this.orders.push(rendeles);
                     }
+                    // for(const order fthis.orders)
                 }
                  catch(error){
-                    console.log(error.response.data)
+                    console.log(error.message)
                 }
         },
         addNewProductBtn(){
             this.addNewProduct = true
             this.disableBtnAdd = true;
             
-        },
-        onChange(e){
-            let file;
-            file = e.target.files[0];
-            this.file = file;
-
         },
         createProduct(nev, szin, ar, keszlet, leiras){
             let formNewProduct = document.getElementById('addNewproductForm');
@@ -130,7 +134,8 @@ export const OrdersStore = defineStore("Product",{
         },
 
         receiveEmit(){
-            this.modalStatus = false
+            this.modalStatus = false;
+            this.modalStatusAccept = false;
             
         },
         orderByProductsAz(){
@@ -152,38 +157,47 @@ export const OrdersStore = defineStore("Product",{
             this.showUp = false
         },
 
-        updateProduct(id, nevHu, szin, ar, keszlet, leirasHu){
-            this.edit_id = id
-            let product = this.products.find(product=>product.id == id)
-            if(product != null){ 
-                this.id = id,
-                this.nevHu = nevHu,
-                this.szin = szin,
-                this.ar = ar,
-                this.keszlet = keszlet,
-                this.leirasHu = leirasHu
+        updateOrder(id){
+            let order = this.orders.find(order=>order.id == id)
+            if(order != null){ 
+                this.message = 'A módosítással email értesítést küldünk ki az ügyfélnek. Biztosan mented a módosítást?';
+                this.modalStatusAccept = true;
+            } else{
+                this.message = 'A kiválasztott rendelés nem található a rendszerben!';
+                this.modalStatusAccept = true;
             }
+        },
+
+        selectedStatus(){
+            console.log(this.selectedStatus);
+        },
+        onChange(id, event) {
+            let order = this.orders.find(order=>order.id == id)
+            if(order!= null){
+                order.allapot = event.target.value
+                order.optionsFinal = this.optionsStatus.filter(option => option.option !== event.target.value);
+                }
+            this.edit_id = id;
+        },
+        saveUpdate(){
+            this.modalStatus = false;
+            this.modalStatusAccept = false;
+            this.save = true;
+            let order = this.orders.find(order=>order.id == this.edit_id)
+            if(order!= null){
             let form_data_update = {
-                id: this.id,
-                nevHu : this.nevHu,
-                szin : this.szin,
-                ar : this.ar,
-                keszlet: this.keszlet,
-                leirasHu: this.leirasHu
+                id: this.edit_id,
+                allapot: order.allapot
             }
-            //form_data_update.push(element)
-            axios.put('api/termekadmin/'+id, form_data_update).then((response)=>{
+                axios.put('api/rendelesek/'+this.edit_id, form_data_update).then((response)=>{
                 if(response.status == 200){
-                this.message = "A termék módosítása sikeres!";
-                this.modalStatus = true;
-                this.products.forEach(function(element) {
-                if(element.id === id){
-                    element.edit = false
-                        }
-                    })    
+                    this.message = "A rendelés állapotának módosítása sikeres!";
+                    this.modalStatus = true;   
                 }
                 }).catch(console.error) 
-        
+            }
+           
+
         }
 
 

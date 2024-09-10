@@ -94,11 +94,11 @@ export default {
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">
                     <li><a href="/webshop_rozsatveszek/public/">Kezdőlap</a></li> <!--átírandó-->
-                    <li><router-link class="link" :to="{name: 'About'}">Rólunk</router-link></li>
-                    <li><a href="#hirek">Hírek</a></li>
+                    <li><a href="/webshop_rozsatveszek/public#about">Rólunk</a></li>
+                    <li><a href="/webshop_rozsatveszek/public#hirek">Hírek</a></li>
                     <li><a href="galeria">Galéria</a></li>
                     <li><a href="termekek">Termékek</a></li>
-                    <li><a href="#kapcsolat">Kapcsolat</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/#kapcsolat">Kapcsolat</a></li>
                     <li><a href="tanacsok">Tanácsok</a></li>
                 </ul>
             </div>

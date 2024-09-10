@@ -15,12 +15,15 @@ class Rendeles extends Model
 
     public function vasarlo(): BelongsTo
     {
-        return $this->belongsTo(Vasarlo::class);
+        return $this->belongsTo(Vasarlo::class, 'fk_vasarloId', 'id');
     }
 
     public function termek(): BelongsToMany
     {
         return $this->belongsToMany(Termek::class, 'valaszts')->withPivot('mennyiseg','kedvezmeny');
+    }
+    public function cim(): BelongsToMany{
+        return $this->belongsToMany(Cim::class, 'cimes', 'id','cim_id');
     }
 
     protected $fillable =[

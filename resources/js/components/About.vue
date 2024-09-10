@@ -2,7 +2,7 @@
 <template>
     <Suspense>
             <template #default>
-                        <div class="tartalom pt-3 pt-sm-6 pt-md-7">
+                        <div class="tartalom pt-3 pt-sm-6 pt-md-7" id="abot" >
                 
                 <div id="fejlec d-flex flex-column justify-content-center">
                     <h2 class="pb-2 text-center">Rólunk</h2>

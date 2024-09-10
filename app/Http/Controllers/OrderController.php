@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function show(Rendeles $rendeles)
+    {
+        $query = Rendeles::query()->with(['vasarlo'])->with(['termek'])->orderBy('id', 'desc')->get();
+        return response()->json($query);
+
+    
+    }
+
     public function storeOrder(Request $request){
 
         //Billing Address
@@ -84,6 +92,14 @@ class OrderController extends Controller
         foreach ($request->items as $product){
             $rendeles->termek()->attach($product['id'], ['mennyiseg' => $product['quantity']]);
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $order = Rendeles::find($id);
+        $order->allapot = $request->allapot;
+        $order->save();
+
     }
 }
 

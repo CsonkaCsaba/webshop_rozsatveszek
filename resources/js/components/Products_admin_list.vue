@@ -74,12 +74,12 @@ fetchProduct();
     
     <div class="col-sm">
         <div v-if="showDown">
-            <button class="btn fw-bold" @click="orderByProductsAz">
+            <button class="btn fw-bold fs-5" @click="orderByProductsAz">
                 Termék <font-awesome-icon :icon="['fas', 'arrow-down-a-z']" />
             </button>
         </div>
         <div v-if="showUp">
-            <button class="btn fw-bold" @click="orderByProductsZa">
+            <button class="btn fw-bold fs-5" @click="orderByProductsZa">
                 Termék <font-awesome-icon :icon="['fas', 'arrow-up-a-z']" />
             </button>
         </div>
@@ -87,10 +87,10 @@ fetchProduct();
        
        
     </div>
-    <div class="col-sm artop">
+    <div class="col-sm artop fw-bold fs-5">
         Ár
     </div>
-    <div class="col-sm szerkeszttop">
+    <div class="col-sm szerkeszttop fw-bold fs-5">
         Szerkesztés
     </div>
   </div>
@@ -205,7 +205,8 @@ fetchProduct();
                 border-radius: 0%
             .keszlet
                 filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.65))
-            
+li:nth-child(odd)
+                background: #f7f5f0           
 .image
     max-width: 60%
     max-height: auto

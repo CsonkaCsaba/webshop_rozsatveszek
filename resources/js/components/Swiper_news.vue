@@ -22,7 +22,7 @@ fetchNewsadmin();
                 <p class="m-3">{{ne.datum}}</p>
             <div class="card-body">
             <div class="d-flex justify-content-center">
-                <form method="POST" @submit.prevent="updateNews(ne.id, ne.cim, ne.leiras, ne.uzletId, ne.photo.kepUtvonal)" >
+                <form method="POST" @submit.prevent="updateNews(ne.id, ne.cim, ne.leiras, 1, ne.photo.kepUtvonal)" >
                   <div class="p-2">
                       <h5 class="d-flex justify-content-center"><font-awesome-icon :icon="['fas', 'pen']" class="fa-solid fa-fw"/> Hír szerkesztése </h5>
                           <input type="hidden" class="form-control" :placeholder="ne.id" v-model="ne.id" name="id"/>

@@ -27,18 +27,6 @@ const vuetify = createVuetify({
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: '/News',
-        name: 'News_front',
-        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/News_front.vue')},
-        { path: '/About',
-        name: 'About',
-        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/About.vue')},
-        { path: '/foot',
-        name: 'foot',
-        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Foot.vue')},
-        { path: '/navigation',
-        name: 'navigation',
-        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Navigation.vue')},
         { path: '/kosar',
         name: 'kosar',
         component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Kosar.vue')},
@@ -50,7 +38,7 @@ const router = createRouter({
         component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Gallery.vue')},
         { path: '/dolgozoi',
         name: 'dolgozoi',
-        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Dolgozoi.vue')},
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Admin.vue')},
         { path: '/rendelesek',
         name: 'orders_admin',
         component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Orders_admin.vue')},
@@ -116,6 +104,11 @@ const Modal_Async = defineAsyncComponent({
 })
 app.component('Modal', Modal_Async);
 
+const ModalAccept_Async = defineAsyncComponent({
+    loader:() => import('./components/ModalAccept.vue')
+})
+app.component('modalAccept', ModalAccept_Async);
+
 const Szamlazas_Async = defineAsyncComponent({
     loader:() => import('./components/Szamlazas.vue')
 })
@@ -142,7 +135,7 @@ const Termekek_Async = defineAsyncComponent({
 app.component('Termekek', Termekek_Async);
 
 const Dolgozoi_Async = defineAsyncComponent({
-    loader:() => import('./components/Dolgozoi.vue')
+    loader:() => import('./components/Admin.vue')
 })
 app.component('dolgozoi', Dolgozoi_Async);
 
@@ -160,6 +153,16 @@ const Products_admin_list_Async = defineAsyncComponent({
     loader:() => import('./components/Products_admin_list.vue')
 })
 app.component('products_admin_list', Products_admin_list_Async);
+
+const Orders_admin_Async = defineAsyncComponent({
+    loader:() => import('./components/Orders_admin.vue')
+})
+app.component('orders_admin', Orders_admin_Async);
+
+const Orders_admin_list_Async = defineAsyncComponent({
+    loader:() => import('./components/Orders_admin_list.vue')
+})
+app.component('orders_admin_list', Orders_admin_list_Async);
 
 
  import Home from './components/Home.vue';
@@ -271,7 +274,12 @@ import {
     faNewspaper,
     faShop,
     faArrowDownAZ,
-    faArrowUpAZ
+    faArrowUpAZ,
+    faHourglass,
+    faTruck,
+    faBan,
+    faXmark,
+    faCircleExclamation
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -306,7 +314,12 @@ library.add(
     faNewspaper,
     faShop,
     faArrowDownAZ,
-    faArrowUpAZ
+    faArrowUpAZ,
+    faHourglass,
+    faTruck,
+    faBan,
+    faXmark,
+    faCircleExclamation
 )
 
 const pinia = createPinia();

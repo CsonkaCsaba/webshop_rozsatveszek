@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia';
 import { OrdersStore } from './store/Orders';
 import { reactive, computed } from 'vue'
 const { orders, selectedValue, addNewProduct,  showDown, accepted} = storeToRefs(OrdersStore())
-const { update, fetchOrders, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateOrder } = OrdersStore()
+const { update, fetchOrders, addNewProductBtn, onChange, createProduct, deleteOrd, orderByProductsAz, orderByProductsZa, updateOrder } = OrdersStore()
 fetchOrders();
 
 </script>
@@ -144,7 +144,7 @@ fetchOrders();
                 <div class="col-2 buttons align-items-center">
                     <button type="button" class="btn secoundaryBtna btn-lg ms-2" @click="updateOrder(order.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Mentés" ><font-awesome-icon :icon="['fas', 'floppy-disk']" /></button>
                     <button type="button" class="btn secoundaryBtna btn-lg ms-2" :class="{ rotateBtn : order.edit}" @click="order.edit = !order.edit, showDown = !showDown" :key="order.id" data-bs-toggle="tooltip" data-bs-placement="top" title="Tovább" ><font-awesome-icon :icon="['fas', 'angle-down']" /></button>
-                    <button type="button" class="btn secoundaryBtnb btn-lg ms-2" @click="deleteProduct(prod.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Törlés"><font-awesome-icon :icon="['fas', 'trash']" /></button>
+                    <button type="button" class="btn secoundaryBtnb btn-lg ms-2" @click="deleteOrd(order.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Törlés"><font-awesome-icon :icon="['fas', 'trash']" /></button>
                 </div>
                 <div  v-if="order.edit">
                     <div class="row row-cols-3 mt-2 align-items-center">

@@ -1,7 +1,7 @@
 <script setup>
 import { OrdersStore } from './store/Orders';
 import { storeToRefs } from 'pinia';
-const { receiveEmit, saveUpdate} = OrdersStore()
+const { receiveEmit, saveUpdate, deleteOrder} = OrdersStore()
 const { modalStatusAccept, message} = storeToRefs(OrdersStore())
 </script>
 
@@ -17,7 +17,7 @@ const { modalStatusAccept, message} = storeToRefs(OrdersStore())
 <orders_admin_list :key="reload">
 </orders_admin_list>
 
-<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @saveUpdate="saveUpdate"></modalAccept>
+<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @saveUpdate="saveUpdate" @deleteOrder="deleteOrder"></modalAccept>
 </template>
 
 <style lang="sass" scoped>

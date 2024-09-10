@@ -101,6 +101,12 @@ class OrderController extends Controller
         $order->save();
 
     }
+
+    public function destroy($id)
+    {
+        $order = Rendeles::find($id);
+        $order->delete();
+    }
 }
 
 ?>

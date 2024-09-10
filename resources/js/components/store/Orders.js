@@ -119,18 +119,26 @@ export const OrdersStore = defineStore("OrdersStore",{
                 this.photoMessage = "Nem választott ki fájlt a feltöltéshez!";
                 }
 
-        }, deleteProduct(id){
-            let answer = confirm("Biztos benne, hogy törölni szeretné a terméket?"); 
-            if(answer != false){
-                axios.delete('api/termekadmin/'+id).then((response)=>{
-                if(response.status == 200){
-                let index = this.products.findIndex(termek=>termek.id == id);
-                this.products.splice(index, 1)
-                this.modalStatus = true;
-                this.message = "A terméket töröltük!";
-                }
-                }).catch(console.error)
+        }, deleteOrd(id){
+            let order = this.orders.find(order=>order.id == id)
+            if(order != null){ 
+                this.edit_id = id;
+                this.message = 'Biztosan törlöd a rendelést?';
+                this.modalStatusAccept = true;
+            } else{
+                this.message = 'A kiválasztott rendelés nem található a rendszerben!';
+                this.modalStatusAccept = true;
             }
+        },deleteOrder(){
+            axios.delete('api/rendelesek/'+this.edit_id).then((response)=>{
+            if(response.status == 200){
+                let index = this.orders.findIndex(order=>order.id == this.edit_id);
+                this.orders.splice(index, 1)
+                this.modalStatusAccept = false,
+                this.modalStatus = true;
+                this.message = "A rendelést töröltük!";
+            }
+            }).catch(console.error)
         },
 
         receiveEmit(){

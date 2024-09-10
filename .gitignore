@@ -1,6 +1,7 @@
-/public/hot
+\public\hot
+\hot
 /public/storage
-storage/logs/laravel.log
+storage\logs\laravel.log
 storage/logs/
 public/hot
 /public/hot

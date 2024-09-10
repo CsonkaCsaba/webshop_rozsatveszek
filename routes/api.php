@@ -37,4 +37,6 @@ Route::resource('/termekadmin', TermekController::class);
 Route::put('/termekadmin/{id}', [TermekController::class,'update']);
 Route::get('/rendelesek', [OrderController::class,'show']);
 Route::put('/rendelesek/{id}', [OrderController::class,'update']);
+Route::delete('/rendelesek/{id}', [OrderController::class,'destroy']);
+
 

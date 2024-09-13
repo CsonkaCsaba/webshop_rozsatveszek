@@ -23,7 +23,7 @@ class Rendeles extends Model
         return $this->belongsToMany(Termek::class, 'valaszts')->withPivot('mennyiseg','kedvezmeny');
     }
     public function cim(): BelongsToMany{
-        return $this->belongsToMany(Cim::class, 'cimes', 'id','cim_id');
+        return $this->belongsToMany(Cim::class, 'cimes');
     }
 
     protected $fillable =[

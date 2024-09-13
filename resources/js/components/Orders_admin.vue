@@ -10,7 +10,7 @@ const { modalStatusAccept, message} = storeToRefs(OrdersStore())
 <div class="container fontcolor">
     <div class="justify-content-center text-center p-2">
         <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'cart-shopping']" /> RENDELÉSEK </span><span></span></div>
-        <img src="../../assets/kepek/shoppingcart.png" alt="desk" width="100" height="100">
+        <img src="../../assets/kepek/shoppingcart.png" alt="desk" width="90" height="100">
     </div>
 </div>
 

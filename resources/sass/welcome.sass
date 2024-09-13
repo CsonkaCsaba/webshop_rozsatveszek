@@ -6,15 +6,36 @@ $extra-large: 1200px
 $szurke: #d1ecf1
 $rozsaszin: #E4A0B7
 
+.paginate-buttons 
+  height: 100%
+  width: 120%
+  border-radius: 20px
+  cursor: pointer
+  background-color: rgb(242, 242, 242)
+  border: 1px solid rgb(217, 217, 217)
+  color: black
+  font-family: 'Nunito', sans-serif
+  margin: 5px
+  &:hover 
+    background-color: #d8d8d8
+
+.active-page 
+  background-color: #1B1C1E
+  border: 1px solid #b9b9b9
+  color: white
+  &:hover 
+    background-color: #b9b9b9
+
+
 .btn-primary,
 .btn-primary:hover, 
 .btn-primary:active, 
 .btn-primary:visited 
   background: $szurke !important
   border: none
-  color:#000000 !important
+  color:#1B1C1E !important
   &:hover
-    background: #000000 !important
+    background: #1B1C1E !important
     transition: .5s ease all
     color:#FFFFFF !important
 

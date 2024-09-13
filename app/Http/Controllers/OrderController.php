@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+   
     public function show(Rendeles $rendeles)
     {
         $query = Rendeles::query()->with(['vasarlo'])->with(['termek'])->orderBy('id', 'desc')->get();

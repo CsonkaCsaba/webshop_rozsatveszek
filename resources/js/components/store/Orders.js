@@ -10,6 +10,9 @@ export const OrdersStore = defineStore("OrdersStore",{
         orders: [
 
         ],
+        slicedOrders:[
+
+        ],
         addNewProduct: false,
         disableBtnAdd: false,
         message : "",
@@ -17,7 +20,8 @@ export const OrdersStore = defineStore("OrdersStore",{
         modalStatusAccept: false,
         save: false,
         lastInsertproductId: 0,
-        showDown : false,
+        showDown : true,
+        showUp: false,
         edit_id: null,
         selectedValue: "",
         optionsStatus:[ {"id": 1, "option":"Feldolgozás alatt"},
@@ -28,14 +32,27 @@ export const OrdersStore = defineStore("OrdersStore",{
         optionsFinal:[],
         updateSuccessful: false,
         accepted: false,
+        currentPage:1,
+        itemsPerPage: 10,
+        totalOrders: 0,
+        pagesShown: 1,
+        startIndex: 0,
+        endIndex: 10,
+        loading: false,
+        input: ""
         }
     },
     getters: {
-
+        displayedOrders(){
+            const startIndex = (this.currentPage * this.itemsPerPage) - this.itemsPerPage;
+            const endIndex = startIndex + this.itemsPerPage; 
+            this.slicedOrders = this.orders.slice(startIndex, endIndex)
+        },
     },
     actions: {
 
         async fetchOrders(){
+            this.loading = true;
             let rendelesek = [];
             try {
                     await axios.get('api/rendelesek').then(function(response){
@@ -46,6 +63,7 @@ export const OrdersStore = defineStore("OrdersStore",{
                         const rendelesDate = spl[0];
                         rendeles.rogzitDatum = rendelesDate;
                         rendeles.optionsFinal = this.optionsStatus.filter(option => option.option !== rendeles.allapot);
+                        rendeles.OriginalStatus = rendeles.allapot;
                         for(const product of rendeles.termek) {
                             const db = product.pivot.mennyiseg;
                             const price = product.ar
@@ -53,7 +71,10 @@ export const OrdersStore = defineStore("OrdersStore",{
                         }
                         this.orders.push(rendeles);
                     }
-                    // for(const order fthis.orders)
+                        this.totalOrders = rendelesek.length;
+                        this.pagesShown = Math.ceil(this.totalOrders/ this.itemsPerPage);
+                        this.slicedOrders = this.orders.slice(this.startIndex, this.endIndex)
+                        this.loading = false;
                 }
                  catch(error){
                     console.log(error.message)
@@ -123,7 +144,7 @@ export const OrdersStore = defineStore("OrdersStore",{
             let order = this.orders.find(order=>order.id == id)
             if(order != null){ 
                 this.edit_id = id;
-                this.message = 'Biztosan törlöd a rendelést?';
+                this.message = 'Biztosan véglegesen törlöd a rendelést?';
                 this.modalStatusAccept = true;
             } else{
                 this.message = 'A kiválasztott rendelés nem található a rendszerben!';
@@ -146,32 +167,28 @@ export const OrdersStore = defineStore("OrdersStore",{
             this.modalStatusAccept = false;
             
         },
-        orderByProductsAz(){
-            function compareByName(a, b) {
-                return a.nevHu.localeCompare(b.nevHu);
-              }
-            this.products.sort(compareByName)
+        orderOrdersByIdASC(){
+            this.slicedOrders.sort( function( a, b ){
+                  return parseInt( a.id ) > parseInt( b.id ) ? 1 : -1;
+            });
             this.showDown = false,
             this.showUp = true
         },
-        orderByProductsZa(){
-
-            function compareByName(a, b) {
-                return b.nevHu.localeCompare(a.nevHu);
-              }
-            this.products.sort(compareByName)
-
+        orderOrdersByIdDESC(){
+            this.slicedOrders.sort( function( a, b ){
+                  return parseInt( a.id ) < parseInt( b.id ) ? 1 : -1;
+            });
             this.showDown = true,
             this.showUp = false
         },
 
         updateOrder(id){
             let order = this.orders.find(order=>order.id == id)
-            if(order != null){ 
+            if(order != null && order.allapot != order.OriginalStatus){ 
                 this.message = 'A módosítással email értesítést küldünk ki az ügyfélnek. Biztosan mented a módosítást?';
                 this.modalStatusAccept = true;
             } else{
-                this.message = 'A kiválasztott rendelés nem található a rendszerben!';
+                this.message = 'Nem történt módosítás az eredeti állapothoz képest!';
                 this.modalStatusAccept = true;
             }
         },
@@ -184,7 +201,7 @@ export const OrdersStore = defineStore("OrdersStore",{
             if(order!= null){
                 order.allapot = event.target.value
                 order.optionsFinal = this.optionsStatus.filter(option => option.option !== event.target.value);
-                }
+            }
             this.edit_id = id;
         },
         saveUpdate(){
@@ -193,6 +210,7 @@ export const OrdersStore = defineStore("OrdersStore",{
             this.save = true;
             let order = this.orders.find(order=>order.id == this.edit_id)
             if(order!= null){
+                order.OriginalStatus = order.allapot;
             let form_data_update = {
                 id: this.edit_id,
                 allapot: order.allapot
@@ -206,6 +224,14 @@ export const OrdersStore = defineStore("OrdersStore",{
             }
            
 
+        },
+        handlePageChange(data){
+            this.currentPage = data.currentPage
+        },
+        inputChanged(){
+            this.slicedOrders = this.orders.filter((order) =>
+                order.vasarlo.nev.toLowerCase().includes(this.input.toLowerCase())
+            ).slice(this.startIndex, this.endIndex);
         }
 
 

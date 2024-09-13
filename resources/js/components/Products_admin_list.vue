@@ -4,6 +4,7 @@ import { ProductStore } from './store/Product';
 const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown} = storeToRefs(ProductStore())
 const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct } = ProductStore()
 fetchProduct();
+
 </script>
 
 <template>

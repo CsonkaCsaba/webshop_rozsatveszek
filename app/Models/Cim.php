@@ -12,10 +12,10 @@ class Cim extends Model
     {
         return $this->belongsToMany(Vasarlo::class, 'cimes')->withPivot('szamlazasi','szallitasi');
     }
-    public function vevoCim(): BelongsToMany
-    {
-        return $this->belongsToMany('App\Vasarlo', 'cimes','id','cim_id');
-    }
+    // public function cim(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Vasarlo::class, 'cimes','id','cim_id');
+    // }
 
     protected $fillable =[
         'id',

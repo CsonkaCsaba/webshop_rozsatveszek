@@ -25,6 +25,7 @@
         "pinia-plugin-persistedstate": "^3.2.1",
         "swiper": "^11.0.1",
         "vite-plugin-vuetify": "^1.0.2",
+        "vue-awesome-paginate": "^1.2.0",
         "vue-numeric-input": "^2.0.0",
         "vue-router": "^4.0.13",
         "vuetify": "^3.5.2",

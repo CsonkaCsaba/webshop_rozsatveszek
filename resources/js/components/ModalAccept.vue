@@ -35,7 +35,7 @@ function deleteOrder() {
       <v-card-actions>
         <div class="d-flex mx-auto">
           <button v-if="message =='A módosítással email értesítést küldünk ki az ügyfélnek. Biztosan mented a módosítást?'" class="btn lilagombKicsi w100 me-4 px-4" @click="saveUpdate()"> Mentés </button>
-          <button v-if="message =='Biztosan törlöd a rendelést?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteOrder()"> Törlés </button>
+          <button v-if="message =='Biztosan véglegesen törlöd a rendelést?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteOrder()"> Törlés </button>
           <button class="btn btn-primary w100 px-4" @click="modalStatus()"> MÉGSEM </button>
         </div>
       </v-card-actions>

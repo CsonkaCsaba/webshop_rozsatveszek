@@ -9,7 +9,9 @@ import './bootstrap';
 import { createApp, defineAsyncComponent } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
 
+import VueAwesomePaginate from "vue-awesome-paginate";
 
+import "vue-awesome-paginate/dist/style.css";
 //import LoadingComponent from './components/LoadingComponent.vue';
 
 import { createPinia } from 'pinia';
@@ -164,6 +166,10 @@ const Orders_admin_list_Async = defineAsyncComponent({
 })
 app.component('orders_admin_list', Orders_admin_list_Async);
 
+const Loader = defineAsyncComponent({
+    loader:() => import('./components/Loader.vue')
+})
+app.component('loader', Loader);
 
  import Home from './components/Home.vue';
  app.component('Home', Home);
@@ -279,7 +285,8 @@ import {
     faTruck,
     faBan,
     faXmark,
-    faCircleExclamation
+    faCircleExclamation,
+    faUpDown
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -319,7 +326,8 @@ library.add(
     faTruck,
     faBan,
     faXmark,
-    faCircleExclamation
+    faCircleExclamation,
+    faUpDown
 )
 
 const pinia = createPinia();
@@ -328,4 +336,5 @@ app.use(router);
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 app.use(vuetify);
+app.use(VueAwesomePaginate);
 app.component('font-awesome-icon', FontAwesomeIcon).mount('#app');

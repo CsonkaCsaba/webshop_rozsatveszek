@@ -14,10 +14,10 @@ class Vasarlo extends Model
     {
         return $this->belongsToMany(Cim::class, 'cimes')->withPivot('szamlazasi','szallitasi');
     }
-    public function vevoCim(): BelongsToMany
-    {
-        return $this->belongsToMany('App\Cim', 'cimes','id','vasarlo_id');
-    }
+    // public function vevoCim(): BelongsToMany
+    // {
+    //     return $this->belongsToMany('App\Cim', 'cimes','id','vasarlo_id');
+    // }
 
     public function rendeles(): HasMany
     {

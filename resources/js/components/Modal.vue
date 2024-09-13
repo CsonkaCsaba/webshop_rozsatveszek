@@ -17,7 +17,7 @@ function modalStatus() {
 <template>
     <v-dialog  width="500" class="transition">
       <v-card class="rounded border border-1 p-4 align-items-center">
-        <img src="../../assets/kepek/done.gif" alt="done" width="100" height="100">
+        <img src="../../assets/kepek/done2.gif" alt="done" width="200" height="200">
       <v-card-text class="text-center">
           <h3>{{ message }}</h3>
       </v-card-text>

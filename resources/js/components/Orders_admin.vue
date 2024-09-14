@@ -7,7 +7,7 @@ const { modalStatusAccept, message} = storeToRefs(OrdersStore())
 
 <template>
 
-<div class="container fontcolor">
+<div class="container fontcolor cim">
     <div class="justify-content-center text-center p-2">
         <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'cart-shopping']" /> RENDELÉSEK </span><span></span></div>
         <img src="../../assets/kepek/shoppingcart.png" alt="desk" width="90" height="100">
@@ -21,5 +21,6 @@ const { modalStatusAccept, message} = storeToRefs(OrdersStore())
 </template>
 
 <style lang="sass" scoped>
-
+.cim
+    margin-top: 1%
 </style>

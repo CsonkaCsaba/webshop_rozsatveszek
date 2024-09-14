@@ -5,7 +5,7 @@
                         <div class="tartalom pt-3 pt-sm-6 pt-md-7" id="abot" >
                 
                 <div id="fejlec d-flex flex-column justify-content-center">
-                    <h2 class="pb-2 text-center">Rólunk</h2>
+                    <h2 class="pb-2 text-center mt-4">Rólunk</h2>
                     <hr class="m-auto">
                     <h3 class="pt-2 text-center">Üdvözöljük webshopunkban!</h3>
                 </div>
@@ -65,6 +65,7 @@ $rozsaszin: #E4A0B7
     color: $szurke_szoveg
     background-color: #f5f5f5
     display: block
+    margin-top: 6.5%
 
     #fejlec
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
@@ -80,6 +81,7 @@ $rozsaszin: #E4A0B7
 @media(max-width: $extra-large)
     #szoveg
         max-width: 980px
+
 
         p
             font-size: 20px

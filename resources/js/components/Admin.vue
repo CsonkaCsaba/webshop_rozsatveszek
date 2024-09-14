@@ -4,7 +4,7 @@ register();
 </script>
 
 <template>
-    <ul class="nav nav-tabs justify-content-center" role="tablist">
+    <ul class="nav nav-tabs justify-content-center tabs" role="tablist">
          <li class="nav-item" role="presentation">
             <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0" aria-selected="true"><font-awesome-icon :icon="['fas', 'shop']" /> Rendelések </a>
         </li>
@@ -52,6 +52,8 @@ register();
     </div>
 </template>
 <style lang="sass" scoped>
+.tabs
+    margin-top: 3%
 .nav-link 
     background-image: linear-gradient(to right, #232526 0%, #414345  51%, #232526  100%)
     color: white

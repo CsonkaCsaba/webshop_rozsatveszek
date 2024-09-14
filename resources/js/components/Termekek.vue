@@ -49,7 +49,7 @@ export default {
 
 
 <template>
-    <div class="mt-8 mb-4 pt-2 container-fluid select-container">
+    <div class="mt-8 mb-4 pt-2 container-fluid select-container prod">
         Termékek
     </div>
     <div class="container-fluid">
@@ -145,7 +145,9 @@ export default {
 </template>
 
 <style>
-
+.prod{
+    margin-top: 10%
+}
 .select-container{
     font-size: 18px;
 }

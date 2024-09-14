@@ -105,7 +105,7 @@ watch(input, ()=>{
 <div class="example-six align-items-center justify-content-center text-center">
     <vue-awesome-paginate v-model="currentPage" :total-items="totalOrders" :items-per-page="itemsPerPage" :max-pages-shown="pagesShown" @page-clicked="handlePageChange" :container-class="'pagination-container'">
         <template #prev-button id="nextBtn">
-        <span><  Előző</span>
+        <span>  Előző</span>
     </template>
 
     <template #next-button>

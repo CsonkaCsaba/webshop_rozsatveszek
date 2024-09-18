@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-<div id="underheader-about-container">
+<div id="">
     <div class="under-header mt-8">
         <p>Vásároljon rózsát<br> közvetlen a termelőtől!</p>
         <hr>
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-            <div class="row justify-content-center absolute -mb-4" id="logreg">
+            <div class="row justify-content-center" id="logreg">
                 <div class="col-md-8">
                     <div class="card">
                         

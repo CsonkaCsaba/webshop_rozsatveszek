@@ -18,6 +18,13 @@ class OrderController extends Controller
 
     
     }
+    public function cim(Cim $cim)
+    {
+        $query = Cim::query()->get();
+        return response()->json($query);
+
+    
+    }
 
     public function storeOrder(Request $request){
 

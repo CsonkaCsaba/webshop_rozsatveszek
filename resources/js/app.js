@@ -286,7 +286,8 @@ import {
     faBan,
     faXmark,
     faCircleExclamation,
-    faUpDown
+    faUpDown,
+    faTruckFast
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -327,7 +328,8 @@ library.add(
     faBan,
     faXmark,
     faCircleExclamation,
-    faUpDown
+    faUpDown,
+    faTruckFast
 )
 
 const pinia = createPinia();

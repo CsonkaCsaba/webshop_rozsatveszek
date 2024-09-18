@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CimController;
+use App\Http\Controllers\CimeController;
 use App\Http\Controllers\HirekController;
 use App\Http\Controllers\KepekController;
 use App\Http\Controllers\UzletController;
@@ -38,5 +40,7 @@ Route::put('/termekadmin/{id}', [TermekController::class,'update']);
 Route::get('/rendelesek', [OrderController::class,'show']);
 Route::put('/rendelesek/{id}', [OrderController::class,'update']);
 Route::delete('/rendelesek/{id}', [OrderController::class,'destroy']);
+Route::get('/rendelesekCimes', [CimeController::class,'index']);
+Route::get('/rendelesekCims', [CimController::class,'index']);
 
 

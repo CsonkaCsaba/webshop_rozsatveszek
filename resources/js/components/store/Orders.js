@@ -57,14 +57,6 @@ export const OrdersStore = defineStore("OrdersStore",{
                     cimek = response.data
             });
             this.addresses.push(cimek);
-            for(const cim of this.addresses){
-                for(const rendeles of this.orders){
-                //  if(rendeles.vasarlo.id == cim.vasarlo.id){
-                   console.log(rendeles.vasarlo.id)
-                //console.log(cim)
-                    // }
-                }
-             }
         }
     },
     actions: {
@@ -98,13 +90,11 @@ export const OrdersStore = defineStore("OrdersStore",{
 
                         await axios.get('api/rendelesekCimes').then(function(response){
                             cimes = response.data
-                            for(const cime of cimes){
-                            }
+
                         });
                         await axios.get('api/rendelesekCims').then(function(response){
                             cims = response.data
-                            for(const cim of cims){
-                            }
+
                         });
                         for(const rendeles of rendelesek){
                             for (const cime of cimes){

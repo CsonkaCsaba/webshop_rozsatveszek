@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\UzletController;
 use App\Http\Middleware\IsAdmin;
 use App\Models\Hirek;
@@ -71,4 +72,5 @@ Route::get('dolgozoi', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('send-mail',[EmailController::class, 'sendWelcomeEmail']);
 

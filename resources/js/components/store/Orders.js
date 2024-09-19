@@ -13,7 +13,7 @@ export const OrdersStore = defineStore("OrdersStore",{
         slicedOrders:[
 
         ],
-        addresses: [
+        addresses:[
 
         ],
         addNewProduct: false,
@@ -51,6 +51,21 @@ export const OrdersStore = defineStore("OrdersStore",{
             const endIndex = startIndex + this.itemsPerPage; 
             this.slicedOrders = this.orders.slice(startIndex, endIndex)
         },
+        async fetchAddresses(){
+            let cimek = [];
+            await axios.get('api/rendelesekCim').then(function(response){
+                    cimek = response.data
+            });
+            this.addresses.push(cimek);
+            for(const cim of this.addresses){
+                for(const rendeles of this.orders){
+                //  if(rendeles.vasarlo.id == cim.vasarlo.id){
+                   console.log(rendeles.vasarlo.id)
+                //console.log(cim)
+                    // }
+                }
+             }
+        }
     },
     actions: {
 

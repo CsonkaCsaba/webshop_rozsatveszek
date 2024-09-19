@@ -38,6 +38,7 @@ Route::post('/termekadmin/create', [TermekController::class,'create']);
 Route::resource('/termekadmin', TermekController::class);
 Route::put('/termekadmin/{id}', [TermekController::class,'update']);
 Route::get('/rendelesek', [OrderController::class,'show']);
+Route::get('/rendelesekCim', [OrderController::class,'address']);
 Route::put('/rendelesek/{id}', [OrderController::class,'update']);
 Route::delete('/rendelesek/{id}', [OrderController::class,'destroy']);
 Route::get('/rendelesekCimes', [CimeController::class,'index']);

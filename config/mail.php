@@ -41,7 +41,7 @@ return [
             'port' => env('MAIL_PORT', 465),
             'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
             'username' => env('MAIL_USERNAME', 'szucstimea02@gmail.com'),
-            'password' => env('MAIL_PASSWORD', 'truwjlqtdiuuzadr'),
+            'password' => env('MAIL_PASSWORD', ''),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],

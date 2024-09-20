@@ -66,14 +66,21 @@ watch(input, ()=>{
                 <button type="button" class="btn secoundaryBtnb btn-lg ms-2" @click="deleteOrd(order.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Törlés"><font-awesome-icon :icon="['fas', 'trash']" /></button>
             </div>
             <div  v-if="order.edit">
+                <hr class=""/>
+                <h5 class="text-uppercase fw-bold"><font-awesome-icon :icon="['fas', 'phone']"/> Kapcsolat</h5>
                 <div class="row row-cols-3 mt-2 align-items-center">
-                    <hr class=""/>
                     <div class="col"><p class="fw-bold">Telefonszám: <br></p>{{ order.vasarlo.telefonszam }} </div>
                     <div class="col"><p class="fw-bold">Email: <br></p>{{ order.vasarlo.email }}</div>
                     <div class="col"><p class="fw-bold">Megjegyzés: <br></p>{{ order.megjegyzes }}</div>
                 </div>
                 <hr class=""/>
-                <div class="col"><p class="fw-bold pt-4">Rendelt termékek <br></p></div>
+                <h5 class="text-uppercase fw-bold"><font-awesome-icon :icon="['fas', 'truck-fast']" /> Címek</h5>
+                <div class="row row-cols-3 mt-2 align-items-center">
+                    <div class="col"><p class="fw-bold">Szállítási cím</p> {{ order.szallitasi_cim }}</div>
+                    <div class="col "><p class="fw-bold">Számlázási cím</p> {{ order.szamlazasi_cim}} </div>
+                </div>
+                <hr class=""/>
+                <h5 class="text-uppercase fw-bold"><font-awesome-icon :icon="['fas', 'cart-shopping']"/> Rendelt termékek</h5>
                 <div class="container mb-4 pt-4 flex-fill">
                     <div class="row row-cols-6 fw-bold fs-5 px-5 ">
                         <div class="col"><p>Termékkép</p></div>
@@ -84,6 +91,7 @@ watch(input, ()=>{
                         <div class="col"><p>Részösszesen</p></div>
                     </div>
                 </div>
+            
                 <div class="row row-cols-6 mt-2 flex-fill">
                     <ul class="listProduct">
                         <li class="row row-cols-6 mt-2 p-4 align-items-center" v-for="termek in order.termek" :key="order.id">
@@ -97,9 +105,9 @@ watch(input, ()=>{
                         </li>
                     
                     </ul>
-                    
                 </div>
             </div>  
+            
             </li>
     </ul>
 <div class="example-six align-items-center justify-content-center text-center">

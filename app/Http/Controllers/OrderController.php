@@ -17,9 +17,18 @@ class OrderController extends Controller
     public function show(Rendeles $rendeles)
     {
         $query = Rendeles::query()->with(['vasarlo'])->with(['termek'])->orderBy('id', 'desc')->get();
-        return response()->json($query);    
-    }
+        return response()->json($query);
+
     
+    }
+    public function cim(Cim $cim)
+    {
+        $query = Cim::query()->get();
+        return response()->json($query);
+
+    
+    }
+
     public function storeOrder(Request $request){
         
         $isUser = Auth::check();
@@ -98,24 +107,24 @@ class OrderController extends Controller
                 $vasarlo->cim()->attach($shipAddress, ['szallitasi' => 1]);
             };
 
-            //Order
-            $fizetes = ($request->payment == 'delivery') ? 'Utánvét' : 'Előre utalás';
-            $allapot = ($request->payment == 'delivery') ? 'Feldolgozás alatt' : 'Utalás ellenőrzése';
-            $cegnek = ($request->billingAddress['company'] == 'yes') ? 1 : 0;
-        
-            $rendeles = Rendeles::create([
-                'megjegyzes' => $request->comments,
-                'fizetesiMod' => $fizetes,
-                'ceges' => $cegnek,
-                'allapot' => $allapot,
-                'vegosszeg' => $request->vegosszeg,
-                'fk_vasarloId' => $vasarloId
-            ]);
-            
-            $rendeles->termek()->attach($product['id'], ['mennyiseg' => $product['quantity']]);
+        //Order
+        $fizetes = ($request->payment == 'delivery') ? 'Utánvét' : 'Előre utalás';
+        $allapot = ($request->payment == 'delivery') ? 'Feldolgozás alatt' : 'Utalás ellenőrzése';
+        $cegnek = ($request->billingAddress['company'] == 'yes') ? 1 : 0;
 
-            return true;
+        $rendeles = Rendeles::create([
+            'megjegyzes' => $request->comments,
+            'fizetesiMod' => $fizetes,
+            'ceges' => $cegnek,
+            'allapot' => $allapot,
+            'vegosszeg' => $request->vegosszeg,
+            'fk_vasarloId' => $vasarloId
+        ]);
+
+        foreach ($request->items as $product){
+            $rendeles->termek()->attach($product['id'], ['mennyiseg' => $product['quantity']]);
         }
+    }
 
     public function update(Request $request, $id)
     {

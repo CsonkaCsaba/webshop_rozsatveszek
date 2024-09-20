@@ -31,7 +31,7 @@ Route::get('/hirek', [HirekController::class, 'show']);
 Route::resource('/hirekadmin', HirekController::class);
 Route::post('/hirekadmin/create', [HirekController::class,'create']);
 //Route::get('/hirekadmin', [HirekController::class, 'index']);
-Route::post('/megrendeles/storeOrder', [OrderController::class, 'storeOrder']);
+Route::middleware('web')->post('/megrendeles/storeOrder', [OrderController::class, 'storeOrder']);
 Route::post('/termekadmin/create', [TermekController::class,'create']);
 Route::resource('/termekadmin', TermekController::class);
 Route::put('/termekadmin/{id}', [TermekController::class,'update']);

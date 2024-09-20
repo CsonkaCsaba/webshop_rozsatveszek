@@ -43,8 +43,7 @@ const router = createRouter({
         component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Admin.vue')},
         { path: '/rendelesek',
         name: 'orders_admin',
-        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Orders_admin.vue')},
-        
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Orders_admin.vue')},             
     ]
 });
 
@@ -166,91 +165,29 @@ const Orders_admin_list_Async = defineAsyncComponent({
 })
 app.component('orders_admin_list', Orders_admin_list_Async);
 
+const sikeresrendeles_Async = defineAsyncComponent({
+    loader:() => import('./components/sikeresrendeles.vue')
+})
+app.component('sikeresrendeles', sikeresrendeles_Async);
+
 const Loader = defineAsyncComponent({
     loader:() => import('./components/Loader.vue')
 })
 app.component('loader', Loader);
 
- import Home from './components/Home.vue';
- app.component('Home', Home);
+import Home from './components/Home.vue';
+app.component('Home', Home);
 
- import About from './components/About.vue';
- app.component('About', About);
+import About from './components/About.vue';
+app.component('About', About);
 
- import News_front from './components/News_front.vue';
- app.component('News_front', News_front);
- 
+import News_front from './components/News_front.vue';
+app.component('News_front', News_front);
 
- import Foot from './components/Foot.vue';
- app.component('Foot', Foot);
-
-// import Navigation_log from './components/Navigation_log.vue';
-// app.component('navigation_log', Navigation_log);
-
-// import Navigation_admin from './components/Navigation_admin.vue';
-// app.component('navigation_admin', Navigation_admin);
-
-// import CompanyData from './components/CompanyData.vue';
-// app.component('companydata', CompanyData);
-
-// import Gallery from './components/Gallery.vue';
-// app.component('gallery', Gallery);
-
-// import Swiper_gallery from './components/Swiper_gallery.vue';
-// app.component('swiper_gallery', Swiper_gallery);
-
-// import Swiper_news from './components/Swiper_news.vue';
-// app.component('swiper_news', Swiper_news);
-
-// import Swiper_front from './components/Swiper_front.vue';
-// app.component('swiper_front', Swiper_front);
-
-// import News_admin from './components/News_admin.vue';
-// app.component('news_admin', News_admin);
-
-// import ShoppingCartSide from './components/ShoppingCartSide.vue';
-// app.component('ShoppingCartSide', ShoppingCartSide);
-
-
-
-
-// const AboutAsync = defineAsyncComponent({
-//     loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/About.vue')
-// })
-// app.component('About', AboutAsync);
-
-// const News_frontAsync = defineAsyncComponent({
-//     loader:() => import('./components/News_front.vue')
-// })
-// app.component('News_front', News_frontAsync);
-
-
-
-// const Footer = defineAsyncComponent({
-//     loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Footer.vue')
-// })
-// app.component('Footer', Footer);
-
-// const Foot = defineAsyncComponent({
-//     loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Foot.vue')
-// })
-// app.component('Foot', Foot);
-//import flags
+import Foot from './components/Foot.vue';
+app.component('Foot', Foot);
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
-
-// import Modal from './components/Modal.vue';
-// app.component('Modal', Modal);
-
-// import components from './components/';
-//app.component('About', About);
-//app.component('News_front', News_front);
-//app.component('foot', Foot);
-
-// import Termekek from './components/Termekek.vue';
-// app.component('termekek', Termekek);
-// import Kosar from './components/Kosar.vue';
-// app.component('kosar', Kosar);
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
@@ -331,6 +268,7 @@ library.add(
 )
 
 const pinia = createPinia();
+
 
 app.use(router);
 pinia.use(piniaPluginPersistedstate);

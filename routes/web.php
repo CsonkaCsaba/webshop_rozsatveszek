@@ -19,7 +19,7 @@ use Inertia\Inertia;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/')->name('welcome');;
+// Route::get('/')->name('welcome');;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +30,7 @@ Route::get('/termekek', function () {
 Route::get('/tanacsok', function () {
     return view('tanacsok');
 });
+
 Route::get('/galeria', function () {
     return view('galeria');
 });
@@ -45,10 +46,13 @@ Route::get('/szallitas', function () {
 Route::get('/megrendeles', function () {
     return view('megrendeles');
 });
-// Route::get('/home', function () {
-//     return redirect()->route('welcome');;
-// });
 
+Route::get('/sikeresrendeles', function () {
+    return view('sikeresrendeles');
+});
+Route::get('/home', function () {
+    return redirect()->route('welcome');;
+});
 
 Route::put('/uzlet/{id}', [UzletController::class, 'update']);
 

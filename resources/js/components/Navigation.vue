@@ -30,7 +30,7 @@ export default {
 
         updateScroll(){
             const scrollPosition = window.scrollY;
-            if (scrollPosition > 50){
+            if (scrollPosition > 10){
                 this.scrolledNav =true;
                 return;
             }
@@ -39,7 +39,7 @@ export default {
 
         checkScreen(){
             this.windowWidth = window.innerWidth;
-            if(this.windowWidth <= 930){
+            if(this.windowWidth <= 1050){
                 this.mobile = true;
                 return;
             }
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <template>
-    <header :class="{ 'scrolled-nav': scrolledNav }">
+    <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky">
         <nav>
             <div class="branding">
                 <img src="../../assets/kepek/logo.png" alt="logo" class="m-3">

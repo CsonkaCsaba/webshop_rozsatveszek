@@ -97,7 +97,6 @@ const cartData = ShoppingCart();
     background: #b1b3b3;
     color: white;
     clip-path: polygon(calc(100% - 1.5rem) 0,100% 50%,calc(100% - 1.5rem) 100%,0 100%,1.5rem 50%,0 0);
-    margin-top: 15%;
 }
 
 .nav-container .nav-item:first-of-type{
@@ -212,5 +211,10 @@ const cartData = ShoppingCart();
     .nav-container{
         font-size: 15px;
     }
+}
+
+.kosar-ures{
+    font-size: 20px;
+    justify-content: center;
 }
 </style>

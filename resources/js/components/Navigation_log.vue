@@ -30,7 +30,7 @@ export default {
 
         updateScroll(){
             const scrollPosition = window.scrollY;
-            if (scrollPosition > 50){
+            if (scrollPosition > 10){
                 this.scrolledNav =true;
                 return;
             }
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <template>
-    <header :class="{ 'scrolled-nav': scrolledNav }">
+    <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky">
         <nav>
             <div class="branding">
                 <img src="../../assets/kepek/logo.png" alt="logo" class="m-3">
@@ -96,11 +96,11 @@ export default {
                     </ul>
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">
-                    <li><a href="/webshop_rozsatveszek/public/">Kezdőlap</a></li> <!--átírandó-->
+                    <li><a href="home">Kezdőlap</a></li> <!--átírandó-->
                     <li><a href="#rolunk">Rólunk</a></li>
                     <li><a href="#hirek">Hírek</a></li>
                     <li><a href="galeria">Galéria</a></li>
-                    <li><a href="termekek">Termékek</a></li>
+                    <li><a href="/termekek">Termékek</a></li>
                     <li><a href="#kapcsolat">Kapcsolat</a></li>
                     <li><a href="tanacsok">Tanácsok</a></li>
                 </ul>
@@ -158,11 +158,11 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <li><a class="link" href="/webshop_rozsatveszek/public/">Kezdőlap</a></li><!--átírandó-->
+                    <li><a class="link" href="/home">Kezdőlap</a></li><!--átírandó-->
                     <li><a class="link" href="#rolunk">Rólunk</a></li>
                     <li><a class="link" href="#hirek">Hírek</a></li>
                     <li><a class="link" href="galeria">Galéria</a></li>
-                    <li><a class="link" href="termekek">Termékek</a></li>
+                    <li><a class="link" href="/termekek">Termékek</a></li>
                     <li><a class="link" href="#kapcsolat">Kapcsolat</a></li>
                     <li><a class="link" href="tanacsok">Tanácsok</a></li>
                 </ul>

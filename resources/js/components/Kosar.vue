@@ -22,7 +22,7 @@ const cartData = ShoppingCart();
             </div>
             <div class="custom-num d-inline-flex align-items-center p-2 m-auto mx-lg-5 col" >
                 <font-awesome-icon class="minusSign" :icon="['fas', 'minus']" @click="cartData.decrement(item)"/>
-                <input type="number" min="1" :max="item.keszlet" :value="item.quantity" class="num-input"/>      
+                <input disabled type="number" min="1" :max="item.keszlet" :value="item.quantity" class="num-input"/>      
                 <font-awesome-icon class="plusSign" :icon="['fas', 'plus']" @click="cartData.increment(item)"/>
             </div>
             <div class="col d-flex align-items-center justify-content-center trash">
@@ -60,7 +60,6 @@ const cartData = ShoppingCart();
     background: #b1b3b3;
     color: white;
     clip-path: polygon(calc(100% - 1.5rem) 0,100% 50%,calc(100% - 1.5rem) 100%,0 100%,1.5rem 50%,0 0);
-    margin-top: 15%;
 }
 
 .nav-container .nav-item:first-of-type{

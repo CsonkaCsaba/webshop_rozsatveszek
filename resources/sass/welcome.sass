@@ -1,4 +1,5 @@
 $extra-small: 320px
+$md-small: 468px
 $small: 576px
 $medium: 768px
 $large: 992px
@@ -107,6 +108,17 @@ $rozsaszin: #E4A0B7
 .under-header
   display: block
   margin-top: 8%
+.btn-vasarlas
+    font-size: 20px
+    border-radius: 18px
+    background: #E4A0B7
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25)
+    color: #fff
+
+.btn-vasarlas:hover
+    color: #fff
+    background: #d95f88
+    transition: .5s ease all
 
 #cover-box
   left: 0
@@ -115,8 +127,12 @@ $rozsaszin: #E4A0B7
   position: absolute
 
 .under-header
-  background-image: url('../assets/kepek/kezdokep.jpg')
+  display: block
+  top:0
   background-size: 100%
+  background-repeat: no-repeat
+  background-image: url('../assets/kepek/kezdokep.jpg')
+
 
   p
     color: #787878
@@ -156,6 +172,7 @@ a
   width: 75%
   position: absolute
   left: 12%
+
 @media(max-width: $extra-small)
   .under-header
     min-height: 185px
@@ -180,7 +197,26 @@ a
   #cover-box
     display: none !important
 
-@media((min-width: $extra-small) and (max-width: $small))
+@media((min-width: $extra-small) and (max-width: $md-small))
+  .under-header
+    min-height: 220px
+
+    p
+      font-size: 16px
+      padding: 10px 0px 0px 20px
+
+    hr
+      width: 90px
+      margin-left: 20px
+    
+    .btn-vasarlas
+      margin-left: 20px
+
+  #cover-box
+    display: none !important
+
+
+@media((min-width: $md-small) and (max-width: $small))
   .under-header
     min-height: 240px
 
@@ -207,7 +243,7 @@ a
 
 @media((min-width: $small) and (max-width: $medium))
   .under-header
-    min-height: 400px
+    min-height: 380px
 
     p
       font-size: 25px

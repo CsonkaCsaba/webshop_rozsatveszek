@@ -24,7 +24,6 @@
     <div id="app">
         
         @guest
-        <router-view></router-view>
         <navigation v-once>
         </navigation>
         @else

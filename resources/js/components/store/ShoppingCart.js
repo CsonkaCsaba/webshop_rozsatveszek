@@ -35,7 +35,7 @@ export const ShoppingCart = defineStore("ShoppingCart",{
                 payment: '',
                 comments: '',
                 vegosszeg: 0
-            }
+            },
         }
     },
 
@@ -62,7 +62,7 @@ export const ShoppingCart = defineStore("ShoppingCart",{
                 this.kosarban = true;
             }else{
                 if((item.keszlet == this.cartItems[index].quantity) || (item.keszlet-this.cartItems[index].quantity < Number(num))){
-                    alert("Sajnos már nincs több " + item.nevHu + " termék a készleten.");
+                    alert("Sajnos már nincs ennyi" + item.nevHu + " a készleten.");
                 }else{
                     this.cartItems[index].quantity += Number(num);
                     this.kosarban = true;                    
@@ -93,10 +93,7 @@ export const ShoppingCart = defineStore("ShoppingCart",{
             this.vegosszeg = total;
             return total;
         },
-        clearBillingAddress(){
-            this.billingAddress = [];
-        },
-        storeToDB(){
+        async storeToDB(){
             this.db_data.items = this.cartItems;
             this.db_data.billingAddress = this.billingAddress;
             this.db_data.shippingAddress = this.shippingAddress;
@@ -105,13 +102,12 @@ export const ShoppingCart = defineStore("ShoppingCart",{
             this.db_data.vegosszeg = this.vegosszeg;
 
             //Billing address is always stored
-            axios.post('api/megrendeles/storeOrder', this.db_data)
-            .then((response) => {
-                console.log(response.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            });
+            try{
+                const response = await axios.post('api/megrendeles/storeOrder', this.db_data)
+                return response
+            }catch(error) {
+                alert(error.response.data.error)
+            };
         }
     },                                                               
     

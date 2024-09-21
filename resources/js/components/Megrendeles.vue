@@ -1,10 +1,3 @@
-<script setup>
-import { ShoppingCart } from './store/ShoppingCart';
-
-const cartData = ShoppingCart();
-
-</script>
-
 <template>
     <div class="mt-8 mb-5 mx-auto p-2 row container nav-container">
         <div class="col nav-item">Kosár</div>
@@ -19,7 +12,8 @@ const cartData = ShoppingCart();
                     <div class="ms-5 text-start font-15"><b>Név: </b> {{ cartData.billingAddress.name }}</div>
                     <div v-if="cartData.billingAddress.company == 'yes'" class="ms-5 text-start font-15"><b>Adószám: </b> {{ cartData.billingAddress.taxNumber }}</div>
                     <div class="ms-5 text-start font-15"><b>E-mail cím: </b> {{ cartData.billingAddress.email }}</div>
-                    <div class="ms-5 text-start font-15"><b>Irányítószám: </b> {{ cartData.billingAddress.phone }}</div>
+                    <div class="ms-5 text-start font-15"><b>Telefonszám: </b> {{ cartData.billingAddress.phone }}</div>
+                    <div class="ms-5 text-start font-15"><b>Irányítószám: </b> {{ cartData.billingAddress.zipCode }}</div>
                     <div class="ms-5 text-start font-15"><b>Település: </b> {{ cartData.billingAddress.city }}</div>
                     <div class="ms-5 text-start font-15"><b>Utca: </b> {{ cartData.billingAddress.street }}</div>
                     <div class="ms-5 text-start font-15"><b>Házszám: </b> {{ cartData.billingAddress.house }}</div>
@@ -56,7 +50,7 @@ const cartData = ShoppingCart();
         <div class="container">
             <div class="row mt-3 align-items-center">
                 <div class="col-6 d-flex justify-content-start"><a href="szallitas"><button type="button" class="btn btn-vasarlas m-0">Vissza</button></a></div>
-                <div class="col-6 d-flex justify-content-end"><button type="submit" class="btn btn-vasarlas m-0" @click="cartData.storeToDB()">Megrendelés</button></div>
+                <div class="col-6 d-flex justify-content-end"><button type="submit" class="btn btn-vasarlas m-0" @click="toDB">Megrendelés</button></div>
             </div>
         </div>
     </div>
@@ -68,6 +62,30 @@ const cartData = ShoppingCart();
     </div>
 
 </template>
+
+<script setup>
+import { ShoppingCart } from './store/ShoppingCart';
+import { useRouter } from 'vue-router';
+import { ref } from "vue";
+
+const router = useRouter();
+const cartData = ShoppingCart();
+
+let errorMsg = ref("");
+
+function toDB() {
+
+  cartData.storeToDB()
+    .then((response) => {
+        console.log(response.data);
+        // window.location.href = 'sikeresrendeles';
+        // cartData.cartItems = []
+    })
+    .catch((error) => {
+        console.log(error)
+    });
+}
+</script>
 
 <style scoped>
 
@@ -93,7 +111,6 @@ const cartData = ShoppingCart();
     background: #b1b3b3;
     color: white;
     clip-path: polygon(calc(100% - 1.5rem) 0,100% 50%,calc(100% - 1.5rem) 100%,0 100%,1.5rem 50%,0 0);
-    margin-top: 15%;
 }
 
 .nav-container .nav-item:first-of-type{
@@ -124,6 +141,11 @@ const cartData = ShoppingCart();
   background-color: #f8f8f8;
   font-size: 16px;
   resize: none;
+}
+
+.kosar-ures{
+    font-size: 20px;
+    justify-content: center;
 }
 
 </style>

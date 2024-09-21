@@ -95,7 +95,6 @@ const cartData = ShoppingCart();
 .nav-container, .vegosszeg{
     font-size: 20px;
     color: #787878;
-    margin-top: 10.5%;
 }
 
 .nav-container .nav-item{
@@ -208,6 +207,11 @@ const cartData = ShoppingCart();
     .nav-container{
         font-size: 15px;
     }
+}
+
+.kosar-ures{
+    font-size: 20px;
+    justify-content: center;
 }
 
 </style>

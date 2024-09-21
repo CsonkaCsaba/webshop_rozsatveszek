@@ -54,14 +54,14 @@ Route::get('/megrendeles', function () {
 Route::put('/uzlet/{id}', [UzletController::class, 'update']);
 
 Route::get('/email/verify', function () {
-    return view('auth.verify');
-})->middleware('auth')->name('verification.notice');
+    return view('auth.verify-email');
+})->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
  
     return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+})->middleware(['signed'])->name('verification.verify');
 
 Auth::routes(['verify' => true]);
 

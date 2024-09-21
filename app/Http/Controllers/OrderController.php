@@ -106,6 +106,11 @@ class OrderController extends Controller
     {
         $order = Rendeles::find($id);
         $order->allapot = $request->allapot;
+        $email = $request->email;
+        $name = $request->nev;
+        $status = $request->allapot;
+
+        app('App\Http\Controllers\EmailController')->sendUpdateEmail($email, $name, $status);
         $order->save();
 
     }

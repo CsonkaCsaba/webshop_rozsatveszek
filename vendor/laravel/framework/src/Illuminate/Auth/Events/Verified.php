@@ -25,4 +25,6 @@ class Verified
     {
         $this->user = $user;
     }
+
+
 }

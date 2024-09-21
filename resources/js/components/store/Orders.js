@@ -256,7 +256,10 @@ export const OrdersStore = defineStore("OrdersStore",{
                 order.OriginalStatus = order.allapot;
             let form_data_update = {
                 id: this.edit_id,
-                allapot: order.allapot
+                allapot: order.allapot,
+                email: order.vasarlo.email,
+                nev: order.vasarlo.nev
+
             }
                 axios.put('api/rendelesek/'+this.edit_id, form_data_update).then((response)=>{
                 if(response.status == 200){

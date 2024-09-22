@@ -134,7 +134,7 @@ class OrderController extends Controller
         $name = $request->nev;
         $status = $request->allapot;
 
-        app('App\Http\Controllers\EmailController')->sendUpdateEmail($email, $name, $status);
+        // app('App\Http\Controllers\EmailController')->sendUpdateEmail($email, $name, $status);
         $order->save();
 
     }

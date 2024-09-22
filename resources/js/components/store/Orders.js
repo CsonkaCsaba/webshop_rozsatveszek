@@ -248,6 +248,7 @@ export const OrdersStore = defineStore("OrdersStore",{
             this.edit_id = id;
         },
         saveUpdate(){
+            this.loading = true;
             this.modalStatus = false;
             this.modalStatusAccept = false;
             this.save = true;
@@ -266,10 +267,25 @@ export const OrdersStore = defineStore("OrdersStore",{
                     this.message = "A rendelés állapotának módosítása sikeres!";
                     this.modalStatus = true;   
                 }
-                }).catch(console.error) 
+                }).catch(console.error)
+
+                if(form_data_update.allapot == "Visszamondott" || form_data_update.allapot =="Sikertelen kézbesítés"){
+                    let order = this.orders.find(order=>order.id == this.edit_id);
+                    for(const termek of order.termek){
+                        let id = termek.id;
+                        let mennyiseg = termek.pivot.mennyiseg;
+                        let form_data_update = {
+                            mennyiseg : mennyiseg
+                        }
+                        axios.put('api/termekadminmennyiseg/'+id, form_data_update).then((response)=>{
+
+                        }).catch(console.error)
+                    }
+                }
+
             }
            
-
+            this.loading = false;
         },
         handlePageChange(data){
             this.currentPage = data.currentPage

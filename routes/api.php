@@ -37,6 +37,7 @@ Route::middleware('web')->post('/megrendeles/storeOrder', [OrderController::clas
 Route::post('/termekadmin/create', [TermekController::class,'create']);
 Route::resource('/termekadmin', TermekController::class);
 Route::put('/termekadmin/{id}', [TermekController::class,'update']);
+Route::put('/termekadminmennyiseg/{id}', [TermekController::class,'updateQuantity']);
 Route::get('/rendelesek', [OrderController::class,'show']);
 Route::get('/rendelesekCim', [OrderController::class,'cim']);
 Route::put('/rendelesek/{id}', [OrderController::class,'update']);

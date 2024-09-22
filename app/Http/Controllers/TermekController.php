@@ -155,6 +155,14 @@ class TermekController extends Controller
                 // $product->save();
             // }
 }
+public function updateQuantity(Request $request, $id)
+    {
+        $product = Termek::find($id);
+        $mennyiseg = $request->mennyiseg;
+        $product->keszlet = $product->keszlet + $mennyiseg;
+        $product->save();
+
+}
 
     /**
      * Remove the specified resource from storage.

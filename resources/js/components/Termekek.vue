@@ -49,15 +49,16 @@ export default {
 
 
 <template>
-    <div class="mt-8 mb-4 pt-2 container-fluid select-container">
-        Termékek
-    </div>
+<div class="d-flex flex-column justify-content-center pt-md-8">
+            <h2 class="pb-2 text-center fontcolor">TERMÉKEK</h2>
+            <hr class="cimalatt_hr mx-auto">
+      </div>
     <div class="container-fluid">
         <div class="row justify-content-center g-0">
-            <div class="col-lg-4 col-md-4 col-sm-5 col-8 m-2 product position-relative" v-for="prod in products" key="prod.id">
+            <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-2 product position-relative" v-for="prod in products" key="prod.id" id="box">
                 <a href="#" class="row">
                     <div class="termek-kep">
-                        <img :src="prod.img" class="img-fluid">
+                        <img :src="prod.img" class="img-fluid img-maxDefault">
                         <div v-if="prod.keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
                         <div v-else class="keszleten px-2 text-start">Készleten</div>
                     </div>
@@ -65,9 +66,9 @@ export default {
                 <div class="row justify-content-center m-1 detail">
                     <div class="szin">{{ prod.szin }}</div>
                     <div class="nev">{{ prod.nevHu }}</div>
-                    <div class="col ar m-1">{{ prod.ar }} Ft</div>
+                    <div class="col ar m-1 pt-1">{{ prod.ar }} Ft</div>
                     <button v-if="prod.keszlet > 0" class="col kosarba kosarba-active text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal" v-on:click="toModal(prod)">
-                        <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pe-1"/>
+                        <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pt-1"/>
                         Kosárba
                     </button> 
                     <button v-else disabled class="col kosarba text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal">
@@ -91,7 +92,7 @@ export default {
                 </div>
                 <div id="KosarbaModalBody" class="modal-body">
                     <div class="termek-kep">
-                        <img :src="termek.img" class="img-fluid img-max">
+                        <img :src="termek.img" class="img-fluid img-max" >
                     </div>
                     <div class="szin">{{ termek.szin }}</div>
                     <div class="nev">{{ termek.nevHu }}</div>
@@ -145,6 +146,19 @@ export default {
 </template>
 
 <style>
+#box{
+    border: 1px solid white;
+    border-radius: 11px;
+}
+#box:hover{
+    background: rgba(228, 160, 183, 0.67);
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
+    transition: box-shadow 0.2s ease-in-out;
+    .termek-kep{
+        width: 100%;
+    }
+}
 
 .select-container{
     font-size: 18px;
@@ -152,6 +166,7 @@ export default {
 
 .product{
     background: rgba(228, 160, 183, 0.47);
+    border: 1px solid white;
 }
 
 .termek-kep{
@@ -183,7 +198,7 @@ export default {
 
 .szin, .ModalKeszletUzenet{
     font-size: 16px;
-    color: #000;
+    color: #1B1C1E;
 }
 
 .nev{
@@ -196,12 +211,14 @@ export default {
     mix-blend-mode: multiply;
     font-size: 16px;
     display: inline-block;
+    padding-top: 15px;
 }
 
 .kosarba{
     border-radius: 11px;
     border: 0px;
-    background: #D9D9D9;
+    background: #1f1f1f;
+    color: white;
     mix-blend-mode: multiply;
     font-size: 16px;
 }
@@ -214,15 +231,20 @@ export default {
 }
 
 .kosarba-active:hover{
-    background-color: #c9c9c9;
+    background-color: #161616;
 }
 
 #KosarbaModal, #KosarbaHelyezveModal{
     font-size: medium;
 }
+.img-maxDefault{
+    height: 300px;
+    width: 100%;
+    border-radius: 9px;
+}
 
 .img-max{
-    max-width: 35%
+    max-width: 35%;
 }
 
 /* setNumber */

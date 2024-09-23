@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="">
-    <div class="under-header mt-8">
+    <div class="under-header">
         <p>Vásároljon rózsát<br> közvetlen a termelőtől!</p>
         <hr>
         <a href="termekek"><button type="button" class="btn btn-vasarlas">Vásárlás</button></a>

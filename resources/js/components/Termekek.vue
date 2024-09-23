@@ -51,7 +51,7 @@ export default {
 <template>
 <div class="d-flex flex-column justify-content-center pt-md-8">
             <h2 class="pb-2 text-center fontcolor">TERMÉKEK</h2>
-            <hr class="cimalatt_hr mx-auto">
+            <hr class="cimalatt_hr mx-auto mt-0">
       </div>
     <div class="container-fluid">
         <div class="row justify-content-center g-0">
@@ -238,7 +238,7 @@ export default {
     font-size: medium;
 }
 .img-maxDefault{
-    height: 300px;
+    height: 250px;
     width: 100%;
     border-radius: 9px;
 }

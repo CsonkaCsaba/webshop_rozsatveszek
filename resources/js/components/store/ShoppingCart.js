@@ -31,6 +31,7 @@ export const ShoppingCart = defineStore("ShoppingCart",{
             db_data: {
                 items: {},
                 billingAddress: {},
+                delivery: 'personal',
                 shippingAddress: {},
                 payment: '',
                 comments: '',

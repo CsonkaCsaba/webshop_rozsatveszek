@@ -51,6 +51,11 @@ Route::get('/megrendeles', function () {
 Route::get('/sikeresrendeles', function () {
     return view('sikeresrendeles');
 });
+
+Route::get('/felhasznalo', function () {
+    return view('felhasznalo');
+});
+
 Route::get('/home', function () {
     return redirect()->route('welcome');;
 });

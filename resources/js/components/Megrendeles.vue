@@ -18,15 +18,18 @@
                     <div class="ms-5 text-start font-15"><b>Utca: </b> {{ cartData.billingAddress.street }}</div>
                     <div class="ms-5 text-start font-15"><b>Házszám: </b> {{ cartData.billingAddress.house }}</div>
                 </div>
-                <div v-if="cartData.shippingAddress.new == 'no'" class="my-3"><b>Szállítási adatok</b>
+                <div v-if="cartData.db_data.delivery=='tohouse' && cartData.shippingAddress.new == 'no'" class="my-3"><b>Szállítási adatok</b>
                     <div class="font-15">A számlázási adatokkal megegyeznek.</div>
                 </div>
-                <div v-else class="my-3"><b>Szállítási adatok</b>
+                <div v-if="cartData.db_data.delivery=='tohouse' && cartData.shippingAddress.new == 'yes'" class="my-3"><b>Szállítási adatok</b>
                     <div class="ms-5 text-start font-15"><b>Név: </b> {{ cartData.shippingAddress.name }}</div>
                     <div class="ms-5 text-start font-15"><b>Irányítószám: </b> {{ cartData.shippingAddress.zipCode }}</div>
                     <div class="ms-5 text-start font-15"><b>Település: </b> {{ cartData.shippingAddress.city }}</div>
                     <div class="ms-5 text-start font-15"><b>Utca: </b> {{ cartData.shippingAddress.street }}</div>
                     <div class="ms-5 text-start font-15"><b>Házszám: </b> {{ cartData.shippingAddress.house }}</div>
+                </div>
+                <div v-if="cartData.db_data.delivery=='personal' && cartData.shippingAddress.new == 'no'" class="my-3"><b>Szállítási adatok</b>
+                    <div class="font-15">Személyes átvétel.</div>
                 </div>
                 <div class="comments container">
                     <b>Egyéb megjegyzések</b>

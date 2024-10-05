@@ -8,6 +8,7 @@ use App\Http\Controllers\UzletController;
 use App\Http\Controllers\TermekController;
 use App\Http\Controllers\KategoriaController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,7 @@ Route::resource('/hirekadmin', HirekController::class);
 Route::post('/hirekadmin/create', [HirekController::class,'create']);
 //Route::get('/hirekadmin', [HirekController::class, 'index']);
 Route::middleware('web')->post('/megrendeles/storeOrder', [OrderController::class, 'storeOrder']);
+Route::middleware('web')->get('/user/orders', [UserController::class, 'orders']);
 Route::post('/termekadmin/create', [TermekController::class,'create']);
 Route::resource('/termekadmin', TermekController::class);
 Route::put('/termekadmin/{id}', [TermekController::class,'update']);

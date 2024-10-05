@@ -6,13 +6,13 @@ const cartData = ShoppingCart();
 </script>
 
 <script>
-export default {
-    data() {
-        return { 
-            szallitas: 1500
-        }
-    }
-}
+// export default {
+//     data() {
+//         return { 
+//             szallitas: 1500
+//         }
+//     }
+// }
 </script>
 
 <template>
@@ -30,16 +30,17 @@ export default {
                 <td>{{ product.ar }}</td>
                 <td>{{ product.quantity }}</td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td colspan="2" class="table-foot"><b>Végösszeg: </b></td>
                 <td class="table-foot"><b>{{ cartData.countTotal() }} Ft</b></td>
-            </tr>
-            <tr>
+            </tr> -->
+            <!-- <tr>
                 <td colspan="2" class="table-foot no-border"><b>Szállítási költség: </b></td>
                 <td class="table-foot no-border"><b>+{{ szallitas }} Ft</b></td>
-            </tr>
+            </tr> -->
             <tr>
-                <td id="fizetendo" colspan="3" class="table-foot no-border"><b>Fizetendő: {{ cartData.countTotal() + szallitas }} Ft</b></td>
+                <!-- <td id="fizetendo" colspan="3" class="table-foot no-border"><b>Fizetendő: {{ cartData.countTotal() + szallitas }} Ft</b></td> -->
+                <td id="fizetendo" colspan="3" class="table-foot no-border"><b>Termékek végösszege: {{ cartData.countTotal()}} Ft</b></td>
             </tr>
         </table>
     </section>
@@ -72,6 +73,6 @@ export default {
 }
 
 #fizetendo{
-    font-size: 20px;
+    font-size: 15px;
 }
 </style>

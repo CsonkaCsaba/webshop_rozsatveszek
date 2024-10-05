@@ -1,7 +1,12 @@
 <script setup>
 
 import { ShoppingCart } from './store/ShoppingCart';
+
 const cartData = ShoppingCart();
+
+const setActiveTab = (tabId) => {
+  localStorage.setItem('activeTab', tabId);
+};
 
 </script>
 
@@ -69,10 +74,10 @@ export default {
                         <li class="nav-item dropdown p-1 m-0">
                             <a class="dropdown-toggle ikon-size" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
                             <ul class="dropdown-menu position-absolute dropdown-menu-right">
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="account">Fiókom</a></li>
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="data">Adataim</a></li>
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="orders">Rendeléseim</a></li>
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="wishlist">Kívánságlistám</a></li>
+                                <li class="p-0"><a class="dropdown-item p-1" href="felhasznalo" id="account" @click="setActiveTab('fiokom')">Fiókom</a></li>
+                                <li class="p-0"><a class="dropdown-item p-1" href="felhasznalo" id="data" @click="setActiveTab('adataim')">Adataim</a></li>
+                                <li class="p-0"><a class="dropdown-item p-1" href="felhasznalo" id="orders" @click="setActiveTab('rendeleseim')">Rendeléseim</a></li>
+                                <li class="p-0"><a class="dropdown-item p-1" href="felhasznalo" id="wishlist" @click="setActiveTab('kivansaglistam')">Kívánságlistám</a></li>
                                 <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#LogoutModal">Kijelentkezés</a></li>
                                 
                             </ul>
@@ -97,7 +102,7 @@ export default {
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">
                     <li><a href="home">Kezdőlap</a></li> <!--átírandó-->
-                    <li><a href="#rolunk">Rólunk</a></li>
+                    <li><a href="home#rolunk">Rólunk</a></li>
                     <li><a href="#hirek">Hírek</a></li>
                     <li><a href="galeria">Galéria</a></li>
                     <li><a href="termekek">Termékek</a></li>

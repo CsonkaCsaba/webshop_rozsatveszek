@@ -170,6 +170,31 @@ const sikeresrendeles_Async = defineAsyncComponent({
 })
 app.component('sikeresrendeles', sikeresrendeles_Async);
 
+const My_account_Async = defineAsyncComponent({
+    loader:() => import('./components/My_account.vue')
+})
+app.component('my_account', My_account_Async);
+
+const My_data_Async = defineAsyncComponent({
+    loader:() => import('./components/My_data.vue')
+})
+app.component('my_data', My_data_Async);
+
+const My_orders_Async = defineAsyncComponent({
+    loader:() => import('./components/My_orders.vue')
+})
+app.component('my_orders', My_orders_Async);
+
+const Wishlist_Async = defineAsyncComponent({
+    loader:() => import('./components/Wishlist.vue')
+})
+app.component('wishlist', Wishlist_Async);
+
+const Usernav_Async = defineAsyncComponent({
+    loader:() => import('./components/UserNav.vue')
+})
+app.component('usernav', Usernav_Async);
+
 const Loader = defineAsyncComponent({
     loader:() => import('./components/Loader.vue')
 })
@@ -216,6 +241,7 @@ import {
     faCamera,
     faNewspaper,
     faShop,
+    faStar,
     faArrowDownAZ,
     faArrowUpAZ,
     faHourglass,
@@ -258,6 +284,7 @@ library.add(
     faCamera,
     faNewspaper,
     faShop,
+    faStar,
     faArrowDownAZ,
     faArrowUpAZ,
     faHourglass,

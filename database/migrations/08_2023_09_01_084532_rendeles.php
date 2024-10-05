@@ -19,13 +19,35 @@ return new class extends Migration
             $table->string('allapot');
             $table->timestamp('rogzitDatum')->nullable();
             $table->integer('vegosszeg');
+            $table->string('szallitas');
 
             $table->foreignId('fk_vasarloId')
             ->constrained(
                 table: 'vasarlos', indexName: 'fk_vasarloid'
             )
             ->onUpdate('cascade')
-            ->onDelete('cascade');            
+            ->onDelete('cascade'); 
+
+            $table->foreignId('fk_userId')->nullable()
+            ->constrained(
+                table: 'users', indexName: 'fk_userid'
+            )
+            ->onUpdate('cascade')
+            ->onDelete('cascade'); 
+            
+            $table->foreignId('fk_szamlazasiCim')
+            ->constrained(
+                table: 'cims', indexName: 'fk_szamlazasicim'
+            )
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
+            $table->foreignId('fk_szallitasiCim')->nullable()
+            ->constrained(
+                table: 'cims', indexName: 'fk_szallitasicim'
+            )
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 

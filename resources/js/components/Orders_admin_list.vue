@@ -76,8 +76,17 @@ watch(input, ()=>{
                 <hr class=""/>
                 <h5 class="text-uppercase fw-bold"><font-awesome-icon :icon="['fas', 'truck-fast']" /> Címek</h5>
                 <div class="row row-cols-3 mt-2 align-items-center">
-                    <div class="col"><p class="fw-bold">Szállítási cím</p> {{ order.szallitasi_cim }}</div>
-                    <div class="col "><p class="fw-bold">Számlázási cím</p> {{ order.szamlazasi_cim}} </div>
+                    <div v-if="order.szallitasi_cim == null">Személyes átvétel</div>
+                    <div v-else class="col"><p class="fw-bold">Szállítási cím</p> {{ 
+                        order.szallitasi_cim.iranyitoszam + " " + 
+                        order.szallitasi_cim.telepules + ", " +
+                        order.szallitasi_cim.utca + " " +
+                        order.szallitasi_cim.hazszam}}</div>
+                    <div class="col "><p class="fw-bold">Számlázási cím</p> {{ 
+                        order.szamlazasi_cim.iranyitoszam + " " + 
+                        order.szamlazasi_cim.telepules + ", " +
+                        order.szamlazasi_cim.utca + " " +
+                        order.szamlazasi_cim.hazszam}} </div>
                 </div>
                 <hr class=""/>
                 <h5 class="text-uppercase fw-bold"><font-awesome-icon :icon="['fas', 'cart-shopping']"/> Rendelt termékek</h5>

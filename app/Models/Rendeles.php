@@ -18,12 +18,19 @@ class Rendeles extends Model
         return $this->belongsTo(Vasarlo::class, 'fk_vasarloId', 'id');
     }
 
+    public function szamlazasiCim(): BelongsTo
+    {
+        return $this->belongsTo(Cim::class, 'fk_szamlazasiCim', 'id');
+    }
+
+    public function szallitasiCim(): BelongsTo
+    {
+        return $this->belongsTo(Cim::class, 'fk_szallitasiCim', 'id');
+    }
+
     public function termek(): BelongsToMany
     {
         return $this->belongsToMany(Termek::class, 'valaszts')->withPivot('mennyiseg','kedvezmeny');
-    }
-    public function cim(): BelongsToMany{
-        return $this->belongsToMany(Cim::class, 'cimes');
     }
 
     protected $fillable =[
@@ -34,7 +41,11 @@ class Rendeles extends Model
         'allapot',
         'vegosszeg',
         'rogzitDatum',
+        'szallitas',
         'fk_vasarloId',
+        'fk_userId',
+        'fk_szamlazasiCim',
+        'fk_szallitasiCim'
     ];
 }
 

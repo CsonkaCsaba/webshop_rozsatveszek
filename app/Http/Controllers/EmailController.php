@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ThankYouOrderEmail;
 use App\Mail\updateStatusEmail;
 use App\Mail\WelcomeEmail;
 use Illuminate\Http\Request;
@@ -27,6 +28,21 @@ class EmailController extends Controller
         $orderStatus = $status;
 
         $response = Mail::to($toEmail)->send(new UpdateStatusEmail($mailMessage, $mailSubject, $userName, $orderStatus));
+        // dd($response);
+
+    }
+
+    public function sendThankYouOrderEmail($id, $email, $name, $orderedProducts,  $billingAddress, $shippingAddress, $total){
+        $id = $id;
+        $toEmail = $email;
+        $mailSubject = 'Köszönjük a rendelését!';
+        $userName = $name;
+        $products = $orderedProducts;
+        $billingAddress =  $billingAddress; 
+        $shippingAddress = $shippingAddress;
+        $total = $total;
+
+        $response = Mail::to($toEmail)->send(new ThankYouOrderEmail($id, $mailSubject, $userName, $products, $billingAddress, $shippingAddress, $total));
         // dd($response);
 
     }

@@ -111,18 +111,27 @@ class OrderController extends Controller
         $fizetes = ($request->payment == 'delivery') ? 'Utánvét' : 'Előre utalás';
         $allapot = ($request->payment == 'delivery') ? 'Feldolgozás alatt' : 'Utalás ellenőrzése';
         $cegnek = ($request->billingAddress['company'] == 'yes') ? 1 : 0;
-
-        $rendeles = Rendeles::create([
-            'megjegyzes' => $request->comments,
-            'fizetesiMod' => $fizetes,
-            'ceges' => $cegnek,
-            'allapot' => $allapot,
-            'vegosszeg' => $request->vegosszeg,
-            'fk_vasarloId' => $vasarloId
-        ]);
-
-        foreach ($request->items as $product){
-            $rendeles->termek()->attach($product['id'], ['mennyiseg' => $product['quantity']]);
+        
+        if ($request->vegosszeg > 0){
+            $rendeles = Rendeles::create([
+                'megjegyzes' => $request->comments,
+                'fizetesiMod' => $fizetes,
+                'ceges' => $cegnek,
+                'allapot' => $allapot,
+                'vegosszeg' => $request->vegosszeg,
+                'fk_vasarloId' => $vasarloId
+            ]);
+            $lastInsertedId= $rendeles->id;
+            $email = $request->billingAddress['email'];
+            $name = $request->billingAddress['name'];
+            $products = $request->items;
+            $billingAddress = $request->billingAddress['zipCode']."".$request->shippingAddress['city']."".$request->shippingAddress['street']."".$request->shippingAddress['house'];
+            $shippingAddress = $request->shippingAddress['zipCode'];
+            $total = $request->vegosszeg;
+            foreach ($request->items as $product){
+                $rendeles->termek()->attach($product['id'], ['mennyiseg' => $product['quantity']]);
+            }
+            app('App\Http\Controllers\EmailController')->sendThankYouOrderEmail($lastInsertedId, $email, $name, $products, $billingAddress, $shippingAddress, $total);
         }
     }
 
@@ -134,7 +143,7 @@ class OrderController extends Controller
         $name = $request->nev;
         $status = $request->allapot;
 
-        // app('App\Http\Controllers\EmailController')->sendUpdateEmail($email, $name, $status);
+        app('App\Http\Controllers\EmailController')->sendUpdateEmail($email, $name, $status);
         $order->save();
 
     }

@@ -77,8 +77,8 @@ function toDB() {
 
   cartData.storeToDB()
     .then((response) => {
-        console.log(response.data);
-        window.location.href = 'sikeresrendeles';
+        console.log(response);
+        //window.location.href = 'sikeresrendeles';
         cartData.cartItems = []
     })
     .catch((error) => {

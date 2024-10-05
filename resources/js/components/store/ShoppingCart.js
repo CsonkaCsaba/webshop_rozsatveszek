@@ -106,7 +106,7 @@ export const ShoppingCart = defineStore("ShoppingCart",{
                 const response = await axios.post('api/megrendeles/storeOrder', this.db_data)
                 return response
             }catch(error) {
-                alert(error.response.data.error)
+                alert(error)
             };
         }
     },                                                               

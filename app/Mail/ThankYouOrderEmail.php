@@ -19,11 +19,14 @@ class ThankYouOrderEmail extends Mailable
     public $billingAddress;
     public $shippingAddress;
     public $total;
+    public $comment;
+    public $pay;
+    public $szallitas;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($id, $mailSubject, $userName, $products, $billingAddress, $shippingAddress, $total)
+    public function __construct($id, $mailSubject, $userName, $products, $billingAddress, $shippingAddress, $total, $comment, $pay, $szallitas)
     {
         $this->id = $id;
         $this->subject = $mailSubject;
@@ -32,6 +35,9 @@ class ThankYouOrderEmail extends Mailable
         $this->billingAddress = $billingAddress;
         $this->shippingAddress = $shippingAddress;
         $this->total = $total;
+        $this->comment = $comment;
+        $this->pay = $pay;
+        $this->szallitas = $szallitas;
     }
 
     /**

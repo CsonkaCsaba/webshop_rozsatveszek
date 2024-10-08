@@ -39,6 +39,8 @@ class OrderController extends Controller
             $name = $request->billingAddress['name'];
             $products = $request->items;
             $total = $request->vegosszeg;
+            $comment = $request->comments;
+           
 
             $isUser = Auth::check();
             if($isUser){
@@ -156,14 +158,17 @@ class OrderController extends Controller
                     $rendeles->update(['fk_userId' => $user->id]);
                 }
                 $lastInsertedId = $rendeles->id;
-                $billingAddress = $request->billingAddress['zipCode']."".$request->shippingAddress['city']."".$request->shippingAddress['street']."".$request->shippingAddress['house'];
-                $shippingAddress = $request->shippingAddress['zipCode'];
+                $billingAddress = ' '.$request->billingAddress['zipCode'].' '.$request->billingAddress['city'].' '.$request->billingAddress['street'].' '.$request->billingAddress['house'];
+                $shippingAddress = ' '.$request->shippingAddress['zipCode'].' '.$request->shippingAddress['city'].' '.$request->shippingAddress['street'].' '.$request->shippingAddress['house'];
 
                 //Save to valaszts pivot table
                 foreach ($products as $product){
                     $rendeles->termek()->attach($product['id'], ['mennyiseg' => $product['quantity']]);
                 }
-                app('App\Http\Controllers\EmailController')->sendThankYouOrderEmail($lastInsertedId, $email, $name, $products, $billingAddress, $shippingAddress, $total);
+                if($szallitas == "Személyes átvétel"){
+                    $shippingAddress = "A rendelt termék(ek) átvétele személyesen történik, kiszállításra nem kerül sor.";
+                }
+                app('App\Http\Controllers\EmailController')->sendThankYouOrderEmail($lastInsertedId, $email, $name, $products, $billingAddress, $shippingAddress, $total, $comment, $fizetes, $szallitas);
             };
         }catch(Exception $e){
             return $e->getMessage();

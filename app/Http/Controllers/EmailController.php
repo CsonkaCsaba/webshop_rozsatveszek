@@ -12,11 +12,10 @@ class EmailController extends Controller
 {
     public function sendWelcomeEmail($email){
         $toEmail = $email;
-        $message = 'Ezúton köszöntjük webshopunk regisztrált vásárlói között!';
+        $message = 'Email címének megerősítését követően köszöntjük webshopunk regisztrált vásárlói között!';
         $subject = 'Sikeres regisztráció!';
 
         $response = Mail::to($toEmail)->send(new WelcomeEmail($message, $subject));
-        // dd($response);
 
     }
 
@@ -28,11 +27,11 @@ class EmailController extends Controller
         $orderStatus = $status;
 
         $response = Mail::to($toEmail)->send(new UpdateStatusEmail($mailMessage, $mailSubject, $userName, $orderStatus));
-        // dd($response);
+
 
     }
 
-    public function sendThankYouOrderEmail($id, $email, $name, $orderedProducts,  $billingAddress, $shippingAddress, $total){
+    public function sendThankYouOrderEmail($id, $email, $name, $orderedProducts,  $billingAddress, $shippingAddress, $total, $comment, $pay, $szallitas){
         $id = $id;
         $toEmail = $email;
         $mailSubject = 'Köszönjük a rendelését!';
@@ -41,9 +40,11 @@ class EmailController extends Controller
         $billingAddress =  $billingAddress; 
         $shippingAddress = $shippingAddress;
         $total = $total;
+        $comment = $comment;
+        $pay = $pay;
+        $szallitas = $szallitas;
 
-        $response = Mail::to($toEmail)->send(new ThankYouOrderEmail($id, $mailSubject, $userName, $products, $billingAddress, $shippingAddress, $total));
-        // dd($response);
+        $response = Mail::to($toEmail)->send(new ThankYouOrderEmail($id, $mailSubject, $userName, $products, $billingAddress, $shippingAddress, $total, $comment, $pay, $szallitas));
 
     }
 }

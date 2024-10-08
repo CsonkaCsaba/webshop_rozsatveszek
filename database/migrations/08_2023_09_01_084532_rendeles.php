@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rendeles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('megjegyzes');
+            $table->text('megjegyzes')->nullable();
             $table->string('fizetesiMod');
             $table->boolean('ceges');
             $table->string('allapot');

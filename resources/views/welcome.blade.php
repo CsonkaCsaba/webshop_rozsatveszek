@@ -9,6 +9,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
             </div>
         @endif
+        @if(session('success'))
+        <div class="alert alert-info alert-dismissible fade show d-flex align-items-center p-3 m-3" role="alert">
+                <h4>{{ session('success')}}</h4>  
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+            </div>
+            @endif
         @if (Auth::user())
         <div class="alert alert-info alert-dismissible fade show" role="alert">
         <h4> Üdvözlünk @auth {{auth()->user()->name}} @endauth!</h4>  
@@ -24,6 +30,34 @@
         <p>Vásároljon rózsát<br> közvetlen a termelőtől!</p>
         <hr>
         <a href="termekek"><button type="button" class="btn btn-vasarlas">Vásárlás</button></a>
+            @if(session('success'))
+            <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card" style="background-color: white;" id="verifycard">
+                        <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+
+                        <div class="card-body d-flex flex-column align-items-center">
+                            @if (session('resent'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ __('A fresh verification link has been sent to your email address.') }}
+                                </div>
+                            @endif
+                            <div>
+                            <img src="../resources/assets/kepek/email.gif" alt="email" height="300">
+                            </div>
+                            {{ __('Before proceeding, please check your email for a verification link.') }}
+                            <!-- {{ __('If you did not receive the email') }},
+                            <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                            </form> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
         <div id="cover-box" class="w-75 d-flex bg-white border-secondary">
             <div class="container">
                 <div class="row justify-content-around m-2">

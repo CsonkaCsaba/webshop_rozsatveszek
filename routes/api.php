@@ -33,7 +33,6 @@ Route::post('/galeria/upload', [KepekController::class, 'upload']);
 Route::get('/hirek', [HirekController::class, 'show']);
 Route::resource('/hirekadmin', HirekController::class);
 Route::post('/hirekadmin/create', [HirekController::class,'create']);
-//Route::get('/hirekadmin', [HirekController::class, 'index']);
 Route::middleware('web')->post('/megrendeles/storeOrder', [OrderController::class, 'storeOrder']);
 Route::middleware('web')->get('/user/orders', [UserController::class, 'orders']);
 Route::post('/termekadmin/create', [TermekController::class,'create']);
@@ -44,7 +43,5 @@ Route::get('/rendelesek', [OrderController::class,'show']);
 Route::get('/rendelesekCim', [OrderController::class,'cim']);
 Route::put('/rendelesek/{id}', [OrderController::class,'update']);
 Route::delete('/rendelesek/{id}', [OrderController::class,'destroy']);
-Route::get('/rendelesekCimes', [CimeController::class,'index']);
-Route::get('/rendelesekCims', [CimController::class,'index']);
 
 

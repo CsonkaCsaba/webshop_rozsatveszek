@@ -86,36 +86,6 @@ export const OrdersStore = defineStore("OrdersStore",{
                         this.totalOrders = rendelesek.length;
                         this.pagesShown = Math.ceil(this.totalOrders/ this.itemsPerPage);
                         this.slicedOrders = this.orders.slice(this.startIndex, this.endIndex)
-                        
-
-                        // await axios.get('api/rendelesekCimes').then(function(response){
-                        //     cimes = response.data
-
-                        // });
-                        // await axios.get('api/rendelesekCims').then(function(response){
-                        //     cims = response.data
-
-                        // });
-                        // for(const rendeles of rendelesek){
-                        //     for (const cime of cimes){
-                        //         if(rendeles.vasarlo.id === cime.vasarlo_id){
-                        //             if(cime.szallitasi != 0){
-                        //             rendeles.szallitasi_cim_id = cime.cim_id;
-                        //             }
-                        //             if(cime.szamlazasi != 0){
-                        //                 rendeles.szamlazasi_cim_id = cime.cim_id;
-                        //             }
-                        //         }
-                        //         for(const cim of cims){
-                        //             if(rendeles.szallitasi_cim_id === cim.id){
-                        //                 rendeles.szallitasi_cim = ""+cim.iranyitoszam+" "+ cim.telepules+" "+cim.utca+" "+cim.hazszam;
-                        //             }
-                        //             if(rendeles.szamlazasi_cim_id === cim.id){
-                        //                 rendeles.szamlazasi_cim = ""+cim.iranyitoszam+" "+ cim.telepules+" "+cim.utca+" "+cim.hazszam;
-                        //             }
-                        //         }
-                        //     }
-                        // }
 
                   this.loading = false;
                 }

@@ -63,7 +63,7 @@ Route::get('/home', function () {
 Route::put('/uzlet/{id}', [UzletController::class, 'update']);
 
 Route::get('/email/verify', function () {
-    return view('auth.verify-email');
+    return view('auth.verify');
 })->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {

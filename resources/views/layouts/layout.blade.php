@@ -52,7 +52,7 @@
     </div>
     <div class="modal-body">
         <div class="card-body">
-            <button type="button" class="btn btn-primary m-2">
+            <button type="button" class="btn btn-primary m-2"  onclick="localStorage.clear();">
             <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">

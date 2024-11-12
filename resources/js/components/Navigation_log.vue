@@ -51,6 +51,7 @@ export default {
             this.mobile = false;
             this.mobileNav = false;
         }
+        
     }
 }
 
@@ -78,7 +79,7 @@ export default {
                                 <li class="p-0"><a class="dropdown-item p-1" href="felhasznalo" id="data" @click="setActiveTab('adataim')">Adataim</a></li>
                                 <li class="p-0"><a class="dropdown-item p-1" href="felhasznalo" id="orders" @click="setActiveTab('rendeleseim')">Rendeléseim</a></li>
                                 <li class="p-0"><a class="dropdown-item p-1" href="felhasznalo" id="wishlist" @click="setActiveTab('kivansaglistam')">Kívánságlistám</a></li>
-                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#LogoutModal">Kijelentkezés</a></li>
+                                <li class="p-0"><a class="dropdown-item p-1" href="#" id="register" data-bs-toggle="modal" data-bs-target="#LogoutModal" >Kijelentkezés</a></li>
                                 
                             </ul>
                         </li>
@@ -106,6 +107,7 @@ export default {
                     <li><a href="#hirek">Hírek</a></li>
                     <li><a href="galeria">Galéria</a></li>
                     <li><a href="termekek">Termékek</a></li>
+                    <li><a href="felhasznalo" id="wishlist" @click="setActiveTab('kivansaglistam')">Kívánságlista</a></li>
                     <li><a href="#kapcsolat">Kapcsolat</a></li>
                     <li><a href="tanacsok">Tanácsok</a></li>
                 </ul>
@@ -168,6 +170,7 @@ export default {
                     <li><a class="link" href="#hirek">Hírek</a></li>
                     <li><a class="link" href="galeria">Galéria</a></li>
                     <li><a class="link" href="termekek">Termékek</a></li>
+                    <li><a class="link" href="felhasznalo" id="wishlist" @click="setActiveTab('kivansaglistam')">Kívánságlista</a></li>
                     <li><a class="link" href="#kapcsolat">Kapcsolat</a></li>
                     <li><a class="link" href="tanacsok">Tanácsok</a></li>
                 </ul>

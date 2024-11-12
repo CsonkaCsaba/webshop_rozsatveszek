@@ -174,7 +174,8 @@ a
   position: absolute
   left: 12%
 
-@media(max-width: $extra-small)
+
+@media(max-width: $extra-small)//320px
   .under-header
     min-height: 185px
 
@@ -189,6 +190,19 @@ a
     .btn-vasarlas
       font-size: 12px
       margin-left: 14px
+
+  .heartIconEmpty
+    width: 10%
+    height: auto
+    padding: 5px
+    cursor: pointer
+
+  .heartIconWish
+    width: 10%
+    height: auto
+    padding-bottom: 5px
+    cursor: pointer
+
 #logreg
   top: 35%
   width: 75%
@@ -198,7 +212,10 @@ a
   #cover-box
     display: none !important
 
-@media((min-width: $extra-small) and (max-width: $md-small))
+
+
+
+@media((min-width: $extra-small) and (max-width: $md-small))//468px
   .under-header
     min-height: 220px
 
@@ -216,8 +233,20 @@ a
   #cover-box
     display: none !important
 
+  .heartIconEmpty
+    width: 18%
+    height: auto
+    padding: 5px
+    cursor: pointer
 
-@media((min-width: $md-small) and (max-width: $small))
+  .heartIconWish
+    width: 18%
+    height: auto
+    padding-bottom: 5px
+    cursor: pointer
+
+
+@media((min-width: $md-small) and (max-width: $small))//576px
   .under-header
     min-height: 240px
 
@@ -235,6 +264,19 @@ a
   #cover-box
     display: none !important
 
+  .heartIconEmpty
+    width: 12%
+    height: auto
+    padding: 5px
+    cursor: pointer
+
+  .heartIconWish
+    width: 12%
+    height: auto
+    padding-bottom: 5px
+    cursor: pointer
+  
+
 #logreg
   top: 30%
   width: 75%
@@ -244,7 +286,9 @@ a
   width: 50%
   position: absolute
 
-@media((min-width: $small) and (max-width: $medium))
+
+
+@media((min-width: $small) and (max-width: $medium))//768px
   .under-header
     min-height: 380px
 
@@ -269,6 +313,17 @@ a
     p
       font-size: 15px
       padding: 5px 0px 0px 8px
+  
+  .heartIconEmpty
+    width: 10%
+    height: auto
+    cursor: pointer
+
+  .heartIconWish
+    width: 10%
+    height: auto
+    padding-bottom: 5px
+    cursor: pointer
 
 #logreg
   top: 30%
@@ -279,7 +334,9 @@ a
   width: 50%
   position: absolute
 
-@media((min-width: $medium) and (max-width: $large))
+
+
+@media((min-width: $medium) and (max-width: $large))//992px
   .under-header
     min-height: 480px
 
@@ -304,6 +361,18 @@ a
     p
       font-size: 25px
       padding: 25px 0px 0px 8px
+  
+  .heartIconEmpty
+    width: 90%
+    height: auto
+    padding-bottom: 30px
+    cursor: pointer
+
+  .heartIconWish
+    width: 90%
+    height: auto
+    cursor: pointer
+    
 
 #logreg
   top: 30%
@@ -314,6 +383,8 @@ a
   top: 5%
   width: 50%
   position: absolute
+
+
 
 @media(min-width: $large)
   .under-header
@@ -341,6 +412,17 @@ a
     p
       font-size: 25px
       padding: 25px 0px 0px 8px
+    
+  .heartIconEmpty
+    width: 100%
+    height: auto
+    padding-bottom: 30px
+    cursor: pointer
+  
+  .heartIconWish
+    width: 100%
+    height: auto
+    cursor: pointer
 
 .divider 							
   display: table 
@@ -416,8 +498,11 @@ a
     to 
       opacity: 1
       top: 0
-.fejlec,
+
 #logreg
   top: 35%
   width: 75%
   position: absolute
+  
+.fejlec
+

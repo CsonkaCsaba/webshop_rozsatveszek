@@ -9,6 +9,7 @@ use App\Http\Controllers\TermekController;
 use App\Http\Controllers\KategoriaController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,5 +44,9 @@ Route::get('/rendelesek', [OrderController::class,'show']);
 Route::get('/rendelesekCim', [OrderController::class,'cim']);
 Route::put('/rendelesek/{id}', [OrderController::class,'update']);
 Route::delete('/rendelesek/{id}', [OrderController::class,'destroy']);
+Route::middleware('web')->get('/user/wishlist', [UserController::class,'wishlist']);
+Route::middleware('web')->post('/user/wishlist', [WishlistController::class, 'storeWish']);
+Route::middleware('web')->delete('/user/wishlist/{id}', [WishlistController::class,'destroy']);
+//Route::middleware('web')->delete('/user/wishlistProduct/{id}', [WishlistController::class,'destroyProduct']);
 
 

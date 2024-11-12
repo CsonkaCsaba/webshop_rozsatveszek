@@ -60,6 +60,10 @@ Route::get('/home', function () {
     return redirect()->route('welcome');;
 });
 
+Route::get('/kivansaglista', function () {
+    return view('kivansaglista');;
+});
+
 Route::put('/uzlet/{id}', [UzletController::class, 'update']);
 
 Route::get('/email/verify', function () {

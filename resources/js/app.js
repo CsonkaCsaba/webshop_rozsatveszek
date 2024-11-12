@@ -6,7 +6,7 @@
 
 import './bootstrap';
 
-import { createApp, defineAsyncComponent } from 'vue';
+import { createApp, defineAsyncComponent, watch } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
 
 import VueAwesomePaginate from "vue-awesome-paginate";
@@ -43,7 +43,10 @@ const router = createRouter({
         component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Admin.vue')},
         { path: '/rendelesek',
         name: 'orders_admin',
-        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Orders_admin.vue')},             
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Orders_admin.vue')},
+        { path: '/kivansaglista',
+        name: 'kivansaglista',
+        component: () => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/Wishlist.vue')},             
     ]
 });
 
@@ -190,6 +193,11 @@ const Wishlist_Async = defineAsyncComponent({
 })
 app.component('wishlist', Wishlist_Async);
 
+const WishlistNotLoggedInAsync = defineAsyncComponent({
+    loader:() => import('./components/WishlistNotLoggedIn.vue')
+})
+app.component('wishlistnotloggedin', WishlistNotLoggedInAsync);
+
 const Usernav_Async = defineAsyncComponent({
     loader:() => import('./components/UserNav.vue')
 })
@@ -212,13 +220,19 @@ app.component('News_front', News_front);
 import Foot from './components/Foot.vue';
 app.component('Foot', Foot);
 
+import Wishlist from './components/Wishlist.vue';
+app.component('kivansaglista', Wishlist);
+
+
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 //Import FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { far } from '@fortawesome/free-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(far)
 import {
     faAngleUp,
     faAngleDown,
@@ -250,7 +264,8 @@ import {
     faXmark,
     faCircleExclamation,
     faUpDown,
-    faTruckFast
+    faTruckFast,
+    faHeart,
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -293,10 +308,18 @@ library.add(
     faXmark,
     faCircleExclamation,
     faUpDown,
-    faTruckFast
+    faTruckFast,
+    faHeart,
 )
 
 const pinia = createPinia();
+watch(
+    pinia.Product,
+    (Product) => {
+      localStorage.setItem("wish", JSON.stringify(Product));
+    },
+    { deep: true }
+    );
 
 
 app.use(router);

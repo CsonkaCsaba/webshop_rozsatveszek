@@ -2,10 +2,11 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { ProductStore } from './store/Product';
+import { ProductStore, elementsToWish } from './store/Product';
 
-const { products } = storeToRefs(ProductStore())
-const { update, editStore, fetchProduct } = ProductStore()
+
+const { products, modalStatusAccept,message, modalStatus, add, loading} = storeToRefs(ProductStore())
+const { update, editStore, fetchWishlist, fetchProduct, addToWishlist, removeFromWishList, receiveEmit, deleteWish} = ProductStore()
 fetchProduct();
 
 </script>
@@ -41,7 +42,7 @@ export default {
         if(this.cartData.kosarban){
             $('#KosarbaHelyezveModal').modal('show');
         }
-      }
+      },
     },
 }
 
@@ -51,6 +52,7 @@ export default {
 <template>
 <div class="d-flex flex-column justify-content-center pt-md-8">
             <h2 class="pb-2 text-center fontcolor">TERMÉKEK</h2>
+            <loader v-if="loading"></loader>
             <hr class="cimalatt_hr mx-auto mt-0">
       </div>
     <div class="container-fluid">
@@ -63,18 +65,29 @@ export default {
                         <div v-else class="keszleten px-2 text-start">Készleten</div>
                     </div>
                 </a>
-                <div class="row justify-content-center m-1 detail">
-                    <div class="szin">{{ prod.szin }}</div>
-                    <div class="nev">{{ prod.nevHu }}</div>
-                    <div class="col ar m-1 pt-1">{{ prod.ar }} Ft</div>
-                    <button v-if="prod.keszlet > 0" class="col kosarba kosarba-active text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal" v-on:click="toModal(prod)">
-                        <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pt-1"/>
-                        Kosárba
-                    </button> 
-                    <button v-else disabled class="col kosarba text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal">
-                        <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pe-1"/>
-                        Kosárba
-                    </button>
+                <div class="row justify-content-center m-1 detail container">
+                    <div class="row row-cols-1">
+                        <div class="szin">{{ prod.szin }}</div>
+                        <div class="nev">{{ prod.nevHu }}</div>
+                        <div class="row justify-content-center">
+                            <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar">{{ prod.ar }} ,-Ft</p></div>
+                        </div>
+                        <div v-if="!prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
+                            <img src="../../assets/kepek/heart.png" class="heartIconEmpty"  alt="rolunk2" @click="addToWishlist(prod.id)">
+                        </div>
+                        <div v-if="prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
+                            <img src="../../assets/kepek/heartfull.png" class="heartIconEmpty heartIconFull"  alt="rolunk2" @click="removeFromWishList(prod.id)">
+                        </div>
+                        
+                        <button v-if="prod.keszlet > 0" class="col-md-8 col-lg-10 col-xl-10 kosarba kosarba-active text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal" v-on:click="toModal(prod)">
+                            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pt-1"/>
+                            Kosárba
+                        </button> 
+                        <button v-else disabled class="col-md-8 col-lg-10 col-xl-10  kosarba text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal">
+                            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pe-1"/>
+                            Kosárba
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,7 +155,9 @@ export default {
             </div>
         </div>
     </div>
-
+<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @deleteWish="deleteWish"></modalAccept>
+<Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" >
+</Modal>
 </template>
 
 <style>
@@ -209,9 +224,7 @@ export default {
     border-radius: 11px;
     background: #D9D9D9;
     mix-blend-mode: multiply;
-    font-size: 16px;
-    display: inline-block;
-    padding-top: 15px;
+    font-size: 15px;
 }
 
 .kosarba{
@@ -228,6 +241,7 @@ export default {
     background: #D9D9D9;
     opacity: 1;
     transition: 0.3s;
+    padding-left: 15px;
 }
 
 .kosarba-active:hover{
@@ -279,5 +293,34 @@ export default {
     padding-top: 0.8em;
     height: 5em;
     padding-bottom: 0;
+}
+.wishlist {
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  background-color: transparent;
+  transition: transform .2s;
+}
+.wishlist:hover{
+    transform: scale(1.3);
+}
+
+.imagebuttondiv{
+    font-size: 25px;
+}
+.heartIconFull{
+    animation: pulse 0.5s
+}
+@keyframes pulse {
+    0% {
+        transform: scale(0.85);
+    }
+
+    70% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0.85);
+    }
 }
 </style>

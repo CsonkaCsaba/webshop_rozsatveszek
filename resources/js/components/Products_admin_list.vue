@@ -1,8 +1,8 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
-const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown} = storeToRefs(ProductStore())
-const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct } = ProductStore()
+const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept} = storeToRefs(ProductStore())
+const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct} = ProductStore()
 fetchProduct();
 
 </script>
@@ -105,22 +105,22 @@ fetchProduct();
                 <div class="col-5 ">
                     <img :src="prod.img" class="image">
                 </div>
-                <div class="col-2 mt-5 keszlet">
+                <div class="col-2 keszlet">
                     <p v-if="prod.keszlet <= 0" class="elfogyott">Elfogyott</p>
                     <p v-else class="keszleten ">Készleten: <br><b>{{ prod.keszlet }} db</b></p>
                     <p v-if ="prod.keszlet > 1 && prod.keszlet <= 10" class=""> <span class="position-absolute translate-middle badge rounded-pill bg-danger figyelem">
                         A készlet hamarosan elfogy!</span></p>
                 </div>
-                <div class="col-2">
+                <div class="col-2 align-self-center">
                     <p class="name">{{ prod.nevHu }}</p><br>
                     <p class="color">{{ prod.szin }}</p>
                 </div>
-                <div class="col-sm ar">
+                <div class="col align-self-center">
                     {{ prod.ar }} Ft
                 </div>
-                <div class="col-sm buttons">
+                <div class="col-sm align-self-center buttons">
                     <button type="button" class="btn secoundaryBtna btn-lg m-4" @click="prod.edit = true" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék szerkesztése" ><font-awesome-icon :icon="['fas', 'pen']" /></button>
-                    <button type="button" class="btn secoundaryBtnb btn-lg" @click="deleteProduct(prod.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék törlése"><font-awesome-icon :icon="['fas', 'trash']" /></button>
+                    <button type="button" class="btn secoundaryBtnb btn-lg" @click="removeProduct(prod.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék törlése"><font-awesome-icon :icon="['fas', 'trash']" /></button>
                 </div>
                 <Transition>
                 <div class="row editProductForm" v-if="prod.edit">
@@ -183,6 +183,8 @@ fetchProduct();
         </li>
     </ul>
 </div>
+<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @deleteProduct="deleteProduct"></modalAccept>
+<Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
 </template>
 
 <style lang="sass" scoped>
@@ -233,8 +235,8 @@ li:nth-child(odd)
 
 .keszlet
     position: absolute
-    width: 150px
-    margin-top: 150px
+    width: 250px
+    margin-top: 100px
     color: #000
     font-weight: 400
 
@@ -246,7 +248,7 @@ li:nth-child(odd)
     text-transform: uppercase
     font-weight: bold
     margin-left: -200px
-    margin-top: 70px
+
 .color
     font-size: 16px
     color: grey
@@ -264,7 +266,6 @@ li:nth-child(odd)
     margin-top: 70px
 
 .buttons
-    margin-top: 40px
     margin-left: 85px
 
 .artop

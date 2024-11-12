@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('termeks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nevHu');
-            $table->string('nevEn');
+            $table->string('nevEn')->nullable();
             $table->integer('ar');
-            $table->string('img');
-            $table->string('url');
+            $table->string('img')->nullable();
+            $table->string('url')->nullable();
             $table->text('leirasHu');
-            $table->text('leirasEn');
+            $table->text('leirasEn')->nullable();
             $table->string('szin');
             $table->string('color');
             $table->integer('keszlet');

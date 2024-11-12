@@ -98,6 +98,7 @@ export default {
                     <li><a href="/webshop_rozsatveszek/public#hirek">Hírek</a></li>
                     <li><a href="galeria">Galéria</a></li>
                     <li><a href="termekek">Termékek</a></li>
+                    <li><a href="kivansaglista">Kívánságlista</a></li>
                     <li><a href="/webshop_rozsatveszek/public/#kapcsolat">Kapcsolat</a></li>
                     <li><a href="tanacsok">Tanácsok</a></li>
                 </ul>
@@ -160,6 +161,7 @@ export default {
                     <li><a class="link" href="#hirek">Hírek</a></li>
                     <li><a class="link" href="galeria">Galéria</a></li>
                     <li><a class="link" href="termekek">Termékek</a></li>
+                    <li><a class="link" href="kivansaglista">Kívánságlista</a></li>
                     <li><a class="link" href="#kapcsolat">Kapcsolat</a></li>
                     <li><a class="link" href="tanacsok">Tanácsok</a></li>
                 </ul>

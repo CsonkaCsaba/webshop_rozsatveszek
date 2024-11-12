@@ -16,6 +16,9 @@
             </div>
             @endif
         @if (Auth::user())
+        <script>
+            localStorage.clear();
+        </script>
         <div class="alert alert-info alert-dismissible fade show" role="alert">
         <h4> Üdvözlünk @auth {{auth()->user()->name}} @endauth!</h4>  
                 {{ session('status') }}

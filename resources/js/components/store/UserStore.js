@@ -15,7 +15,6 @@ export const UserStore = defineStore("UserStore",{
                 this.orders = []
                 ordersFromDB.data.forEach(order => {
                     this.orders.push(order);
-                    console.log(order)
                 });
             }catch(error) {
                 alert(error.response.data.error)

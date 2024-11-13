@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('leirasHu');
             $table->text('leirasEn')->nullable();
             $table->string('szin');
-            $table->string('color');
+            $table->string('color')->nullable();
             $table->integer('keszlet');
             $table->timestamps();
         });

@@ -7,8 +7,8 @@
       </div>
 </div>
 @if (Auth::user())
-<WishlistNotLoggedIn></WishlistNotLoggedIn>
-@else
 <wishlist></wishlist>
+@else
+<WishlistNotLoggedIn></WishlistNotLoggedIn>
 @endif
 @endsection

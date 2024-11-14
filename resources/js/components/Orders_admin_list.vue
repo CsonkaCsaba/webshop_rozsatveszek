@@ -10,9 +10,50 @@ watch(input, ()=>{
     inputChanged();
 })
 </script>
+<!-- <script>
+  const gradients = [
+    ['#222'],
+    ['#42b3f4'],
+    ['red', 'orange', 'yellow'],
+    ['purple', 'violet'],
+    ['#00c6ff', '#F0F', '#FF0'],
+    ['#f72047', '#ffd200', '#1feaea'],
+  ]
+
+  export default {
+    data: () => ({
+      width: 2,
+      radius: 10,
+      padding: 8,
+      lineCap: 'round',
+      gradient: gradients[5],
+      value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+      gradientDirection: 'top',
+      gradients,
+      fill: false,
+      type: 'trend',
+      autoLineWidth: false,
+    }),
+  }
+</script> -->
 
 <template>
 <div class="container mb-4 pt-4 align-items-center">
+
+        <!-- <v-sparkline
+            :auto-line-width="autoLineWidth"
+            :fill="fill"
+            :gradient="gradient"
+            :gradient-direction="gradientDirection"
+            :line-width="width"
+            :model-value="value"
+            :padding="padding"
+            :smooth="radius || false"
+            :stroke-linecap="lineCap"
+            :type="type"
+            auto-draw
+        ></v-sparkline> -->
+
     <div class="row row-cols-7 fw-bold fs-5 px-4">
         <div class="col d-flex justify-content-start align-items-start">
             <button v-if="showDown" class="btn btn-light fw-bold fs-5 btnorder" @click="orderOrdersByIdASC">
@@ -36,7 +77,7 @@ watch(input, ()=>{
         <input type="text" v-model="input" placeholder="Keresés..." class="form-control ms-2"/>
 </div>
 
-<div class="d-inline-flex justify-content-center align-items-center ps-4 invalid-feedback" v-if="input&&slicedOrders.length == 0">
+<div class="d-inline-flex justify-content-center align-items-center ps-4" v-if="input&&slicedOrders.length == 0">
      <h4>Sajnálom, nincs ilyen névvel regisztrált vevő a rendszerben!</h4>
   </div>
 </div>

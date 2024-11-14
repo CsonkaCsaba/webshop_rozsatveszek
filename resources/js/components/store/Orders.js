@@ -214,6 +214,16 @@ export const OrdersStore = defineStore("OrdersStore",{
                 order.allapot = event.target.value
                 order.optionsFinal = this.optionsStatus.filter(option => option.option !== event.target.value);
             }
+            let localOrders = JSON.parse(localStorage.getItem('orders')) 
+                if(localOrders.length > 0){
+                    for(const order of localOrders){  
+                        if(order.id === id){
+                            console.log(id, event.target.value)
+                            order.allapot = event.target.value
+                            }
+                    }
+                    localStorage.setItem('orders', JSON.stringify(this.orders));
+                } 
             this.edit_id = id;
         },
         saveUpdate(){
@@ -261,7 +271,6 @@ export const OrdersStore = defineStore("OrdersStore",{
             const endIndex = startIndex + this.itemsPerPage; 
             let localOrders = JSON.parse(localStorage.getItem('orders')) 
                 if(localOrders.length > 0){
-                    console.log(localOrders)
                     slicedOrders = localOrders.slice(startIndex, endIndex)
                 } else{
                     slicedOrders = this.orders.slice(startIndex, endIndex)

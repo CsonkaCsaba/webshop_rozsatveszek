@@ -3,14 +3,12 @@ import axios from 'axios';
 import {ref } from 'vue'
 
 export let reload = ref(0);
+export let slicedOrders =[]
 
 export const OrdersStore = defineStore("OrdersStore",{
     state: () => {
       return {
         orders: [
-
-        ],
-        slicedOrders:[
 
         ],
         addresses:[
@@ -49,7 +47,7 @@ export const OrdersStore = defineStore("OrdersStore",{
         displayedOrders(){
             const startIndex = (this.currentPage * this.itemsPerPage) - this.itemsPerPage;
             const endIndex = startIndex + this.itemsPerPage; 
-            this.slicedOrders = this.orders.slice(startIndex, endIndex)
+            slicedOrders = this.orders.slice(startIndex, endIndex)
         },
         async fetchAddresses(){
             let cimek = [];
@@ -83,9 +81,10 @@ export const OrdersStore = defineStore("OrdersStore",{
                         }
                         this.orders.push(rendeles);
                     }
+                        localStorage.setItem('orders', JSON.stringify(rendelesek));
                         this.totalOrders = rendelesek.length;
                         this.pagesShown = Math.ceil(this.totalOrders/ this.itemsPerPage);
-                        this.slicedOrders = this.orders.slice(this.startIndex, this.endIndex)
+                        slicedOrders = this.orders.slice(this.startIndex, this.endIndex)
 
                   this.loading = false;
                 }
@@ -181,14 +180,14 @@ export const OrdersStore = defineStore("OrdersStore",{
             
         },
         orderOrdersByIdASC(){
-            this.slicedOrders.sort( function( a, b ){
+            slicedOrders.sort( function( a, b ){
                   return parseInt( a.id ) > parseInt( b.id ) ? 1 : -1;
             });
             this.showDown = false,
             this.showUp = true
         },
         orderOrdersByIdDESC(){
-            this.slicedOrders.sort( function( a, b ){
+            slicedOrders.sort( function( a, b ){
                   return parseInt( a.id ) < parseInt( b.id ) ? 1 : -1;
             });
             this.showDown = true,
@@ -257,11 +256,20 @@ export const OrdersStore = defineStore("OrdersStore",{
            
             this.loading = false;
         },
-        handlePageChange(data){
-            this.currentPage = data.currentPage
+        handlePageChange(){
+            const startIndex = (this.currentPage * this.itemsPerPage) - this.itemsPerPage;
+            const endIndex = startIndex + this.itemsPerPage; 
+            let localOrders = JSON.parse(localStorage.getItem('orders')) 
+                if(localOrders.length > 0){
+                    console.log(localOrders)
+                    slicedOrders = localOrders.slice(startIndex, endIndex)
+                } else{
+                    slicedOrders = this.orders.slice(startIndex, endIndex)
+                }
+            
         },
         inputChanged(){
-            this.slicedOrders = this.orders.filter((order) =>
+                slicedOrders = this.orders.filter((order) =>
                 order.vasarlo.nev.toLowerCase().includes(this.input.toLowerCase())
             ).slice(this.startIndex, this.endIndex);
         }

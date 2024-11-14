@@ -266,6 +266,7 @@ import {
     faUpDown,
     faTruckFast,
     faHeart,
+    faQuestion
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -310,6 +311,7 @@ library.add(
     faUpDown,
     faTruckFast,
     faHeart,
+    faQuestion
 )
 
 const pinia = createPinia();

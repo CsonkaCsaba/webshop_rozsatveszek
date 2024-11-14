@@ -1,9 +1,9 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { OrdersStore } from './store/Orders';
+import { OrdersStore, slicedOrders } from './store/Orders';
 import { reactive, computed } from 'vue'
 import { ref, watch } from 'vue';
-const { orders, selectedValue, addNewProduct,  showDown, showUp, accepted, currentPage, itemsPerPage, totalOrders, pagesShown, slicedOrders, input, loading} = storeToRefs(OrdersStore())
+const { orders, selectedValue, addNewProduct,  showDown, showUp, accepted, currentPage, itemsPerPage, totalOrders, pagesShown, input, loading} = storeToRefs(OrdersStore())
 const { update, fetchOrders, addNewProductBtn, onChange, createProduct, deleteOrd, orderOrdersByIdASC, orderOrdersByIdDESC, updateOrder, handlePageChange, inputChanged, displayOrders } = OrdersStore()
 fetchOrders();
 watch(input, ()=>{
@@ -50,15 +50,17 @@ watch(input, ()=>{
             <div class="col ms-4"><p class="">{{ order.vegosszeg }},-Ft</p></div>
             <div class="col"><p class="">{{ order.fizetesiMod }}</p></div>
             <div class="col-2 d-flex align-items-center">
-                <font-awesome-icon  v-if="order.allapot == 'Feldolgozás alatt'" :icon="['fa', 'hourglass']" class="pe-3" color="#7a7d80"/>
-                <font-awesome-icon v-if="order.allapot == 'Kiszállítás alatt'" :icon="['fa', 'truck']" class="pe-3" color="#1679c9"/>
-                <font-awesome-icon v-if="order.allapot == 'Teljesítve'" :icon="['fa', 'check']" class="pe-3" color="#64c916"/>
-                <font-awesome-icon  v-if="order.allapot == 'Visszamondott'" :icon="['fa', 'ban']" class="pe-3" color="#d41e1e"/>
-                <font-awesome-icon v-if="order.allapot == 'Sikertelen kézbesítés'" :icon="['fa', 'xmark']" class="pe-3" color="#d41e1e"/>
                 <select class="form-select fs-6 px-2" :v-model="selectedValue" @change="onChange(order.id, $event)">
                     <option :value="order.allapot">{{ order.allapot }}</option>
                     <option v-for="option in order.optionsFinal" :key="option.id" :value="option.option">{{ option.option }}</option>
                 </select>
+                <font-awesome-icon  v-if="order.allapot == 'Feldolgozás alatt'" :icon="['fa', 'hourglass']" class="ps-3" color="#7a7d80"/>
+                <font-awesome-icon v-if="order.allapot == 'Kiszállítás alatt'" :icon="['fa', 'truck']" class="ps-3" color="#1679c9"/>
+                <font-awesome-icon v-if="order.allapot == 'Teljesítve'" :icon="['fa', 'check']" class="ps-3" color="#64c916"/>
+                <font-awesome-icon  v-if="order.allapot == 'Visszamondott'" :icon="['fa', 'ban']" class="ps-3" color="#d41e1e"/>
+                <font-awesome-icon v-if="order.allapot == 'Sikertelen kézbesítés'" :icon="['fa', 'xmark']" class="ps-3" color="#d41e1e"/>
+                <font-awesome-icon v-if="order.allapot == 'Utalás ellenőrzése'" :icon="['fas', 'question']" class="ps-3"/>
+                
             </div>
             <div class="col-2 buttons align-items-center">
                 <button type="button" class="btn secoundaryBtna btn-lg ms-2" @click="updateOrder(order.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Mentés" ><font-awesome-icon :icon="['fas', 'floppy-disk']" /></button>
@@ -120,7 +122,7 @@ watch(input, ()=>{
             </li>
     </ul>
 <div class="example-six align-items-center justify-content-center text-center">
-    <vue-awesome-paginate v-model="currentPage" :total-items="totalOrders" :items-per-page="itemsPerPage" :max-pages-shown="pagesShown" @page-clicked="handlePageChange" :container-class="'pagination-container'">
+    <vue-awesome-paginate v-model="currentPage" :total-items="totalOrders" :items-per-page="itemsPerPage" :max-pages-shown="pagesShown" @click="handlePageChange" :container-class="'pagination-container'">
         <template #prev-button id="nextBtn">
         <span>  Előző</span>
     </template>

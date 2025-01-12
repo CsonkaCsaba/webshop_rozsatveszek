@@ -4,19 +4,13 @@ import { storeToRefs } from 'pinia';
 import { NewsStore } from './store/NewsStore';
 import { Pagination, Navigation } from 'swiper/modules';
 import { showSwiper } from './store/NewsStore';
-
 const store = NewsStore()
 onServerPrefetch(async () => {
   await store.fetchData()
-})
-
-const modules = [Pagination, Navigation]
-
-const { modalStatus, message, photoMessage} = storeToRefs(NewsStore())
-const { receiveEmit} = NewsStore()
-
-
-
+});
+const modules = [Pagination, Navigation];
+const { modalStatus, message, photoMessage, modalStatusAccept} = storeToRefs(NewsStore());
+const { receiveEmit, deleteNewsAccepted} = NewsStore();
 </script>
 
 
@@ -30,15 +24,16 @@ const { receiveEmit} = NewsStore()
 </div>
 
 
-<Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" >
-</Modal>
-
 
 <swiper_news :key="showSwiper">
 </swiper_news>
 
 <addnews :key="showSwiper" :photoMessage="photoMessage">
 </addnews>
+
+<Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
+<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @deleteNewsAccepted="deleteNewsAccepted" ></modalAccept>
+
 
 </template>
 

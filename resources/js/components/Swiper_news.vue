@@ -9,7 +9,7 @@ import { Pagination, Navigation } from 'swiper/modules';
 const modules = [Pagination, Navigation]
 
 const  { news } = storeToRefs(NewsStore())
-const { deleteNews, updateNews, deleteStatusChange, createNews, receiveEmit, fetchNewsadmin } = NewsStore()
+const { deleteNews, updateNews, deleteStatusChange, createNews, receiveEmit, fetchNewsadmin, modalStatusAccept, modalStatus, message } = NewsStore()
 fetchNewsadmin();
 </script>
 
@@ -34,7 +34,7 @@ fetchNewsadmin();
                   </div>
                   <div class="d-flex justify-content-center m-2">
                       <button class="btn secoundaryBtna m-2" type="submit" title="Módosítások mentése"><font-awesome-icon :icon="['fas', 'floppy-disk']" class="fa-fw"/>  Mentés</button>
-                      <button type="button" class="btn secoundaryBtnb m-2"  @click="deleteNews( ne.id, ne.cim)" title="Hír törlése"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>
+                      <button type="button" class="btn secoundaryBtnb m-2"  @click="deleteNews(ne.id)" title="Hír törlése"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>
                     </div>
       
                 </form>
@@ -44,7 +44,6 @@ fetchNewsadmin();
         </swiper-slide>
     </swiper>
     </div>
-
 </template>
 <style>
 </style>

@@ -4,19 +4,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Rozsatveszek</title>
-
+        <title>Rózsák közvetlen a termelőtől - rozsatveszek.hu</title>
+        <link rel="shortcut icon" href="{{ asset('img/rozsatveszek_logo_kicsi-removebg-preview.webp') }}">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        <link rel="icon" href="../assets/kepek/logo.png">
+        <!-- <link rel="icon" href="../assets/kepek/logo.png"> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-        
-     </script>
         <!-- Styles -->
         <style>
-          
         </style>
         @vite(['resources/js/app.js', 'resources/sass/app.scss', 'resources/css/app.css'])
     </head>

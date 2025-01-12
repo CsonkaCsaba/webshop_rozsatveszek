@@ -1,6 +1,11 @@
-
 <script>
-
+    export default{
+    data(){
+        return{
+            year: new Date().getFullYear()
+        }
+    }
+}
 </script>
 
     <template>
@@ -34,7 +39,7 @@
         </div>
         <div class="row p-2">
             <div class="col">
-                @2023 Minden jog fenntartva.
+                @<span id="year"> {{ year }}</span> Minden jog fenntartva.
             </div>
             <div class="col">
                 <a class="link p-3 social"><font-awesome-icon :icon="['fab', 'facebook']" /></a>
@@ -46,7 +51,6 @@
     </div>
 
 </template>
-
 
 <style lang="sass" scoped>
 .google-map

@@ -9,7 +9,7 @@
     </h4>
     <div class="d-flex flex-row my-5 align-items-center justify-content-center">
       <div class="">
-        <a href="termekek"><button class="mx-auto btn btn-vasarlas"> Irány a webshop </button></a>
+        <a href="termekek"><button class="mx-auto btn btn-vasarlas"> Vissza a webshopba </button></a>
       </div>
     </div>    
   </div>

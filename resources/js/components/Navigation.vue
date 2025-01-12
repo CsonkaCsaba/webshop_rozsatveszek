@@ -55,7 +55,9 @@ export default {
     <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky">
         <nav>
             <div class="branding">
-                <img src="../../assets/kepek/logo.png" alt="logo" class="m-3">
+                <a href="/webshop_rozsatveszek/public/">
+                    <img src="../../assets/kepek/rozsatveszek_logo_kicsi-removebg-preview.webp" alt="logo" class="m-3">
+                </a>
             </div>
             <div class="d-flex flex-column">
                 <div class="d-flex flex-row up">
@@ -221,7 +223,7 @@ header
         align-items: center
 
         img
-            width: 130px
+            width: 180px
             transition: .5s ease all
         
     .navigation

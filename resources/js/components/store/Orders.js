@@ -40,7 +40,23 @@ export const OrdersStore = defineStore("OrdersStore",{
         startIndex: 0,
         endIndex: 10,
         loading: false,
-        input: ""
+        input: "",
+        gradient : ['#f72047', '#ffd200', '#1feaea'],
+        width: 2,
+        radius: 10,
+        padding: 8,
+        lineCap: 'round',
+        value: [],
+        gradientDirection: 'top',
+        fill: false,
+        type: 'trend',
+        autoLineWidth: false,
+        numberOfTheCurrentMonth: new Date().getMonth(),
+        currentYear: new Date().getFullYear(),
+        currentMonth: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
+        daysInMonth: new Date(new Date().getFullYear(), new Date().getMonth()+1, 0).getDate(),
+        labels: [],
+        prices: []
         }
     },
     getters: {
@@ -55,7 +71,9 @@ export const OrdersStore = defineStore("OrdersStore",{
                     cimek = response.data
             });
             this.addresses.push(cimek);
-        }
+        },
+        
+
     },
     actions: {
 
@@ -71,6 +89,12 @@ export const OrdersStore = defineStore("OrdersStore",{
                     for(const rendeles of rendelesek){
                         const spl = rendeles.rogzitDatum.split('T');
                         const rendelesDate = spl[0];
+                        const rendelesD = rendelesDate.split('-');
+                        const orderDay = parseInt(rendelesD[2]);
+                        const orderMonth = rendelesD[1];
+                        const orderYear = rendelesD[0];
+                        const currentYear = this.currentYear.toString();
+                        const currentMonth = (this.numberOfTheCurrentMonth + 1).toString();
                         rendeles.rogzitDatum = rendelesDate;
                         rendeles.optionsFinal = this.optionsStatus.filter(option => option.option !== rendeles.allapot);
                         rendeles.OriginalStatus = rendeles.allapot;
@@ -79,6 +103,10 @@ export const OrdersStore = defineStore("OrdersStore",{
                             const price = product.ar
                             product.subTotal = db * price
                         }
+
+                        // if(orderYear === currentYear && orderMonth === currentMonth){
+                        //     this.value[orderDay] = (parseInt(rendeles.vegosszeg))
+                        // }
                         this.orders.push(rendeles);
                     }
                         localStorage.setItem('orders', JSON.stringify(rendelesek));
@@ -92,6 +120,12 @@ export const OrdersStore = defineStore("OrdersStore",{
                     console.log(error.message)
                 }
         },
+        async setChartDays(){   
+            for(let i =1; i <= this.daysInMonth; i++){
+                this.labels.push(i)
+            }
+        },
+        
         addNewProductBtn(){
             this.addNewProduct = true
             this.disableBtnAdd = true;

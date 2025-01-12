@@ -3,7 +3,7 @@
 <div class="container mt-8">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card" style="background-color: white;" id="verifycard">
+            <div class="card" style="background-color: white;" id="logreg">
                 <div class="card-header">{{ __('Verify Your Email Address') }}</div>
 
                 <div class="card-body d-flex flex-column align-items-center">

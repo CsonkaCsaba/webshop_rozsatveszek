@@ -15,6 +15,7 @@ export const NewsStore = defineStore("NewsStore",{
             
         ],
         modalStatus: false,
+        modalStatusAccept: false,
         baseUrl: window.location.origin,
         edit_id: null,
         file: '',
@@ -22,7 +23,8 @@ export const NewsStore = defineStore("NewsStore",{
         noFile: false,
         message : "",
         photoMessage : "",
-        photo: {}
+        photo: {},
+        loading: false
         }
     },
     getters: {
@@ -55,27 +57,42 @@ export const NewsStore = defineStore("NewsStore",{
                     console.log(error)
                 }
         },
-
-        deleteNews(id, cim){
+        receiveEmit(){
+            this.modalStatus = false;
+            this.modalStatusAccept = false;
+        },
+        deleteNews(id){
+            this.loading = true; 
+            let hasNew = this.news[0].some(e => e.id === id);
+            if(hasNew){ 
+                this.edit_id = id;
+                this.modalStatusAccept = true;
+                this.message = 'Biztos benne, hogy véglegesen törölni szeretné a hírt?';
+             } else{
+                this.modalStatusAccept = true;
+                this.message = 'A kiválasztott hír nem található a rendszerben!';
+             } 
+             this.loading = false;
+        },
+        deleteNewsAccepted(){
+            this.loading = true;
             try{
-                let answer = confirm("Biztos benne, hogy törölni szeretné a(z) " +cim+" című hírt?");          
-                if(answer != false){
-                axios.delete('api/hirekadmin/'+id).then(res=>{
-                    if(res.status == 200){
-                        let index = this.news.findIndex(news=>news.id == id);
-                        this.news.splice(index, 1)
-                        this.modalStatus = true;
-                        this.message = "A hír törlése sikeres!";
-                        showSwiper +=1
-                    }
-                    answer = false;
-                    
-                    }).catch(console.error)
+            axios.delete('api/hirekadmin/'+this.edit_id).then(res=>{
+                if(res.status == 200){
+                    let index = this.news.findIndex(news=>news.id == this.edit_id);
+                    this.news.splice(index, 1);
+                    this.modalStatusAccept = false,
+                    this.modalStatus = true;
+                    this.message = "A hír törlése sikeres!";
+                    showSwiper +=1
+                    this.loading = false;
                 }
-            }catch(error){
+                
+                }).catch(console.error)
+
+            }  catch(error){
                 console.log(error)
             }
-
         },
 
         updateNews(id, cim, leiras, uzletId, kepId){

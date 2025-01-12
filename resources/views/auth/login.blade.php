@@ -26,9 +26,9 @@
         </div>
             <div class="row justify-content-center" id="logreg">
                 <div class="col-md-8">
-                    <div class="card">
+                    <div class="card transition">
                         
-                        <div class="card-header text-uppercase"><strong>{{ __('Login') }}</strong></div>
+                        <div class="card-header text-uppercase d-flex flex-row"><strong>{{ __('Login') }}</strong><div class="closebutton"> <a href="/webshop_rozsatveszek/public/">X</a></div></div> 
 
                         <div class="card-body">
                             <form method="POST" action="{{ route('login') }}">

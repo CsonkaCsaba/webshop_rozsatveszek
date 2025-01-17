@@ -13,7 +13,7 @@ watch(input, ()=>{
 </script>
 
 <template>
-<v-card class="mt-8 mx-auto overflow-visible text-center" max-width="800">
+<!-- <v-card class="mt-8 mx-auto overflow-visible text-center" max-width="800">
         <v-sparkline :auto-line-width="autoLineWidth" :fill="fill" :gradient="gradient" :gradient-direction="gradientDirection" :line-width="width" :model-value="value" :padding="padding"
             :smooth="radius || false" :stroke-linecap="lineCap" :type="type" auto-draw :labels="labels"
         ></v-sparkline>
@@ -22,7 +22,7 @@ watch(input, ()=>{
         <b>{{ currentMonth[numberOfTheCurrentMonth] }}</b>
       </div>
     </v-card-text>
-</v-card>
+</v-card> -->
 <div class="container mb-4 pt-4 align-items-center">
     
     <div class="row row-cols-7 fw-bold fs-5 px-4">

@@ -1,6 +1,7 @@
 <script setup>
 import { OrdersStore } from './store/Orders';
 import { storeToRefs } from 'pinia';
+import { reload } from './store/Orders';
 const { receiveEmit, saveUpdate, deleteOrder} = OrdersStore()
 const { modalStatusAccept, message} = storeToRefs(OrdersStore())
 </script>

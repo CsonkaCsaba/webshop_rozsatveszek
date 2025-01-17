@@ -5,12 +5,6 @@ import { GalleryStore } from './store/Gallery';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation } from 'swiper/modules';
 
-const store = GalleryStore()
-onServerPrefetch(async () => {
-  await store.fetchData()
-})
-
-  // define your modules list here
   const modules = [Pagination, Navigation]
 
 
@@ -31,7 +25,7 @@ onServerPrefetch(async () => {
         <div class="">
         <div class="d-flex justify-content-center">
                 <div class="form-group">
-                    <button type="button" class="btn secoundaryBtna m-2"  @click="deletePhoto(gall.id, gall.uzletId, gall.kepNev)" data-bs-toggle="tooltip" data-bs-placement="top" title="Fotó törlése"  :disabled="gall.id <= 4"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>
+                    <button type="button" class="btn secoundaryBtna m-2"  @click="deletePhoto(gall.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Fotó törlése"  :disabled="gall.id <= 4"><font-awesome-icon :icon="['fas', 'trash']" class="fa-fw"/> Töröl </button>
                 </div>
                 <div class="form-group">
                     <a :href="gall.kepUtvonal" @click.prevent="downloadPhoto(gall.kepUtvonal)"><button type="button" class="btn secoundaryBtnb m-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Fotó letöltése"><font-awesome-icon :icon="['fas', 'download']" class="fa-fw"/>  Letölt</button></a>

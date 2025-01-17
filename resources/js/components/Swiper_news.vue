@@ -9,7 +9,7 @@ import { Pagination, Navigation } from 'swiper/modules';
 const modules = [Pagination, Navigation]
 
 const  { news } = storeToRefs(NewsStore())
-const { deleteNews, updateNews, deleteStatusChange, createNews, receiveEmit, fetchNewsadmin, modalStatusAccept, modalStatus, message } = NewsStore()
+const { deleteNews, updateNews, fetchNewsadmin} = NewsStore()
 fetchNewsadmin();
 </script>
 
@@ -44,6 +44,10 @@ fetchNewsadmin();
         </swiper-slide>
     </swiper>
     </div>
+
+<!-- <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal> -->
+
+
 </template>
 <style>
 </style>

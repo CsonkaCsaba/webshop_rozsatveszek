@@ -3,7 +3,7 @@ import axios from 'axios'
 import {ref} from 'vue'
 
 
-export let showSwiper = ref(0);
+export let reload = ref(0);
 
 export const NewsStore = defineStore("NewsStore",{
     state: () => {
@@ -33,6 +33,7 @@ export const NewsStore = defineStore("NewsStore",{
     actions: {
 
         async fetchNews(){
+            //this.news = [];
             let news = [];
             try {
                    await axios.get('api/hirek').then(function(response){
@@ -61,6 +62,10 @@ export const NewsStore = defineStore("NewsStore",{
             this.modalStatus = false;
             this.modalStatusAccept = false;
         },
+        emitRecive(){
+            this.modalStatus = false;
+            this.modalStatusAccept = false;
+        },
         deleteNews(id){
             this.loading = true; 
             let hasNew = this.news[0].some(e => e.id === id);
@@ -84,8 +89,8 @@ export const NewsStore = defineStore("NewsStore",{
                     this.modalStatusAccept = false,
                     this.modalStatus = true;
                     this.message = "A hír törlése sikeres!";
-                    showSwiper +=1
                     this.loading = false;
+                    reload += 1;
                 }
                 
                 }).catch(console.error)

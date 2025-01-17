@@ -18,10 +18,15 @@ class Uzlet extends Model
         'email',
         'tel',
         'adoszam',
+        'cegjegyzekszam',
         'iranyitoszam',
         'telepules',
         'hazszam',
-        'utca'
+        'utca',
+        'bank',
+        'bankszamlaszam',
+        'iban',
+        'swiftbic'
     ];
 
     public $timestamps = false;

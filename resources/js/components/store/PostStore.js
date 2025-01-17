@@ -9,7 +9,9 @@ export const PostStore = defineStore("post",{
         ],
         edit_id :1,
         uzenet: "Sikeres mentés ",
-        updateSuccessful: false
+        updateSuccessful: false,
+        modalStatus: false,
+        message : ""
        
         }
     },
@@ -36,8 +38,13 @@ export const PostStore = defineStore("post",{
                     hazszam:uzlet.hazszam,
                     tel:uzlet.tel,
                     email: uzlet.email,
-                    adoszam:uzlet.adoszam
-                    
+                    adoszam:uzlet.adoszam,
+                    cegjegyzekszam: uzlet.cegjegyzekszam,
+                    bank: uzlet.bank,
+                    bankszamlaszam: uzlet.bankszamlaszam,
+                    iban: uzlet.iban,
+                    swiftbic: uzlet.swiftbic
+
                 })
                 
                 } catch(error){
@@ -57,15 +64,17 @@ export const PostStore = defineStore("post",{
                     hazszam: this.posts[0].hazszam,
                     tel: this.posts[0].tel,
                     email: this.posts[0].email,
-                    adoszam: this.posts[0].adoszam
+                    adoszam: this.posts[0].adoszam,
+                    cegjegyzekszam: this.posts[0].cegjegyzekszam,
+                    bank: this.posts[0].bank,
+                    bankszamlaszam: this.posts[0].bankszamlaszam,
+                    iban: this.posts[0].iban,
+                    swiftbic: this.posts[0].swiftbic
                 }; 
-                console.log(form_data);
-                
-
                 axios.put('uzlet/'+this.edit_id, form_data).then(res=>{
-                console.log(res);
                 this.updateSuccessful= true;
-                this.text = "Sikeres módosítás! ";
+                this.modalStatus = true;
+                this.message = "Sikeres módosítás!";
                 })
         } ,
         editItem(id){
@@ -85,8 +94,9 @@ export const PostStore = defineStore("post",{
                 this.edit_id = post.id         
             }
         },
-        deleteItem(){
-
+        receiveEmit(){
+            this.modalStatus = false;
+            this.modalStatusAccept = false;
         }
     }
 

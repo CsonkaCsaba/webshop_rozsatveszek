@@ -3,7 +3,7 @@
 
 <template>
     <Suspense>
-        <News_front_child>
+        <News_front_child> 
         </News_front_child>
     </Suspense>
 </template>

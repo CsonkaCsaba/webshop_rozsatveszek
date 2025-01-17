@@ -204,6 +204,7 @@ export const OrdersStore = defineStore("OrdersStore",{
                 this.modalStatusAccept = false,
                 this.modalStatus = true;
                 this.message = "A rendelést töröltük!";
+                reload += 1;
             }
             }).catch(console.error)
         },

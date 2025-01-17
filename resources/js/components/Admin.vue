@@ -47,7 +47,6 @@ register();
             <Suspense>
                 <companydata></companydata>
             </Suspense>
-            <p>Rendelések</p>
         </div>
     </div>
 </template>

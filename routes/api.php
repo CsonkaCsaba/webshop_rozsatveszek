@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CimController;
 use App\Http\Controllers\CimeController;
 use App\Http\Controllers\HirekController;
@@ -48,5 +49,6 @@ Route::middleware('web')->get('/user/wishlist', [UserController::class,'wishlist
 Route::middleware('web')->post('/user/wishlist', [WishlistController::class, 'storeWish']);
 Route::middleware('web')->delete('/user/wishlist/{id}', [WishlistController::class,'destroy']);
 //Route::middleware('web')->delete('/user/wishlistProduct/{id}', [WishlistController::class,'destroyProduct']);
+Route::get('/banner', [BannerController::class,'index']);
 
 

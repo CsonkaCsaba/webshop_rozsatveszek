@@ -4,6 +4,7 @@ register();
 </script>
 
 <template>
+        
     <ul class="nav nav-tabs justify-content-center tabs" role="tablist">
          <li class="nav-item" role="presentation">
             <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0" aria-selected="true"><font-awesome-icon :icon="['fas', 'shop']" /> Rendelések </a>
@@ -48,7 +49,7 @@ register();
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-4" role="tabpanel" aria-labelledby="simple-tab-4">
             <Suspense>
-                <BannerPopup></BannerPopup>
+                <BannerPopupAdmin></BannerPopupAdmin>
             </Suspense>
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-5" role="tabpanel" aria-labelledby="simple-tab-5">

@@ -11,7 +11,9 @@ class banner extends Model
         'id',
         'szoveg',
         'hatterszin',
-        'betuszin'
+        'betuszin',
+        'aktiv',
+        'sebeseg'
     ];
     public $timestamps = false;
 }

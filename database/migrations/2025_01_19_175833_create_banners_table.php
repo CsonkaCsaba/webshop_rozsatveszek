@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('szoveg')->nullable();
             $table->string('hatterszin')->nullable();
             $table->string('betuszin')->nullable();
+            $table->boolean('aktiv')->nullable();
+            $table->integer('sebeseg')->nullable();
         });
     }
 

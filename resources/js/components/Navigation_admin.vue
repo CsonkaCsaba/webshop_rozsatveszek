@@ -1,3 +1,5 @@
+
+
 <template>
     <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky">
         <nav>
@@ -119,7 +121,6 @@ export default{
 <style lang="sass" scoped>
 
 header
-    z-index: 99
     width: 100%
     position: fixed
     top: 0

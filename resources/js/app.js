@@ -209,9 +209,14 @@ const Loader = defineAsyncComponent({
 app.component('loader', Loader);
 
 const BannerPopup = defineAsyncComponent({
-    loader:() => import('./components/BannerPopup.vue')
+    loader:() => import('./components/BannerPopupAdmin.vue')
 })
-app.component('BannerPopup', BannerPopup);
+app.component('BannerPopupAdmin', BannerPopup);
+
+const BannerFront = defineAsyncComponent({
+    loader:() => import('./components/BannerFront.vue')
+})
+app.component('BannerFront', BannerFront);
 
 import Home from './components/Home.vue';
 app.component('Home', Home);
@@ -272,7 +277,10 @@ import {
     faTruckFast,
     faHeart,
     faQuestion,
-    faWindowMaximize
+    faWindowMaximize,
+    faEye,
+    faEyeSlash,
+    faRotateLeft
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -318,7 +326,10 @@ library.add(
     faTruckFast,
     faHeart,
     faQuestion,
-    faWindowMaximize
+    faWindowMaximize,
+    faEye,
+    faEyeSlash,
+    faRotateLeft
 )
 
 const pinia = createPinia();

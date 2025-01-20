@@ -50,9 +50,15 @@ class BannerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, banner $banner)
+    public function update(Request $request, banner $banner, $id)
     {
-        //
+        $banner = Banner::find($id);
+        $banner->szoveg = $request->szoveg;
+        $banner->hatterszin = $request->hatterszin;
+        $banner->betuszin = $request->betuszin;
+        $banner->aktiv = $request->aktiv;
+        $banner->sebesseg = $request->sebesseg;
+        $banner->save();
     }
 
     /**

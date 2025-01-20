@@ -18,7 +18,6 @@
     </head>
     <body>
     <div id="app">
-        
         @guest
         <navigation v-once>
         </navigation>

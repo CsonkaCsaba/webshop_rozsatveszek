@@ -50,5 +50,6 @@ Route::middleware('web')->post('/user/wishlist', [WishlistController::class, 'st
 Route::middleware('web')->delete('/user/wishlist/{id}', [WishlistController::class,'destroy']);
 //Route::middleware('web')->delete('/user/wishlistProduct/{id}', [WishlistController::class,'destroyProduct']);
 Route::get('/banner', [BannerController::class,'index']);
+Route::put('/banner/{id}', [BannerController::class,'update']);
 
 

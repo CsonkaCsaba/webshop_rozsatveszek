@@ -1,6 +1,7 @@
 <script setup>
 import { BannerPopupStore } from './store/BannerPopupStore';
 import { storeToRefs } from 'pinia';
+import Banner from './Banner.vue';
 const { showPreview, closePreview, banners, activeBanner} = storeToRefs(BannerPopupStore())
 const { fetchBanners} = BannerPopupStore()
 fetchBanners();
@@ -9,9 +10,9 @@ fetchBanners();
 </script>
 
 <template>
-    <div class="col-12 mb-8" v-for="banner in banners" key="banner.id">
-    <div v-if="banner[0].aktiv != 0" class="position-absolute top-0 start-0 w-100 marquee" :style="{'background-color' : banner[0].hatterszin, 'color': banner[0].betuszin}"><p class="p-3 mt-3" :style="{'animation-duration':banner[0].sebesseg+'s'} ">{{ banner[0].szoveg }}</p></div>
-</div>
+    <div v-for="banner in banners[0]" key="banner.id">
+        <Banner v-model="banner.aktiv" :hatterszin="banner.hatterszin" :betuszin="banner.betuszin" :szoveg="banner.szoveg" :sebesseg="banner.sebesseg" :betutipus="banner.betutipus" :betustilus="banner.betustilus"></Banner>
+    </div>
 </template>
 
 <style lang="sass" scoped>

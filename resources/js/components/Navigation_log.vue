@@ -58,7 +58,8 @@ export default {
 </script>
 
 <template>
-    <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky">
+ 
+    <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky mt-2">
         <nav>
             <div class="branding">
                 <a href="/webshop_rozsatveszek/public/">

@@ -58,6 +58,8 @@ class BannerController extends Controller
         $banner->betuszin = $request->betuszin;
         $banner->aktiv = $request->aktiv;
         $banner->sebesseg = $request->sebesseg;
+        $banner->betutipus = $request->betutipus;
+        $banner->betustilus = $request->betustilus;
         $banner->save();
     }
 

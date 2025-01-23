@@ -52,7 +52,8 @@ export default {
 </script>
 
 <template>
-        <BannerFront></BannerFront>
+       
+    <BannerFront></BannerFront>
     <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky mt-2">
         <nav>
             <div class="branding">

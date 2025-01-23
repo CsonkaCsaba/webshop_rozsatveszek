@@ -213,10 +213,35 @@ const BannerPopup = defineAsyncComponent({
 })
 app.component('BannerPopupAdmin', BannerPopup);
 
+const Banner_Admin = defineAsyncComponent({
+    loader:() => import('./components/Banner_Admin.vue')
+})
+app.component('Banner_Admin', Banner_Admin);
+
+const Popup_Admin = defineAsyncComponent({
+    loader:() => import('./components/Popup_Admin.vue')
+})
+app.component('Popup_Admin', Popup_Admin);
+
+const Popup = defineAsyncComponent({
+    loader:() => import('./components/Popup.vue')
+})
+app.component('Popup', Popup);
+
+const Popup_Front = defineAsyncComponent({
+    loader:() => import('./components/Popup_Front.vue')
+})
+app.component('Popup_Front', Popup_Front);
+
 const BannerFront = defineAsyncComponent({
     loader:() => import('./components/BannerFront.vue')
 })
 app.component('BannerFront', BannerFront);
+
+const Banner = defineAsyncComponent({
+    loader:() => import('./components/Banner.vue')
+})
+app.component('Banner', Banner);
 
 import Home from './components/Home.vue';
 app.component('Home', Home);

@@ -2,10 +2,6 @@
 </script>
 
 <template>
-    <!-- <Suspense>
-        <BannerFront>
-        </BannerFront>
-    </Suspense> -->
     <Suspense>
         <About>
         </About>

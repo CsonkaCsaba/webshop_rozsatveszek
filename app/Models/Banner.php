@@ -13,7 +13,9 @@ class banner extends Model
         'hatterszin',
         'betuszin',
         'aktiv',
-        'sebeseg'
+        'sebeseg',
+        'betutipus',
+        'betustilus'
     ];
     public $timestamps = false;
 }

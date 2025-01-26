@@ -4,6 +4,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CimController;
 use App\Http\Controllers\CimeController;
 use App\Http\Controllers\HirekController;
+use App\Http\Controllers\KarbantartasController;
 use App\Http\Controllers\KepekController;
 use App\Http\Controllers\UzletController;
 use App\Http\Controllers\TermekController;
@@ -54,5 +55,6 @@ Route::get('/banner', [BannerController::class,'index']);
 Route::put('/banner/{id}', [BannerController::class,'update']);
 Route::get('/popup', [PopupController::class,'index']);
 Route::put('/popup/{id}', [PopupController::class,'update']);
+Route::put('/karbantartas/{id}', [KarbantartasController::class,'update']);
 
 

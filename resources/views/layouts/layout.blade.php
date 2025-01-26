@@ -18,6 +18,7 @@
     </head>
     <body>
     <div id="app">
+        
         @guest
         <navigation v-once>
         </navigation>
@@ -30,7 +31,10 @@
         <navigation_admin v-once>
         </navigation_admin>
         @endif --}}
- 
+        <?php 
+        $articles = \App\Models\Karbantartas::all();
+        echo $articles[0]->aktiv;
+        ?>
        @yield('content')
     </div>
 

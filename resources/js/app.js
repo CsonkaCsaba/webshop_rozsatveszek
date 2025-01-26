@@ -243,6 +243,11 @@ const Banner = defineAsyncComponent({
 })
 app.component('Banner', Banner);
 
+const Karbatartas = defineAsyncComponent({
+    loader:() => import('./components/Karbatartas.vue')
+})
+app.component('Karbatartas', Karbatartas);
+
 import Home from './components/Home.vue';
 app.component('Home', Home);
 

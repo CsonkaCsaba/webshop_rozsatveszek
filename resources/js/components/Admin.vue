@@ -1,10 +1,21 @@
 <script setup>
 import { register } from 'swiper/element/bundle';
+import { storeToRefs} from 'pinia';
+import { KarbantartasStore } from './store/KarbantartasStore';
+
+ const { karbatart } = storeToRefs(KarbantartasStore());
+ const { switchkarbatartasAktiv, fetchKarbantartas} = KarbantartasStore();
+ fetchKarbantartas();
 register();
 </script>
 
 <template>
-        
+        <div class="d-flex justify-content-center text-center align">
+            <div class="form-check form-switch mt-2">
+                <input class="form-check-input " type="checkbox" id="popupCheckbox" v-model="karbatart" :checked="karbatart" @click="switchkarbatartasAktiv">
+                <label class="form-check-label m-1 ps-2" for="popupCheckbox">Karbantartási üzemmód</label>
+            </div>
+        </div>
     <ul class="nav nav-tabs justify-content-center tabs" role="tablist">
          <li class="nav-item" role="presentation">
             <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0" aria-selected="true"><font-awesome-icon :icon="['fas', 'shop']" /> Rendelések </a>

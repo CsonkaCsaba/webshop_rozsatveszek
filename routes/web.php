@@ -57,7 +57,7 @@ Route::get('/felhasznalo', function () {
 });
 
 Route::get('/home', function () {
-    return redirect()->route('welcome');;
+    return view('welcome');
 });
 
 Route::get('/kivansaglista', function () {
@@ -79,11 +79,13 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Auth::routes(['verify' => true]);
 
 
-Route::get('dolgozoi', function () {
-    return view('dolgozoi', [UzletController::class,'index']);
-})->middleware('admin')->name('admin');
+Route::get('/dolgozoi', function () {
+    return view('dolgozoi');
+});
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('send-mail',[EmailController::class, 'sendWelcomeEmail']);
-
+Route::get('/loginadmin', function () {
+    return view('loginadmin');
+});;

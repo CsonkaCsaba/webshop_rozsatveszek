@@ -55,6 +55,7 @@ Route::get('/banner', [BannerController::class,'index']);
 Route::put('/banner/{id}', [BannerController::class,'update']);
 Route::get('/popup', [PopupController::class,'index']);
 Route::put('/popup/{id}', [PopupController::class,'update']);
+Route::get('/karbantartas', [KarbantartasController::class,'index']);
 Route::put('/karbantartas/{id}', [KarbantartasController::class,'update']);
 
 

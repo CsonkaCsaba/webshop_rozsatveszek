@@ -16,10 +16,15 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user() &&  Auth::user()->admin == 1) {
-        return $next($request);
-        redirect('dolgozoi');
+        // if (Auth::user() &&  Auth::user()->admin == 1) {
+        // //return redirect('/dolgozoi');
+        // return $next($request);
+        
+        // }
+        if (Auth::user() &&  Auth::user()->admin != 1){
+            return redirect('/')->with('hiba','Sajnáljuk, a felület eléréséhez nincs jogosultsága. Kérjük jelentkezzen be admin joggal rendelkező felhasználói fiókkal!');
+        } else{
+            return redirect('/dolgozoi');
         }
-        return redirect('/')->with('hiba','Sajnáljuk, a felület eléréséhez nincs jogosultsága. Kérjük jelentkezzen be admin joggal rendelkező felhasználói fiókkal!');
     }
 }

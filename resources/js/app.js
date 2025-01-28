@@ -248,6 +248,11 @@ const Karbatartas = defineAsyncComponent({
 })
 app.component('Karbatartas', Karbatartas);
 
+const Navigation_Admin = defineAsyncComponent({
+    loader:() => import('./components/Navigation_admin.vue')
+})
+app.component('navigation_admin', Navigation_Admin);
+
 import Home from './components/Home.vue';
 app.component('Home', Home);
 

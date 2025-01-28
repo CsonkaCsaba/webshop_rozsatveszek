@@ -3,17 +3,18 @@ import { register } from 'swiper/element/bundle';
 import { storeToRefs} from 'pinia';
 import { KarbantartasStore } from './store/KarbantartasStore';
 
- const { karbatart } = storeToRefs(KarbantartasStore());
- const { switchkarbatartasAktiv, fetchKarbantartas} = KarbantartasStore();
+ const { karbatart, message, modalStatus } = storeToRefs(KarbantartasStore());
+ const { switchkarbatartasAktiv, fetchKarbantartas, receiveEmit} = KarbantartasStore();
  fetchKarbantartas();
 register();
 </script>
 
 <template>
         <div class="d-flex justify-content-center text-center align">
-            <div class="form-check form-switch mt-2">
+            <div class="form-check form-switch mt-4">
                 <input class="form-check-input " type="checkbox" id="popupCheckbox" v-model="karbatart" :checked="karbatart" @click="switchkarbatartasAktiv">
-                <label class="form-check-label m-1 ps-2" for="popupCheckbox">Karbantartási üzemmód</label>
+                <label v-if="!karbatart"  class="form-check-label m-1 ps-2" for="popupCheckbox">Karbantartási üzemmód bekapcsolás</label>
+                <label v-if="karbatart" class="fw-bold form-check-label m-1 ps-2" for="bannerCheckbox" :class="{activekarbantart : karbatart}">Karbantartási üzemmód aktív</label>
             </div>
         </div>
     <ul class="nav nav-tabs justify-content-center tabs" role="tablist">
@@ -69,6 +70,7 @@ register();
             </Suspense>
         </div>
     </div>
+    <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
 </template>
 <style lang="sass" scoped>
 .tabs
@@ -84,7 +86,8 @@ register();
     color: black !important
     background-color: white !important
     background-image: none
-
+.activekarbantart
+    color: red
 
 
 </style>

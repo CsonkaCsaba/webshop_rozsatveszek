@@ -57,9 +57,9 @@ Route::get('/felhasznalo', function () {
     return view('felhasznalo');
 });
 
-Route::get('/home', function () {
-    return view('welcome');
-});
+// Route::get('/home', function () {
+//     return view('welcome');
+// });
 
 Route::get('/kivansaglista', function () {
     return view('kivansaglista');;

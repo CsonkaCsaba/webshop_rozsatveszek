@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 
-<!-- @guest
+@guest
         <navigation v-once>
         </navigation>
         @else
@@ -25,6 +25,6 @@
             </div>
         </div>  
     </div>
-</div> -->
+</div>
 @endguest
 @endsection

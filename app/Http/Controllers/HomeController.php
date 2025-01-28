@@ -31,14 +31,16 @@ class HomeController extends Controller
             $usertype = Auth()->user()->admin;
             if($usertype == 1){
                 return view('/dolgozoi');
-            } else if ($usertype == null && $karbantartas == false){
-                return view('welcome');
-            } else if ($usertype == null && $karbantartas == true){
-                Auth::logout();
-                //Session::flush();
-                return redirect()->back()->with(['msg' => 'Sajnáljuk, karbantartás alatt csak a dolgozói jogosultsággal rendelkező felhasználók léphetnek be!']);
-            }else {
-                return redirect()->back();
+                } else if ($usertype == null && $karbantartas == true){
+                    Auth::logout();
+                    //Session::flush();
+                    return redirect()->back()->with(['msg' => 'Sajnáljuk, karbantartás alatt csak a dolgozói jogosultsággal rendelkező felhasználók léphetnek be!']);
+                    
+                } else if($usertype == null && $karbantartas == false){
+                    return redirect('/');
+                }
+            else {
+                return redirect('/');
             }
         }
     }

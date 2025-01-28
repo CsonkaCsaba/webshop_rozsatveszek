@@ -23,16 +23,15 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    //protected function authenticated(Request $request, $user)
-       //  {
-        // if ( $user->admin == 1 ) {// do your magic here
-        //     return redirect('/dolgozoi');
-        // }else{
-        //     return redirect('/');
-        //     }
-        // }
-
-    /**
+    protected function authenticated(Request $request, $user)
+         {
+        if ( $user->admin == 1 ) {// do your magic here
+            return redirect('/dolgozoi');
+        }else{
+            return redirect('/');
+            }
+        }
+        /**
      * Where to redirect users after login.
      *
      * @var string

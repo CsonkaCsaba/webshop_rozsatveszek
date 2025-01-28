@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\UzletController;
+use App\Http\Controllers\HomeController;
 use App\Http\Middleware\IsAdmin;
 use App\Models\Hirek;
 use Illuminate\Support\Facades\Route;
@@ -84,7 +85,7 @@ Route::get('/dolgozoi', function () {
 });
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('send-mail',[EmailController::class, 'sendWelcomeEmail']);
 Route::get('/loginadmin', function () {
     return view('loginadmin');

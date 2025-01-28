@@ -47,6 +47,11 @@
                         <div class="card-header text-uppercase d-flex flex-row"><strong>{{ __('Login') }} DOLGOZÓKÉNT</strong><div class="closebutton"> <a href="/webshop_rozsatveszek/public/">X</a></div></div> 
 
                         <div class="card-body">
+                                        @if(Session::get('msg'))
+                                        <div class="text-center ">
+                                            <p class="text-danger fs-6">{{Session::get('msg')}}</p>
+                                        </div>
+                                        @endif
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
 
@@ -95,7 +100,6 @@
                                         <button type="submit" class="btn btn-primary">
                                             {{ __('Login') }}
                                         </button>
-
                                         @if (Route::has('password.request'))
                                             <a class="btn btn-link" href="{{ route('password.request') }}">
                                                 {{ __('Forgot Your Password?') }}

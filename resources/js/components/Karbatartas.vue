@@ -30,7 +30,7 @@ function changeBackround(){
 
 <template>
      <div class="simpleslide100 container-fluid" @mouseenter="changeBackround()">
-		<div id="hatter"class="simpleslide100-item bg-img1"><div class="overlay"></div></div>
+		<div id="hatter" class="simpleslide100-item bg-img1"><div class="overlay"></div></div>
           
 	</div>
      <div class="vh-100 h-100 bg-dark" >

@@ -22,13 +22,13 @@ register();
             <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0" aria-selected="true"><font-awesome-icon :icon="['fas', 'shop']" /> Rendelések </a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-1" role="tab" aria-controls="simple-tabpanel-1" aria-selected="false"><font-awesome-icon :icon="['fas', 'camera']" /> Termékek</a>
+            <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-1" role="tab" aria-controls="simple-tabpanel-1" aria-selected="false"><font-awesome-icon :icon="['fas', 'bars']" /> Termékek</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="simple-tab-2" data-bs-toggle="tab" href="#simple-tabpanel-2" role="tab" aria-controls="simple-tabpanel-2" aria-selected="false"><font-awesome-icon :icon="['fa', 'newspaper']" /> Hírek</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link " id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-3" role="tab" aria-controls="simple-tabpanel-3" aria-selected="false"> <font-awesome-icon :icon="['fas', 'bars']" /> Galéria </a>
+            <a class="nav-link " id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-3" role="tab" aria-controls="simple-tabpanel-3" aria-selected="false"> <font-awesome-icon :icon="['fas', 'camera']" /> Galéria </a>
         </li>
         <li class="nav-item " role="presentation">
             <a class="nav-link " id="simple-tab-4" data-bs-toggle="tab" href="#simple-tabpanel-4" role="tab" aria-controls="simple-tabpanel-4" aria-selected="false"><font-awesome-icon :icon="['fas', 'window-maximize']" />  Banner & Popup</a>

@@ -68,7 +68,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
             {"id": 10, "option":"'Nunito', sans-serif"}
         ],
         optionsFinalFontFamily:[],
-        
+        chooseFromGallery: false
         }
         
     },
@@ -277,7 +277,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                 }
                 let formData = new FormData();
                 formData.append('file', this.file);
-                axios.post('api/galeria/upload',formData, config).then((response)=>{
+                axios.post('api/galeria/upload',formData, config).then((response)=>{chooseFromGallery
                     if(response.status == 200){
                     this.lastInsertId = parseInt(response.data.last_insert_id);
                     for(const popup of this.popups[0]){
@@ -438,6 +438,13 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                 },
                 deleteThePopupCookie(name){
                     document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+                },
+                changeGallery(){
+                    if(this.chooseFromGallery == true){
+                        this.chooseFromGallery = false
+                    } else{
+                        this.chooseFromGallery = true
+                    }
                 }
         }    
         

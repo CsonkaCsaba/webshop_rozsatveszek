@@ -32,6 +32,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
         defaultPopupBetuStilus:"",
         defaultPopupBetuTipus: "",
         popupWithPhoto: null,
+        kepUtvonalGalleriabol: "",
         message : "",
         loading: false,
         activeBanner: false,
@@ -140,6 +141,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                             this.defaultPopupKepId = popup.photo.kepId;
                             this.defaultPopupAktiv = popup.aktiv;
                             this.defaultPopupKepUtvonal = popup.photo.kepUtvonal;
+                            this.kepUtvonalGalleriabol = popup.photo.kepUtvonal;
                             this.defaultPopupFotoMutat = popup.fotomutat;
                             this.defaultPopupBetuStilus = popup.betustilus;
                             this.defaultPopupBetuTipus = popup.betutipus;
@@ -188,6 +190,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                 popup.photo.kepId = this.defaultPopupKepId
                 popup.aktiv = this.defaultPopupAktiv
                 popup.photo.kepUtvonal = this.defaultPopupKepUtvonal
+                this.kepUtvonalGalleriabol = this.defaultPopupKepUtvonal
                 popup.fotomutat = this.defaultPopupFotoMutat
                 popup.betustilus = this.defaultPopupBetuStilus
                 popup.betutipus =this.defaultPopupBetuTipus
@@ -290,7 +293,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                 let form_data_update = {
                 cim : popup.cim,
                 szoveg : popup.szoveg,
-                kepId: popup.kepId,
+                kepId: popup.photo.id,
                 aktiv: popup.aktiv,
                 hatterszin : popup.hatterszin,
                 betuszin : popup.betuszin,
@@ -440,11 +443,14 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                     document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
                 },
                 changeGallery(){
-                    if(this.chooseFromGallery == true){
-                        this.chooseFromGallery = false
-                    } else{
-                        this.chooseFromGallery = true
+                    this.chooseFromGallery = ! this.chooseFromGallery
+                },
+                changePhotoFromGallery(kepUtvonal, id){
+                    for(const popup of this.popups[0]){
+                        popup.photo.kepUtvonal = kepUtvonal;
+                        popup.photo.id = id;
                     }
+                    this.kepUtvonalGalleriabol = kepUtvonal
                 }
         }    
         

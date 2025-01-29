@@ -5,8 +5,8 @@ import { storeToRefs} from 'pinia';
 import { ref, watch } from 'vue';
 import Popup from './Popup.vue';
 
-const { receiveEmit, saveUpdate, fetchBanners, fetchPopups, update, showPreviewButton, closePreviewButton, showPreviewButtonPopup, closePreviewButtonPopup, setToDefault,setToDefaultPopup, updateBanner, updatePopup,switchBannerState, switchPopupState, onChange, uploadPoto, changePhotoState, changeFontFamily, changeFontStyle, changeGallery} = BannerPopupStore()
-const { modalStatus, message, photoMessage, activeBanner, banners, popups, showPreviewBanner, showPreviewPopup, defaultBackroundColor, defaultFontColor, activePopup, popupWithPhoto, noFile, selectedValue, optionsStatus, isAdmin, chooseFromGallery} = storeToRefs(BannerPopupStore())
+const { receiveEmit, saveUpdate, fetchBanners, fetchPopups, update, showPreviewButton, closePreviewButton, showPreviewButtonPopup, closePreviewButtonPopup, setToDefault,setToDefaultPopup, updateBanner, updatePopup,switchBannerState, switchPopupState, onChange, uploadPoto, changePhotoState, changeFontFamily, changeFontStyle, changeGallery, changePhotoFromGallery} = BannerPopupStore()
+const { modalStatus, message, photoMessage, activeBanner, banners, popups, showPreviewBanner, showPreviewPopup, defaultBackroundColor, defaultFontColor, activePopup, popupWithPhoto, kepUtvonalGalleriabol, noFile, selectedValue, optionsStatus, isAdmin, chooseFromGallery} = storeToRefs(BannerPopupStore())
 
 const { gallery} = storeToRefs(GalleryStore())
 
@@ -26,7 +26,7 @@ fetchPopups();
             </div>
         </div>
     </div>
-    <div class="container mb-4 pt-4 banner">
+    <div class="container mb-4 pt-4 banner pb-4">
     <div class="col-12 mb-8" v-for="popup in popups[0]" key="popup.id">
             <ul class="m-4">
                 <ol>
@@ -83,7 +83,7 @@ fetchPopups();
                         <div class="row mt-4 align-items-end">
                             <label class="form-label form-label-top fw-bold" for="">Fotó</label>
                             <div class="col-6 border-end">
-                                <img :src="popup.photo.kepUtvonal" class="w-50 h-50 float-start img-fluid rounded mx-auto d-block"/>
+                                <img :src="kepUtvonalGalleriabol" class="w-50 h-50 float-start img-fluid rounded mx-auto d-block"/>
                             </div>
                             <div class="col-6">
                             <form enctype="multipart/form-data" @submit.prevent ="uploadPoto">
@@ -108,15 +108,13 @@ fetchPopups();
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-3">
+                        <div class="col-3 mt-4">
                                 <button v-if="!chooseFromGallery" type="button" class="btn lilagombKicsi mt-1" @click="changeGallery"><font-awesome-icon :icon="['fas', 'camera']"/> Galéria megnyitása</button>
                                 <button v-if="chooseFromGallery" type="button" class="btn lilagombKicsi mt-1" @click="changeGallery"><font-awesome-icon :icon="['fas', 'camera']"/> Galéria bezárása</button>
                             </div>
-                        </div>
                         <div v-if="chooseFromGallery" class="row mt-4">
                                 <div v-for="gall in gallery" key="gall.id" class="col-2">
-                                    <img :src="gall.kepUtvonal" :alt="gall.kepLeiras" class="img-fluid p-1 foto" id=""/>  
+                                    <img :src="gall.kepUtvonal" :alt="gall.kepLeiras" class="img-fluid p-1 foto" id="" @click="changePhotoFromGallery(gall.kepUtvonal, gall.id)"/>  
                                 </div>
                             </div>
                         </div>    

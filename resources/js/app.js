@@ -253,6 +253,11 @@ const Navigation_Admin = defineAsyncComponent({
 })
 app.component('navigation_admin', Navigation_Admin);
 
+const Cookie = defineAsyncComponent({
+    loader:() => import('./components/Cookie.vue')
+})
+app.component('cookie', Cookie);
+
 import Home from './components/Home.vue';
 app.component('Home', Home);
 
@@ -315,7 +320,8 @@ import {
     faWindowMaximize,
     faEye,
     faEyeSlash,
-    faRotateLeft
+    faRotateLeft,
+    faCookie
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -364,7 +370,8 @@ library.add(
     faWindowMaximize,
     faEye,
     faEyeSlash,
-    faRotateLeft
+    faRotateLeft,
+    faCookie
 )
 
 const pinia = createPinia();

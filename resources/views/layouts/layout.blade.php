@@ -34,6 +34,7 @@
         @endguest
 
         @endif
+        <cookie></cookie>
        @yield('content')
     </div>
 

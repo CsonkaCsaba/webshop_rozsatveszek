@@ -225,8 +225,9 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                         this.lastInsertId = response.data.last_insert_id;
                         this.uploadedPhotoUrl = response.data.kepUtvonal
                         for(const popup of this.popups[0]){
-                            popup.photo.kepId = this.lastInsertId;
+                            popup.photo.id = this.lastInsertId;
                             popup.photo.kepUtvonal = this.uploadedPhotoUrl;
+                            this.kepUtvonalGalleriabol = this.uploadedPhotoUrl
                         }
                             this.file = null;
                     } else if (response.data.error === 422)
@@ -272,23 +273,6 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
         },
         updatePopup(){
             this.loading = true;
-            if(this.file !== ""){
-                const config = {
-                    headers: {
-                        'content-type':'multipart/form-data'
-                    }
-                }
-                let formData = new FormData();
-                formData.append('file', this.file);
-                axios.post('api/galeria/upload',formData, config).then((response)=>{chooseFromGallery
-                    if(response.status == 200){
-                    this.lastInsertId = parseInt(response.data.last_insert_id);
-                    for(const popup of this.popups[0]){
-                     popup.kepId =this.lastInsertId
-                        }
-                    }
-                })
-            } else {
             for(const popup of this.popups[0]){
                 let form_data_update = {
                 cim : popup.cim,
@@ -309,7 +293,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                     }
                     }).catch(console.error)
                 }
-            }   
+            // }   
 
             const popupData = {
                 popupState: 'updated',

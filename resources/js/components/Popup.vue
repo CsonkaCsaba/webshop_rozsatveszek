@@ -1,6 +1,8 @@
 <script setup>
 import { BannerPopupStore } from './store/BannerPopupStore';
+import { CookieStore } from './store/CookieStore';
 import { storeToRefs} from 'pinia';
+const {cookieaktiv, cookieSettingsOpen} = storeToRefs(CookieStore())
 
 const { closePreviewButtonPopup} = BannerPopupStore()
 const { showPreviewPopup} = storeToRefs(BannerPopupStore())
@@ -78,7 +80,7 @@ if( popupState == "hided" && viewed == true){
 }
 </script>
 <template>
-     <v-dialog v-if="showPreviewPopup || show" width="auto" v-model="showPreviewPopup" class="transition container-fluid">
+     <v-dialog v-if="showPreviewPopup || show && !cookieaktiv && !cookieSettingsOpen" width="auto" v-model="showPreviewPopup" class="transition container-fluid popup">
                 <div v-if="!isAdmin" class="vdialogclosebutton" @click="hidePop()" >X</div>
                 <div v-if="isAdmin"class="vdialogclosebutton" @click="modalStatus()" >X</div>
                 <v-card :style="{'background-color' : hatterszin, 'color': betuszin, 'font-family': betutipus, 'font-style': betustilus } ">
@@ -103,7 +105,9 @@ if( popupState == "hided" && viewed == true){
                 </v-card>
             </v-dialog>
 </template>
-<style scoped>
 
+<style lang="sass" scoped>
+.popup
+  z-index: 0
 
 </style>

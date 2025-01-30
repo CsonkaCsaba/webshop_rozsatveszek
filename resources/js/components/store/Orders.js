@@ -41,22 +41,36 @@ export const OrdersStore = defineStore("OrdersStore",{
         endIndex: 10,
         loading: false,
         input: "",
-        gradient : ['#f72047', '#ffd200', '#1feaea'],
-        width: 2,
-        radius: 10,
-        padding: 8,
-        lineCap: 'round',
-        value: [],
-        gradientDirection: 'top',
-        fill: false,
-        type: 'trend',
-        autoLineWidth: false,
         numberOfTheCurrentMonth: new Date().getMonth(),
         currentYear: new Date().getFullYear(),
-        currentMonth: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
+        months: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
+        // salesSum: {
+        //     január: 40,
+        //     február: null,
+        //     március: null,
+        //     április: null,
+        //     május: null,
+        //     június: null,
+        //     július: null,
+        //     augusztus: null,
+        //     szeptember: null,
+        //     október: null,
+        //     november: null,
+        //     december: null,
+        // },
+        salesSum: 0,
         daysInMonth: new Date(new Date().getFullYear(), new Date().getMonth()+1, 0).getDate(),
         labels: [],
-        prices: []
+        prices: [],
+        chartData: {
+            labels: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
+            datasets: [ { data: [40, 20, 12] } ],
+           
+          },
+          chartOptions: {
+            responsive: true,
+             type: 'pie'
+          },
         }
     },
     getters: {
@@ -72,11 +86,6 @@ export const OrdersStore = defineStore("OrdersStore",{
             });
             this.addresses.push(cimek);
         },
-        
-
-    },
-    actions: {
-
         async fetchOrders(){
             this.loading = true;
             let rendelesek = [];
@@ -94,6 +103,52 @@ export const OrdersStore = defineStore("OrdersStore",{
                         const orderMonth = rendelesD[1];
                         const orderYear = rendelesD[0];
                         const currentYear = this.currentYear.toString();
+                        if(orderYear == currentYear){
+                            this.salesSum += parseInt(rendeles.vegosszeg);
+                            switch (orderMonth) {
+                                case '01':
+                                    this.chartData.datasets[0].data += parseInt(rendeles.vegosszeg);
+                                    console.log(this.chartData.datasets[0].data)
+                                  //this.chartData.datasets.data[0] += parseInt(rendeles.vegosszeg);
+                                  break;
+                                case '02':
+                                    this.chartData.datasets[1].data += parseInt(rendeles.vegosszeg);
+                                  break;
+                                case '03':
+                                    this.chartData.datasets[2].data += parseInt(rendeles.vegosszeg);
+                                  break;
+                                case '04':
+                                    this.chartData.datasets[3].data += parseInt(rendeles.vegosszeg);
+                                    break;
+                                case '05':
+                                    this.chartData.datasets[4].data += parseInt(rendeles.vegosszeg);
+                                break;
+                                case '06':
+                                    this.chartData.datasets[5].data += parseInt(rendeles.vegosszeg);
+                                break;
+                                case '07':
+                                    this.chartData.datasets[6].data += parseInt(rendeles.vegosszeg);
+                                break;
+                                case '08':
+                                    this.chartData.datasets[7].data += parseInt(rendeles.vegosszeg);
+                                break;
+                                case '09':
+                                    this.chartData.datasets[8].data += parseInt(rendeles.vegosszeg);
+                                break;
+                                case '10':
+                                    this.chartData.datasets[9].data += parseInt(rendeles.vegosszeg);
+                                break;
+                                case '11':
+                                    this.chartData.datasets[10].data += parseInt(rendeles.vegosszeg);
+                                break;
+                                case '12':
+                                    this.chartData.datasets[11].data += parseInt(rendeles.vegosszeg);
+                                break;    
+                                default:
+                                  console.log('Unknown fruit.');
+                              }
+
+                        }
                         const currentMonth = (this.numberOfTheCurrentMonth + 1).toString();
                         rendeles.rogzitDatum = rendelesDate;
                         rendeles.optionsFinal = this.optionsStatus.filter(option => option.option !== rendeles.allapot);
@@ -119,12 +174,17 @@ export const OrdersStore = defineStore("OrdersStore",{
                  catch(error){
                     console.log(error.message)
                 }
-        },
-        async setChartDays(){   
-            for(let i =1; i <= this.daysInMonth; i++){
-                this.labels.push(i)
-            }
-        },
+        }
+    
+
+    },
+    actions: {
+        //async setSalesToChart(){   
+            // for(let i =1; i <= this.daysInMonth; i++){
+            //     this.labels.push(i)
+            // }
+
+        //},
         
         addNewProductBtn(){
             this.addNewProduct = true

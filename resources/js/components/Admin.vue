@@ -22,49 +22,56 @@ register();
             <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0" aria-selected="true"><font-awesome-icon :icon="['fas', 'shop']" /> Rendelések </a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-1" role="tab" aria-controls="simple-tabpanel-1" aria-selected="false"><font-awesome-icon :icon="['fas', 'bars']" /> Termékek</a>
+            <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-1" role="tab" aria-controls="simple-tabpanel-1" aria-selected="false"><font-awesome-icon :icon="['fas', 'chart-simple']" /> Statisztika </a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="simple-tab-2" data-bs-toggle="tab" href="#simple-tabpanel-2" role="tab" aria-controls="simple-tabpanel-2" aria-selected="false"><font-awesome-icon :icon="['fa', 'newspaper']" /> Hírek</a>
+            <a class="nav-link" id="simple-tab-2" data-bs-toggle="tab" href="#simple-tabpanel-2" role="tab" aria-controls="simple-tabpanel-2" aria-selected="false"><font-awesome-icon :icon="['fas', 'bars']" /> Termékek</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link " id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-3" role="tab" aria-controls="simple-tabpanel-3" aria-selected="false"> <font-awesome-icon :icon="['fas', 'camera']" /> Galéria </a>
+            <a class="nav-link" id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-3" role="tab" aria-controls="simple-tabpanel-3" aria-selected="false"><font-awesome-icon :icon="['fa', 'newspaper']" /> Hírek</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link " id="simple-tab-4" data-bs-toggle="tab" href="#simple-tabpanel-4" role="tab" aria-controls="simple-tabpanel-4" aria-selected="false"> <font-awesome-icon :icon="['fas', 'camera']" /> Galéria </a>
         </li>
         <li class="nav-item " role="presentation">
-            <a class="nav-link " id="simple-tab-4" data-bs-toggle="tab" href="#simple-tabpanel-4" role="tab" aria-controls="simple-tabpanel-4" aria-selected="false"><font-awesome-icon :icon="['fas', 'window-maximize']" />  Banner & Popup</a>
+            <a class="nav-link " id="simple-tab-5" data-bs-toggle="tab" href="#simple-tabpanel-5" role="tab" aria-controls="simple-tabpanel-5" aria-selected="false"><font-awesome-icon :icon="['fas', 'window-maximize']" />  Banner & Popup</a>
         </li>
         <li class="nav-item " role="presentation">
-            <a class="nav-link " id="simple-tab-5" data-bs-toggle="tab" href="#simple-tabpanel-5" role="tab" aria-controls="simple-tabpanel-5" aria-selected="false"><font-awesome-icon :icon="['fas', 'cart-shopping']" /> Cégadatok</a>
+            <a class="nav-link " id="simple-tab-6" data-bs-toggle="tab" href="#simple-tabpanel-6" role="tab" aria-controls="simple-tabpanel-6" aria-selected="false"><font-awesome-icon :icon="['fas', 'cart-shopping']" /> Cégadatok</a>
         </li>
     </ul>
     <div class="tab-content" id="tab-content">
         <div class="tab-pane fade show active" id="simple-tabpanel-0" role="tabpanel" aria-labelledby="simple-tab-0">
             <Suspense>
                 <orders_admin></orders_admin>
-                
             </Suspense>
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-1" role="tabpanel" aria-labelledby="simple-tab-1">
             <Suspense>
-                <products_admin></products_admin>
+                <stat_admin></stat_admin>
             </Suspense>
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-2" role="tabpanel" aria-labelledby="simple-tab-2">
             <Suspense>
-                <news_admin></news_admin>
+                <products_admin></products_admin>
             </Suspense>
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-3" role="tabpanel" aria-labelledby="simple-tab-3">
             <Suspense>
-                <gallery></gallery>
+                <news_admin></news_admin>
             </Suspense>
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-4" role="tabpanel" aria-labelledby="simple-tab-4">
             <Suspense>
-                <BannerPopupAdmin></BannerPopupAdmin>
+                <gallery></gallery>
             </Suspense>
         </div>
         <div class="tab-pane fade" id="simple-tabpanel-5" role="tabpanel" aria-labelledby="simple-tab-5">
+            <Suspense>
+                <BannerPopupAdmin></BannerPopupAdmin>
+            </Suspense>
+        </div>
+        <div class="tab-pane fade" id="simple-tabpanel-6" role="tabpanel" aria-labelledby="simple-tab-6">
             <Suspense>
                 <companydata></companydata>
             </Suspense>

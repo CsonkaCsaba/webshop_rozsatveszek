@@ -258,6 +258,11 @@ const Cookie = defineAsyncComponent({
 })
 app.component('cookie', Cookie);
 
+const Stat_Admin = defineAsyncComponent({
+    loader:() => import('./components/Stat_Admin.vue')
+})
+app.component('stat_admin', Stat_Admin);
+
 import Home from './components/Home.vue';
 app.component('Home', Home);
 
@@ -321,7 +326,8 @@ import {
     faEye,
     faEyeSlash,
     faRotateLeft,
-    faCookie
+    faCookie,
+    faChartSimple
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -371,7 +377,8 @@ library.add(
     faEye,
     faEyeSlash,
     faRotateLeft,
-    faCookie
+    faCookie,
+    faChartSimple
 )
 
 const pinia = createPinia();

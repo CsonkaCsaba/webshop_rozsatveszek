@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
 import {ref } from 'vue'
+//import { storeToRefs } from 'pinia';
+//import { ProductStore } from './Product';
+//const { products } = storeToRefs(ProductStore())
 
 export let reload = ref(0);
 export let slicedOrders =[]
@@ -14,6 +17,7 @@ export const OrdersStore = defineStore("OrdersStore",{
         addresses:[
 
         ],
+        products: [],
         addNewProduct: false,
         disableBtnAdd: false,
         message : "",
@@ -44,33 +48,36 @@ export const OrdersStore = defineStore("OrdersStore",{
         numberOfTheCurrentMonth: new Date().getMonth(),
         currentYear: new Date().getFullYear(),
         months: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
-        // salesSum: {
-        //     január: 40,
-        //     február: null,
-        //     március: null,
-        //     április: null,
-        //     május: null,
-        //     június: null,
-        //     július: null,
-        //     augusztus: null,
-        //     szeptember: null,
-        //     október: null,
-        //     november: null,
-        //     december: null,
-        // },
         salesSum: 0,
+        deliveredSum: 0,
+        deliverySum: 0,
+        prepare: 0,
+        canceled: 0,
+        notDelivered: 0,
+        transaction: 0,
+        ordersSum: 0,
         daysInMonth: new Date(new Date().getFullYear(), new Date().getMonth()+1, 0).getDate(),
-        labels: [],
         prices: [],
         chartData: {
             labels: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
-            datasets: [ { data: [40, 20, 12] } ],
+            datasets: [ { label: 'Rendelések összege havi bontásban', data: [0,0,0,0,0,0,0,0,0,0,0,0] } ],
            
+        },
+        chartOptions: {
+        responsive: true,
+        },
+        chartDataPie : {
+            labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
+            datasets: [
+              {
+                backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+                data: [40, 20, 80, 10]
+              }
+            ]
           },
-          chartOptions: {
-            responsive: true,
-             type: 'pie'
-          },
+        chartOptionsPie: {
+        responsive: true,
+        },
         }
     },
     getters: {
@@ -86,16 +93,21 @@ export const OrdersStore = defineStore("OrdersStore",{
             });
             this.addresses.push(cimek);
         },
+
+    },
+    actions: {
         async fetchOrders(){
             this.loading = true;
             let rendelesek = [];
             let cimes = [];
             let cims = [];
+            let data = this.chartData.datasets[0].data
             try {
                     await axios.get('api/rendelesek').then(function(response){
                         rendelesek = response.data
                     });
                     for(const rendeles of rendelesek){
+                        this.ordersSum += 1;
                         const spl = rendeles.rogzitDatum.split('T');
                         const rendelesDate = spl[0];
                         const rendelesD = rendelesDate.split('-');
@@ -107,49 +119,70 @@ export const OrdersStore = defineStore("OrdersStore",{
                             this.salesSum += parseInt(rendeles.vegosszeg);
                             switch (orderMonth) {
                                 case '01':
-                                    this.chartData.datasets[0].data += parseInt(rendeles.vegosszeg);
-                                    console.log(this.chartData.datasets[0].data)
-                                  //this.chartData.datasets.data[0] += parseInt(rendeles.vegosszeg);
+                                    data[0] += parseInt(rendeles.vegosszeg);
                                   break;
                                 case '02':
-                                    this.chartData.datasets[1].data += parseInt(rendeles.vegosszeg);
+                                    data[1] += parseInt(rendeles.vegosszeg);
                                   break;
                                 case '03':
-                                    this.chartData.datasets[2].data += parseInt(rendeles.vegosszeg);
+                                    data[2] += parseInt(rendeles.vegosszeg);
                                   break;
                                 case '04':
-                                    this.chartData.datasets[3].data += parseInt(rendeles.vegosszeg);
+                                    data[3] += parseInt(rendeles.vegosszeg);
                                     break;
                                 case '05':
-                                    this.chartData.datasets[4].data += parseInt(rendeles.vegosszeg);
+                                    data[4] += parseInt(rendeles.vegosszeg);
                                 break;
                                 case '06':
-                                    this.chartData.datasets[5].data += parseInt(rendeles.vegosszeg);
+                                    data[5] += parseInt(rendeles.vegosszeg);
                                 break;
                                 case '07':
-                                    this.chartData.datasets[6].data += parseInt(rendeles.vegosszeg);
+                                    data[6] += parseInt(rendeles.vegosszeg);
                                 break;
                                 case '08':
-                                    this.chartData.datasets[7].data += parseInt(rendeles.vegosszeg);
+                                    data[7] += parseInt(rendeles.vegosszeg);
                                 break;
                                 case '09':
-                                    this.chartData.datasets[8].data += parseInt(rendeles.vegosszeg);
+                                    data[8] += parseInt(rendeles.vegosszeg);
                                 break;
                                 case '10':
-                                    this.chartData.datasets[9].data += parseInt(rendeles.vegosszeg);
+                                    data[9] += parseInt(rendeles.vegosszeg);
                                 break;
                                 case '11':
-                                    this.chartData.datasets[10].data += parseInt(rendeles.vegosszeg);
+                                    data[10] += parseInt(rendeles.vegosszeg);
                                 break;
                                 case '12':
-                                    this.chartData.datasets[11].data += parseInt(rendeles.vegosszeg);
+                                    data[11] += parseInt(rendeles.vegosszeg);
                                 break;    
                                 default:
-                                  console.log('Unknown fruit.');
+                                  console.log('default swicth');
                               }
-
+                              switch (rendeles.allapot) {
+                                case 'Feldolgozás alatt':
+                                    this.prepare += 1;
+                                  break;
+                                case 'Kiszállítás alatt':
+                                    this.deliverySum += 1;
+                                  break;
+                                case 'Teljesítve':
+                                   this.deliveredSum += 1;
+                                  break;
+                                case 'Visszamondott':
+                                    this.canceled += 1;
+                                    break;
+                                case 'Sikertelen kézbesítés':
+                                    this.notDelivered += 1;
+                                break;
+                                case 'Utalás ellenőrzése':
+                                    this.transaction += 1;
+                                break;
+                                default:
+                                  console.log('default swicth');
+                              }
+                              
                         }
-                        const currentMonth = (this.numberOfTheCurrentMonth + 1).toString();
+                        
+                        //const currentMonth = (this.numberOfTheCurrentMonth + 1).toString();
                         rendeles.rogzitDatum = rendelesDate;
                         rendeles.optionsFinal = this.optionsStatus.filter(option => option.option !== rendeles.allapot);
                         rendeles.OriginalStatus = rendeles.allapot;
@@ -159,26 +192,22 @@ export const OrdersStore = defineStore("OrdersStore",{
                             product.subTotal = db * price
                         }
 
-                        // if(orderYear === currentYear && orderMonth === currentMonth){
-                        //     this.value[orderDay] = (parseInt(rendeles.vegosszeg))
-                        // }
                         this.orders.push(rendeles);
-                    }
+                    }   
+                        this.chartData.datasets[0].data = data;
                         localStorage.setItem('orders', JSON.stringify(rendelesek));
                         this.totalOrders = rendelesek.length;
                         this.pagesShown = Math.ceil(this.totalOrders/ this.itemsPerPage);
                         slicedOrders = this.orders.slice(this.startIndex, this.endIndex)
 
                   this.loading = false;
+                //   this.products = products;
+                //   console.log(this.products)
                 }
                  catch(error){
                     console.log(error.message)
                 }
-        }
-    
-
-    },
-    actions: {
+        },
         //async setSalesToChart(){   
             // for(let i =1; i <= this.daysInMonth; i++){
             //     this.labels.push(i)

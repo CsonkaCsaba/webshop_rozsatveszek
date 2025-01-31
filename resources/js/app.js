@@ -263,6 +263,11 @@ const Stat_Admin = defineAsyncComponent({
 })
 app.component('stat_admin', Stat_Admin);
 
+const PieChart = defineAsyncComponent({
+    loader:() => import('./components/PieChart.vue')
+})
+app.component('piechart', PieChart);
+
 import Home from './components/Home.vue';
 app.component('Home', Home);
 

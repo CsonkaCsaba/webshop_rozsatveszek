@@ -52,7 +52,7 @@ ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <piechart></piechart>
             </div>
         </div>

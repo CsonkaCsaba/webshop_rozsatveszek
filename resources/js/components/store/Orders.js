@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
 import {ref } from 'vue'
-//import { storeToRefs } from 'pinia';
-//import { ProductStore } from './Product';
-//const { products } = storeToRefs(ProductStore())
+
 
 export let reload = ref(0);
 export let slicedOrders =[]
@@ -17,7 +15,6 @@ export const OrdersStore = defineStore("OrdersStore",{
         addresses:[
 
         ],
-        products: [],
         addNewProduct: false,
         disableBtnAdd: false,
         message : "",
@@ -67,7 +64,7 @@ export const OrdersStore = defineStore("OrdersStore",{
         responsive: true,
         },
         chartDataPie : {
-            labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
+            labels: [],
             datasets: [
               {
                 backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
@@ -101,13 +98,17 @@ export const OrdersStore = defineStore("OrdersStore",{
             let rendelesek = [];
             let cimes = [];
             let cims = [];
+            let termekek = [];
+            let uniquetermekek = [];
+            let termekMennyiseg = [];
+            let elem = {};
+            let sumMenyiseg = 0;
             let data = this.chartData.datasets[0].data
             try {
                     await axios.get('api/rendelesek').then(function(response){
                         rendelesek = response.data
                     });
                     for(const rendeles of rendelesek){
-                        this.ordersSum += 1;
                         const spl = rendeles.rogzitDatum.split('T');
                         const rendelesDate = spl[0];
                         const rendelesD = rendelesDate.split('-');
@@ -116,6 +117,7 @@ export const OrdersStore = defineStore("OrdersStore",{
                         const orderYear = rendelesD[0];
                         const currentYear = this.currentYear.toString();
                         if(orderYear == currentYear){
+                            this.ordersSum += 1;
                             this.salesSum += parseInt(rendeles.vegosszeg);
                             switch (orderMonth) {
                                 case '01':
@@ -179,10 +181,26 @@ export const OrdersStore = defineStore("OrdersStore",{
                                 default:
                                   console.log('default swicth');
                               }
-                              
+                              for(const termekert of rendeles.termek){
+                                    termekek.push(termekert.nevHu)
+                                    const exists = Object.entries(termekMennyiseg).some(([key, value]) => value.termekNev === termekert.nevHu);
+                                    let sameObj = []
+                                    if(exists){
+                                        sameObj.push({termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg})
+                                        for(const same of sameObj){
+                                            for(const termek of termekMennyiseg){
+                                                if(termek.termekNev == same.termekNev){
+                                                    termek.mennyiseg += same.mennyiseg
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        termekMennyiseg.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg });
+                                    }
+                              }
+                              uniquetermekek = [...new Set(termekek)];
                         }
                         
-                        //const currentMonth = (this.numberOfTheCurrentMonth + 1).toString();
                         rendeles.rogzitDatum = rendelesDate;
                         rendeles.optionsFinal = this.optionsStatus.filter(option => option.option !== rendeles.allapot);
                         rendeles.OriginalStatus = rendeles.allapot;
@@ -194,7 +212,11 @@ export const OrdersStore = defineStore("OrdersStore",{
 
                         this.orders.push(rendeles);
                     }   
+                        console.log(termekMennyiseg)
                         this.chartData.datasets[0].data = data;
+                        for(const termek of uniquetermekek){
+                            this.chartDataPie.labels.push(termek.toString());
+                        }
                         localStorage.setItem('orders', JSON.stringify(rendelesek));
                         this.totalOrders = rendelesek.length;
                         this.pagesShown = Math.ceil(this.totalOrders/ this.itemsPerPage);

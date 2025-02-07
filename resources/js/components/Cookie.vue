@@ -99,19 +99,7 @@ if( CookieWindowviewed == true){
 <style lang="sass" scoped>
 .coockie
     z-index: 9999
-.acceptBtn
-    background-color: #212529
-    color: white
-    padding-left: 0.75rem
-    padding-right: 0.75rem
-    padding-top: 0.35rem
-    padding-bottom: 0.35rem
-    line-heigh: 1.6
-    cursor: pointer
-    border-radius: 5px
-    &:hover
-        background-color: white
-        color: #212529 
+
 input[type=checkbox]
     accent-color: green
     background-color: white

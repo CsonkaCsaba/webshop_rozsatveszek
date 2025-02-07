@@ -266,7 +266,17 @@ app.component('stat_admin', Stat_Admin);
 const PieChart = defineAsyncComponent({
     loader:() => import('./components/PieChart.vue')
 })
-app.component('piechart', PieChart);
+app.component('pieChart', PieChart);
+
+const BarChart = defineAsyncComponent({
+    loader:() => import('./components/BarChart.vue')
+})
+app.component('barChart', BarChart);
+
+const LineChart = defineAsyncComponent({
+    loader:() => import('./components/LineChart.vue')
+})
+app.component('lineCharta', LineChart);
 
 import Home from './components/Home.vue';
 app.component('Home', Home);
@@ -332,7 +342,8 @@ import {
     faEyeSlash,
     faRotateLeft,
     faCookie,
-    faChartSimple
+    faChartSimple,
+    faAngleLeft
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -383,7 +394,8 @@ library.add(
     faEyeSlash,
     faRotateLeft,
     faCookie,
-    faChartSimple
+    faChartSimple,
+    faAngleLeft
 )
 
 const pinia = createPinia();

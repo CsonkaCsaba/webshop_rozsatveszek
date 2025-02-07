@@ -12,10 +12,10 @@ ChartJS.register(Title, Tooltip, Legend, ArcElement);
 </script>
 
 <template>
-    <div class="container text-center mt-2">
-        <h2 class="pt-4 mt-4">Termékek előfordulása a rendelésekben</h2>
-        <Pie class="my-4" id="my-chart-id" :options="chartOptionsPie" :data="chartDataPie" />
-    </div>
+        <div class="col-12 flex justify-content-center align-self-center align-items-center">
+            <h4 class="pt-4 mt-4">Termékek előfordulása a rendelésekben éves szinten</h4>
+            <Pie class="w-50 h-50" id="my-chart-id" :options="chartOptionsPie" :data="chartDataPie" />
+        </div>
 </template>
 
 <style lang="sass" scoped>

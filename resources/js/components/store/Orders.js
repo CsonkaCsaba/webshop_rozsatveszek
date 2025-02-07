@@ -53,11 +53,17 @@ export const OrdersStore = defineStore("OrdersStore",{
         notDelivered: 0,
         transaction: 0,
         ordersSum: 0,
+        firstOrderYear: null,
+        lastOrderYear: null,
+        messageAboutYear: "",
         daysInMonth: new Date(new Date().getFullYear(), new Date().getMonth()+1, 0).getDate(),
         prices: [],
         chartData: {
             labels: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
-            datasets: [ { label: 'Rendelések összege havi bontásban', data: [0,0,0,0,0,0,0,0,0,0,0,0] } ],
+            datasets: [ { label: 'Rendelések összege havi bontásban (Ft)', data: [0,0,0,0,0,0,0,0,0,0,0,0], backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: '#5c5c5c ',
+                borderWidth: 2,
+                borderRadius: 8 } ],
            
         },
         chartOptions: {
@@ -67,14 +73,49 @@ export const OrdersStore = defineStore("OrdersStore",{
             labels: [],
             datasets: [
               {
-                backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                data: [40, 20, 80, 10]
+                backgroundColor: ['rgba(75, 192, 192, 0.8)', 'rgba(239, 29, 138, 0.8)', 'rgba(62, 17, 40, 0.8)', 'rgba(42, 178, 168, 0.8)', 'rgba(148, 241, 234, 0.8)', 'rgba(3, 245, 227, 0.8)'],
+                data: [0, 0]
               }
             ]
           },
         chartOptionsPie: {
         responsive: true,
         },
+        chartDataLine : {
+            labels: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
+            datasets: [
+            //   {
+            //     label: 'My First Dataset',
+            //     data: [65, 59, 80, 81, 56, 55, 40],
+            //     borderColor: 'rgb(75, 192, 192)',
+            //     tension: 0.1
+            //   }
+            ]
+          },
+        chartOptionsLine: {
+        
+        },
+        termekek: [],
+        orderYear: 2000,
+        orderYears: [],
+        orderMonth: "",
+        data: [0,0,0,0,0,0,0,0,0,0,0,0],
+        dataPie : [0,0,0,0,0,0,0,0,0,0,0,0],
+        termekMennyiseg : [],
+        reload: 0,
+        bevetel: true,
+        termek: false,
+        mennyiseg: false,
+        rendelesDb: [0,0,0,0,0,0,0,0,0,0,0,0],
+        termekDb: [],
+        forLabel: [],
+        forData: [],
+        newDataSet : {
+                label: '',
+                data: [0,0,0,0,0,0,0,0,0,0,0,0],
+                borderColor: '',
+                tension: 0.1
+            }
         }
     },
     getters: {
@@ -96,147 +137,44 @@ export const OrdersStore = defineStore("OrdersStore",{
         async fetchOrders(){
             this.loading = true;
             let rendelesek = [];
-            let cimes = [];
-            let cims = [];
-            let termekek = [];
-            let uniquetermekek = [];
-            let termekMennyiseg = [];
-            let elem = {};
-            let sumMenyiseg = 0;
-            let data = this.chartData.datasets[0].data
             try {
                     await axios.get('api/rendelesek').then(function(response){
                         rendelesek = response.data
                     });
+                    this.data = this.chartData.datasets[0].data;
                     for(const rendeles of rendelesek){
-                        const spl = rendeles.rogzitDatum.split('T');
-                        const rendelesDate = spl[0];
-                        const rendelesD = rendelesDate.split('-');
-                        const orderDay = parseInt(rendelesD[2]);
-                        const orderMonth = rendelesD[1];
-                        const orderYear = rendelesD[0];
-                        const currentYear = this.currentYear.toString();
-                        if(orderYear == currentYear){
-                            this.ordersSum += 1;
-                            this.salesSum += parseInt(rendeles.vegosszeg);
-                            switch (orderMonth) {
-                                case '01':
-                                    data[0] += parseInt(rendeles.vegosszeg);
-                                  break;
-                                case '02':
-                                    data[1] += parseInt(rendeles.vegosszeg);
-                                  break;
-                                case '03':
-                                    data[2] += parseInt(rendeles.vegosszeg);
-                                  break;
-                                case '04':
-                                    data[3] += parseInt(rendeles.vegosszeg);
-                                    break;
-                                case '05':
-                                    data[4] += parseInt(rendeles.vegosszeg);
-                                break;
-                                case '06':
-                                    data[5] += parseInt(rendeles.vegosszeg);
-                                break;
-                                case '07':
-                                    data[6] += parseInt(rendeles.vegosszeg);
-                                break;
-                                case '08':
-                                    data[7] += parseInt(rendeles.vegosszeg);
-                                break;
-                                case '09':
-                                    data[8] += parseInt(rendeles.vegosszeg);
-                                break;
-                                case '10':
-                                    data[9] += parseInt(rendeles.vegosszeg);
-                                break;
-                                case '11':
-                                    data[10] += parseInt(rendeles.vegosszeg);
-                                break;
-                                case '12':
-                                    data[11] += parseInt(rendeles.vegosszeg);
-                                break;    
-                                default:
-                                  console.log('default swicth');
-                              }
-                              switch (rendeles.allapot) {
-                                case 'Feldolgozás alatt':
-                                    this.prepare += 1;
-                                  break;
-                                case 'Kiszállítás alatt':
-                                    this.deliverySum += 1;
-                                  break;
-                                case 'Teljesítve':
-                                   this.deliveredSum += 1;
-                                  break;
-                                case 'Visszamondott':
-                                    this.canceled += 1;
-                                    break;
-                                case 'Sikertelen kézbesítés':
-                                    this.notDelivered += 1;
-                                break;
-                                case 'Utalás ellenőrzése':
-                                    this.transaction += 1;
-                                break;
-                                default:
-                                  console.log('default swicth');
-                              }
-                              for(const termekert of rendeles.termek){
-                                    termekek.push(termekert.nevHu)
-                                    const exists = Object.entries(termekMennyiseg).some(([key, value]) => value.termekNev === termekert.nevHu);
-                                    let sameObj = []
-                                    if(exists){
-                                        sameObj.push({termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg})
-                                        for(const same of sameObj){
-                                            for(const termek of termekMennyiseg){
-                                                if(termek.termekNev == same.termekNev){
-                                                    termek.mennyiseg += same.mennyiseg
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        termekMennyiseg.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg });
-                                    }
-                              }
-                              uniquetermekek = [...new Set(termekek)];
-                        }
+                        this.handleOrderDate(rendeles);
                         
-                        rendeles.rogzitDatum = rendelesDate;
+                        if (!this.orderYears.includes(this.orderYear)) {
+                            this.orderYears.push(this.orderYear);
+                        }
+                        this.updateCharts(rendeles);
+                        
                         rendeles.optionsFinal = this.optionsStatus.filter(option => option.option !== rendeles.allapot);
                         rendeles.OriginalStatus = rendeles.allapot;
+                        rendeles.vegosszeg = 0;
                         for(const product of rendeles.termek) {
                             const db = product.pivot.mennyiseg;
                             const price = product.ar
                             product.subTotal = db * price
+                            rendeles.vegosszeg += product.subTotal
                         }
 
                         this.orders.push(rendeles);
                     }   
-                        console.log(termekMennyiseg)
-                        this.chartData.datasets[0].data = data;
-                        for(const termek of uniquetermekek){
-                            this.chartDataPie.labels.push(termek.toString());
-                        }
+                        this.firstOrderYear = Math.min(...this.orderYears);
+                        this.lastOrderYear = Math.max(...this.orderYears);
+
                         localStorage.setItem('orders', JSON.stringify(rendelesek));
                         this.totalOrders = rendelesek.length;
                         this.pagesShown = Math.ceil(this.totalOrders/ this.itemsPerPage);
                         slicedOrders = this.orders.slice(this.startIndex, this.endIndex)
-
-                  this.loading = false;
-                //   this.products = products;
-                //   console.log(this.products)
+                 
                 }
                  catch(error){
                     console.log(error.message)
                 }
-        },
-        //async setSalesToChart(){   
-            // for(let i =1; i <= this.daysInMonth; i++){
-            //     this.labels.push(i)
-            // }
-
-        //},
-        
+        },        
         addNewProductBtn(){
             this.addNewProduct = true
             this.disableBtnAdd = true;
@@ -427,9 +365,316 @@ export const OrdersStore = defineStore("OrdersStore",{
                 slicedOrders = this.orders.filter((order) =>
                 order.vasarlo.nev.toLowerCase().includes(this.input.toLowerCase())
             ).slice(this.startIndex, this.endIndex);
-        }
+        },
+        minusYear(){
+            this.currentYear -= 1;
+            if(this.firstOrderYear > this.currentYear){
+                this.messageAboutYear = "A legelső rendelés éve: " + this.firstOrderYear + ", korábbi adatok nem állnak rendelkezésre!"
+                this.currentYear += 1;
+            }else {
+                this.emptyingTheVariables()
+                for(const rendeles of this.orders){
+                    this.updateCharts(rendeles);
+                }
+            }
+        },
+        plusYear(){
+            this.currentYear += 1;
+            if(this.lastOrderYear < this.currentYear){
+                this.messageAboutYear = "Az utolsó rendelés éve: " + this.lastOrderYear + ", későbbi adatok nem állnak rendelkezésre!"
+                this.currentYear -= 1;
+            }else {
+                this.emptyingTheVariables()
+                
+                for(const rendeles of this.orders){
+                    this.updateCharts(rendeles);
+                }
 
+            }
+        },
+        updateBarChartData(data){
+            if(this.bevetel === true){
+                this.mennyiseg = false;
+                this.termek = false;
+                this.chartData.datasets[0].data = this.data;
+                this.chartData.datasets[0].label = "Rendelések összege havi bontásban (Ft)";
+                this.chartData.datasets[0].backgroundColor = "rgba(75, 192, 192, 0.2)"
 
+            } else if(this.mennyiseg === true){
+                this.bevetel = false ;
+                this.termek = false;
+                this.chartData.datasets[0].data = this.rendelesDb;
+                this.chartData.datasets[0].label = "Rendelések száma havi bontásban (db)";
+                this.chartData.datasets[0].backgroundColor = "rgba(239, 29, 138, 0.2)"
+
+            }
+            else if (this.termek === true){
+                this.bevetel = false ;
+                this.mennyiseg = false;
+                this.termek = true;
+            } else {
+                this.chartData.datasets[0].data = data;
+                
+            }
+            this.scroolBack();
+            
+        },
+        updatePieChartData(){
+            let countProduct = [];
+            this.chartDataPie.labels = this.termekek;
+            for (let value of Object.values(this.termekMennyiseg)) {
+                    countProduct.push(parseInt(value.mennyiseg))
+            }
+
+            this.chartDataPie.datasets[0].data = countProduct
+            this.scroolBack();
+            
+        },
+        updateLineChartData(){
+            let exist = false;
+            let simpleLable = []
+            this.addDatasetToLineChart();
+           
+            
+         
+            for(const data of this.chartDataLine.datasets){
+                for(const lab of this.forLabel){
+                    console.log(lab, data.label)
+                    if(data.label == lab){
+                        exist = true
+                    }else{
+                        simpleLable.push(lab)
+                    }
+                }
+            }
+            console.log(simpleLable)
+            if(!exist){
+                this.newDataSet.label = this.forLabel.toString()
+                this.chartDataLine.datasets.push(this.newDataSet);
+                
+            }
+            
+            this.scroolBack();
+            // console.log(this.newDataSet)
+            // console.log(this.chartData)
+            
+        },
+        updateCharts(rendeles){
+            this.handleOrderDate(rendeles);
+            if(this.orderYear == this.currentYear){
+                this.ordersSum += 1;
+                this.salesSum += parseInt(rendeles.vegosszeg);
+                for(const termekert of rendeles.termek){ 
+                    switch (this.orderMonth) {
+                        case '01':
+                            this.data[0] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[0] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 0 })
+                        break;
+                        case '02':
+                            this.data[1] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[1] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 1 })
+                        break;
+                        case '03':
+                            this.data[2] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[2] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 2 })
+                        break;
+                        case '04':
+                            this.data[3] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[3] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 3 })
+                            break;
+                        case '05':
+                            this.data[4] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[4] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 4 })
+                        break;
+                        case '06':
+                            this.data[5] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[5] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 5 })
+                        break;
+                        case '07':
+                            this.data[6] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[6] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 6 })
+                        break;
+                        case '08':
+                            this.data[7] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[7] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 7 })
+                        break;
+                        case '09':
+                            this.data[8] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[8] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 8 })
+                        break;
+                        case '10':
+                            this.data[9] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[9] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 9 })
+                        break;
+                        case '11':
+                            this.data[10] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[10] += 1;
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 10 })
+                        break;
+                        case '12':
+                            this.data[11] += parseInt(rendeles.vegosszeg);
+                            this.rendelesDb[11] += 1; 
+                            this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 11 })
+                        break;    
+                        default:
+                        console.log('default swicth');
+                    }
+
+                    this.updateBarChartData(this.data);
+
+                    switch (rendeles.allapot) {
+                        case 'Feldolgozás alatt':
+                            this.prepare += 1;
+                        break;
+                        case 'Kiszállítás alatt':
+                            this.deliverySum += 1;
+                        break;
+                        case 'Teljesítve':
+                        this.deliveredSum += 1;
+                        break;
+                        case 'Visszamondott':
+                            this.canceled += 1;
+                            break;
+                        case 'Sikertelen kézbesítés':
+                            this.notDelivered += 1;
+                        break;
+                        case 'Utalás ellenőrzése':
+                            this.transaction += 1;
+                        break;
+                        default:
+                        console.log('default swicth');
+                    }
+
+                
+                        if (!this.termekek.includes(termekert.nevHu)) {
+                            this.termekek.push(termekert.nevHu);
+                        }
+                        
+                        const exists = Object.entries(this.termekMennyiseg).some(([key, value]) => value.termekNev === termekert.nevHu);
+                        if(exists){
+                            for(const termek of this.termekMennyiseg){    
+                                if(termek.termekNev === termekert.nevHu){
+                                    termek.mennyiseg += termekert.pivot.mennyiseg
+                                }
+                            }
+                        } else {
+                            this.termekMennyiseg.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg });
+                        }  
+                  }
+                  
+            }
+            this.updatePieChartData();
+            this.updateLineChartData();
+            this.loading = false;
+            this.reload += 1;
+        },
+        handleOrderDate(rendeles){
+            
+            const spl = rendeles.rogzitDatum.split('T');
+            const rendelesDate = spl[0];
+            const rendelesD = rendelesDate.split('-');
+            const orderDay = parseInt(rendelesD[2]);
+            this.orderMonth = rendelesD[1];
+            this.orderYear = rendelesD[0];
+            rendeles.rogzitDatum = rendelesDate;
+        },
+        emptyingTheVariables(){
+            this.transaction = 0;
+                this.deliveredSum = 0;
+                this.deliverySum = 0;
+                this.prepare = 0;
+                this.canceled = 0;
+                this.notDelivered = 0;
+                this.ordersSum = 0;
+                this.salesSum = 0;
+                this.messageAboutYear = null;
+                this.data = [0,0,0,0,0,0,0,0,0,0,0,0];
+                this.dataPie = [0,0,0,0,0,0,0,0,0,0,0,0];
+                this.chartData.datasets[0].data = [0,0,0,0,0,0,0,0,0,0,0,0];
+                this.chartDataPie.datasets[0].data = [0,0,0,0,0,0,0,0,0,0,0,0];
+                this.termekMennyiseg = [];
+                this.termekek = [];
+                this.rendelesDb = [0,0,0,0,0,0,0,0,0,0,0,0];
+                
+        },
+        scroolBack(){
+            document.getElementById("chartsDiv").scrollIntoView({
+                behavior: 'smooth',
+                inline: "nearest",
+                block: "end"
+              });
+            //element.scrollTop = 880;
+        },
+        changeView(event){
+
+            if(event.target.id == "bevetelek"){
+                this.bevetel = true;
+                this.mennyiseg = false;
+                this.termek = false;
+                this.chartData.datasets[0].data = this.data;
+                this.chartData.datasets[0].label = "Rendelések összege havi bontásban (Ft)";
+                this.chartData.datasets[0].backgroundColor = "rgba(75, 192, 192, 0.2)"
+                this.reload += 1;
+                this. scroolBack();
+
+            } else if(event.target.id == "mennyiseg"){
+                this.bevetel = false ;
+                this.mennyiseg = true;
+                this.termek = false;
+                this.chartData.datasets[0].data = this.rendelesDb;
+                this.chartData.datasets[0].label = "Rendelések száma havi bontásban (db)";
+                this.chartData.datasets[0].backgroundColor = "rgba(239, 29, 138, 0.2)"
+                this.reload += 1;
+                this. scroolBack();
+
+            }
+            else if (event.target.id == "termekek"){
+                this.bevetel = false ;
+                this.mennyiseg = false;
+                this.termek = true;
+            }
+
+        },
+        addDatasetToLineChart(){
+            
+        let newColor = this.getRandomColor();
+        this.newDataSet.borderColor = newColor;
+            for(const element of this.termekDb){
+            const exists = Object.entries(this.forData).some(([key, value]) => value.termekNev === element.termekNev && value.honap == element.honap);
+            if(exists){
+                for(const termek of this.forData){    
+                    if(termek.termekNev == element.termekNev && termek.honap == element.honap){
+                        termek.mennyiseg += element.mennyiseg
+                    }
+                }
+            } else {
+                this.forData.push({ termekNev: element.termekNev, mennyiseg: element.mennyiseg, honap: element.honap });
+            }
+            }
+            for(const elem of this.forData){
+                this.forLabel.findIndex(x => x == elem.termekNev) == -1 ? this.forLabel.push(elem.termekNev) : "";
+                this.newDataSet.data[elem.honap] = elem.mennyiseg;
+            }
+       
+        },
+        getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          }
      }
 
 })

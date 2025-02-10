@@ -60,10 +60,14 @@ export const OrdersStore = defineStore("OrdersStore",{
         prices: [],
         chartData: {
             labels: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
-            datasets: [ { label: 'Rendelések összege havi bontásban (Ft)', data: [0,0,0,0,0,0,0,0,0,0,0,0], backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            datasets: [ {label: 'Rendelések összege (Ft)', data: [0,0,0,0,0,0,0,0,0,0,0,0], backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: '#5c5c5c ',
                 borderWidth: 2,
-                borderRadius: 8 } ],
+                borderRadius: 2 },
+                {label: 'Teljesített rendelések összege (Ft)', data: [0,0,0,0,0,0,0,0,0,0,0,0], backgroundColor: 'rgba(39, 245, 166, 0.8)',
+                borderColor: '#5c5c5c ',
+                borderWidth: 2,
+                borderRadius: 2 } ],
            
         },
         chartOptions: {
@@ -84,12 +88,12 @@ export const OrdersStore = defineStore("OrdersStore",{
         chartDataLine : {
             labels: ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'],
             datasets: [
-            //   {
-            //     label: 'My First Dataset',
-            //     data: [65, 59, 80, 81, 56, 55, 40],
-            //     borderColor: 'rgb(75, 192, 192)',
-            //     tension: 0.1
-            //   }
+              {
+                label: '',
+                data: [0, 0, 0, 0, 0, 0, 0],
+                borderColor: '',
+                tension: 0.1
+              }
             ]
           },
         chartOptionsLine: {
@@ -100,6 +104,8 @@ export const OrdersStore = defineStore("OrdersStore",{
         orderYears: [],
         orderMonth: "",
         data: [0,0,0,0,0,0,0,0,0,0,0,0],
+        dataCompleted: [0,0,0,0,0,0,0,0,0,0,0,0],
+        dataCompletedDb: [0,0,0,0,0,0,0,0,0,0,0,0],
         dataPie : [0,0,0,0,0,0,0,0,0,0,0,0],
         termekMennyiseg : [],
         reload: 0,
@@ -111,11 +117,14 @@ export const OrdersStore = defineStore("OrdersStore",{
         forLabel: [],
         forData: [],
         newDataSet : {
+                id: '',
                 label: '',
                 data: [0,0,0,0,0,0,0,0,0,0,0,0],
                 borderColor: '',
                 tension: 0.1
-            }
+            },
+        elementId: 0,
+        linemonth: true
         }
     },
     getters: {
@@ -142,14 +151,13 @@ export const OrdersStore = defineStore("OrdersStore",{
                         rendelesek = response.data
                     });
                     this.data = this.chartData.datasets[0].data;
+                    this.dataCompleted = this.chartData.datasets[1].data;
                     for(const rendeles of rendelesek){
                         this.handleOrderDate(rendeles);
                         
                         if (!this.orderYears.includes(this.orderYear)) {
                             this.orderYears.push(this.orderYear);
                         }
-                        this.updateCharts(rendeles);
-                        
                         rendeles.optionsFinal = this.optionsStatus.filter(option => option.option !== rendeles.allapot);
                         rendeles.OriginalStatus = rendeles.allapot;
                         rendeles.vegosszeg = 0;
@@ -161,6 +169,10 @@ export const OrdersStore = defineStore("OrdersStore",{
                         }
 
                         this.orders.push(rendeles);
+
+                        this.updateCharts(rendeles);
+                        
+                        
                     }   
                         this.firstOrderYear = Math.min(...this.orderYears);
                         this.lastOrderYear = Math.max(...this.orderYears);
@@ -376,6 +388,7 @@ export const OrdersStore = defineStore("OrdersStore",{
                 for(const rendeles of this.orders){
                     this.updateCharts(rendeles);
                 }
+                this.updateLineChartData();
             }
         },
         plusYear(){
@@ -383,12 +396,13 @@ export const OrdersStore = defineStore("OrdersStore",{
             if(this.lastOrderYear < this.currentYear){
                 this.messageAboutYear = "Az utolsó rendelés éve: " + this.lastOrderYear + ", későbbi adatok nem állnak rendelkezésre!"
                 this.currentYear -= 1;
-            }else {
+            } else {
                 this.emptyingTheVariables()
                 
                 for(const rendeles of this.orders){
                     this.updateCharts(rendeles);
                 }
+                this.updateLineChartData();
 
             }
         },
@@ -396,16 +410,22 @@ export const OrdersStore = defineStore("OrdersStore",{
             if(this.bevetel === true){
                 this.mennyiseg = false;
                 this.termek = false;
-                this.chartData.datasets[0].data = this.data;
-                this.chartData.datasets[0].label = "Rendelések összege havi bontásban (Ft)";
+                this.chartData.datasets[0].data = data;
+                this.chartData.datasets[0].label = "Rendelések összege(Ft)";
                 this.chartData.datasets[0].backgroundColor = "rgba(75, 192, 192, 0.2)"
+                this.chartData.datasets[1].data = this.dataCompleted;
+                this.chartData.datasets[1].label = "Teljesített rendelések összege(Ft)";
+                this.chartData.datasets[1].backgroundColor = "rgba(39, 245, 166, 0.8)"
 
             } else if(this.mennyiseg === true){
                 this.bevetel = false ;
                 this.termek = false;
                 this.chartData.datasets[0].data = this.rendelesDb;
-                this.chartData.datasets[0].label = "Rendelések száma havi bontásban (db)";
+                this.chartData.datasets[0].label = "Rendelések száma (db)";
                 this.chartData.datasets[0].backgroundColor = "rgba(239, 29, 138, 0.2)"
+                this.chartData.datasets[1].data = this.dataCompletedDb;
+                this.chartData.datasets[1].label = "Teljesített rendelések száma (db)";
+                this.chartData.datasets[1].backgroundColor = "rgba(39, 245, 166, 0.8)"
 
             }
             else if (this.termek === true){
@@ -414,6 +434,7 @@ export const OrdersStore = defineStore("OrdersStore",{
                 this.termek = true;
             } else {
                 this.chartData.datasets[0].data = data;
+                this.chartData.datasets[1].data = this.dataCompleted;
                 
             }
             this.scroolBack();
@@ -431,33 +452,23 @@ export const OrdersStore = defineStore("OrdersStore",{
             
         },
         updateLineChartData(){
-            let exist = false;
-            let simpleLable = []
-            this.addDatasetToLineChart();
-           
-            
-         
-            for(const data of this.chartDataLine.datasets){
-                for(const lab of this.forLabel){
-                    console.log(lab, data.label)
-                    if(data.label == lab){
-                        exist = true
-                    }else{
-                        simpleLable.push(lab)
+            this.loading = true;
+            for(const element of this.termekDb){
+                const exists = Object.entries(this.forData).some(([key, value]) => value.termekNev === element.termekNev && value.honap === element.honap);
+                    if(exists){ 
+                        for(const termek of this.forData){    
+                            if(termek.termekNev === element.termekNev && termek.honap === element.honap){
+                                termek.mennyiseg += element.mennyiseg
+                            }                         
+                        }  
+                    } else {
+                        this.elementId += 1; 
+                        this.forData.push({ id: this.elementId, termekNev: element.termekNev, mennyiseg: element.mennyiseg, honap: element.honap });
                     }
-                }
             }
-            console.log(simpleLable)
-            if(!exist){
-                this.newDataSet.label = this.forLabel.toString()
-                this.chartDataLine.datasets.push(this.newDataSet);
-                
-            }
-            
+            this.addDatasetToLineChart();
             this.scroolBack();
-            // console.log(this.newDataSet)
-            // console.log(this.chartData)
-            
+            this.loading = false;
         },
         updateCharts(rendeles){
             this.handleOrderDate(rendeles);
@@ -467,64 +478,112 @@ export const OrdersStore = defineStore("OrdersStore",{
                 for(const termekert of rendeles.termek){ 
                     switch (this.orderMonth) {
                         case '01':
-                            this.data[0] += parseInt(rendeles.vegosszeg);
+                            this.data[0] += parseInt(termekert.subTotal);
                             this.rendelesDb[0] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 0 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[0] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[0] += 1;
+                            }
                         break;
                         case '02':
-                            this.data[1] += parseInt(rendeles.vegosszeg);
+                            this.data[1] += parseInt(termekert.subTotal);
                             this.rendelesDb[1] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 1 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[1] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[1] += 1;
+                            }
                         break;
                         case '03':
-                            this.data[2] += parseInt(rendeles.vegosszeg);
+                            this.data[2] += parseInt(termekert.subTotal);
                             this.rendelesDb[2] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 2 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[2] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[2] += 1;
+                            }
                         break;
                         case '04':
-                            this.data[3] += parseInt(rendeles.vegosszeg);
+                            this.data[3] += parseInt(termekert.subTotal);
                             this.rendelesDb[3] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 3 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[3] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[3] += 1;
+                            }
                             break;
                         case '05':
-                            this.data[4] += parseInt(rendeles.vegosszeg);
+                            this.data[4] += parseInt(termekert.subTotal);
                             this.rendelesDb[4] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 4 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[4] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[4] += 1;
+                            }
                         break;
                         case '06':
-                            this.data[5] += parseInt(rendeles.vegosszeg);
+                            this.data[5] += parseInt(termekert.subTotal);
                             this.rendelesDb[5] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 5 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[5] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[5] += 1;
+                            }
                         break;
                         case '07':
-                            this.data[6] += parseInt(rendeles.vegosszeg);
+                            this.data[6] += parseInt(termekert.subTotal);
                             this.rendelesDb[6] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 6 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[6] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[6] += 1;
+                            }
                         break;
                         case '08':
-                            this.data[7] += parseInt(rendeles.vegosszeg);
+                            this.data[7] += parseInt(termekert.subTotal);
                             this.rendelesDb[7] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 7 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[7] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[7] += 1;
+                            }
                         break;
                         case '09':
-                            this.data[8] += parseInt(rendeles.vegosszeg);
+                            this.data[8] += parseInt(termekert.subTotal);
                             this.rendelesDb[8] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 8 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[8] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[8] += 1;
+                            }
                         break;
                         case '10':
-                            this.data[9] += parseInt(rendeles.vegosszeg);
+                            this.data[9] += parseInt(termekert.subTotal);
                             this.rendelesDb[9] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 9 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[9] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[9] += 1;
+                            }
                         break;
                         case '11':
-                            this.data[10] += parseInt(rendeles.vegosszeg);
+                            this.data[10] += parseInt(termekert.subTotal);
                             this.rendelesDb[10] += 1;
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 10 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[10] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[10] += 1;
+                            }
                         break;
                         case '12':
-                            this.data[11] += parseInt(rendeles.vegosszeg);
+                            this.data[11] += parseInt(termekert.subTotal);
                             this.rendelesDb[11] += 1; 
                             this.termekDb.push({ termekNev: termekert.nevHu, mennyiseg: termekert.pivot.mennyiseg, honap: 11 })
+                            if(rendeles.allapot == "Teljesítve"){
+                                this.dataCompleted[11] += parseInt(termekert.subTotal);
+                                this.dataCompletedDb[11] += 1;
+                            }
                         break;    
                         default:
                         console.log('default swicth');
@@ -574,7 +633,6 @@ export const OrdersStore = defineStore("OrdersStore",{
                   
             }
             this.updatePieChartData();
-            this.updateLineChartData();
             this.loading = false;
             this.reload += 1;
         },
@@ -601,10 +659,23 @@ export const OrdersStore = defineStore("OrdersStore",{
                 this.data = [0,0,0,0,0,0,0,0,0,0,0,0];
                 this.dataPie = [0,0,0,0,0,0,0,0,0,0,0,0];
                 this.chartData.datasets[0].data = [0,0,0,0,0,0,0,0,0,0,0,0];
+                this.chartData.datasets[1].data = [0,0,0,0,0,0,0,0,0,0,0,0];
                 this.chartDataPie.datasets[0].data = [0,0,0,0,0,0,0,0,0,0,0,0];
                 this.termekMennyiseg = [];
                 this.termekek = [];
                 this.rendelesDb = [0,0,0,0,0,0,0,0,0,0,0,0];
+                this.termekDb = [];
+                this.forData = [];
+                this.chartDataLine.datasets = [
+                    {
+                        label: '',
+                        data: [0, 0, 0, 0, 0, 0, 0],
+                        borderColor: '',
+                        tension: 0.1
+                      }
+                ],
+                this.dataCompleted = [0,0,0,0,0,0,0,0,0,0,0,0];
+                this.dataCompletedDb = [0,0,0,0,0,0,0,0,0,0,0,0];
                 
         },
         scroolBack(){
@@ -622,8 +693,11 @@ export const OrdersStore = defineStore("OrdersStore",{
                 this.mennyiseg = false;
                 this.termek = false;
                 this.chartData.datasets[0].data = this.data;
-                this.chartData.datasets[0].label = "Rendelések összege havi bontásban (Ft)";
+                this.chartData.datasets[0].label = "Rendelések összege (Ft)";
                 this.chartData.datasets[0].backgroundColor = "rgba(75, 192, 192, 0.2)"
+                this.chartData.datasets[1].data = this.dataCompleted;
+                this.chartData.datasets[1].label = "Teljesített rendelések összege (Ft)";
+                this.chartData.datasets[1].backgroundColor = "rgba(39, 245, 166, 0.8)";
                 this.reload += 1;
                 this. scroolBack();
 
@@ -632,40 +706,52 @@ export const OrdersStore = defineStore("OrdersStore",{
                 this.mennyiseg = true;
                 this.termek = false;
                 this.chartData.datasets[0].data = this.rendelesDb;
-                this.chartData.datasets[0].label = "Rendelések száma havi bontásban (db)";
-                this.chartData.datasets[0].backgroundColor = "rgba(239, 29, 138, 0.2)"
+                this.chartData.datasets[0].label = "Rendelések száma (db)";
+                this.chartData.datasets[0].backgroundColor = "rgba(75, 192, 192, 0.2)";
+                this.chartData.datasets[1].data = this.dataCompletedDb;
+                this.chartData.datasets[1].label = "Teljesített rendelések száma (db)";
+                this.chartData.datasets[1].backgroundColor = "rgba(39, 245, 166, 0.8)";
                 this.reload += 1;
                 this. scroolBack();
 
             }
             else if (event.target.id == "termekek"){
+                this.chartDataLine.datasets.pop();
                 this.bevetel = false ;
                 this.mennyiseg = false;
                 this.termek = true;
+                 this.updateLineChartData();
             }
 
         },
         addDatasetToLineChart(){
-            
-        let newColor = this.getRandomColor();
-        this.newDataSet.borderColor = newColor;
-            for(const element of this.termekDb){
-            const exists = Object.entries(this.forData).some(([key, value]) => value.termekNev === element.termekNev && value.honap == element.honap);
-            if(exists){
-                for(const termek of this.forData){    
-                    if(termek.termekNev == element.termekNev && termek.honap == element.honap){
-                        termek.mennyiseg += element.mennyiseg
+        let termekNeve = "";
+        let found = false;
+        for(const elem of this.forData){
+                termekNeve = elem.termekNev;
+                found = this.chartDataLine.datasets.some(el => el.label === elem.termekNev || el.id === elem.id);
+                if(!found){
+                    this.newDataSet.label = elem.termekNev;
+                    let newColor = this.getRandomColor();
+                    this.newDataSet.borderColor = newColor;
+                    this.newDataSet.id = elem.id;
+                    this.newDataSet.data[elem.honap] += elem.mennyiseg;
+                    this.chartDataLine.datasets.push(this.newDataSet);
+                    this.newDataSet = {
+                        id: '',
+                        label: '',
+                        data: [0,0,0,0,0,0,0,0,0,0,0,0],
+                        borderColor: '',
+                        tension: 0.1
                     }
-                }
-            } else {
-                this.forData.push({ termekNev: element.termekNev, mennyiseg: element.mennyiseg, honap: element.honap });
-            }
-            }
-            for(const elem of this.forData){
-                this.forLabel.findIndex(x => x == elem.termekNev) == -1 ? this.forLabel.push(elem.termekNev) : "";
-                this.newDataSet.data[elem.honap] = elem.mennyiseg;
-            }
-       
+                } else {
+                    for(const prod of this.chartDataLine.datasets){
+                        if( prod.label === elem.termekNev){
+                            prod.data[elem.honap] += elem.mennyiseg
+                        }
+                    }
+                } 
+            }  
         },
         getRandomColor() {
             var letters = '0123456789ABCDEF';

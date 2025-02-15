@@ -31,6 +31,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
         defaultPopupFotoMutat: false,
         defaultPopupBetuStilus:"",
         defaultPopupBetuTipus: "",
+        defaultPopupBetuMeret: null,
         popupWithPhoto: null,
         kepUtvonalGalleriabol: "",
         message : "",
@@ -43,6 +44,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
         defaultSpeed: "",
         defaultFontType: "",
         defaultFontStyle: "",
+        defaultFontSize: null,
         isAdmin: false,
         activePopup: false,
         file: "",
@@ -53,6 +55,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
         uploadedPhotoUrl:"",
         showInFrontPopup: false,
         selectedValue: "",
+        selectedFontSize: 0,
         optionsFontStyle:[ {"id": 1, "option":"normal"},
                         {"id": 2, "option":"italic"}, 
         ],
@@ -69,6 +72,21 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
             {"id": 10, "option":"'Nunito', sans-serif"}
         ],
         optionsFinalFontFamily:[],
+        optionsFontSize: [
+            {"id":1, "option": 8},
+            {"id":2, "option": 9},
+            {"id":3, "option": 10},
+            {"id":4, "option": 11},
+            {"id":5, "option": 12},
+            {"id":6, "option": 14},
+            {"id":7, "option": 16},
+            {"id":8, "option": 18},
+            {"id":9, "option": 20},
+            {"id":10, "option": 24},
+            {"id":11, "option": 26},
+            {"id":12, "option": 28},  
+        ],
+        optionsFinalFontSize: [],
         chooseFromGallery: false
         }
         
@@ -92,6 +110,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                             };
                             bann.optionsFinalFontStyle = this.optionsFontStyle.filter(option => option.option !== bann.betustilus);
                             bann.optionsFinalFontFamily = this.optionsFontFamily.filter(option => option.option !== bann.betutipus);
+                            bann.optionsFinalFontSize = this.optionsFontSize.filter(option => option.option !== bann.betumeret);
                             this.edit_id = bann.id;
                             this.message = bann.szoveg;
                             this.defaultBackroundColor = bann.hatterszin;
@@ -99,6 +118,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                             this.defaultSpeed = bann.sebesseg;
                             this.defaultFontType = bann.betutipus;
                             this.defaultFontStyle = bann.betustilus;
+                            this.defaultFontSize = bann.betumeret;
                             bann.sebesseg = String(bann.sebesseg);
 
                             // if(bann.szoveg != ""){
@@ -126,6 +146,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                         for(const popup of this.popups[0]){
                             popup.optionsFinalFontStyle = this.optionsFontStyle.filter(option => option.option !== popup.betustilus);
                             popup.optionsFinalFontFamily = this.optionsFontFamily.filter(option => option.option !== popup.betutipus);
+                            popup.optionsFinalFontSize = this.optionsFontSize.filter(option => option.option !== popup.betumeret);
                             if(popup.aktiv === 1){
                                 this.activePopup = true;
                                 this.showInFrontPopup = true;
@@ -145,6 +166,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                             this.defaultPopupFotoMutat = popup.fotomutat;
                             this.defaultPopupBetuStilus = popup.betustilus;
                             this.defaultPopupBetuTipus = popup.betutipus;
+                            this.defaultPopupBetuMeret = popup.betumeret;
                          }
                     this.loading = false;
                 }
@@ -175,25 +197,27 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
         },
         setToDefault(){
             for(const bann of this.banners[0]){
-                bann.hatterszin = this.defaultBackroundColor
-                bann.betuszin = this.defaultFontColor
-                bann.betutipus = this.defaultFontType,
-                bann.betustilus = this.defaultFontStyle
+                bann.hatterszin = this.defaultBackroundColor;
+                bann.betuszin = this.defaultFontColor;
+                bann.betutipus = this.defaultFontType;
+                bann.betustilus = this.defaultFontStyle;
+                bann.betumeret = this.defaultFontSize;
             }   
         },
         setToDefaultPopup(){
             for(const popup of this.popups[0]){
-                popup.cim = this.defaultPopupCim
-                popup.szoveg = this.defaultPopupSzoveg
-                popup.betuszin = this.defaultPopupFontColor
-                popup.hatterszin = this.defaultPopupBackroundColor
-                popup.photo.kepId = this.defaultPopupKepId
-                popup.aktiv = this.defaultPopupAktiv
-                popup.photo.kepUtvonal = this.defaultPopupKepUtvonal
-                this.kepUtvonalGalleriabol = this.defaultPopupKepUtvonal
-                popup.fotomutat = this.defaultPopupFotoMutat
-                popup.betustilus = this.defaultPopupBetuStilus
-                popup.betutipus =this.defaultPopupBetuTipus
+                popup.cim = this.defaultPopupCim;
+                popup.szoveg = this.defaultPopupSzoveg;
+                popup.betuszin = this.defaultPopupFontColor;
+                popup.hatterszin = this.defaultPopupBackroundColor;
+                popup.photo.kepId = this.defaultPopupKepId;
+                popup.aktiv = this.defaultPopupAktiv;
+                popup.photo.kepUtvonal = this.defaultPopupKepUtvonal;
+                this.kepUtvonalGalleriabol = this.defaultPopupKepUtvonal;
+                popup.fotomutat = this.defaultPopupFotoMutat;
+                popup.betustilus = this.defaultPopupBetuStilus;
+                popup.betutipus =this.defaultPopupBetuTipus;
+                popup.betumeret = this.defaultPopupBetuMeret;
                 
             } 
         },
@@ -322,7 +346,8 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                     aktiv: bann.aktiv,
                     sebesseg: bann.sebesseg,
                     betutipus : bann.betutipus,
-                    betustilus: bann.betustilus
+                    betustilus: bann.betustilus,
+                    betumeret: bann.betumeret
                 }
                 axios.put('api/banner/'+this.edit_id, form_data_update).then((response)=>{
                     if(response.status == 200){
@@ -363,6 +388,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                         betutipus : popup.betutipus,
                         fotomutat : popup.fotomutat,
                         betustilus : popup.betustilus,
+                        betumeret : popup.betumeret,
                         }
                         axios.put('api/popup/'+1, form_data_update).then((response)=>{
                             if(response.status == 200){
@@ -405,6 +431,13 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                         popup.optionsFinalFontStyle = this.optionsFontStyle.filter(option => option.option !== this.selectedValue);
                     }
                 },
+                changeFontSize(event){
+                    this.selectedFontSize = parseInt(event.target.value);
+                    for(const popup of this.popups[0]){
+                        popup.betumeret = this.selectedFontSize;
+                        popup.optionsFinalFontSize = this.optionsFontSize.filter(option => option.option !== this.selectedFontSize);
+                    }
+                },
                 changeFontFamilyBanner(event){
                     this.selectedValue = event.target.value
                     for(const banner of this.banners[0]){
@@ -417,6 +450,13 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                     for(const banner of this.banners[0]){
                         banner.betustilus = this.selectedValue;
                         banner.optionsFinalFontStyle = this.optionsFontStyle.filter(option => option.option !== this.selectedValue);
+                    }
+                },
+                changeFontSizeBanner(event){
+                    this.selectedFontSize = parseInt(event.target.value);
+                    for(const banner of this.banners[0]){
+                        banner.betumeret = this.selectedFontSize;
+                        banner.optionsFinalFontSize = this.optionsFontSize.filter(option => option.option !== this.selectedFontSize);
                     }
                 },
                 setThePopupCookie(name, value, days){

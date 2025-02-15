@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia';
 import { ProductStore, elementsToWish } from './store/Product';
 
 
-const { products, modalStatusAccept,message, modalStatus, add, loading} = storeToRefs(ProductStore())
+const { products, modalStatusAccept,message, modalStatus, add, loading, cimkek} = storeToRefs(ProductStore())
 const { update, editStore, fetchWishlist, fetchProduct, addToWishlist, removeFromWishList, receiveEmit, deleteWish} = ProductStore()
 fetchProduct();
 
@@ -57,7 +57,7 @@ export default {
       </div>
     <div class="container-fluid">
         <div class="row justify-content-center g-0">
-            <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-2 product position-relative" v-for="prod in products" key="prod.id" id="box">
+            <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-2 product position-relative pb-4" v-for="prod in products" key="prod.id" id="box">
                 <a href="#" class="row">
                     <div class="termek-kep">
                         <img :src="prod.img" class="img-fluid img-maxDefault">

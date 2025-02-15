@@ -7,8 +7,7 @@
 import './bootstrap';
 
 import { createApp, defineAsyncComponent, watch } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router'
-
+import { createRouter, createWebHistory } from 'vue-router';
 import VueAwesomePaginate from "vue-awesome-paginate";
 
 import "vue-awesome-paginate/dist/style.css";
@@ -17,13 +16,13 @@ import "vue-awesome-paginate/dist/style.css";
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
-
-
-import { createVuetify } from 'vuetify'
-
+import { createVuetify } from 'vuetify';
+import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
 const vuetify = createVuetify({
-
+    icons: {
+        iconfont: 'md',
+      },
 })
 
 const router = createRouter({
@@ -293,6 +292,9 @@ app.component('Foot', Foot);
 import Wishlist from './components/Wishlist.vue';
 app.component('kivansaglista', Wishlist);
 
+import Tags from './components/Tags.vue';
+app.component('tagsComponent', Tags);
+
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
@@ -343,7 +345,8 @@ import {
     faRotateLeft,
     faCookie,
     faChartSimple,
-    faAngleLeft
+    faAngleLeft,
+    faTag,
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -395,7 +398,8 @@ library.add(
     faRotateLeft,
     faCookie,
     faChartSimple,
-    faAngleLeft
+    faAngleLeft,
+    faTag
 )
 
 const pinia = createPinia();

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CimController;
 use App\Http\Controllers\CimeController;
+use App\Http\Controllers\CimkeController;
 use App\Http\Controllers\HirekController;
 use App\Http\Controllers\KarbantartasController;
 use App\Http\Controllers\KepekController;
@@ -57,5 +58,8 @@ Route::get('/popup', [PopupController::class,'index']);
 Route::put('/popup/{id}', [PopupController::class,'update']);
 Route::get('/karbantartas', [KarbantartasController::class,'index']);
 Route::put('/karbantartas/{id}', [KarbantartasController::class,'update']);
+Route::post('/cimke/create', [CimkeController::class,'create']);
+Route::get('/cimkek', [CimkeController::class,'index']);
+
 
 

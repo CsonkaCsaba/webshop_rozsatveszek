@@ -48,6 +48,10 @@ const props = defineProps({
         type: String,
         required: true
       },
+      betumeret: {
+        type: Number,
+        required: true
+      },
       isAdmin: {
         type: Boolean,
         required: true
@@ -82,21 +86,21 @@ if( popupState == "hided" && viewed == true){
 <template>
      <v-dialog v-if="showPreviewPopup || show && !cookieaktiv && !cookieSettingsOpen" width="auto" v-model="showPreviewPopup" class="transition container-fluid popup">
                 <div v-if="!isAdmin" class="vdialogclosebutton" @click="hidePop()" >X</div>
-                <div v-if="isAdmin"class="vdialogclosebutton" @click="modalStatus()" >X</div>
-                <v-card :style="{'background-color' : hatterszin, 'color': betuszin, 'font-family': betutipus, 'font-style': betustilus } ">
+                <div v-if="isAdmin" class="vdialogclosebutton" @click="modalStatus()" >X</div>
+                <v-card :style="{'background-color' : hatterszin, 'color': betuszin, 'font-family': betutipus, 'font-style': betustilus, 'font-size': betumeret+'px' } ">
                     <v-container class="container-fluid">
                         <div class="row">
                             <div class="col">
                                 <br>
                                 <img v-if="fotomutat || popupWithPhoto" :src="kepUtvonal" class="float-start m-4 modalkep img-fluid rounded mx-auto d-block"/>
                                 <div class="mt-4">
-                                    <h3 class="news-title mt-4">{{cim}}</h3>
+                                    <h3 class="news-title mt-4" :style="{'color': betuszin, 'font-family': betutipus, 'font-style': betustilus, 'font-size': betumeret+'px'} "><b>{{cim}}</b></h3>
                                     <hr class="m-auto hr float-start"/><br>
                                     <p class="m-1"> {{szoveg}}</p> 
                                 </div>
                                 <v-card-actions>
-                                            <button v-if="!isAdmin" type="button" class="btn rozsaszingomb mt-3"  @click="hidePop()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="A böngésző bezárása után a beállítás elveszhet." :style="{'color': betuszin, 'font-family': betutipus, 'font-style': betustilus }">Bezár</button><br>
-                                            <button v-if="isAdmin" type="button" class="btn rozsaszingomb mt-3"  @click="modalStatus()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="A böngésző bezárása után a beállítás elveszhet." :style="{'color': betuszin, 'font-family': betutipus, 'font-style': betustilus }">Bezár</button><br>
+                                            <button v-if="!isAdmin"  type="button" class="btn rozsaszingomb mt-3"  @click="hidePop()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="A böngésző bezárása után a beállítás elveszhet." :style="{'color': betuszin, 'font-family': betutipus, 'font-style': betustilus, 'font-size': betumeret+'px' }">Bezár</button><br>
+                                            <button v-if="isAdmin" type="button" class="btn rozsaszingomb mt-3"  @click="modalStatus()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="A böngésző bezárása után a beállítás elveszhet." :style="{'color': betuszin, 'font-family': betutipus, 'font-style': betustilus, 'font-size': betumeret+'px' }">Bezár</button><br>
                                             
                                 </v-card-actions>
                             </div>

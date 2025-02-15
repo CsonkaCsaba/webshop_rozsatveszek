@@ -123,8 +123,25 @@ export const CookieStore = defineStore("CookieStore",{
         deleteCookieSettings(name){
             document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
         },
-        
-            }    
+        openSettings(){
+            this.cookieSettingsOpen = true;
+            let cookie = document.cookie;
+            let readCookie = JSON.parse(this.getCookie('cookieSettings'));
+            let cookieConsentbasicOperation = readCookie.cookieConsentbasicOperation;
+            let statisticOperationAccepted = readCookie.statisticOperationAccepted;
+            let marketingOperationAccepted = readCookie.marketingOperationAccepted;
+
+            if(marketingOperationAccepted === false || statisticOperationAccepted === false || cookieConsentbasicOperation === false){
+                this.acceptedAll = false;
+            }
+        },
+        getCookie(name){
+            return document.cookie.split("; ").reduce((r, v) => {
+                const parts = v.split("=");
+                return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+              }, "");
+            }
+        }    
         
         }
     )

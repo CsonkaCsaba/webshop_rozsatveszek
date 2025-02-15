@@ -3,7 +3,7 @@ import { storeToRefs} from 'pinia';
 import { OrdersStore } from './store/Orders';
 
 const { minusYear, plusYear, changeView } = OrdersStore();
-const { currentYear, salesSum,deliveredSum, deliverySum, prepare, canceled, notDelivered, transaction, ordersSum,  messageAboutYear, loading, reload, bevetel, termek,  mennyiseg, lineChart, linemonth} = storeToRefs(OrdersStore());
+const { currentYear, salesSum,deliveredSum, deliverySum, prepare, canceled, notDelivered, transaction, ordersSum,  messageAboutYear, loading, reload, bevetel, termek,  mennyiseg, lineChart, linemonth, salesSumDelivered} = storeToRefs(OrdersStore());
 </script>
 
 <template>
@@ -72,6 +72,9 @@ const { currentYear, salesSum,deliveredSum, deliverySum, prepare, canceled, notD
                 <p class="p-2"> Rendelések összértéke: {{ salesSum.toLocaleString() }},-Ft</p>
             </div>
             <div class="col mt-4 border-end border-top">
+                <p class="p-2"> Teljesített rendelések: {{ salesSumDelivered.toLocaleString() }},-Ft</p>
+            </div>
+            <div class="col mt-4 border-end border-top">
                 <p class="p-2" data-bs-toggle="tooltip" data-bs-placement="top" title="mérőszám, amelyet az ügyfelek által egy tranzakció során elköltött átlagos összeg meghatározására használnak"> Átlagos kosárérték: {{ Math.round(salesSum/ordersSum).toLocaleString() }},-Ft</p>
             </div>
         </div>
@@ -82,8 +85,5 @@ const { currentYear, salesSum,deliveredSum, deliverySum, prepare, canceled, notD
 .mainStat
     background-color: black
     color: white
-.activeBtn
-    background-color: white
-    color: black
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3)
+
 </style>

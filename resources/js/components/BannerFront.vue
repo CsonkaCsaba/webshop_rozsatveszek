@@ -11,7 +11,7 @@ fetchBanners();
 
 <template>
     <div v-for="banner in banners[0]" key="banner.id">
-        <Banner v-model="banner.aktiv" :hatterszin="banner.hatterszin" :betuszin="banner.betuszin" :szoveg="banner.szoveg" :sebesseg="banner.sebesseg" :betutipus="banner.betutipus" :betustilus="banner.betustilus"></Banner>
+        <Banner v-model="banner.aktiv" :hatterszin="banner.hatterszin" :betuszin="banner.betuszin" :etumeret="banner.betumeret" :szoveg="banner.szoveg" :sebesseg="banner.sebesseg" :betutipus="banner.betutipus" :betustilus="banner.betustilus"></Banner>
     </div>
 </template>
 

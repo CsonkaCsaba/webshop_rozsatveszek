@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('sebeseg')->nullable();
             $table->string('betustilus')->nullable();
             $table->string('betutipus')->nullable();
+            $table->integer('betumeret')->nullable();
         });
     }
 

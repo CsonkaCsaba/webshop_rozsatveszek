@@ -124,7 +124,8 @@ export const OrdersStore = defineStore("OrdersStore",{
                 tension: 0.1
             },
         elementId: 0,
-        linemonth: true
+        linemonth: true,
+        salesSumDelivered: 0
         }
     },
     getters: {
@@ -475,6 +476,9 @@ export const OrdersStore = defineStore("OrdersStore",{
             if(this.orderYear == this.currentYear){
                 this.ordersSum += 1;
                 this.salesSum += parseInt(rendeles.vegosszeg);
+                if(rendeles.allapot == "Teljesítve"){
+                    this.salesSumDelivered += rendeles.vegosszeg;
+                }
                 for(const termekert of rendeles.termek){ 
                     switch (this.orderMonth) {
                         case '01':
@@ -676,6 +680,7 @@ export const OrdersStore = defineStore("OrdersStore",{
                 ],
                 this.dataCompleted = [0,0,0,0,0,0,0,0,0,0,0,0];
                 this.dataCompletedDb = [0,0,0,0,0,0,0,0,0,0,0,0];
+                this.salesSumDelivered = 0;
                 
         },
         scroolBack(){

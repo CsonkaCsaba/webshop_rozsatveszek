@@ -27,6 +27,10 @@ const props = defineProps({
       betustilus: {
         type: String,
         required: true
+      },
+      betumeret: {
+        type: Number,
+        required: true
       }
 
 });
@@ -34,7 +38,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="position-absolute top-0 start-0 w-100 marquee" :style="{'background-color' : hatterszin, 'color': betuszin, 'font-family': betutipus, 'font-style': betustilus}"><p class="p-3 mt-3" :style="{'animation-duration':sebesseg+'s'} ">{{ szoveg }}</p></div>
+    <div class="position-absolute top-0 start-0 w-100 marquee" :style="{'background-color' : hatterszin, 'color': betuszin, 'font-family': betutipus, 'font-style': betustilus, 'font-size': betumeret +'px'}"><p class="p-3 mt-3" :style="{'animation-duration':sebesseg+'s'} ">{{ szoveg }}</p></div>
 </template>
 <style>
 </style>

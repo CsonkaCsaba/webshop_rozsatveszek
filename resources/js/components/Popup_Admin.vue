@@ -3,10 +3,10 @@ import { BannerPopupStore } from './store/BannerPopupStore';
 import { GalleryStore } from './store/Gallery';
 import { storeToRefs} from 'pinia';
 import { ref, watch } from 'vue';
-import Popup from './Popup.vue';
+//import Popup from './popup.vue';
 
-const { receiveEmit, saveUpdate, fetchBanners, fetchPopups, update, showPreviewButton, closePreviewButton, showPreviewButtonPopup, closePreviewButtonPopup, setToDefault,setToDefaultPopup, updateBanner, updatePopup,switchBannerState, switchPopupState, onChange, uploadPoto, changePhotoState, changeFontFamily, changeFontStyle, changeGallery, changePhotoFromGallery} = BannerPopupStore()
-const { modalStatus, message, photoMessage, activeBanner, banners, popups, showPreviewBanner, showPreviewPopup, defaultBackroundColor, defaultFontColor, activePopup, popupWithPhoto, kepUtvonalGalleriabol, noFile, selectedValue, optionsStatus, isAdmin, chooseFromGallery} = storeToRefs(BannerPopupStore())
+const { receiveEmit, saveUpdate, fetchBanners, fetchPopups, update, showPreviewButton, closePreviewButton, showPreviewButtonPopup, closePreviewButtonPopup, setToDefault, setToDefaultPopup, updateBanner, updatePopup,switchBannerState, switchPopupState, onChange, uploadPoto, changePhotoState, changeFontFamily, changeFontStyle, changeGallery, changePhotoFromGallery, changeFontSize} = BannerPopupStore()
+const { modalStatus, message, photoMessage, activeBanner, banners, popups, showPreviewBanner, showPreviewPopup, defaultBackroundColor, defaultFontColor, activePopup, popupWithPhoto, kepUtvonalGalleriabol, noFile, selectedValue, selectedFontSize, optionsStatus, isAdmin, chooseFromGallery} = storeToRefs(BannerPopupStore())
 
 const { gallery} = storeToRefs(GalleryStore())
 
@@ -57,18 +57,25 @@ fetchPopups();
                         </div>
                     </div>
                         <div class="row">
-                            <div class="col-3">
-                                <label class="form-label mt-4 fw-bold" for="popupTextColor"> Betűk típusa</label>
+                            <div class="col-2">
+                                <label class="form-label mt-4 fw-bold" for="popupFontFamily"> Betűk típusa</label>
                                 <select class="form-select fs-6 px-2" :v-model="selectedValue" @change="changeFontFamily($event)">
                                     <option :value="popup.betutipus">{{ popup.betutipus }}</option>
                                     <option v-for="option in popup.optionsFinalFontFamily" :key="option.id" :value="option.option" :style="{'font-family': option.option}" >{{ option.option }}</option>
                                 </select>
                             </div>
-                            <div class="col-3">
-                                <label class="form-label mt-4 fw-bold" for="popupTextColor"> Betűk stílusa</label>
+                            <div class="col-2">
+                                <label class="form-label mt-4 fw-bold" for="popupFontStyle"> Betűk stílusa</label>
                                 <select class="form-select fs-6 px-2" :v-model="selectedValue" @change="changeFontStyle($event)">
                                     <option :value="popup.betustilus">{{ popup.betustilus }}</option>
                                     <option v-for="option in popup.optionsFinalFontStyle" :key="option.id" :value="option.option" :style="{'font-style': option.option}" >{{ option.option }}</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <label class="form-label mt-4 fw-bold" for="popupFontSize"> Betűk mérete</label>
+                                <select class="form-select fs-6 px-2 mb-4 " :v-model="selectedFontSize" @change="changeFontSize($event)">
+                                    <option :value="popup.betumeret">{{ popup.betumeret }}</option>
+                                    <option v-for="option in popup.optionsFinalFontSize" :key="option.id" :value="option.option">{{ option.option }}</option>
                                 </select>
                             </div>
                         
@@ -121,7 +128,7 @@ fetchPopups();
                 </form>
                 </ol>
             </ul>
-            <Popup v-model="showPreviewPopup" :hatterszin="popup.hatterszin" :betuszin="popup.betuszin" :betutipus="popup.betutipus" :betustilus="popup.betustilus" :fotomutat="popupWithPhoto" :popupWithPhoto="popupWithPhoto" :kepUtvonal="popup.photo.kepUtvonal" :cim="popup.cim" :szoveg="popup.szoveg" :isAdmin="isAdmin" @modalStatus="receiveEmit"></Popup>
+            <Popup v-model="showPreviewPopup" :hatterszin="popup.hatterszin" :betuszin="popup.betuszin" :betumeret="popup.betumeret" :betutipus="popup.betutipus" :betustilus="popup.betustilus" :fotomutat="popupWithPhoto" :popupWithPhoto="popupWithPhoto" :kepUtvonal="popup.photo.kepUtvonal" :cim="popup.cim" :szoveg="popup.szoveg" :isAdmin="isAdmin" @modalStatus="receiveEmit"></Popup>
         </div>
     </div>
 </template>

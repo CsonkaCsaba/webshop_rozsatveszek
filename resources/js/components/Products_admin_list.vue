@@ -1,188 +1,193 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
-const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept} = storeToRefs(ProductStore())
-const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct} = ProductStore()
+const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading} = storeToRefs(ProductStore())
+const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction} = ProductStore()
 fetchProduct();
 
 </script>
 
 <template>
-<div class="container">
-    <div class="d-flex addNewBtn mb-4 ">
-      <button type="button" class="btn secoundaryBtnb" @click="addNewProductBtn" :disabled="disableBtnAdd"><font-awesome-icon :icon="['fas', 'plus']" /> Új termék hozzáadás</button>
+    <loader v-if="loading"></loader>
+    <div class="container">
+        <div class="row m-4">
+            <div class="col-4">
+                <button type="button" class="btn secoundaryBtnb addNewProd" @click="addNewProductBtn" :disabled="disableBtnAdd"><font-awesome-icon :icon="['fas', 'plus']" /> Új termék hozzáadás </button>
+            </div>
+        </div>
     </div>
-</div>
-<Transition>
-<div class="addNewProduct p-2" v-if="addNewProduct">
- <!--show if Add New Product button clicked-->
- <form method="POST" @submit.prevent="createProduct(name, color, price, stock, description)" id="addNewproductForm">
-        <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-4">
-                    <label for="name" class="p-1 col">Név</label>
-                    <input id="nameInput" type="text" class="form-control fw-light" required placeholder="Név megadása" name="nameInput" v-model="name"/>
-                </div>
-                <div class="col-4">
-                <div>
-                    <label for="color" class="p-1 col">Szín</label>
-                    <input id="color" type="text" class="form-control fw-light" required placeholder="Szín megadása" name="colorInput" v-model="color"/>
-                </div>
-                </div>
-            </div>
-
-            <div class="row justify-content-center text-center mt-2">
-                <div class="col-4">
-                    <label for="price" class="p-1 col">Ár</label>
-                    <div class="input-group mb-3">
-                        <input id="price" type="number"  class="form-control fw-light" required placeholder="Ár megadása" name="priceInput" v-model="price"/>
-                        <span class="input-group-text">-Ft</span> 
+  
+    <div class="addNewProduct p-2" v-if="addNewProduct">
+    <Transition>
+    <!--show if Add New Product button clicked-->
+    <form method="POST" @submit.prevent="createProduct(name, color, price, stock, description)" id="addNewproductForm">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-4">
+                        <label for="name" class="p-1 col">Név</label>
+                        <input id="nameInput" type="text" class="form-control fw-light" required placeholder="Név megadása" name="nameInput" v-model="name"/>
+                    </div>
+                    <div class="col-4">
+                    <div>
+                        <label for="color" class="p-1 col">Szín</label>
+                        <input id="color" type="text" class="form-control fw-light" required placeholder="Szín megadása" name="colorInput" v-model="color"/>
+                    </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <label for="stock" class="p-1 col">Készlet</label>
-                    <div class="input-group mb-3">
-                        <input id="stock" type="number"  class="form-control fw-light" required placeholder="Készlet megadása" name="stockInput" v-model="stock"/>
-                        <span class="input-group-text">db</span>  
+
+                <div class="row justify-content-center text-center mt-2">
+                    <div class="col-4">
+                        <label for="price" class="p-1 col">Ár</label>
+                        <div class="input-group mb-3">
+                            <input id="price" type="number"  class="form-control fw-light" required placeholder="Ár megadása" name="priceInput" v-model="price"/>
+                            <span class="input-group-text">-Ft</span> 
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="stock" class="p-1 col">Készlet</label>
+                        <div class="input-group mb-3">
+                            <input id="stock" type="number"  class="form-control fw-light" required placeholder="Készlet megadása" name="stockInput" v-model="stock"/>
+                            <span class="input-group-text">db</span>  
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row justify-content-center text-center">
-                <div class="col-4">
-                    <label for="description" class="p-1 col">Leírás</label>
-                        <textarea id="description"  class="form-control fw-light" required placeholder="Leírás megadása" name="descriptionInput" v-model="description" rows="8">
-                        </textarea>
+                <div class="row justify-content-center text-center">
+                    <div class="col-4">
+                        <label for="description" class="p-1 col">Leírás</label>
+                            <textarea id="description"  class="form-control fw-light" required placeholder="Leírás megadása" name="descriptionInput" v-model="description" rows="8">
+                            </textarea>
+                    </div>
+                    <div class=" col-4 form-floating mb-3">
+                        <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó hozzáadása</p> 
+                        <input id="uploadInput" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
+                        <p class="text-danger">{{ photoMessage }}</p>
+                    </div>
                 </div>
-                <div class=" col-4 form-floating mb-3">
-                    <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó hozzáadása</p> 
-                    <input id="uploadInput" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
-                    <p class="text-danger">{{ photoMessage }}</p>
+                    <div class="justify-content-center text-center">
+                    <div class="d-inline-flex p-4 mt-2">
+                        <button type="submit" class="btn m-1 secoundaryBtna" :disabled="disableBtn">Hozzáadás</button>
+                        <button type="button" class="btn secoundaryBtnb m-1" @click="addNewProduct = false; disableBtnAdd = false">Mégsem</button>
+                    </div>
+                    </div>
                 </div>
-            </div>
-                <div class="justify-content-center text-center">
-                <div class="d-inline-flex p-4 mt-2">
-                    <button type="submit" class="btn m-1 secoundaryBtna" :disabled="disableBtn">Hozzáadás</button>
-                    <button type="button" class="btn secoundaryBtnb m-1" @click="addNewProduct = false; disableBtnAdd = false">Mégsem</button>
-                </div>
-                </div>
-            </div>
-    </form>
-  </div>
-</Transition>
+        </form>
+    </Transition>
+    </div>
+  
 
-<div class="container fw-bold mb-4 justify-content-center text-center">
-  <div class="row">
-    
-    <div class="col-sm">
-        <div v-if="showDown">
-            <button class="btn fw-bold fs-5" @click="orderByProductsAz">
-                Termék <font-awesome-icon :icon="['fas', 'arrow-down-a-z']" />
-            </button>
-        </div>
-        <div v-if="showUp">
-            <button class="btn fw-bold fs-5" @click="orderByProductsZa">
-                Termék <font-awesome-icon :icon="['fas', 'arrow-up-a-z']" />
-            </button>
-        </div>
+    <div class="container fw-bold mb-4 justify-content-center text-center">
+    <div class="row">
         
-       
-       
-    </div>
-    <div class="col-sm artop fw-bold fs-5">
-        Ár
-    </div>
-    <div class="col-sm szerkeszttop fw-bold fs-5">
-        Szerkesztés
-    </div>
-  </div>
-</div>
-
-
-<div class="container mb-4">
-    <ul class="list">
-        <li class="text-left" v-for="prod in products" :key="prod.id">
-            <div class="row ">
-                <div class="col-5 ">
-                    <img :src="prod.img" class="image">
-                </div>
-                <div class="col-2 keszlet">
-                    <p v-if="prod.keszlet <= 0" class="elfogyott">Elfogyott</p>
-                    <p v-else class="keszleten ">Készleten: <br><b>{{ prod.keszlet }} db</b></p>
-                    <p v-if ="prod.keszlet > 1 && prod.keszlet <= 10" class=""> <span class="position-absolute translate-middle badge rounded-pill bg-danger figyelem">
-                        A készlet hamarosan elfogy!</span></p>
-                </div>
-                <div class="col-2 align-self-center">
-                    <p class="name">{{ prod.nevHu }}</p><br>
-                    <p class="color">{{ prod.szin }}</p>
-                </div>
-                <div class="col align-self-center">
-                    {{ prod.ar }} Ft
-                </div>
-                <div class="col-sm align-self-center buttons">
-                    <button type="button" class="btn secoundaryBtna btn-lg m-4" @click="prod.edit = true" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék szerkesztése" ><font-awesome-icon :icon="['fas', 'pen']" /></button>
-                    <button type="button" class="btn secoundaryBtnb btn-lg" @click="removeProduct(prod.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék törlése"><font-awesome-icon :icon="['fas', 'trash']" /></button>
-                </div>
-                <Transition>
-                <div class="row editProductForm" v-if="prod.edit">
-                    <form class="col ml-8" method="PUT" @submit.prevent="updateProduct(prod.id, prod.nevHu, prod.szin, prod.ar, prod.keszlet, prod.leirasHu)">
-                        <div class="container">
-                            <div class="row justify-content-center text-center">
-                                <div class="col-4">
-                                    <label for="name" class="p-1 col">Név</label>
-                                    <input id="nameInput" type="text" class="form-control fw-light" required :placeholder=prod.nevHu v-model="prod.nevHu"/>
-                                </div>
-                                <div class="col-4">
-                                <div>
-                                    <label for="color" class="p-1 col">Szín</label>
-                                    <input id="color" type="text" class="form-control fw-light" required :placeholder=prod.szin  v-model="prod.szin"/>
-                                </div>
-                                </div>
-                            </div>
-
-                            <div class="row justify-content-center text-center mt-2">
-                                <div class="col-4">
-                                    <label for="price" class="p-1 col">Ár</label>
-                                    <div class="input-group mb-3">
-                                        <input id="price" type="number"  class="form-control fw-light" required :placeholder=prod.ar  v-model="prod.ar"/>
-                                        <span class="input-group-text">-Ft</span> 
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <label for="stock" class="p-1 col">Készlet</label>
-                                    <div class="input-group mb-3">
-                                        <input id="stock" type="number"  class="form-control fw-light" required :placeholder=prod.keszlet v-model="prod.keszlet"/>
-                                        <span class="input-group-text">db</span>  
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row justify-content-center text-center">
-                                <div class="col-4">
-                                    <label for="description" class="p-1 col">Leírás</label>
-                                        <textarea id="description"  class="form-control fw-light" required :placeholder=prod.leirasHu v-model="prod.leirasHu" rows="8">
-                                        </textarea>
-                                </div>
-                                <!-- <div class=" col-4 form-floating mb-3">
-                                    <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó módosítás</p> 
-                                    <input name="upload_file" id="upload_file" type="file" @change="onChange" class="form-control" accept="image/*"/>
-                                    <p class="text-danger">{{ photoMessage }}</p>
-                                </div> -->
-                            </div>
-                                <div class="justify-content-center text-center">
-                                <div class="d-inline-flex p-4 mt-2">
-                                    <button type="submit" class="btn m-1 secoundaryBtna">Módosítás</button>
-                                    <button type="button" class="btn secoundaryBtnb m-1" @click="prod.edit= false">Mégsem</button>
-                                </div>
-                                </div>
-                            </div>
-                        </form>
-                </div>
-            </Transition>
-                
+        <div class="col-sm">
+            <div v-if="showDown">
+                <button class="btn fw-bold fs-5" @click="orderByProductsAz">
+                    Termék <font-awesome-icon :icon="['fas', 'arrow-down-a-z']" />
+                </button>
             </div>
+            <div v-if="showUp">
+                <button class="btn fw-bold fs-5" @click="orderByProductsZa">
+                    Termék <font-awesome-icon :icon="['fas', 'arrow-up-a-z']" />
+                </button>
+            </div>
+            
+        
+        
+        </div>
+        <div class="col-sm artop fw-bold fs-5">
+            Ár
+        </div>
+        <div class="col-sm szerkeszttop fw-bold fs-5">
+            Szerkesztés
+        </div>
+    </div>
+    </div>
 
-        </li>
-    </ul>
-</div>
+
+    <div class="container mb-4">
+        <ul class="list">
+            <li class="text-left" v-for="prod in products" :key="prod.id">
+                <div class="row ">
+                    <div class="col-5 ">
+                        <img :src="prod.img" class="image">
+                    </div>
+                    <div class="col-2 keszlet">
+                        <p v-if="prod.keszlet <= 0" class="elfogyott">Elfogyott</p>
+                        <p v-else class="keszleten">Készleten: <br><b>{{ prod.keszlet }} db</b></p>
+                        <p v-if ="prod.keszlet > 1 && prod.keszlet <= 10" class=""> <span class="position-absolute translate-middle badge rounded-pill bg-danger figyelem">
+                            A készlet hamarosan elfogy!</span></p>
+                    </div>
+                    <div class="col-2 align-self-center">
+                        <p class="name">{{ prod.nevHu }}</p><br>
+                        <p class="color">{{ prod.szin }}</p>
+                    </div>
+                    <div class="col align-self-center">
+                        {{ prod.ar }} Ft
+                    </div>
+                    <div class="col-sm align-self-center buttons">
+                        <button type="button" class="btn secoundaryBtna btn-lg m-4" @click="prod.edit = true" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék szerkesztése" ><font-awesome-icon :icon="['fas', 'pen']" /></button>
+                        <button type="button" class="btn secoundaryBtnb btn-lg" @click="removeProduct(prod.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék törlése"><font-awesome-icon :icon="['fas', 'trash']" /></button>
+                    </div>
+                    <Transition>
+                    <div class="row editProductForm" v-if="prod.edit">
+                        <form class="col ml-8" method="PUT" @submit.prevent="updateProduct(prod.id, prod.nevHu, prod.szin, prod.ar, prod.keszlet, prod.leirasHu)">
+                            <div class="container">
+                                <div class="row justify-content-center text-center">
+                                    <div class="col-4">
+                                        <label for="name" class="p-1 col">Név</label>
+                                        <input id="nameInput" type="text" class="form-control fw-light" required :placeholder=prod.nevHu v-model="prod.nevHu"/>
+                                    </div>
+                                    <div class="col-4">
+                                    <div>
+                                        <label for="color" class="p-1 col">Szín</label>
+                                        <input id="color" type="text" class="form-control fw-light" required :placeholder=prod.szin  v-model="prod.szin"/>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center text-center mt-2">
+                                    <div class="col-4">
+                                        <label for="price" class="p-1 col">Ár</label>
+                                        <div class="input-group mb-3">
+                                            <input id="price" type="number"  class="form-control fw-light" required :placeholder=prod.ar  v-model="prod.ar"/>
+                                            <span class="input-group-text">-Ft</span> 
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="stock" class="p-1 col">Készlet</label>
+                                        <div class="input-group mb-3">
+                                            <input id="stock" type="number"  class="form-control fw-light" required :placeholder=prod.keszlet v-model="prod.keszlet"/>
+                                            <span class="input-group-text">db</span>  
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center text-center">
+                                    <div class="col-4">
+                                        <label for="description" class="p-1 col">Leírás</label>
+                                            <textarea id="description"  class="form-control fw-light" required :placeholder=prod.leirasHu v-model="prod.leirasHu" rows="8">
+                                            </textarea>
+                                    </div>
+                                    <!-- <div class=" col-4 form-floating mb-3">
+                                        <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó módosítás</p> 
+                                        <input name="upload_file" id="upload_file" type="file" @change="onChange" class="form-control" accept="image/*"/>
+                                        <p class="text-danger">{{ photoMessage }}</p>
+                                    </div> -->
+                                </div>
+                                    <div class="justify-content-center text-center">
+                                    <div class="d-inline-flex p-4 mt-2">
+                                        <button type="submit" class="btn m-1 secoundaryBtna">Módosítás</button>
+                                        <button type="button" class="btn secoundaryBtnb m-1" @click="prod.edit= false">Mégsem</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+                </Transition>
+                    
+                </div>
+
+            </li>
+        </ul>
+    </div>
 <modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @deleteProduct="deleteProduct"></modalAccept>
 <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
 </template>
@@ -270,9 +275,13 @@ li:nth-child(odd)
 
 .artop
     margin-left: 45px
-.addNewBtn
-    margin-left: 100px
-    font-size: 21px 
+.addNewProd
+    margin-left: 80px
+    font-size: 16px 
+
+.tagsBtn
+    float: right
+    margin-right: 100px
 
 .szerkeszttop
     margin-right: 15px

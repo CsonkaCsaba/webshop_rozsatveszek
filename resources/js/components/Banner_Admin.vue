@@ -2,8 +2,8 @@
 import { BannerPopupStore } from './store/BannerPopupStore';
 import { storeToRefs} from 'pinia';
 import { ref, watch } from 'vue'
-const { receiveEmit, saveUpdate, fetchBanners, fetchPopups, update, showPreviewButton, closePreviewButton, showPreviewButtonPopup, closePreviewButtonPopup, setToDefault,setToDefaultPopup, updateBanner, updatePopup,switchBannerState, switchPopupState, onChange, changeFontFamilyBanner, changeFontStyleBanner} = BannerPopupStore()
-const { modalStatus, message, activeBanner, banners, popups, showPreviewBanner, showPreviewPopup, defaultBackroundColor, defaultFontColor, activePopup, popupWithPhoto} = storeToRefs(BannerPopupStore())
+const { receiveEmit, saveUpdate, fetchBanners, fetchPopups, update, showPreviewButton, closePreviewButton, showPreviewButtonPopup, closePreviewButtonPopup, setToDefault,setToDefaultPopup, updateBanner, updatePopup,switchBannerState, switchPopupState, onChange, changeFontFamilyBanner, changeFontStyleBanner, changeFontSizeBanner} = BannerPopupStore()
+const { modalStatus, message, activeBanner, banners, popups, showPreviewBanner, showPreviewPopup, defaultBackroundColor, defaultFontColor, activePopup, popupWithPhoto, selectedValue, selectedFontSize} = storeToRefs(BannerPopupStore())
 fetchBanners();
 </script>
 <template>
@@ -53,18 +53,25 @@ fetchBanners();
                             <button type="button" class="btn secoundaryBtna btn-lg mt-5 ms-2" @click="updateBanner" data-bs-toggle="tooltip" data-bs-placement="top" title="Mentés" ><font-awesome-icon :icon="['fas', 'floppy-disk']" /></button>
                         </div>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-2">
                                 <label class="form-label fw-bold" for="bannerTextColor"> Betűk típusa</label>
                                 <select class="form-select fs-6 px-2 mb-4 " :v-model="selectedValue" @change="changeFontFamilyBanner($event)">
                                     <option :value="banner.betutipus">{{ banner.betutipus }}</option>
                                     <option v-for="option in banner.optionsFinalFontFamily" :key="option.id" :value="option.option" :style="{'font-family': option.option}" >{{ option.option }}</option>
                                 </select>
                             </div>
-                            <div class="col-3">
+                            <div class="col-2">
                                 <label class="form-label fw-bold" for="bannerTextColor"> Betűk stílusa</label>
                                 <select class="form-select fs-6 px-2 mb-4 " :v-model="selectedValue" @change="changeFontStyleBanner($event)">
                                     <option :value="banner.betustilus">{{ banner.betustilus }}</option>
                                     <option v-for="option in banner.optionsFinalFontStyle" :key="option.id" :value="option.option" :style="{'font-style': option.option}" >{{ option.option }}</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <label class="form-label fw-bold" for="bannerTextColor"> Betűk mérete</label>
+                                <select class="form-select fs-6 px-2 mb-4 " :v-model="selectedFontSize" @change="changeFontSizeBanner($event)">
+                                    <option :value="banner.betumeret">{{ banner.betumeret }}</option>
+                                    <option v-for="option in banner.optionsFinalFontSize" :key="option.id" :value="option.option">{{ option.option }}</option>
                                 </select>
                             </div>
                     </div>
@@ -74,7 +81,7 @@ fetchBanners();
                 
                 </ol>
             </ul>
-            <div v-if="showPreviewBanner" class="position-absolute top-0 start-0 w-100 marquee" :style="{'background-color' : banner.hatterszin, 'color': banner.betuszin, 'font-family': banner.betutipus, 'font-style': banner.betustilus}"><p class="p-3 mt-3" :style="{'animation-duration':banner.sebesseg+'s'} ">{{ banner.szoveg }}</p></div>
+            <div v-if="showPreviewBanner" class="position-absolute top-0 start-0 w-100 marquee" :style="{'background-color' : banner.hatterszin, 'color': banner.betuszin, 'font-family': banner.betutipus, 'font-style': banner.betustilus, 'font-size': banner.betumeret+'px'}"><p class="p-3 mt-3" :style="{'animation-duration':banner.sebesseg+'s'} ">{{ banner.szoveg }}</p></div>
         </div>
 </div>
 </template>

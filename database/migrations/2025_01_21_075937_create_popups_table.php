@@ -28,6 +28,7 @@ return new class extends Migration
             $table->boolean('fotomutat')->nullable();
             $table->string('betustilus')->nullable();
             $table->string('betutipus')->nullable();
+            $table->integer('betumeret')->nullable();
         });
     }
 

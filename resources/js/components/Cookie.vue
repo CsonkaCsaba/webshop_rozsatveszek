@@ -1,7 +1,7 @@
 <script setup>
 import { CookieStore } from './store/CookieStore';
 import { storeToRefs} from 'pinia';
-const { acceptAllCookies, cookieSettings, changeView, switchbasicOperationAcception, switchStatisticOperationAcception, switchMarketingOperationAcception, acceptAllCookiesfromSettings, declineAllCookiesfromSettings, saveCookieSettings } = CookieStore()
+const { acceptAllCookies, cookieSettings, changeView, switchbasicOperationAcception, switchStatisticOperationAcception, switchMarketingOperationAcception, acceptAllCookiesfromSettings, declineAllCookiesfromSettings, saveCookieSettings, openSettings } = CookieStore()
 const {cookieaktiv, cookieSettingsOpen, defaultTextWindow, basicOperationWindow, statisticWindow, marketingWindow, basicOperationAccepted, statisticOperationAccepted, marketingOperationAccepted, acceptedAll} = storeToRefs(CookieStore())
 
 
@@ -44,7 +44,7 @@ if( CookieWindowviewed == true){
         <div class="col-3 m-2 p-2 align-middle text-start ">
             <button id="defaultTextWindow" type="button" class="acceptBtn m-2 p-4" @click="changeView($event)">Adatvédelmi áttekintés</button>
             <button id="basicOperationWindow" type="button" class="acceptBtn m-2 p-4" @click="changeView($event)">Alapműködést biztosító sütik</button>
-            <button id="statisticWindow"type="button" class="acceptBtn m-2 p-4" @click="changeView($event)">Statisztikai célú sütik</button>
+            <button id="statisticWindow" type="button" class="acceptBtn m-2 p-4" @click="changeView($event)">Statisztikai célú sütik</button>
             <button id="marketingWindow" type="button" class="acceptBtn m-2 p-4" @click="changeView($event)">Marketing célú sütik</button>
         </div>
         <div class="col-8 m-2 p-2 justify-content-center text-center bg-light">
@@ -92,7 +92,7 @@ if( CookieWindowviewed == true){
     </v-card>
   </v-dialog>
   <div class="sutiikonDiv">
-    <img src="../../assets/kepek/cookie_icon.png" alt="cookieicon" class="sutiikon" @click="cookieSettingsOpen = true" data-bs-toggle="tooltip" data-bs-placement="top" title="Süti beállítások megnyitása">
+    <img src="../../assets/kepek/cookie_icon.png" alt="cookieicon" class="sutiikon" @click="openSettings" data-bs-toggle="tooltip" data-bs-placement="top" title="Süti beállítások megnyitása">
   </div>
 </template>
 

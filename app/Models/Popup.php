@@ -23,7 +23,8 @@ class Popup extends Model
         'betuszin',
        'fotomutat',
        'betustilus',
-        'betutipus'
+        'betutipus',
+        'betumeret'
     ];
     public $timestamps = false;
 }

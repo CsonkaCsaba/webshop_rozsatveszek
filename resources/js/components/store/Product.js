@@ -14,6 +14,9 @@ export const ProductStore = defineStore("Product",{
         wishlist: [
 
         ],
+        cimkek: [
+
+        ],
         addNewProduct: false,
         disableBtnAdd: false,
         photoMessage : "",
@@ -33,7 +36,9 @@ export const ProductStore = defineStore("Product",{
         updateSuccessful: false,
         db_data: {
             photo: {},
-        }
+        },
+        tags: false,
+        addNewTag: false
        
         }
     },
@@ -130,6 +135,21 @@ export const ProductStore = defineStore("Product",{
                     console.log(error)
                 }
 
+        this.loading = false;
+        },
+        async fetchCimkek(){
+            this.loading = true;
+            let cimke = [];
+            try {
+                await axios.get('api/cimkek').then(function(response){
+                    cimke = response.data
+                    console.log(cimke)
+                });    
+                    this.cimkek.push(cimke);
+                }
+                 catch(error){
+                    console.log(error)
+                }
         this.loading = false;
         },
 
@@ -348,6 +368,7 @@ export const ProductStore = defineStore("Product",{
                 }
                 }).catch(console.error)
         },
+
         
         
     //     update(){

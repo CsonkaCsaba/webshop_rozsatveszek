@@ -23,6 +23,7 @@ class TermekController extends Controller
     {
         $termekek = Termek::all();
         return response()->json($termekek);
+        
     }
 
     /**

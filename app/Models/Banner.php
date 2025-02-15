@@ -15,7 +15,8 @@ class banner extends Model
         'aktiv',
         'sebeseg',
         'betutipus',
-        'betustilus'
+        'betustilus',
+        'betumeret'
     ];
     public $timestamps = false;
 }

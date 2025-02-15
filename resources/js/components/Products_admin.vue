@@ -11,6 +11,11 @@ onServerPrefetch(async () => {
 
 const { modalStatus, message} = storeToRefs(OrdersStore())
 const { receiveEmit} = OrdersStore()
+
+import { ProductStore } from './store/Product';
+const { tags } = storeToRefs(ProductStore())
+const { } = ProductStore()
+
 </script>
 
 <template>
@@ -18,11 +23,16 @@ const { receiveEmit} = OrdersStore()
     <div class="justify-content-center text-center p-2">
         <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'bars']" /> TERMÉKEK</span><span></span></div>
         <img src="../../assets/kepek/products1.png" alt="desk" width="80" height="80">
+        <div class="m-4">
+          <button type="button" class="btn secoundaryBtnb tagsBtn secoundaryBtna m-2" @click="tags=false" :class="{ activeBtn: !tags }"><font-awesome-icon :icon="['fas', 'bars']" /> Termékek</button>
+          <button type="button" class="btn secoundaryBtnb tagsBtn secoundaryBtna m-2" @click="tags=true" :class="{ activeBtn: tags }"><font-awesome-icon :icon="['fas', 'tag']" /> Címkék</button>
+        </div>
     </div>
 </div>
 
-<products_admin_list :key="reload">
+<products_admin_list v-if="!tags" :key="reload">
 </products_admin_list>
+ <tagsComponent v-if="tags"></tagsComponent>
 
 <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" >
 </Modal>

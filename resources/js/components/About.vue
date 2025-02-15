@@ -9,7 +9,7 @@
                 </div>
                 <div id="szoveg" class="container-fluid pt-3">
                     <div id="part1" class="row mt-4 mt-sm-3 m-md-5 m-lg-3 m-xl-4 align-items-center">
-                        <div class="col-12 col-sm-7">
+                        <div data-aos="fade-right" class="col-12 col-sm-7">
                             <p class="about-title"><b>Családi vállalkozásunk</b></p>
                             <p class="about-text"> nagy szeretettel és elkötelezettséggel foglalkozik
                                 rózsatermesztéssel.
@@ -22,18 +22,18 @@
                                 legjobb minőséget nyújtsa.
                             </p>
                         </div>
-                        <div class="col text-center my-auto">
+                        <div data-aos="fade-left" class="col text-center my-auto">
                             <img src="../../assets/kepek/rolunk1.jpg" class="img-fluid mt-sm-auto mb-sm-auto rounded shadow"
                                 alt="rolunk2">
                         </div>
                     </div>
                     <div id="part2"
                         class="row mt-4 m-sm-2 m-md-5 m-lg-3 m-xl-4 align-items-center">
-                        <div class="col-12 col-sm-7 col-lg-4 text-center my-auto">
+                        <div data-aos="fade-right" class="col-12 col-sm-7 col-lg-4 text-center my-auto">
                             <img src="../../assets/kepek/rolunk2.jpg" class="img-fluid mt-sm-auto mb-sm-auto rounded shadow"
                                 alt="rolunk2">
                         </div>
-                        <div class="pt-3 col">
+                        <div data-aos="fade-left" class="pt-3 col">
                             <p class="about-title"><b>Munkánk során</b></p>
                             <p class="mt-md-2 about-text">arra törekszünk, hogy minőségi és gyönyörű rózsákat
                                 neveljünk,
@@ -60,8 +60,34 @@
 
 </template>
 
-<script>
+<script setup>
+import { onMounted, onUnmounted } from 'vue';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
+// Function to initialize AOS
+function initializeAOS() {
+  AOS.init({
+    duration: 1000, // Animation duration in milliseconds
+    once: false,    // Set to false to trigger animations on every scroll
+  });
+}
+
+onMounted(() => {
+  initializeAOS();
+
+  // Refresh AOS when the window is scrolled
+  const onScroll = () => {
+    AOS.refresh();
+  };
+
+  window.addEventListener('scroll', onScroll);
+
+  // Cleanup event listener on component unmount
+  onUnmounted(() => {
+    window.removeEventListener('scroll', onScroll);
+  });
+});
 </script>
 
 <style lang="sass" scoped>
@@ -71,11 +97,12 @@ $medium: 768px
 $large: 992px
 $extra-large: 1200px
 $szurke_szoveg: #787878
+$vilagos_szoveg: #f7f5f5
 $rozsaszin: #E4A0B7
 
 .tartalom
-    color: $szurke_szoveg
-    background-color: #f5f5f5
+    color: #ffffff
+    background-color: #9c9c9c
     display: block
 
     #fejlec

@@ -52,7 +52,9 @@ export default {
 </script>
 
 <template>
-    <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky">
+       
+    <BannerFront></BannerFront>
+    <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky mt-2">
         <nav>
             <div class="branding">
                 <a href="/webshop_rozsatveszek/public/">
@@ -96,8 +98,8 @@ export default {
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">
                     <li><a href="/webshop_rozsatveszek/public/">Kezdőlap</a></li> <!--átírandó-->
-                    <li><a href="/webshop_rozsatveszek/public#about">Rólunk</a></li>
-                    <li><a href="/webshop_rozsatveszek/public#hirek">Hírek</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/#about">Rólunk</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/#hirek">Hírek</a></li>
                     <li><a href="galeria">Galéria</a></li>
                     <li><a href="termekek">Termékek</a></li>
                     <li><a href="kivansaglista">Kívánságlista</a></li>

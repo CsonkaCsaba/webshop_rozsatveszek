@@ -208,6 +208,76 @@ const Loader = defineAsyncComponent({
 })
 app.component('loader', Loader);
 
+const BannerPopup = defineAsyncComponent({
+    loader:() => import('./components/BannerPopupAdmin.vue')
+})
+app.component('BannerPopupAdmin', BannerPopup);
+
+const Banner_Admin = defineAsyncComponent({
+    loader:() => import('./components/Banner_Admin.vue')
+})
+app.component('Banner_Admin', Banner_Admin);
+
+const Popup_Admin = defineAsyncComponent({
+    loader:() => import('./components/Popup_Admin.vue')
+})
+app.component('Popup_Admin', Popup_Admin);
+
+const Popup = defineAsyncComponent({
+    loader:() => import('./components/Popup.vue')
+})
+app.component('Popup', Popup);
+
+const Popup_Front = defineAsyncComponent({
+    loader:() => import('./components/Popup_Front.vue')
+})
+app.component('Popup_Front', Popup_Front);
+
+const BannerFront = defineAsyncComponent({
+    loader:() => import('./components/BannerFront.vue')
+})
+app.component('BannerFront', BannerFront);
+
+const Banner = defineAsyncComponent({
+    loader:() => import('./components/Banner.vue')
+})
+app.component('Banner', Banner);
+
+const Karbatartas = defineAsyncComponent({
+    loader:() => import('./components/Karbatartas.vue')
+})
+app.component('Karbatartas', Karbatartas);
+
+const Navigation_Admin = defineAsyncComponent({
+    loader:() => import('./components/Navigation_admin.vue')
+})
+app.component('navigation_admin', Navigation_Admin);
+
+const Cookie = defineAsyncComponent({
+    loader:() => import('./components/Cookie.vue')
+})
+app.component('cookie', Cookie);
+
+const Stat_Admin = defineAsyncComponent({
+    loader:() => import('./components/Stat_Admin.vue')
+})
+app.component('stat_admin', Stat_Admin);
+
+const PieChart = defineAsyncComponent({
+    loader:() => import('./components/PieChart.vue')
+})
+app.component('pieChart', PieChart);
+
+const BarChart = defineAsyncComponent({
+    loader:() => import('./components/BarChart.vue')
+})
+app.component('barChart', BarChart);
+
+const LineChart = defineAsyncComponent({
+    loader:() => import('./components/LineChart.vue')
+})
+app.component('lineCharta', LineChart);
+
 import Home from './components/Home.vue';
 app.component('Home', Home);
 
@@ -266,7 +336,14 @@ import {
     faUpDown,
     faTruckFast,
     faHeart,
-    faQuestion
+    faQuestion,
+    faWindowMaximize,
+    faEye,
+    faEyeSlash,
+    faRotateLeft,
+    faCookie,
+    faChartSimple,
+    faAngleLeft
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -311,7 +388,14 @@ library.add(
     faUpDown,
     faTruckFast,
     faHeart,
-    faQuestion
+    faQuestion,
+    faWindowMaximize,
+    faEye,
+    faEyeSlash,
+    faRotateLeft,
+    faCookie,
+    faChartSimple,
+    faAngleLeft
 )
 
 const pinia = createPinia();

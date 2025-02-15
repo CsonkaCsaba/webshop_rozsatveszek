@@ -3,7 +3,7 @@ import axios from 'axios'
 import {ref } from 'vue'
 
 
-export let showSwiper = ref(0);
+// export let reload = ref(0);
 let answer = false;
 
 export const GalleryStore = defineStore("Gallery",{
@@ -13,6 +13,7 @@ export const GalleryStore = defineStore("Gallery",{
            
         ],
         modalStatus: false,
+        modalStatusAccept: false,
         message : "",
         message_button: "" ,
         baseUrl: window.location.origin,
@@ -20,6 +21,7 @@ export const GalleryStore = defineStore("Gallery",{
         file: '',
         oldPhotoName: null,
         noFile: false,
+        reload: 0
         }
     },
     getters: {
@@ -28,6 +30,7 @@ export const GalleryStore = defineStore("Gallery",{
     actions: {
 
         async fetchGallery(){
+            this.gallery = [];
             let gallery = [];
             try {
                     await axios.get('api/galeria').then(function(response){
@@ -41,27 +44,41 @@ export const GalleryStore = defineStore("Gallery",{
                     console.log(error.response.data)
                 }
         },
-        deletePhoto(id, uzletId, name){
-            try{
-                console.log(id, name)
-                if (id<= 4){
-                answer = confirm("Figyelem! A kiválasztott fotó törlése befolyásolhatja a kezdőoldal megjelenését! Biztos bene, hogy törölni szeretné a(z) " +name+" elnevezésű fotót?");
-                } else {
-                answer = confirm("Biztos bene, hogy törölni szeretné a(z) " +name+" elnevezésű fotót?");
+        deletePhoto(id){
+            let hasImgage = this.gallery.some(e => e.id === id);
+            if(hasImgage){ 
+                this.edit_id = id;
+                this.modalStatusAccept = true;
+                this.message = 'Biztos benne, hogy véglegesen törölni szeretné a fotót?';
+                } else{
+                this.modalStatusAccept = true;
+                this.message = 'A kiválasztott fotó nem található a rendszerben!';
+                } 
+        },
+        deleteImageAccepted(){
+        try {
+            axios.delete('api/galeria/'+this.edit_id).then(res=>{
+            let index = this.gallery.findIndex(gall=>gall.id == this.edit_id);
+            this.gallery.splice(index, 1);
+            this.modalStatusAccept = false;
+            this.modalStatus = true;
+            this.message = "A fotó törlése sikeres!",
+            this.reload += 1;
+            answer = false;
+            }).catch(console.error)
                 }
-                if(answer != false){
-                axios.delete('api/galeria/'+id).then(res=>{
-                    let index = this.gallery.findIndex(gall=>gall.id == id);
-                    this.gallery.splice(index, 1)
-                    this.modalStatus = true;
-                    this.message = "A fotó törlése sikeres!",
-                    answer = false;
-                    }).catch(console.error)
-                }
-            }catch(error){
+            catch(error){
                 console.log(error)
             }
 
+        },
+        receiveEmit(){
+            this.modalStatus = false;
+            this.modalStatusAccept = false;
+        },
+        emitRecive(){
+            this.modalStatus = false;
+            this.modalStatusAccept = false;
         },
         downloadPhoto(kepUtvonal){
                 axios({
@@ -148,8 +165,8 @@ export const GalleryStore = defineStore("Gallery",{
                 }).catch((error) => {
                     console.log(error)
                     if(error.response.status === 422){
-                        this.modalStatus= true;
-                        this.message = "Kérjük ellenőrizze, hogy jelölt-e ki fájlt! "+error.response.data.message;
+                        // this.modalStatus= true;
+                        // this.message = "Kérjük ellenőrizze, hogy jelölt-e ki fájlt! "+error.response.data.message;
                         this.file = null;
                     }
       

@@ -6,9 +6,7 @@ const props = defineProps({
       }
 });
 
-const emit = defineEmits(['modalStatus','saveUpdate', 'deleteOrder','deleteWish','deleteProduct', 'deleteNewsAccepted']);
-emit('modalStatus');
-// emit('saveUpdate');
+const emit = defineEmits(['modalStatus','saveUpdate', 'deleteOrder','deleteWish','deleteProduct', 'deleteNewsAccepted','deleteImageAccepted']);
 
 function modalStatus() {
      emit('modalStatus');
@@ -28,6 +26,9 @@ function deleteProduct() {
 }
 function deleteNewsAccepted() {
   emit('deleteNewsAccepted');
+}
+function deleteImageAccepted() {
+  emit('deleteImageAccepted');
 }
 
 
@@ -49,6 +50,7 @@ function deleteNewsAccepted() {
           <button v-if="message =='Biztos benne, hogy törölni szeretné a kívánságlistáról a terméket?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteWish()"> Törlés </button>
           <button v-if="message =='Biztos benne, hogy törölni szeretné a terméket?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteProduct()"> Törlés </button>
           <button v-if="message =='Biztos benne, hogy véglegesen törölni szeretné a hírt?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteNewsAccepted()"> Törlés </button>
+          <button v-if="message =='Biztos benne, hogy véglegesen törölni szeretné a fotót?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteImageAccepted()"> Törlés </button>
           <button class="btn btn-primary w100 px-4" @click="modalStatus()"> MÉGSEM </button>
         </div>
       </v-card-actions>

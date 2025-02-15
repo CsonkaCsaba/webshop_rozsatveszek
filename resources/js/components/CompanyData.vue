@@ -4,8 +4,8 @@ import {ref, onMounted, reactive } from 'vue';
 import { storeToRefs } from 'pinia';
 import { PostStore } from './store/PostStore'
 
-const {posts, id, nev, bemutatkozasHu, bemutatkozasEn, iranyitoszam, telepules, utca, hazszam, tel, email, adoszam, updateSuccessful, uzenet} = storeToRefs(PostStore())
-const { update, editStore, fetchStore } = PostStore()
+const {posts, updateSuccessful, message, modalStatus} = storeToRefs(PostStore())
+const { update, editStore, fetchStore, receiveEmit } = PostStore()
 fetchStore();
 
 </script>
@@ -18,13 +18,13 @@ fetchStore();
             <img src="../../assets/kepek/desk.png" alt="desk" width="90" height="60"> 
         </div>
     <div>  
-
+<!-- 
     <div class="container" v-if="updateSuccessful">
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <p>{{ uzenet }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
         </div>
-    </div>
+    </div> -->
 
     <ul class="mt-4">
         <ol v-for="post in posts" key="post.id">
@@ -66,19 +66,38 @@ fetchStore();
                         </div>
                 </div>
                     <div class="p-2">
+                            <h5 class="fw-bold fs-5">Banki adatok</h5>
+                            <div class="col-12 mb-3">
+                                <label class="form-label form-label-top" for="bank">Bank neve</label>
+                                <input type="text" class="form-control" :placeholder="post.bank" v-model="post.bank" name="bank"/>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label form-label-top" for="bankszamlaszam">Bankszámlaszám</label>
+                                <input type="text" class="form-control" :placeholder="post.bankszamlaszam" v-model="post.bankszamlaszam" name="bankszamlaszam"/>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label form-label-top" for="iban">IBAN szám</label>
+                                <input type="text" class="form-control" :placeholder="post.iban" v-model="post.iban" name="iban"/>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label form-label-top" for="swiftbic">SWIFT/BIC</label>
+                                <input type="text" class="form-control" :placeholder="post.swiftbic" v-model="post.swiftbic" name="swiftbic"/>
+                            </div>
+                    </div>
+                    <div class="p-2">
                         <h5 class="fw-bold fs-5">Egyéb</h5>
                         <div class="col-12 mb-3">
                             <label class="form-label form-label-top" for="adoszam">Adószám</label>
                             <input type="text" class="form-control" :placeholder="post.adoszam" v-model="post.adoszam" name="adoszam"/>
                         </div>
                         <div class="col-12 mb-3">
-                            <label class="form-label form-label-top" for="logo">Logó</label>
-                            <input type="text" class="form-control" :placeholder="post.adoszam" v-model="post.adoszam" name="adoszam"/>
+                            <label class="form-label form-label-top" for="cegjegyzekszam">Cégjegyzékszám</label>
+                            <input type="text" class="form-control" :placeholder="post.cegjegyzekszam" v-model="post.cegjegyzekszam" name="cegjegyzekszam"/>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center">
-                <button class="btn lilagombKicsi col-1 " type="submit">Módosít
+                <div class="d-flex justify-content-center mb-4">
+                <button class="btn lilagombKicsi col-1 m-4" type="submit">Módosít
                     
                 </button>
                 </div>
@@ -87,6 +106,7 @@ fetchStore();
         </ul>
     </div>
 </div>
+<Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
 </template>
 
 <style lang="sass" scoped>

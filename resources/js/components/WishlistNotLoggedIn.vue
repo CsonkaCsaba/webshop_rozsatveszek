@@ -52,7 +52,7 @@ export default {
     <loader v-if="loading"></loader>
     <div class="container-fluid">
         <div class="row justify-content-center g-0">
-            <div v-if="emptyMessage" class="justify-content-center text-center"><p>Jelenleg üres a kívánságlista.</p></div>
+            <div v-if="emptyMessage" class="justify-content-center text-center"><p>Jelenleg üres a kívánságlistád. <a href="termekek"> <b> Adj hozzá csodálatos rózsákat!</b></a></p></div>
             <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-2 product position-relative" v-for="wish in wishlist" key="wish.id" id="box">
                 <a href="#" class="row">
                     <div class="termek-kep">

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CimController;
 use App\Http\Controllers\CimeController;
 use App\Http\Controllers\HirekController;
+use App\Http\Controllers\KarbantartasController;
 use App\Http\Controllers\KepekController;
 use App\Http\Controllers\UzletController;
 use App\Http\Controllers\TermekController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\KategoriaController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\PopupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,5 +51,11 @@ Route::middleware('web')->get('/user/wishlist', [UserController::class,'wishlist
 Route::middleware('web')->post('/user/wishlist', [WishlistController::class, 'storeWish']);
 Route::middleware('web')->delete('/user/wishlist/{id}', [WishlistController::class,'destroy']);
 //Route::middleware('web')->delete('/user/wishlistProduct/{id}', [WishlistController::class,'destroyProduct']);
+Route::get('/banner', [BannerController::class,'index']);
+Route::put('/banner/{id}', [BannerController::class,'update']);
+Route::get('/popup', [PopupController::class,'index']);
+Route::put('/popup/{id}', [PopupController::class,'update']);
+Route::get('/karbantartas', [KarbantartasController::class,'index']);
+Route::put('/karbantartas/{id}', [KarbantartasController::class,'update']);
 
 

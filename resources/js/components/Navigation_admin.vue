@@ -1,5 +1,7 @@
+
+
 <template>
-    <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky">
+    <header :class="{ 'scrolled-nav': scrolledNav }" class="position-sticky mt-2">
         <nav>
             <div class="branding">
                 <a href="/webshop_rozsatveszek/public/">
@@ -119,7 +121,6 @@ export default{
 <style lang="sass" scoped>
 
 header
-    z-index: 99
     width: 100%
     position: fixed
     top: 0

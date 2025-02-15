@@ -174,6 +174,19 @@ a
   position: absolute
   left: 12%
 
+.acceptBtn
+  background-color: #212529
+  color: white
+  padding-left: 0.75rem
+  padding-right: 0.75rem
+  padding-top: 0.35rem
+  padding-bottom: 0.35rem
+  line-heigh: 1.6
+  cursor: pointer
+  border-radius: 5px
+  &:hover
+      background-color: white
+      color: #212529 
 
 @media(max-width: $extra-small)//320px
   .under-header
@@ -202,6 +215,13 @@ a
     height: auto
     padding-bottom: 5px
     cursor: pointer
+
+  @keyframes marquee 
+    0% 
+        transform: translate(0, 0)
+  
+    100% 
+        transform: translate(-80%, 0)
 
 #logreg
   top: 35%
@@ -245,6 +265,13 @@ a
     padding-bottom: 5px
     cursor: pointer
 
+  @keyframes marquee 
+    0% 
+        transform: translate(0, 0)
+  
+    100% 
+        transform: translate(-100%, 0)
+
 
 @media((min-width: $md-small) and (max-width: $small))//576px
   .under-header
@@ -275,6 +302,13 @@ a
     height: auto
     padding-bottom: 5px
     cursor: pointer
+
+  @keyframes marquee 
+    0% 
+        transform: translate(0, 0)
+  
+    100% 
+        transform: translate(-150%, 0)
   
 
 #logreg
@@ -288,7 +322,7 @@ a
 
 
 
-@media((min-width: $small) and (max-width: $medium))//768px
+@media ((min-width: $small) and (max-width: $medium))//768px
   .under-header
     min-height: 380px
 
@@ -324,6 +358,13 @@ a
     height: auto
     padding-bottom: 5px
     cursor: pointer
+
+  @keyframes marquee 
+    0% 
+        transform: translate(0, 0)
+
+    100% 
+        transform: translate(-100%, 0)
 
 #logreg
   top: 30%
@@ -513,3 +554,72 @@ a
   font-weight: bold
   a
     color: white
+
+
+.marquee 
+    display: flex
+    flex-flow: row nowrap
+    align-items: center
+    overflow: hidden
+    z-index: 100
+    height: 30px
+    text-transform: uppercase
+    
+.marquee p
+    white-space: nowrap 
+    animation: marquee linear infinite
+    max-width: none
+    position: relative
+    left: 95%
+    font-weight: bold
+    
+@keyframes marquee 
+    0% 
+        transform: translate(0, 0)
+  
+    100% 
+        transform: translate(-300%, 0)
+        
+.modalkep
+    max-width: 60%
+    height: auto
+    padding: 2%
+
+.modalszoveg
+    hyphens: auto
+
+
+.hr
+    border: solid 0.2rem $rozsaszin
+    width: 10rem
+
+#bannerCheckbox,
+#popupCheckbox
+    width: 35px
+    height: 18px
+
+.active
+    color: green
+
+#fast
+    left: 75%
+    position: relative
+
+input[type="range"] 
+
+    box-shadow: 0 0 1px 0 #555
+    transition: background .3s ease-in-out
+
+.banner
+   background: #f7f5f0
+
+.vdialogclosebutton
+  text-align: right
+  position: relative
+  font-weight: bold
+  color: white
+  font-size: 25px
+  cursor: pointer
+  &:hover 
+    font-size: 28px
+    transition: .5s ease all

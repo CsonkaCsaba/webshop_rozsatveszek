@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 @section('content')
+
 <div id="underheader-about-container">
 
     <div class="under-header">
@@ -19,15 +20,17 @@
         <script>
             localStorage.clear();
         </script>
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <h4> Üdvözlünk @auth {{auth()->user()->name}} @endauth!</h4>  
+        <div class="alert alert-info alert-dismissible fade show align-items-center text-center" role="alert">
+        <h4> Üdvözlünk @auth {{auth()->user()->name}} !</h4>
                 {{ session('status') }}
                 {{ __('You are logged in!') }}
-                @if(Auth::user()->admin == 1)<br>
-                <a class="link" href="dolgozoi" id="admin">Tovább a dolgozói felületre</a>
+                @if(Auth::user() &&  Auth::user()->admin == 1)<br>
+                <!-- <script>window.location = "http://localhost/webshop_rozsatveszek/public/dolgozoi";</script>  -->
+                <a class="link" href="dolgozoi" id="admin"> <button type="button" class="btn btn-dark mt-4">Tovább a dolgozói felületre</button></a>
                 @endif
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
         </div>
+        @endauth
         @endif
 
         <p>Vásároljon rózsát<br> közvetlen a termelőtől!</p>

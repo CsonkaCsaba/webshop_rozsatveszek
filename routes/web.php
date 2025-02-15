@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\UzletController;
+use App\Http\Controllers\HomeController;
 use App\Http\Middleware\IsAdmin;
 use App\Models\Hirek;
 use Illuminate\Support\Facades\Route;
@@ -56,9 +57,9 @@ Route::get('/felhasznalo', function () {
     return view('felhasznalo');
 });
 
-Route::get('/home', function () {
-    return redirect()->route('welcome');;
-});
+// Route::get('/home', function () {
+//     return view('welcome');
+// });
 
 Route::get('/kivansaglista', function () {
     return view('kivansaglista');;
@@ -79,11 +80,13 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Auth::routes(['verify' => true]);
 
 
-Route::get('dolgozoi', function () {
-    return view('dolgozoi', [UzletController::class,'index']);
-})->middleware('admin')->name('admin');
+Route::get('/dolgozoi', function () {
+    return view('dolgozoi');
+});
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('send-mail',[EmailController::class, 'sendWelcomeEmail']);
-
+Route::get('/loginadmin', function () {
+    return view('loginadmin');
+});;

@@ -1,5 +1,13 @@
 @extends('layouts.layout')
 @section('content')
+
+@guest
+        <navigation v-once>
+        </navigation>
+        @else
+        <navigation_log v-once>
+        </navigation_log>
+        
 <div class="container mt-8">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -18,4 +26,5 @@
         </div>  
     </div>
 </div>
+@endguest
 @endsection

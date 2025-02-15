@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
         <title>Rózsák közvetlen a termelőtől - rozsatveszek.hu</title>
         <link rel="shortcut icon" href="{{ asset('img/rozsatveszek_logo_kicsi-removebg-preview.webp') }}">
         <!-- Fonts -->
@@ -23,7 +22,14 @@
     </head>
     <body>
     <div id="app">
-        
+
+    <?php 
+        $articles = \App\Models\Karbantartas::all();
+        $karbantartas = $articles[0]->aktiv;
+    ?>
+        @if($karbantartas == 1)
+        <Karbatartas></Karbantartas>
+        @else
         @guest
         <navigation v-once>
         </navigation>
@@ -31,12 +37,9 @@
         <navigation_log v-once>
         </navigation_log>
         @endguest
-{{-- 
-        @if(Auth::check() && Auth::user()->admin == 1)
-        <navigation_admin v-once>
-        </navigation_admin>
-        @endif --}}
- 
+
+        @endif
+        <cookie></cookie>
        @yield('content')
     </div>
 

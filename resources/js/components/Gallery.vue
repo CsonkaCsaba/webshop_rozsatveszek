@@ -1,10 +1,11 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { GalleryStore } from './store/Gallery';
-import {showSwiper} from './store/Gallery';
+// import { reload } from './store/Gallery';
 
- const { modalStatus, noFile, message, message_button} = storeToRefs(GalleryStore())
- const { onChange, uploadPoto, receiveEmit} = GalleryStore()
+const { onChange, uploadPoto, receiveEmit, emitRecive, deleteImageAccepted} = GalleryStore()
+ const { modalStatusAccept, modalStatus, noFile, message, message_button, reload} = storeToRefs(GalleryStore())
+
 
 </script>
 
@@ -17,11 +18,8 @@ import {showSwiper} from './store/Gallery';
 </div>
 </div>
 
-<Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit">
-</Modal>
-    
 
-<swiper_gallery :key="showSwiper">
+<swiper_gallery :key="reload">
 </swiper_gallery>
 
 
@@ -40,6 +38,10 @@ import {showSwiper} from './store/Gallery';
     </form>
 </div>
 
+<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="emitRecive" @deleteImageAccepted="deleteImageAccepted" ></modalAccept>
+
+<Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit">
+</Modal>
 </template>
 
 <style lang="sass" scoped>

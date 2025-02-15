@@ -131,16 +131,5 @@ $rozsaszin: #E4A0B7
                 opacity: 70%
                 font-size: 13px
             
-.modalkep
-    max-width: 60%
-    height: auto
-    padding: 2%
 
-.modalszoveg
-    hyphens: auto
-
-
-.hr
-    border: solid 0.2rem $rozsaszin
-    width: 10rem
 </style>

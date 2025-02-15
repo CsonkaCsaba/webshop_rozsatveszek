@@ -1,16 +1,11 @@
 <script setup>
-import { onServerPrefetch } from 'vue'
 import { storeToRefs } from 'pinia';
 import { NewsStore } from './store/NewsStore';
-import { Pagination, Navigation } from 'swiper/modules';
-import { showSwiper } from './store/NewsStore';
-const store = NewsStore()
-onServerPrefetch(async () => {
-  await store.fetchData()
-});
-const modules = [Pagination, Navigation];
-const { modalStatus, message, photoMessage, modalStatusAccept} = storeToRefs(NewsStore());
-const { receiveEmit, deleteNewsAccepted} = NewsStore();
+import { reload } from './store/NewsStore';
+
+const { receiveEmit, emitRecive, deleteNewsAccepted } = NewsStore()
+const { message, photoMessage, modalStatusAccept, modalStatus} = storeToRefs(NewsStore())
+
 </script>
 
 
@@ -23,18 +18,14 @@ const { receiveEmit, deleteNewsAccepted} = NewsStore();
 </div>
 </div>
 
-
-
-<swiper_news :key="showSwiper">
+<swiper_news :key="reload">
 </swiper_news>
 
-<addnews :key="showSwiper" :photoMessage="photoMessage">
+<addnews :key="reload" :photoMessage="photoMessage">
 </addnews>
 
+<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="emitRecive" @deleteNewsAccepted="deleteNewsAccepted" ></modalAccept>
 <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
-<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @deleteNewsAccepted="deleteNewsAccepted" ></modalAccept>
-
-
 </template>
 
 <style lang="sass" scoped>

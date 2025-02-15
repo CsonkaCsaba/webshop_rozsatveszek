@@ -48,6 +48,11 @@ class UzletController extends Controller
             'tel'=> $request-> tel,
             'email'=> $request-> email,
             'adoszam'=> $request-> adoszam,
+            'cegjegyzekszam' => $request->cegjegyzekszam,
+            'bank'=> $request-> bank,
+            'bankszamlaszam'=> $request-> bankszamlaszam,
+            'IBAN'=> $request-> iban,
+            'SWIFTBIC'=> $request-> swiftbic
         ]);
 
         return response()->json('created');
@@ -89,6 +94,11 @@ class UzletController extends Controller
             $uzlet->tel = $request->tel;
             $uzlet->email = $request->email;
             $uzlet->adoszam = $request->adoszam;
+            $uzlet->cegjegyzekszam = $request->cegjegyzekszam;
+            $uzlet->bank = $request-> bank;
+            $uzlet->bankszamlaszam= $request-> bankszamlaszam;
+            $uzlet->IBAN = $request-> iban;
+            $uzlet->SWIFTBIC= $request-> swiftbic;
 
 
             $uzlet->save();

@@ -12,7 +12,7 @@ class Cimke extends Model
 
     public function products(): HasMany
     {
-        return $this->hasMany(Termek::class, 'id', 'termekId');
+        return $this->hasMany(Termek::class, 'cimkeId', 'id');
     }
     protected $fillable =[
         'id',
@@ -25,7 +25,6 @@ class Cimke extends Model
         'betumeret',
         'akciosarFt',
         'akciosarSzazalek',
-        'termekId'
     ];
     public $timestamps = false;
 }

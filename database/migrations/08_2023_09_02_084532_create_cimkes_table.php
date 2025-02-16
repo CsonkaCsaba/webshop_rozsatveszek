@@ -22,13 +22,6 @@ return new class extends Migration
             $table->integer('betumeret')->nullable();
             $table->integer('akciosarFt')->nullable();
             $table->integer('akciosarSzazalek')->nullable();
-
-            $table->foreignId('termekId')
-            ->constrained(
-                table: 'termeks', indexName: 'termekid'
-            )
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
         });
     }
 

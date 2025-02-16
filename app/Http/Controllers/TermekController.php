@@ -16,12 +16,13 @@ class TermekController extends Controller
 
     public function __invoke(Request $request)
     {
-        return Termek::all();
+        $termekek = Termek::query()->with(['cimke'])->get();
+        return response()->json($termekek);
     }
 
     public function index()
     {
-        $termekek = Termek::all();
+        $termekek = Termek::query()->with(['cimke'])->get();
         return response()->json($termekek);
         
     }
@@ -77,6 +78,13 @@ class TermekController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function updateCimke(Request $request, $id)
+    {
+        $product = Termek::find($id);
+        $product->cimkeId = $request->cimkeId;
+        $product->save();
     }
 
     /**

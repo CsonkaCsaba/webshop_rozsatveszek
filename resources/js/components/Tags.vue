@@ -5,12 +5,12 @@ import { TagsStore } from './store/Tags';
 import { watch } from 'vue'
 import { BannerPopupStore } from './store/BannerPopupStore';
 
-const {  addNewTag, loading, products} = storeToRefs(ProductStore())
+const {  addNewTag, loading, products,} = storeToRefs(ProductStore())
 //const { } = ProductStore()
 
-const { tag, showPreviewtag, selectedValue, selectedProduct, prewievProducts, cim, szoveg, hatterszin, betuszin, betutipus, betustilus, betumeret, akciosarFt, akciosarSzazalek, modalStatus, message } = storeToRefs(TagsStore())
-const { newTag, showPreviewButton, closePreviewButton, setToDefault, updatetag, changeFontFamilytag, changeFontStyletag,  changeFontSize, pushToSelectedProducts, reducePrice, createTag, receiveEmit} = TagsStore()
-
+const { tag, showPreviewtag, selectedValue, selectedProduct, prewievProducts, cim, szoveg, hatterszin, betuszin, betutipus, betustilus, betumeret, akciosarFt, akciosarSzazalek, modalStatus, message, cimkek, allSelected, showDown } = storeToRefs(TagsStore())
+const { newTag, showPreviewButton, closePreviewButton, setToDefault, updateTag, changeFontFamilytag, changeFontStyletag,  changeFontSize, pushToSelectedProducts, reducePrice, createTag, receiveEmit, fetchCimkek} = TagsStore()
+fetchCimkek()
 watch(selectedProduct, () => {
     pushToSelectedProducts()
     
@@ -54,7 +54,7 @@ watch(selectedProduct, () => {
                                 
                             </div>
                             <div class="col-3 border-start mt-4">
-                                <input class="form-check-input" type="checkbox" name="inlineCheckbox1" id="inlineCheckbox1" value="">
+                                <input class="form-check-input" type="checkbox" name="inlineCheckbox1" id="inlineCheckbox1" value="" v-model="allSelected">
                                 <label class="form-check-label ms-4" for="inlineCheckbox1"> Beállítás az összes termékre</label>
                                     <v-autocomplete color="blue-grey-lighten-2" v-model="selectedProduct" :items="products" item-title="nevHu" item-value="nevHu" label="Választás" variant="underlined" chips  multiple auto-select-first placeholder="Termék kiválasztása" item-props>
                                         <template v-slot:chip="{ props, item }">
@@ -107,48 +107,48 @@ watch(selectedProduct, () => {
                         </div>
                         
                                                         <!-- TERMÉKEK -->
-                                    <div class="container-fluid">
-                                        <div class="row g-0">
-                                            <h5 class="fw-bold">Előnézet</h5>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-8 m-2 product position-relative m-4 pb-4" v-for="prod in prewievProducts" key="prod.id" id="box" >
-                                                <a href="#" class="row">
-                                                    <div class="cimke" :style="{'color': betuszin, 'font-family': betutipus, 'font-style': betustilus, 'background': 'linear-gradient(to left bottom,'+hatterszin+' 40%, transparent)'}">
-                                                        <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" :style="{'font-size': betumeret+'px'}"> {{ szoveg }} </h3>
-                                                    </div>
-                                                    <div class="termek-kep">
-                                                        <img :src="prod[0].img" class="img-fluid img-maxDefault">
-                                                        <div v-if="prod[0].keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
-                                                        <div v-else class="keszleten px-2 text-start">Készleten</div>
-                                                    </div>
-                                                </a>
-                                                <div class="row justify-content-center m-1 detail container">
-                                                    <div class="row row-cols-1 text-center">
-                                                        <div class="szin">{{ prod[0].szin }}</div>
-                                                        <div class="nev">{{ prod[0].nevHu }}</div>
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar text-center " :class="{ strikethrough : akciosarFt>0 }">{{ prod[0].ar }} ,-Ft</p></div>
-                                                            <div v-if="akciosarFt>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ akciosarFt }} ,-Ft</h2></div>
-                                                        </div>
-                                                        <div v-if="!prod[0].addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
-                                                            <img src="../../assets/kepek/heart.png" class="heartIconEmpty"  alt="rolunk2" @click="addToWishlist(prod.id)">
-                                                        </div>
-                                                        <div v-if="prod[0].addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
-                                                            <img src="../../assets/kepek/heartfull.png" class="heartIconEmpty heartIconFull"  alt="rolunk2" @click="removeFromWishList(prod[0].id)">
-                                                        </div>
-                                                        
-                                                        <button v-if="prod[0].keszlet > 0" class="col-md-8 col-lg-10 col-xl-10 kosarba kosarba-active text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal" v-on:click="toModal(prod[0])">
-                                                            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pt-1"/>
-                                                            Kosárba
-                                                        </button> 
-                                                        <button v-else disabled class="col-md-8 col-lg-10 col-xl-10  kosarba text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal">
-                                                            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pe-1"/>
-                                                            Kosárba
-                                                        </button>
-                                                    </div>
-                                                </div>
+                        <div class="container-fluid">
+                            <div class="row g-0">
+                                <h5 class="fw-bold">Előnézet</h5>
+                                <div class="col-lg-4 col-md-4 col-sm-5 col-8 m-2 product position-relative m-4 pb-4" v-for="prod in prewievProducts" key="prod.id" id="box" >
+                                    <a href="#" class="row">
+                                        <div class="cimke" :style="{'color': betuszin, 'font-family': betutipus, 'font-style': betustilus, 'background': 'linear-gradient(to left bottom,'+hatterszin+' 40%, transparent)'}">
+                                            <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" :style="{'font-size': betumeret+'px'}"> {{ szoveg }} </h3>
+                                        </div>
+                                        <div class="termek-kep">
+                                            <img :src="prod.img" class="img-fluid img-maxDefault">
+                                            <div v-if="prod.keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
+                                            <div v-else class="keszleten px-2 text-start">Készleten</div>
+                                        </div>
+                                    </a>
+                                    <div class="row justify-content-center m-1 detail container">
+                                        <div class="row row-cols-1 text-center">
+                                            <div class="szin">{{ prod.szin }}</div>
+                                            <div class="nev">{{ prod.nevHu }}</div>
+                                            <div class="row justify-content-center">
+                                                <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar text-center " :class="{ strikethrough : akciosarFt>0 }">{{ prod.ar }} ,-Ft</p></div>
+                                                <div v-if="akciosarFt>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ akciosarFt }} ,-Ft</h2></div>
                                             </div>
+                                            <div v-if="!prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
+                                                <img src="../../assets/kepek/heart.png" class="heartIconEmpty"  alt="rolunk2" @click="addToWishlist(prod.id)">
+                                            </div>
+                                            <div v-if="prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
+                                                <img src="../../assets/kepek/heartfull.png" class="heartIconEmpty heartIconFull"  alt="rolunk2" @click="removeFromWishList(prod.id)">
+                                            </div>
+                                            
+                                            <button v-if="prod.keszlet > 0" class="col-md-8 col-lg-10 col-xl-10 kosarba kosarba-active text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal" v-on:click="toModal(prod)">
+                                                <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pt-1"/>
+                                                Kosárba
+                                            </button> 
+                                            <button v-else disabled class="col-md-8 col-lg-10 col-xl-10  kosarba text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal">
+                                                <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pe-1"/>
+                                                Kosárba
+                                            </button>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
                         </div>
                     </form>
                     </ol>
@@ -156,6 +156,111 @@ watch(selectedProduct, () => {
         </div>
     </div>
 </div>
+
+<div class="container mb-4">
+        <ul class="list mt-4 mb-4">
+            <li class="text-left" v-for="cimke in cimkek[0]" :key="cimke.id">
+                <div class="row">
+                    <div class="col-8">
+                        <p class="align-items-center justify-content-center p-2 fw-bold">{{cimke.cim}} </p>
+                    </div>
+                    <div class="col-4 buttons align-items-center p-4">
+                        <button type="button" class="btn secoundaryBtna btn-lg ms-2"  data-bs-toggle="tooltip" data-bs-placement="top" title="Mentés" ><font-awesome-icon :icon="['fas', 'floppy-disk']" /></button>
+                        <button type="button" class="btn secoundaryBtna btn-lg ms-2" :class="{ rotateBtn : showDown}" @click="showDown = !showDown" data-bs-toggle="tooltip" data-bs-placement="top" title="Tovább" ><font-awesome-icon :icon="['fas', 'angle-down']" /></button>
+                        <button type="button" class="btn secoundaryBtnb btn-lg ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Törlés"><font-awesome-icon :icon="['fas', 'trash']" /></button>
+                    </div>
+                </div>
+
+                <div class="" v-if="showDown">
+                    <div class="container mb-4 pt-4 back mt-4">
+                        <div class="col-12 mb-8">
+                                <ul class="m-4">
+                                    <ol>
+                                    <form method="PUT" @submit.prevent="updateTag(cimke.id, cimke.cim, cimke.szoveg, cimke.hatterszin, cimke.betuszin, cimke.betutipus, cimke.betustilus, cimke.betumeret, cimke.akciosarFt, cimke.akciosarSzazalek)" id="updateTag">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label class="form-label form-label-top mt-4 fw-bold" for="tagCim"> Cím</label>
+                                                <textarea  type="text" class="form-control" :placeholder=cimke.cim v-model="cimke.cim" name="tagCim"></textarea>
+                                            </div>
+                                            <div class="col-3">
+                                                <label class="form-label form-label-top mt-4 fw-bold" for="tagText"> Szöveges tartalom</label>
+                                                <textarea  type="text" class="form-control"  :placeholder=cimke.szoveg v-model="cimke.szoveg" name="tagText" rows="3"></textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <label class="form-label mt-4 fw-bold" for="tagBackroundColor"> Háttérszín</label>
+                                                <input type="color" class="form-control form-control-color"  :placeholder=cimke.hatterszin v-model="cimke.hatterszin" name="tagBackroundColor"/>
+                                            </div>
+                                            <div class="col-1">
+                                                <label class="form-label mt-4 fw-bold" for="tagTextColor"> Betűszín</label>
+                                                <input type="color" class="form-control form-control-color" :placeholder=cimke.betuszin v-model="cimke.betuszin" name="tagTextColor"/>
+                                            </div>
+                                            <div class="col-1">
+                                                
+                                            </div>
+                                            <div class="col-3 border-start mt-4">
+                                                <input class="form-check-input" type="checkbox" name="inlineCheckbox1" id="inlineCheckbox1" value="" v-model="allSelected">
+                                                <label class="form-check-label ms-4" for="inlineCheckbox1"> Beállítás az összes termékre</label>
+                                                    <v-autocomplete color="blue-grey-lighten-2" v-model="selectedProduct" :items="products" item-title="nevHu" item-value="nevHu" label="Választás" variant="underlined" chips  multiple auto-select-first placeholder="Termék kiválasztása" item-props>
+                                                        <template v-slot:chip="{ props, item }">
+                                                            <v-chip class="hideBtn" v-bind="props" :prepend-avatar="item.raw.img" :text="item.title" :key="item.raw.id" closable ></v-chip>
+                                                        </template>
+
+                                                        <template v-slot:item="{ props, item }">
+                                                            <v-hover v-slot:default="{ hover }">
+                                                                <v-list-item class="items" v-bind="props" :prepend-avatar="item.raw.img" :subtitle="item.raw.szin" :title="item.title"></v-list-item>
+                                                            </v-hover>
+                                                        </template>
+                                                    </v-autocomplete>
+                                            </div>
+                                            <div class="row mt-4">
+                                                <div class="col-3">
+                                                    <label class="form-label fw-bold" for="tagTextType"> Betűk típusa</label>
+                                                    <select class="form-select fs-6 px-2 mb-4 " v-model="cimke.betutipus" @change="changeFontFamilytag($event)">
+                                                        <option :value="cimke.betutipus">{{ cimke.betutipus }}</option>
+                                                        <option v-for="option in BannerPopupStore().optionsFontFamily" :key="option.id" :value="option.option" :style="{'font-family': option.option}" >{{ option.option }}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="form-label fw-bold" for="tagTextStyle"> Betűk stílusa</label>
+                                                    <select class="form-select fs-6 px-2 mb-4 " v-model="cimke.betustilus" @change="changeFontStyletag($event)">
+                                                        <option :value="cimke.betustilus">{{ cimke.betustilus }}</option>
+                                                        <option v-for="option in BannerPopupStore().optionsFontStyle" :key="option.id" :value="option.option" :style="{'font-style': option.option}" >{{ option.option }}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="form-label fw-bold" for="tagTextSize"> Betűk mérete</label>
+                                                    <select class="form-select fs-6 px-2 mb-4 " v-model="cimke.betumeret" @change="changeFontSize($event)">
+                                                        <option :value="cimke.betumeret">{{ cimke.betumeret }}</option>
+                                                        <option v-for="option in BannerPopupStore().optionsFontSize" :key="option.id" :value="option.option" :style="{'font-size': option.option}" >{{ option.option }}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-4">
+                                                <div class="col-3">
+                                                    <label class="form-label fw-bold" for="inlineCheckbox2">Akciós ár (Ft)</label>
+                                                    <input  type="text" class="form-control px-2 mb-4" v-model="cimke.akciosarFt" name="tagCim"/>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="form-label fw-bold" for="inlineCheckbox2">Akciós ár (%)</label>
+                                                    <input  type="text" class="form-control px-2 mb-4" v-model="cimke.akciosarSzazalek" name="tagCim"/>
+                                                </div>
+                                                <div class="col-3 align-items-end mt-4">
+                                                    <button type="submit" class="btn secoundaryBtna px-2 mb-4 ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Mentés" >Mentés</button>
+                                                    <button type="button" class="btn secoundaryBtnb px-2 mb-4 ms-2" @click="showDown=false">Mégsem</button>
+                                                </div>
+                                        </div>
+                                        </div>
+                                    </form>
+                                    </ol>
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+        </li>
+    </ul>
+</div>
+
+
 <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
 </template>
 
@@ -344,4 +449,30 @@ watch(selectedProduct, () => {
 .strikethrough
     text-decoration: line-through
     color: grey
+
+.list
+    list-style-type: none
+    width: 100%
+    height: auto
+    font-size: 18px
+    padding-left: 5%
+    padding-right: 5%
+    li
+        &:hover
+            box-shadow: rgba(149, 157, 165, 0.6) 0px 4px 8px
+            img
+                -webkit-filter: brightness(100%)
+                -webkit-transition: all 1s ease
+                -moz-transition: all 1s ease
+                -o-transition: all 1s ease
+                -ms-transition: all 1s ease
+                transition: all 1s ease
+                border-radius: 0%
+
+li:nth-child(odd)
+    background: #f7f5f0   
+
+.rotateBtn
+    transform: rotate(180deg)
+    transition: transform 0.5s ease        
 </style>

@@ -137,22 +137,6 @@ export const ProductStore = defineStore("Product",{
 
         this.loading = false;
         },
-        async fetchCimkek(){
-            this.loading = true;
-            let cimke = [];
-            try {
-                await axios.get('api/cimkek').then(function(response){
-                    cimke = response.data
-                    console.log(cimke)
-                });    
-                    this.cimkek.push(cimke);
-                }
-                 catch(error){
-                    console.log(error)
-                }
-        this.loading = false;
-        },
-
         addNewProductBtn(){
             this.addNewProduct = true
             this.disableBtnAdd = true;

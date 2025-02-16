@@ -56,9 +56,12 @@ export default {
             <hr class="cimalatt_hr mx-auto mt-0">
       </div>
     <div class="container-fluid">
-        <div class="row justify-content-center g-0">
+        <div class="row justify-content-center g-0 mt-4">
             <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-2 product position-relative pb-4" v-for="prod in products" key="prod.id" id="box">
                 <a href="#" class="row">
+                    <div v-if="prod.cimke !=null" class="cimke" style="{'color': prod.cimke.betuszin, 'font-family': prod.cimke.betutipus, 'font-style': prod.cimke.betustilus, 'background': 'linear-gradient(to left bottom,'+prod.cimke.hatterszin+' 40%, transparent)'}">
+                        <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" style="{'font-size': prod.cimke.betumeret+'px'}"> {{ prod.cimke.szoveg }} </h3>
+                    </div>
                     <div class="termek-kep">
                         <img :src="prod.img" class="img-fluid img-maxDefault">
                         <div v-if="prod.keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
@@ -70,7 +73,8 @@ export default {
                         <div class="szin">{{ prod.szin }}</div>
                         <div class="nev">{{ prod.nevHu }}</div>
                         <div class="row justify-content-center">
-                            <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar">{{ prod.ar }} ,-Ft</p></div>
+                            <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar text-center " :class="{ strikethrough : prod.cimke != null && prod.cimke.akciosarFt>0 }">{{ prod.ar }} ,-Ft</p></div>
+                            <div v-if="prod.cimke != null &&  prod.cimke.akciosarFt>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ prod.cimke.akciosarFt }} ,-Ft</h2></div>
                         </div>
                         <div v-if="!prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
                             <img src="../../assets/kepek/heart.png" class="heartIconEmpty"  alt="rolunk2" @click="addToWishlist(prod.id)">
@@ -322,5 +326,22 @@ export default {
     100% {
         transform: scale(0.85);
     }
+}
+.cimke{
+    width: 45%;
+    height: 18%;
+    right: -3%;
+    top: -9%;
+    position: absolute;
+    color: white;
+    text-shadow: 0px 0px 6px rgba(255,255,255,0.7);
+    z-index: 10;
+    background: linear-gradient(to left bottom, #60A448 40%, transparent);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 10% 2%;
+}
+.strikethrough{
+    text-decoration: line-through;
+    color: grey;
 }
 </style>

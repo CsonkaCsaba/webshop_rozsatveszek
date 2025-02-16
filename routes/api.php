@@ -43,6 +43,7 @@ Route::middleware('web')->get('/user/orders', [UserController::class, 'orders'])
 Route::post('/termekadmin/create', [TermekController::class,'create']);
 Route::resource('/termekadmin', TermekController::class);
 Route::put('/termekadmin/{id}', [TermekController::class,'update']);
+Route::put('/termekCimkeUpdate/{id}', [TermekController::class,'updateCimke']);
 Route::put('/termekadminmennyiseg/{id}', [TermekController::class,'updateQuantity']);
 Route::get('/rendelesek', [OrderController::class,'show']);
 Route::get('/rendelesekCim', [OrderController::class,'cim']);

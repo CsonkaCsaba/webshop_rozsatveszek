@@ -19,7 +19,7 @@ class Termek extends Model
     }
     public function cimke(): BelongsTo
     {
-        return $this->belongsTo(Cimke::class);
+        return $this->belongsTo(Cimke::class, 'cimkeId');
     }
 
     protected $fillable =[
@@ -36,5 +36,6 @@ class Termek extends Model
         'keszlet',
         'created_at',
         'updated_at',
+        'cimkeId'
     ];
 }

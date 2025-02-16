@@ -24,6 +24,13 @@ return new class extends Migration
             $table->string('color')->nullable();
             $table->integer('keszlet');
             $table->timestamps();
+
+            $table->foreignId('cimkeId')
+            ->constrained(
+                table: 'cimkes', indexName: 'cimkeid'
+            )
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 

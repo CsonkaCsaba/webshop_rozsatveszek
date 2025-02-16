@@ -12,10 +12,7 @@ class CimkeController extends Controller
      */
     public function index()
     {
-        $query = Cimke::query()
-        ->with(['products'])
-        ->get();
-        return response()->json($query);   
+        return Cimke::all();  
     }
 
     /**
@@ -35,13 +32,8 @@ class CimkeController extends Controller
             'betumeret'=> $request->betumeret,
             'akciosarFt'=> $request->akciosarFt,
             'akciosarSzazalek'=> $request->akciosarSzazalek,
-            'termekId'=> $request->termekId
-             
          ]);
- 
          $lastInsertId = $new->id;
- 
- 
          return response()->json(array('last_id' => $lastInsertId));
     }
 

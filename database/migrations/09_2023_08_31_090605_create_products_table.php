@@ -25,12 +25,12 @@ return new class extends Migration
             $table->integer('keszlet');
             $table->timestamps();
 
-            $table->foreignId('cimkeId')
+            $table->foreignId('cimkeId')->nullable()
             ->constrained(
                 table: 'cimkes', indexName: 'cimkeid'
             )
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
+            ->onUpdate('set null')
+            ->onDelete('set null');
         });
     }
 

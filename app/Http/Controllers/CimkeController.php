@@ -72,8 +72,11 @@ class CimkeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cimke $cimke)
+    public function destroy(Cimke $cimke, $id)
     {
-        //
+        $cimke = Cimke::find($id);
+        $cimke->delete();
     }
+
+   
 }

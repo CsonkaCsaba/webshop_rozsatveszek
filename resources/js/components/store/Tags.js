@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios';
 import { ProductStore } from './Product';
 import { BannerPopupStore } from './BannerPopupStore';
+import { th } from 'vuetify/locale';
 
 export const TagsStore = defineStore("TagsStore",{
     state: () => {
@@ -9,6 +10,7 @@ export const TagsStore = defineStore("TagsStore",{
         selectedProduct: [],
         prewievProducts : [{}],
         cimkek: [],
+        cimkekForShow: [],
         cim: "", 
         szoveg: "",
         hatterszin: "",
@@ -25,7 +27,11 @@ export const TagsStore = defineStore("TagsStore",{
         allOk: true,
         lastInsertproductId: "",
         allSelected: false,
-        showDown: false
+        showDown: false,
+        getProdData: [],
+        addNewTag: false,
+        selectedProd: [],
+        selectedIndex: null
 
         }
         
@@ -36,13 +42,41 @@ export const TagsStore = defineStore("TagsStore",{
     actions: {
         async fetchCimkek(){
             this.loading = true;
-            let cimke = [];
+            let termekek = [];
+            let convToObj = {};
+            //let cimke = [];
             try {
-                await axios.get('api/cimkek').then(function(response){
-                    cimke = response.data
-                    console.log(cimke)
-                });    
-                    this.cimkek.push(cimke);
+                // await axios.get('api/cimkek').then(function(response){
+                //     cimke = response.data
+                //     console.log(cimke)
+                // });    
+                    //this.cimkek.push(cimke);
+                    for(const prod of ProductStore().products){
+                      const exists = Object.entries(this.cimkekForShow).some(([key, value]) => value.cim === prod.cimke.cim);
+                      if(prod.cimke != null && !exists){
+                        this.cimkekForShow.push({ 
+                          cimkeId: prod.cimke.id,
+                          cim : prod.cimke.cim,
+                          termekNev: prod.nevHu,
+                          termekId: prod.id, 
+                          szoveg: prod.cimke.szoveg,
+                          hatterszin : prod.cimke.hatterszin,
+                          betuszin: prod.cimke.betuszin,
+                          betutipus: prod.cimke.betutipus,
+                          betustilus: prod.cimke.betustilus,
+                          betumeret: prod.cimke.betumeret,
+                          akciosarFt: prod.cimke.akciosarFt,
+                          akciosarSzazalek: prod.cimke.akciosarSzazalek,
+                        });
+                        this.getProdData.push(prod)
+                      } else if(prod.cimke != null && exists){
+                        for(const cimke of this.cimkekForShow){
+                            if(cimke.cim === prod.cimke.cim){
+                              this.getProdData.push(prod)
+                            }
+                        }
+                      }
+                    }
                 }
                  catch(error){
                     console.log(error)
@@ -86,6 +120,7 @@ export const TagsStore = defineStore("TagsStore",{
           }
           //this.cimkek.push(cimkePush);
           formNewTag.reset();
+          this.addNewTag = false;
         },
         pushToSelectedProducts(){
           if(this.prewievProducts.length != 0){
@@ -144,9 +179,54 @@ export const TagsStore = defineStore("TagsStore",{
         },
         updateTag(id, cim, szoveg, hatterszin, betuszin, betutipus, betustilus, betumeret, akciosarFt, akciosarSzazalek){
 
+        },
+        deleteTag(cimke){
+          //let iDs = []
+          //iDs.push(id)
+          let obj_common = []
+          for (const elem of this.getProdData){
+                if(cimke.cim === elem.cimke.cim){
+                  obj_common.push(elem)
+                }
+          }
+          for(const obj of obj_common){
+
+            axios.delete('api/tagdelete/'+obj.cimkeId).then((response)=>{
+            if(response.status == 200){
+              let index = this.cimkekForShow.findIndex(cimke=>cimke.cimkeId == obj.cimkeId);
+              this.cimkekForShow.splice(index, 1)
+              this.responseOk.push(true);
+                }
+              for(const resp of this.responseOk){
+                if(resp !== true){
+                  this.allOk = false;
+                }
+              }
+              if(this.allOk){
+              this.message = "A címkét töröltük!";
+              this.modalStatus = true;
+              }
+              })
+          }
+      },
+      TagProd(cimkeId){
+        this.selectedProd = []
+        for(const data of this.getProdData){
+          for(const cimke of this.cimkekForShow){
+            if(cimkeId = cimke.cimkeId && cimke.edit === true && data.cimke.cim === cimke.cim){
+                this.selectedProd.push(data)
+            }
+          }
+          
         }
-
-       
-     }
-
+      },
+      setInd(indexNumber){
+        console.log(indexNumber)
+        if(this.selectedIndex === null){
+            this.selectedIndex = indexNumber
+        } else if(this.selectedIndex === indexNumber){
+            this.selectedIndex = null
+        }
+      }
+    }
 })

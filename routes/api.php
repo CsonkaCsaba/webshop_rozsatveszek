@@ -61,6 +61,7 @@ Route::get('/karbantartas', [KarbantartasController::class,'index']);
 Route::put('/karbantartas/{id}', [KarbantartasController::class,'update']);
 Route::post('/cimke/create', [CimkeController::class,'create']);
 Route::get('/cimkek', [CimkeController::class,'index']);
+Route::delete('/tagdelete/{id}', [CimkeController::class,'destroy']);
 
 
 

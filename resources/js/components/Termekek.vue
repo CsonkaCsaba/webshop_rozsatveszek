@@ -21,7 +21,19 @@ export default {
             termek: {
                 type: Object
             },
-            num: 1
+            num: 1,
+            message : [ 
+            {"id": 1, "message":"😍 Kiváló választás! Ez a magastörzsű rózsa biztosan feldobja kertjét!"},
+            {"id": 2, "message":"😍 Tökéletes döntés! A rózsája hamarosan a kertje ékköve lesz."}, 
+            {"id": 3, "message":"😍 Gratulálunk! Egy igazi szépséget választott, ami garantáltan örömet okoz."},
+            {"id": 4, "message":"😍 Remek választás! Ez a rózsa biztosan varázslatos hangulatot ad a kertjének."},
+            {"id": 5, "message":"😍 Ez a rózsa valóban különleges! Készülhet a kertje egy igazi látványossággal."},
+            {"id": 6, "message":"😍 Nagyszerű döntés! Egy ilyen gyönyörű magastörzsű rózsa nem hiányozhat a kertjéből."},
+            {"id": 7, "message":"😍 Szuper választás! Ezzel a rózsával garantáltan kitűnik majd a kertje."},
+            {"id": 8, "message":"😍 Ezt a rózsát nem lehet megunni! Kiváló döntés a kertje szépítésére."},
+            {"id": 9, "message":"😍 Ez a rózsa igazi dísze lesz a kertjének! Nagyon jó választás."},
+            {"id": 10, "message":"😍 Bámulatos! Ezzel a rózsával a kertje minden pillanatban varázslatos lesz."}
+        ],
         }
     },
     methods: {
@@ -41,6 +53,10 @@ export default {
         this.cartData.addToCart(termek,num)
         if(this.cartData.kosarban){
             $('#KosarbaHelyezveModal').modal('show');
+            const randomIndex = Math.floor(Math.random() * this.message.length);
+            const randomObject = this.message[randomIndex];
+            document.getElementById('randomMessage').innerHTML = randomObject.message;
+
         }
       },
     },
@@ -150,7 +166,8 @@ export default {
                 </div>
                 <div id="KosarbaModalBody" class="modal-body">
                     <font-awesome-icon :icon="['fas', 'check']" />
-                    A termék sikeresen bekerült a kosárba
+                    A termék sikeresen bekerült a kosárba  <br>
+                    <p class="fst-italic" id="randomMessage"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tovább vásárolok</button>

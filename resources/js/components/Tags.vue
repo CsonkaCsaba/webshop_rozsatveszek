@@ -8,8 +8,8 @@ import { BannerPopupStore } from './store/BannerPopupStore';
 const {  loading, products,} = storeToRefs(ProductStore())
 //const { } = ProductStore()
 
-const { tag, showPreviewtag, selectedValue, selectedProduct, prewievProducts, cim, szoveg, hatterszin, betuszin, betutipus, betustilus, betumeret, akciosarFt, akciosarSzazalek, modalStatus, message, cimkek, allSelected, showDown, cimkekForShow, getProdData, addNewTag, selectedProd, selectedIndex } = storeToRefs(TagsStore())
-const { newTag, showPreviewButton, closePreviewButton, setToDefault, updateTag, changeFontFamilytag, changeFontStyletag,  changeFontSize, pushToSelectedProducts, reducePrice, createTag, receiveEmit, fetchCimkek, deleteTag, TagProd, setInd} = TagsStore()
+const { tag, showPreviewtag, selectedValue, selectedProduct, prewievProducts, cim, szoveg, hatterszin, betuszin, betutipus, betustilus, betumeret, akciosarFt, akciosarSzazalek, modalStatus, message, cimkek, allSelected, showDown, cimkekForShow, getProdData, addNewTag, selectedProd, selectedIndex, changed, reload } = storeToRefs(TagsStore())
+const { newTag, showPreviewButton, closePreviewButton, setToDefault, updateTag, changeFontFamilytag, changeFontStyletag,  changeFontSize, pushToSelectedProducts, reducePrice, createTag, receiveEmit, fetchCimkek, deleteTag, TagProd, setInd, setDataToSelectedProducts, changeSelectedProd, chipDelete, emptingVariables } = TagsStore()
 fetchCimkek()
 watch(selectedProduct, () => {
     pushToSelectedProducts()
@@ -18,8 +18,18 @@ watch(selectedProduct, () => {
   watch(akciosarSzazalek, () => {
     reducePrice()
     
-  })
+  });
 
+TagsStore().cimkekForShow.forEach((item, index) => {
+  watch(item,() => {
+    setDataToSelectedProducts()
+    },{ deep: true }
+  );
+});
+// watch(selectedProd, () => {
+//     changeSelectedProd()
+    
+//   });
 </script>
 
 <template>
@@ -62,9 +72,7 @@ watch(selectedProduct, () => {
                                         </template>
 
                                         <template v-slot:item="{ props, item }">
-                                            <v-hover v-slot:default="{ hover }">
                                                 <v-list-item class="items" v-bind="props" :prepend-avatar="item.raw.img" :subtitle="item.raw.szin" :title="item.title"></v-list-item>
-                                            </v-hover>
                                         </template>
                                     </v-autocomplete>
                             </div>
@@ -167,11 +175,12 @@ watch(selectedProduct, () => {
                            
                         </div>
                         <div class="col">
+                            <p class="d-flex align-items-start justify-content-start pt-5 text-muted fw-light fs-6">{{item.szoveg}} </p>
                         </div>
                         <div class="col buttons align-items-end pt-4 ms-5 ">
                             <button type="button" class="btn secoundaryBtna btn-lg  ms-5"  data-bs-toggle="tooltip" data-bs-placement="top" title="Mentés" ><font-awesome-icon :icon="['fas', 'floppy-disk']" /></button>
                             <button v-if="!item.edit" type="button" class="btn secoundaryBtna btn-lg ms-2" @click="item.edit = !item.edit, TagProd(item.cimkeId), setInd(index)" data-bs-toggle="tooltip" data-bs-placement="top" title="Szerkeszt" ><font-awesome-icon :icon="['fas', 'pen']" /></button>
-                            <button v-if="item.edit" type="button" class="btn secoundaryBtna btn-lg ms-2" @click="item.edit = !item.edit, setInd(index)" data-bs-toggle="tooltip" data-bs-placement="top" title="Bezár" ><font-awesome-icon :icon="['fas', 'xmark']" /></button>
+                            <button v-if="item.edit" type="button" class="btn secoundaryBtna btn-lg ms-2" @click="item.edit = !item.edit,  emptingVariables()" data-bs-toggle="tooltip" data-bs-placement="top" title="Bezár" ><font-awesome-icon :icon="['fas', 'xmark']" /></button>
                             <button type="button" class="btn secoundaryBtnb btn-lg ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Törlés"><font-awesome-icon :icon="['fas', 'trash']" @click="deleteTag(item)"/></button>
                         </div>
                     </div>
@@ -213,13 +222,13 @@ watch(selectedProduct, () => {
                                                 <input class="form-check-input" type="checkbox" name="inlineCheckbox1" id="inlineCheckbox1" value="" v-model="allSelected">
                                                 <label class="form-check-label ms-4" for="inlineCheckbox1"> Beállítás az összes termékre</label>
                                                     
-                                                        <v-autocomplete color="blue-grey-lighten-2" v-model="selectedProd" :items="products" item-title="nevHu" item-value="nevHu" label="Választás" variant="underlined" chips  multiple auto-select-first placeholder="Termék kiválasztása" item-props>
+                                                        <v-autocomplete color="blue-grey-lighten-2" v-model="selectedProduct" :items="products" item-title="nevHu" item-value="nevHu" label="Választás" variant="underlined" chips  multiple auto-select-first placeholder="Termék kiválasztása" item-props>
                                                             <template v-slot:chip="{ props, item }">
                                                                 <v-chip class="hideBtn" v-bind="props" :prepend-avatar="item.raw.img" :text="item.title" :key="item.raw.id" closable ></v-chip>
                                                             </template>
 
                                                             <template v-slot:item="{ props, item }">
-                                                                    <v-list-item class="items" v-bind="props" :prepend-avatar="item.raw.img" :subtitle="item.raw.szin" :title="item.title"></v-list-item>
+                                                                    <v-list-item  :disabled="item.raw.cimkeId !== null" class="items" v-bind="props" :prepend-avatar="item.raw.img" :subtitle="item.raw.szin" :title="item.title"></v-list-item>
                                                             </template>
                                                         </v-autocomplete>
 
@@ -258,7 +267,7 @@ watch(selectedProduct, () => {
                                                 </div>
                                                 <div class="col-3 align-items-end mt-4">
                                                     <button type="submit" class="btn secoundaryBtna px-2 mb-4 ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Mentés" >Mentés</button>
-                                                    <button type="button" class="btn secoundaryBtnb px-2 mb-4 ms-2" @click="showDown=false">Mégsem</button>
+                                                    <button type="button" class="btn secoundaryBtnb px-2 mb-4 ms-2" @click="item.edit = !item.edit,  emptingVariables()">Mégsem</button>
                                                 </div>
                                         </div>
                                         </div>
@@ -267,30 +276,30 @@ watch(selectedProduct, () => {
                                 </ul>
                         </div>
 
-                                    <!-- <div class="container-fluid" >
+                                    <div class="container-fluid" :key="reload">
                                         <div class="row g-0">
                                             <h5 class="fw-bold">Előnézet</h5>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-8 m-2 product position-relative m-4 pb-4" v-for="data in getProdData" key="prod.id" id="box" >
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-8 m-2 product position-relative m-4 pb-4" v-for="data in prewievProducts" key="prod.id" id="box" >
                                                 
-                                                <div v-if="data.cimke.cim === item.cim">
+                                        
                                                     <a href="#" class="row">
                                                    
-                                                    <div  class="cimke" :style="{'color': data.cimke.betuszin, 'font-family': data.cimke.betutipus, 'font-style': data.cimke.betustilus, 'background': 'linear-gradient(to left bottom,'+data.cimke.hatterszin+' 40%, transparent)'}">
-                                                        <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" :style="{'font-size': data.cimke.betumeret+'px'}"> {{ data.cimke.szoveg }} </h3>
-                                                    </div>
-                                                    <div class="termek-kep">
-                                                        <img :src="data.img" class="img-fluid img-maxDefault">
-                                                        <div v-if="data.keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
-                                                        <div v-else class="keszleten px-2 text-start">Készleten</div>
-                                                    </div>
-                                                </a>
+                                                        <div  class="cimke" :style="{'color': data.cimke.betuszin, 'font-family': data.cimke.betutipus, 'font-style': data.cimke.betustilus, 'background': 'linear-gradient(to left bottom,'+data.cimke.hatterszin+' 40%, transparent)'}">
+                                                            <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" :style="{'font-size': data.cimke.betumeret+'px'}"> {{ data.cimke.szoveg }} </h3>
+                                                        </div>
+                                                        <div class="termek-kep">
+                                                            <img :src="data.img" class="img-fluid img-maxDefault">
+                                                            <div v-if="data.keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
+                                                            <div v-else class="keszleten px-2 text-start">Készleten</div>
+                                                        </div>
+                                                    </a>
                                                 <div class="row justify-content-center m-1 detail container">
                                                     <div class="row row-cols-1 text-center">
                                                         <div class="szin">{{ data.szin }}</div>
                                                         <div class="nev">{{ data.nevHu }}</div>
                                                         <div class="row justify-content-center">
-                                                            <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar text-center " :class="{ strikethrough : data.cimke.akciosarFt>0 }">{{ data.ar }} ,-Ft</p></div>
-                                                            <div v-if="data.cimke.akciosarFt>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ data.cimke.akciosarFt }} ,-Ft</h2></div>
+                                                            <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar text-center " :class="{ strikethrough : data.akciosarFt>0 }">{{ data.ar }} ,-Ft</p></div>
+                                                            <div v-if="data.akciosarFt>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ data.akciosarFt }} ,-Ft</h2></div>
                                                         </div>
                                                         <div  class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
                                                             <img src="../../assets/kepek/heart.png" class="heartIconEmpty"  alt="rolunk2" @click="addToWishlist(prod.id)">
@@ -305,10 +314,10 @@ watch(selectedProduct, () => {
                                                         </button>
                                                     </div>
                                                 </div>
-                                                </div>
+                                              
                                             </div>
                                         </div>
-                                    </div>-->
+                                    </div>
                     </div>
                     
                 </div>

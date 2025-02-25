@@ -4,11 +4,12 @@ import { ProductStore } from './Product';
 import { BannerPopupStore } from './BannerPopupStore';
 import { th } from 'vuetify/locale';
 
+
 export const TagsStore = defineStore("TagsStore",{
     state: () => {
       return {
         selectedProduct: [],
-        prewievProducts : [{}],
+        prewievProducts : [],
         cimkek: [],
         cimkekForShow: [],
         cim: "", 
@@ -31,7 +32,8 @@ export const TagsStore = defineStore("TagsStore",{
         getProdData: [],
         addNewTag: false,
         selectedProd: [],
-        selectedIndex: null
+        selectedIndex: null,
+        reload : 0
 
         }
         
@@ -128,9 +130,12 @@ export const TagsStore = defineStore("TagsStore",{
             }
           for(const pro of this.selectedProduct){
             let findProducts = ProductStore().products.find(option => option.nevHu == pro);
-            console.log(findProducts)
+            if(findProducts.cimkeId === null){
+              findProducts.cimke = this.cimkekForShow[this.selectedIndex];
+            }
             this.prewievProducts.push(findProducts);
           }
+          this.reload += 1;
         },
         reducePrice(){
           for(const prod of this.prewievProducts){
@@ -210,23 +215,76 @@ export const TagsStore = defineStore("TagsStore",{
           }
       },
       TagProd(cimkeId){
-        this.selectedProd = []
+        this.selectedProd = [];
+        if(this.selectedProduct.length > 0){
+          this.selectedProduct = [];
+        }
         for(const data of this.getProdData){
           for(const cimke of this.cimkekForShow){
             if(cimkeId = cimke.cimkeId && cimke.edit === true && data.cimke.cim === cimke.cim){
-                this.selectedProd.push(data)
+                this.selectedProduct.push(data)
+                this.prewievProducts.push(data)
             }
           }
           
         }
+
       },
       setInd(indexNumber){
-        console.log(indexNumber)
         if(this.selectedIndex === null){
             this.selectedIndex = indexNumber
         } else if(this.selectedIndex === indexNumber){
             this.selectedIndex = null
         }
+      },
+      setDataToSelectedProducts(){
+        for(const cimke of this.cimkekForShow){
+          for(const selected of this.prewievProducts){
+            if(cimke.cim == selected.cimke.cim){
+                selected.cimke.akciosarFt = cimke.akciosarFt
+
+                if(cimke.akciosarSzazalek != 0){
+                  let szazalek = cimke.akciosarSzazalek * 0.01
+                  selected.akciosarFt = selected.ar - (selected.ar * szazalek)
+                }else{
+                  selected.akciosarFt = ""
+                }
+                selected.cimke.betumeret = cimke.betumeret
+                selected.cimke.betustilus = cimke.betustilus
+                selected.cimke.betuszin = cimke.betuszin
+                selected.cimke.betutipus = cimke.betutipus
+                selected.cimke.cim = cimke.cim
+                selected.cimke.hatterszin = cimke.hatterszin
+                selected.cimke.id = cimke.id
+                selected.cimke.szoveg = cimke.szoveg
+            }
+          }
+        }
+
+      },
+      chipDelete(item){
+        console.log(item)
+        for(const pro of this.prewievProducts){
+          if(item.title == pro.nevHU){
+            let index = this.prewievProducts.findIndex(pr=>pr.nevHU == item.title);
+            this.prewievProducts.splice(index, 1)
+            //this.prewievProducts = this.prewievProducts.filter(option => option.nevHu !== item.title);
+          }
+        }
+        //this.prewievProducts = [];
+        // for(const pro of this.selectedProduct){
+          
+        //   let findProducts = ProductStore().products.find(option => option.nevHu == pro);
+        //   console.log(findProducts)
+        //   this.prewievProducts.push(findProducts);
+        // }
+      },
+      emptingVariables(){
+        this.selectedProduct = [];
+        this.prewievProducts = [];
+        this.cimkek= [];
+        this.selectedProd= [];
+        this.selectedIndex= null;
       }
     }
 })

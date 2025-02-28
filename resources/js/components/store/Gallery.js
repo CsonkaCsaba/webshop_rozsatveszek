@@ -36,10 +36,12 @@ export const GalleryStore = defineStore("Gallery",{
             let gallery = [];
             try {
                     await axios.get('api/galeria').then(function(response){
-                        if(response.status === 500){
-                            location.reload();
-                        }
                     gallery = response.data
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                 for(const element of gallery){
                         this.gallery.push(element);

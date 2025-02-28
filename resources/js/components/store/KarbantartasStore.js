@@ -23,12 +23,15 @@ export const KarbantartasStore = defineStore("KarbantartasStore",{
           let karbantart = [];
           try {
                  await axios.get('api/karbantartas').then(function(response){
-                  if(response.status === 500){
-                    location.reload();
-                }
+                 
                   karbantart = response.data;
                  
-                  });
+                  }).catch(error => {
+                    if (error.response.status === 500) {
+                          location.reload();
+                          console.error('Internal Server Error: Please try again later.');
+                    } 
+                });
                       this.karbantartas.push(karbantart);
                       for(const karbantart of this.karbantartas[0]){
                         if(karbantart.aktiv === 1){

@@ -52,10 +52,13 @@ export const ProductStore = defineStore("Product",{
             let wishlistProducts = [];
             try {
                     await axios.get('api/user/wishlist').then(function(response){
-                        if(response.status === 500){
-                            location.reload();
-                        }
+                        
                         wishlistProducts = response.data
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                     for(const product of wishlistProducts){
                         this.wishlist.push(product);
@@ -74,10 +77,13 @@ export const ProductStore = defineStore("Product",{
             let termekek = [];
             try {
                 await axios.get('api/termekek').then(function(response){
-                    if(response.status === 500){
-                        location.reload();
-                    }
+                    
                     termekek = response.data
+                }).catch(error => {
+                    if (error.response.status === 500) {
+                          location.reload();
+                          console.error('Internal Server Error: Please try again later.');
+                    } 
                 });
                 for(const termek of termekek){
                     let localWish = JSON.parse(localStorage.getItem("wish")) 
@@ -104,10 +110,13 @@ export const ProductStore = defineStore("Product",{
             let termekek = [];
             try {
                     await axios.get('api/termekek').then(function(response){
-                        if(response.status === 500){
-                            location.reload();
-                        }
+                       
                         termekek = response.data
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                     for(const termek of termekek){
                         termek.edit = false
@@ -123,10 +132,13 @@ export const ProductStore = defineStore("Product",{
                          } else {//logged in users
                             let wishlistProducts = [];
                             await axios.get('api/user/wishlist').then(function(response){
-                                if(response.status === 500){
-                                    location.reload();
-                                }
+                                
                                 wishlistProducts = response.data
+                            }).catch(error => {
+                                if (error.response.status === 500) {
+                                      location.reload();
+                                      console.error('Internal Server Error: Please try again later.');
+                                } 
                             });
                             if(wishlistProducts.length === 0){
                                 this.emptyMessage = true;

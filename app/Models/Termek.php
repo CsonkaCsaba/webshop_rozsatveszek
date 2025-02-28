@@ -27,6 +27,7 @@ class Termek extends Model
         'nevHu',
         'nevEn',
         'ar',
+        'akciosar',
         'img',
         'url',
         'leirasHu',

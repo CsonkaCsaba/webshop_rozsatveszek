@@ -72,11 +72,11 @@ export default {
             <hr class="cimalatt_hr mx-auto mt-0">
       </div>
     <div class="container-fluid">
-        <div class="row justify-content-center g-0 mt-4">
-            <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-2 product position-relative pb-4" v-for="prod in products" key="prod.id" id="box">
+        <div class="row justify-content-center g-0 mt-5">
+            <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-5 product position-relative pb-4" v-for="prod in products" key="prod.id" id="box">
                 <a href="#" class="row">
-                    <div v-if="prod.cimke !=null" class="cimke" style="{'color': prod.cimke.betuszin, 'font-family': prod.cimke.betutipus, 'font-style': prod.cimke.betustilus, 'background': 'linear-gradient(to left bottom,'+prod.cimke.hatterszin+' 40%, transparent)'}">
-                        <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" style="{'font-size': prod.cimke.betumeret+'px'}"> {{ prod.cimke.szoveg }} </h3>
+                    <div v-if="prod.cimke !=null" class="cimke" :style="{'color': prod.cimke.betuszin, 'font-family': prod.cimke.betutipus, 'font-style': prod.cimke.betustilus, 'background': 'linear-gradient(to left bottom,'+prod.cimke.hatterszin+' 40%, transparent)'}">
+                        <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" :style="{'font-size': prod.cimke.betumeret+'px'}"> {{ prod.cimke.szoveg }} </h3>
                     </div>
                     <div class="termek-kep">
                         <img :src="prod.img" class="img-fluid img-maxDefault">
@@ -89,8 +89,9 @@ export default {
                         <div class="szin">{{ prod.szin }}</div>
                         <div class="nev">{{ prod.nevHu }}</div>
                         <div class="row justify-content-center">
-                            <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar text-center " :class="{ strikethrough : prod.cimke != null && prod.cimke.akciosarFt>0 }">{{ prod.ar }} ,-Ft</p></div>
-                            <div v-if="prod.cimke != null &&  prod.cimke.akciosarFt>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ prod.cimke.akciosarFt }} ,-Ft</h2></div>
+                            <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar text-center " :class="{ strikethrough : prod.cimke != null && prod.cimke.akciosarFt>0 || prod.akciosar > 0 }">{{ prod.ar }} ,-Ft</p></div>
+                            <div v-if="prod.cimke != null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ prod.akciosar }} ,-Ft</h2></div>
+                            <div v-else-if="prod.cimke == null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ prod.akciosar }} ,-Ft</h2></div>
                         </div>
                         <div v-if="!prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
                             <img src="../../assets/kepek/heart.png" class="heartIconEmpty"  alt="rolunk2" @click="addToWishlist(prod.id)">

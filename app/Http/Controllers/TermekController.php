@@ -51,6 +51,7 @@ class TermekController extends Controller
                     'nevEn'=> $form_data->nev,
                     'szin'=> $form_data->szin,
                     'ar'=> $form_data->ar,
+                    'akciosar'=> $form_data->akciosar,
                     'leirasHu' =>$form_data->leiras,
                     'keszlet'=> $form_data->keszlet,
                     'img'=> $imgUrl
@@ -84,6 +85,7 @@ class TermekController extends Controller
     {
         $product = Termek::find($id);
         $product->cimkeId = $request->cimkeId;
+        $product->akciosar = $request->akciosar;
         $product->save();
     }
 
@@ -133,6 +135,7 @@ class TermekController extends Controller
                 $product->nevEn = $request->nevHu;
                 $product->szin = $request->szin;
                 $product->ar = $request->ar;
+                $product->akciosar = $request->akciosar;
                 $product->leirasHu = $request->leirasHu;
                 $product->keszlet = $request->keszlet;
                 // $product->img = $imgUrl;

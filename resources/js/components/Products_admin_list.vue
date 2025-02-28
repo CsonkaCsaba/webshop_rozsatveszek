@@ -20,7 +20,7 @@ fetchProduct();
     <div class="addNewProduct p-2" v-if="addNewProduct">
     <Transition>
     <!--show if Add New Product button clicked-->
-    <form method="POST" @submit.prevent="createProduct(name, color, price, stock, description)" id="addNewproductForm">
+    <form method="POST" @submit.prevent="createProduct(name, color, price, akciosar, stock, description)" id="addNewproductForm">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-4">
@@ -40,6 +40,13 @@ fetchProduct();
                         <label for="price" class="p-1 col">Ár</label>
                         <div class="input-group mb-3">
                             <input id="price" type="number"  class="form-control fw-light" required placeholder="Ár megadása" name="priceInput" v-model="price"/>
+                            <span class="input-group-text">-Ft</span> 
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="akciosar" class="p-1 col">Ár</label>
+                        <div class="input-group mb-3">
+                            <input id="price" type="number"  class="form-control fw-light" required placeholder="Akciós ár megadása" name="priceInput" v-model="akciosar"/>
                             <span class="input-group-text">-Ft</span> 
                         </div>
                     </div>
@@ -129,7 +136,7 @@ fetchProduct();
                     </div>
                     <Transition>
                     <div class="row editProductForm" v-if="prod.edit">
-                        <form class="col ml-8" method="PUT" @submit.prevent="updateProduct(prod.id, prod.nevHu, prod.szin, prod.ar, prod.keszlet, prod.leirasHu)">
+                        <form class="col ml-8" method="PUT" @submit.prevent="updateProduct(prod.id, prod.nevHu, prod.szin, prod.ar, prod.akciosar , prod.keszlet, prod.leirasHu)">
                             <div class="container">
                                 <div class="row justify-content-center text-center">
                                     <div class="col-4">
@@ -145,10 +152,17 @@ fetchProduct();
                                 </div>
 
                                 <div class="row justify-content-center text-center mt-2">
-                                    <div class="col-4">
+                                    <div class="col-2">
                                         <label for="price" class="p-1 col">Ár</label>
                                         <div class="input-group mb-3">
                                             <input id="price" type="number"  class="form-control fw-light" required :placeholder=prod.ar  v-model="prod.ar"/>
+                                            <span class="input-group-text">-Ft</span> 
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <label for="price" class="p-1 col">Akciós ár</label>
+                                        <div class="input-group mb-3">
+                                            <input id="akciosar" type="number"  class="form-control fw-light" required :placeholder=prod.akciosar  v-model="prod.akciosar"/>
                                             <span class="input-group-text">-Ft</span> 
                                         </div>
                                     </div>

@@ -46,6 +46,7 @@ function deleteImageAccepted() {
       <v-card-actions>
         <div class="d-flex mx-auto">
           <button v-if="message =='A módosítással email értesítést küldünk ki az ügyfélnek. Biztosan mented a módosítást?'" class="btn lilagombKicsi w100 me-4 px-4" @click="saveUpdate()"> Mentés </button>
+          <button v-if="message =='Minden terméket kijelöltél. Ha voltak korábbi címkék, akkor azokat törölni fogjuk, mert egyetlen termék se tartozik majd hozzájuk. Biztos vagy benne?'" class="btn lilagombKicsi w100 me-4 px-4" @click="saveUpdate()"> Igen </button>
           <button v-if="message =='Biztosan véglegesen törlöd a rendelést?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteOrder()"> Törlés </button>
           <button v-if="message =='Biztos benne, hogy törölni szeretné a kívánságlistáról a terméket?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteWish()"> Törlés </button>
           <button v-if="message =='Biztos benne, hogy törölni szeretné a terméket?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteProduct()"> Törlés </button>

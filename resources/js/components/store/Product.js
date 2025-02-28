@@ -148,12 +148,13 @@ export const ProductStore = defineStore("Product",{
             this.file = file;
 
         },
-        createProduct(nev, szin, ar, keszlet, leiras){
+        createProduct(nev, szin, ar, akciosar, keszlet, leiras){
             let formNewProduct = document.getElementById('addNewproductForm');
 
             this.nev = nev,
             this.szin = szin,
             this.ar = ar,
+            this.akciosar = akciosar,
             this.keszlet = keszlet
             this.leiras = leiras
 
@@ -171,6 +172,7 @@ export const ProductStore = defineStore("Product",{
                     nev : this.nev,
                     szin : this.szin,
                     ar : this.ar,
+                    akciosar : this.akciosar,
                     keszlet: this.keszlet,
                     leiras: this.leiras,
                   });
@@ -189,6 +191,7 @@ export const ProductStore = defineStore("Product",{
                         nevHu : this.nev,
                         szin : this.szin,
                         ar : this.ar,
+                        akciosar : this.akciosar,
                         keszlet: this.keszlet,
                         leiras: this.leiras,
                         img: "../public/img/uploads/"+formDataObj.file.name
@@ -246,7 +249,7 @@ export const ProductStore = defineStore("Product",{
             this.showUp = false
         },
 
-        updateProduct(id, nevHu, szin, ar, keszlet, leirasHu){
+        updateProduct(id, nevHu, szin, ar, akciosar, keszlet, leirasHu){
             this.edit_id = id
             let product = this.products.find(product=>product.id == id)
             if(product != null){ 
@@ -254,6 +257,7 @@ export const ProductStore = defineStore("Product",{
                 this.nevHu = nevHu,
                 this.szin = szin,
                 this.ar = ar,
+                this.akciosar = akciosar,
                 this.keszlet = keszlet,
                 this.leirasHu = leirasHu
             }
@@ -262,6 +266,7 @@ export const ProductStore = defineStore("Product",{
                 nevHu : this.nevHu,
                 szin : this.szin,
                 ar : this.ar,
+                akciosar: this.akciosar,
                 keszlet: this.keszlet,
                 leirasHu: this.leirasHu
             }

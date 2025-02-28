@@ -15,6 +15,12 @@ class CimkeController extends Controller
         return Cimke::all();  
     }
 
+    public function last()
+    {
+        $lastElement = Cimke::orderBy('id', 'desc')->first();  
+        return $lastElement; 
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -64,9 +70,19 @@ class CimkeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cimke $cimke)
+    public function update(Request $request, $id)
     {
-        //
+        $tag = Cimke::find($id);
+        $tag->cim = $request->cim;
+        $tag->szoveg = $request->szoveg;
+        $tag->hatterszin = $request->hatterszin;
+        $tag->betuszin = $request->betuszin;
+        $tag->betustilus = $request->betustilus;
+        $tag->betutipus = $request->betutipus;
+        $tag->betumeret = $request->betumeret;
+        $tag->akciosarFt = $request->akciosarFt;
+        $tag->akciosarSzazalek = $request->akciosarSzazalek;
+        $tag->save();
     }
 
     /**

@@ -6,6 +6,6 @@
             <hr class="cimalatt_hr mx-auto mt-0">
       </div>
 </div>
-<swiper_front>
-</swiper_front>
+<Gallery_front>
+</Gallery_front>
 @endsection

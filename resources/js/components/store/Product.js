@@ -52,6 +52,9 @@ export const ProductStore = defineStore("Product",{
             let wishlistProducts = [];
             try {
                     await axios.get('api/user/wishlist').then(function(response){
+                        if(response.status === 500){
+                            location.reload();
+                        }
                         wishlistProducts = response.data
                     });
                     for(const product of wishlistProducts){
@@ -71,6 +74,9 @@ export const ProductStore = defineStore("Product",{
             let termekek = [];
             try {
                 await axios.get('api/termekek').then(function(response){
+                    if(response.status === 500){
+                        location.reload();
+                    }
                     termekek = response.data
                 });
                 for(const termek of termekek){
@@ -98,6 +104,9 @@ export const ProductStore = defineStore("Product",{
             let termekek = [];
             try {
                     await axios.get('api/termekek').then(function(response){
+                        if(response.status === 500){
+                            location.reload();
+                        }
                         termekek = response.data
                     });
                     for(const termek of termekek){
@@ -114,6 +123,9 @@ export const ProductStore = defineStore("Product",{
                          } else {//logged in users
                             let wishlistProducts = [];
                             await axios.get('api/user/wishlist').then(function(response){
+                                if(response.status === 500){
+                                    location.reload();
+                                }
                                 wishlistProducts = response.data
                             });
                             if(wishlistProducts.length === 0){

@@ -37,6 +37,9 @@ export const NewsStore = defineStore("NewsStore",{
             let news = [];
             try {
                    await axios.get('api/hirek').then(function(response){
+                    if(response.status === 500){
+                        location.reload();
+                    }
                    news = response.data;
                    
                     });
@@ -50,6 +53,9 @@ export const NewsStore = defineStore("NewsStore",{
             let news = [];
             try {
                    await axios.get('api/hirekadmin').then(function(response){
+                    if(response.status === 500){
+                        location.reload();
+                    }
                    news = response.data;
                     });
                         this.news.push(news);

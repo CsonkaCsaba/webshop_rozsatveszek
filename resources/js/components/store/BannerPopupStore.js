@@ -101,6 +101,9 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
             let banner = [];
             try {
                    await axios.get('api/banner').then(function(response){
+                    if(response.status === 500){
+                        location.reload();
+                    }
                     banner = response.data;
                     });
                         this.banners.push(banner);
@@ -140,6 +143,9 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
             let popup = [];
             try {
                    await axios.get('api/popup').then(function(response){
+                    if(response.status === 500){
+                        location.reload();
+                    }
                     popup = response.data;
                     });
                         this.popups.push(popup);

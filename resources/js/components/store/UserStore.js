@@ -12,6 +12,9 @@ export const UserStore = defineStore("UserStore",{
         async fetchStore(){
             try {
                 const ordersFromDB = await axios.get('api/user/orders');
+                if(response.status === 500){
+                    location.reload();
+                }
                 this.orders = []
                 ordersFromDB.data.forEach(order => {
                     this.orders.push(order);

@@ -21,6 +21,9 @@ export const CategoryStore = defineStore("Category",{
             let kategoriak = [];
             try {
                     await axios.get('api/kategoria').then(function(response){
+                        if(response.status === 500){
+                            location.reload();
+                        }
                         kategoriak = response.data
                     });
                     for(const kategoria of kategoriak){

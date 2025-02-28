@@ -36,6 +36,9 @@ export const GalleryStore = defineStore("Gallery",{
             let gallery = [];
             try {
                     await axios.get('api/galeria').then(function(response){
+                        if(response.status === 500){
+                            location.reload();
+                        }
                     gallery = response.data
                     });
                 for(const element of gallery){

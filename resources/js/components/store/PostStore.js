@@ -24,6 +24,9 @@ export const PostStore = defineStore("post",{
             let uzlet = [];
             try {
                 await axios.get('api/uzlet').then(function(response){
+                    if(response.status === 500){
+                        location.reload();
+                    }
                     uzlet = response.data[0]
                 });
                 

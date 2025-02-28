@@ -23,6 +23,9 @@ export const KarbantartasStore = defineStore("KarbantartasStore",{
           let karbantart = [];
           try {
                  await axios.get('api/karbantartas').then(function(response){
+                  if(response.status === 500){
+                    location.reload();
+                }
                   karbantart = response.data;
                  
                   });

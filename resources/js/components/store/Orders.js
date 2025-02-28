@@ -137,6 +137,9 @@ export const OrdersStore = defineStore("OrdersStore",{
         async fetchAddresses(){
             let cimek = [];
             await axios.get('api/rendelesekCim').then(function(response){
+                if(response.status === 500){
+                    location.reload();
+                }
                     cimek = response.data
             });
             this.addresses.push(cimek);
@@ -149,6 +152,9 @@ export const OrdersStore = defineStore("OrdersStore",{
             let rendelesek = [];
             try {
                     await axios.get('api/rendelesek').then(function(response){
+                        if(response.status === 500){
+                            location.reload();
+                        }
                         rendelesek = response.data
                     });
                     this.data = this.chartData.datasets[0].data;

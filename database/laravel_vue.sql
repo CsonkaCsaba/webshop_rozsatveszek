@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Mar 01. 11:21
+-- Létrehozás ideje: 2025. Mar 01. 11:24
 -- Kiszolgáló verziója: 10.4.24-MariaDB
 -- PHP verzió: 8.1.4
 
@@ -476,6 +476,7 @@ CREATE TABLE `termeks` (
   `nevHu` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nevEn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ar` int(11) NOT NULL,
+  `akciosar` int(11) DEFAULT NULL,
   `img` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `leirasHu` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -492,12 +493,12 @@ CREATE TABLE `termeks` (
 -- A tábla adatainak kiíratása `termeks`
 --
 
-INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `created_at`, `updated_at`, `cimkeId`) VALUES
-(1, 'Mr. Lincolna', 'Mr. Lincolna', 2500, '../resources/assets/kepek/lincoln.jpg', '', 'Piros tearózsaa', 'Red tea rose', 'Piros', 'RED', 88, NULL, '2025-02-15 19:01:04', 18),
-(2, 'Bianca', 'Bianca', 2500, '../resources/assets/kepek/bianca.jpg\r\n', '', '', '', 'Fehér', 'White', 74, NULL, '2025-02-15 19:01:04', 17),
-(3, 'Monica', 'Monica', 2500, '../resources/assets/kepek/monica.jpg\r\n', '', '', '', 'Narancssárga', 'Orange', 58, NULL, '2024-10-08 14:49:51', NULL),
-(4, 'Caresse', 'Caresse', 2500, '../resources/assets/kepek/caresse.jpg\r\n', '', '', '', 'Rózsaszín', 'Pink', 95, NULL, '2024-10-05 15:41:42', NULL),
-(5, 'Golden Leader', 'Golden Leader', 2500, '../resources/assets/kepek/golden.jpg\r\n', '', '', '', 'Citromsárga', 'Yellow', 90, NULL, '2024-10-07 13:58:27', NULL);
+INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `akciosar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `created_at`, `updated_at`, `cimkeId`) VALUES
+(1, 'Mr. Lincolna', 'Mr. Lincolna', 2500, NULL, '../resources/assets/kepek/lincoln.jpg', '', 'Piros tearózsaa', 'Red tea rose', 'Piros', 'RED', 88, NULL, '2025-02-15 19:01:04', 18),
+(2, 'Bianca', 'Bianca', 2500, NULL, '../resources/assets/kepek/bianca.jpg\r\n', '', '', '', 'Fehér', 'White', 74, NULL, '2025-02-15 19:01:04', 17),
+(3, 'Monica', 'Monica', 2500, NULL, '../resources/assets/kepek/monica.jpg\r\n', '', '', '', 'Narancssárga', 'Orange', 58, NULL, '2024-10-08 14:49:51', NULL),
+(4, 'Caresse', 'Caresse', 2500, NULL, '../resources/assets/kepek/caresse.jpg\r\n', '', '', '', 'Rózsaszín', 'Pink', 95, NULL, '2024-10-05 15:41:42', NULL),
+(5, 'Golden Leader', 'Golden Leader', 2500, NULL, '../resources/assets/kepek/golden.jpg\r\n', '', '', '', 'Citromsárga', 'Yellow', 90, NULL, '2024-10-07 13:58:27', NULL);
 
 -- --------------------------------------------------------
 

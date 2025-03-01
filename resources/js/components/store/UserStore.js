@@ -12,9 +12,15 @@ export const UserStore = defineStore("UserStore",{
         async fetchStore(){
             try {
                 const ordersFromDB = await axios.get('api/user/orders');
+               
                 this.orders = []
                 ordersFromDB.data.forEach(order => {
                     this.orders.push(order);
+                }).catch(error => {
+                    if (error.response.status === 500) {
+                          location.reload();
+                          console.error('Internal Server Error: Please try again later.');
+                    } 
                 });
             }catch(error) {
                 alert(error.response.data.error)

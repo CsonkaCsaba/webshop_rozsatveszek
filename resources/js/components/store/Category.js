@@ -22,6 +22,11 @@ export const CategoryStore = defineStore("Category",{
             try {
                     await axios.get('api/kategoria').then(function(response){
                         kategoriak = response.data
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                     for(const kategoria of kategoriak){
                         this.categories.push(kategoria);

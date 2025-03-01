@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nevHu');
             $table->string('nevEn')->nullable();
             $table->integer('ar');
+            $table->integer('akciosar')->nullable();
             $table->string('img')->nullable();
             $table->string('url')->nullable();
             $table->text('leirasHu');

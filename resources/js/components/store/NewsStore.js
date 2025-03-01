@@ -37,8 +37,14 @@ export const NewsStore = defineStore("NewsStore",{
             let news = [];
             try {
                    await axios.get('api/hirek').then(function(response){
+                    
                    news = response.data;
                    
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                         this.news.push(news);
                 }
@@ -50,7 +56,13 @@ export const NewsStore = defineStore("NewsStore",{
             let news = [];
             try {
                    await axios.get('api/hirekadmin').then(function(response){
+                    
                    news = response.data;
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                         this.news.push(news);
                 }

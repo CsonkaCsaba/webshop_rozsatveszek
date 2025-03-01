@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 6.0.0-dev+20230508.a256228264
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 16. 20:02
--- Kiszolgáló verziója: 10.4.24-MariaDB
--- PHP verzió: 8.1.4
+-- Létrehozás ideje: 2025. Feb 28. 11:38
+-- Kiszolgáló verziója: 10.4.28-MariaDB
+-- PHP verzió: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,7 +37,7 @@ CREATE TABLE `banners` (
   `betustilus` varchar(255) DEFAULT NULL,
   `betutipus` varchar(255) DEFAULT NULL,
   `betumeret` int(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `banners`
@@ -54,8 +54,8 @@ INSERT INTO `banners` (`id`, `szoveg`, `hatterszin`, `betuszin`, `aktiv`, `sebes
 
 CREATE TABLE `cegs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `cegnev` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `adoszam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cegnev` varchar(255) NOT NULL,
+  `adoszam` varchar(255) NOT NULL,
   `cimId` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -97,17 +97,16 @@ CREATE TABLE `cimkes` (
   `betumeret` int(255) DEFAULT NULL,
   `akciosarFt` int(255) DEFAULT NULL,
   `akciosarSzazalek` int(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `cimkes`
 --
 
 INSERT INTO `cimkes` (`id`, `cim`, `szoveg`, `hatterszin`, `betuszin`, `betustilus`, `betutipus`, `betumeret`, `akciosarFt`, `akciosarSzazalek`) VALUES
-(15, 'Új termék', 'Új termék!', '#60A448', '#white', 'normal', '\'Nunito, sans-serif\'', 14, 0, 0),
-(16, 'Új termék', 'Új termék!', '#60A448', '#white', 'normal', '\'Nunito, sans-serif\'', 14, 0, 0),
-(17, '10% akció', '10% akció!', '#60A448', '#white', 'normal', '\'Nunito, sans-serif\'', 14, 2250, 10),
-(18, '10% akció', '10% akció!', '#60A448', '#white', 'normal', '\'Nunito, sans-serif\'', 14, 2250, 10);
+(257, 'Új', 'új', '#60A448', '#white', 'normal', '\'Nunito, sans-serif\'', 14, 0, 10),
+(259, 'Kiváló', 'Kiváló', '#60A448', '#white', 'normal', '\'Nunito, sans-serif\'', 14, NULL, 15),
+(260, 'Kiváló', 'Kiváló', '#60A448', '#white', 'normal', '\'Nunito, sans-serif\'', 14, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -117,10 +116,10 @@ INSERT INTO `cimkes` (`id`, `cim`, `szoveg`, `hatterszin`, `betuszin`, `betustil
 
 CREATE TABLE `cims` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `iranyitoszam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telepules` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `utca` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hazszam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `iranyitoszam` varchar(255) NOT NULL,
+  `telepules` varchar(255) NOT NULL,
+  `utca` varchar(255) NOT NULL,
+  `hazszam` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -155,11 +154,11 @@ CREATE TABLE `dolgozo` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -171,11 +170,11 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `felhasznalo` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `felhNev` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `jelszo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `vezNev` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kerNev` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lakcim` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `felhNev` varchar(255) NOT NULL,
+  `jelszo` varchar(255) NOT NULL,
+  `vezNev` varchar(255) NOT NULL,
+  `kerNev` varchar(255) NOT NULL,
+  `lakcim` varchar(255) NOT NULL,
   `szulDatum` date NOT NULL,
   `utolsoBeDatum` date NOT NULL,
   `admin` tinyint(1) NOT NULL,
@@ -191,8 +190,8 @@ CREATE TABLE `felhasznalo` (
 
 CREATE TABLE `hireks` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `cim` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `leiras` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cim` varchar(255) NOT NULL,
+  `leiras` text NOT NULL,
   `datum` date DEFAULT NULL,
   `uzletId` bigint(20) UNSIGNED NOT NULL,
   `kepId` bigint(20) UNSIGNED NOT NULL
@@ -216,7 +215,7 @@ INSERT INTO `hireks` (`id`, `cim`, `leiras`, `datum`, `uzletId`, `kepId`) VALUES
 CREATE TABLE `karbantartas` (
   `id` bigint(20) NOT NULL,
   `aktiv` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `karbantartas`
@@ -233,11 +232,11 @@ INSERT INTO `karbantartas` (`id`, `aktiv`) VALUES
 
 CREATE TABLE `kategorias` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nevHu` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nevEn` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `leirasHu` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `leirasEn` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `nevHu` varchar(255) NOT NULL,
+  `nevEn` varchar(255) NOT NULL,
+  `leirasHu` text NOT NULL,
+  `leirasEn` text NOT NULL,
+  `url` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -260,9 +259,9 @@ CREATE TABLE `kategorizals` (
 
 CREATE TABLE `kepeks` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `kepNev` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `kepUtvonal` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `kepLeiras` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kepNev` varchar(255) DEFAULT NULL,
+  `kepUtvonal` varchar(255) DEFAULT NULL,
+  `kepLeiras` varchar(255) DEFAULT NULL,
   `termekId` bigint(20) UNSIGNED DEFAULT NULL,
   `kategoriaId` bigint(20) UNSIGNED DEFAULT NULL,
   `uzletId` bigint(20) UNSIGNED NOT NULL
@@ -288,7 +287,7 @@ INSERT INTO `kepeks` (`id`, `kepNev`, `kepUtvonal`, `kepLeiras`, `termekId`, `ka
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -324,8 +323,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -336,8 +335,8 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -349,11 +348,11 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -378,7 +377,7 @@ CREATE TABLE `popups` (
   `betustilus` varchar(255) DEFAULT NULL,
   `betutipus` varchar(255) DEFAULT NULL,
   `betumeret` int(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `popups`
@@ -395,13 +394,13 @@ INSERT INTO `popups` (`id`, `cim`, `szoveg`, `kepId`, `aktiv`, `hatterszin`, `be
 
 CREATE TABLE `rendeles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `megjegyzes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fizetesiMod` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `megjegyzes` text DEFAULT NULL,
+  `fizetesiMod` varchar(255) NOT NULL,
   `ceges` tinyint(1) NOT NULL,
-  `allapot` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `allapot` varchar(255) NOT NULL,
   `rogzitDatum` timestamp NULL DEFAULT NULL,
   `vegosszeg` int(11) NOT NULL,
-  `szallitas` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `szallitas` varchar(255) NOT NULL,
   `fk_vasarloId` bigint(20) UNSIGNED NOT NULL,
   `fk_userId` bigint(20) UNSIGNED DEFAULT NULL,
   `fk_szamlazasiCim` bigint(20) UNSIGNED NOT NULL,
@@ -464,15 +463,16 @@ INSERT INTO `rendeles` (`id`, `megjegyzes`, `fizetesiMod`, `ceges`, `allapot`, `
 
 CREATE TABLE `termeks` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nevHu` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nevEn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nevHu` varchar(255) NOT NULL,
+  `nevEn` varchar(255) DEFAULT NULL,
   `ar` int(11) NOT NULL,
-  `img` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `leirasHu` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `leirasEn` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `szin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `akciosar` int(11) DEFAULT NULL,
+  `img` varchar(255) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `leirasHu` text NOT NULL,
+  `leirasEn` text DEFAULT NULL,
+  `szin` varchar(255) NOT NULL,
+  `color` varchar(255) DEFAULT NULL,
   `keszlet` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -483,12 +483,12 @@ CREATE TABLE `termeks` (
 -- A tábla adatainak kiíratása `termeks`
 --
 
-INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `created_at`, `updated_at`, `cimkeId`) VALUES
-(1, 'Mr. Lincolna', 'Mr. Lincolna', 2500, '../resources/assets/kepek/lincoln.jpg', '', 'Piros tearózsaa', 'Red tea rose', 'Piros', 'RED', 88, NULL, '2025-02-15 20:01:04', 18),
-(2, 'Bianca', 'Bianca', 2500, '../resources/assets/kepek/bianca.jpg\r\n', '', '', '', 'Fehér', 'White', 74, NULL, '2025-02-15 20:01:04', 17),
-(3, 'Monica', 'Monica', 2500, '../resources/assets/kepek/monica.jpg\r\n', '', '', '', 'Narancssárga', 'Orange', 58, NULL, '2024-10-08 16:49:51', NULL),
-(4, 'Caresse', 'Caresse', 2500, '../resources/assets/kepek/caresse.jpg\r\n', '', '', '', 'Rózsaszín', 'Pink', 95, NULL, '2024-10-05 17:41:42', NULL),
-(5, 'Golden Leader', 'Golden Leader', 2500, '../resources/assets/kepek/golden.jpg\r\n', '', '', '', 'Citromsárga', 'Yellow', 90, NULL, '2024-10-07 15:58:27', NULL);
+INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `akciosar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `created_at`, `updated_at`, `cimkeId`) VALUES
+(1, 'Mr. Lincolna', 'Mr. Lincolna', 2500, 2250, '../resources/assets/kepek/lincoln.jpg', '', 'Piros tearózsaa', 'Red tea rose', 'Piros', 'RED', 88, NULL, '2025-02-27 12:43:48', 257),
+(2, 'Bianca', 'Bianca', 2000, 2000, '../resources/assets/kepek/bianca.jpg\r\n', '', '', '', 'Fehér', 'White', 74, NULL, '2025-02-27 12:30:48', 257),
+(3, 'Monica', 'Monica', 2500, 2125, '../resources/assets/kepek/monica.jpg\r\n', '', '', '', 'Narancssárga', 'Orange', 58, NULL, '2025-02-27 12:31:18', 259),
+(4, 'Caresse', 'Caresse', 2500, 2125, '../resources/assets/kepek/caresse.jpg\r\n', '', '', '', 'Rózsaszín', 'Pink', 95, NULL, '2025-02-27 12:31:18', 259),
+(5, 'Golden Leader', 'Golden Leader', 2500, 1800, '../resources/assets/kepek/golden.jpg\r\n', '', 'Golden Leader', '', 'Citromsárga', 'Yellow', 90, NULL, '2025-02-27 12:58:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -498,16 +498,16 @@ INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `img`, `url`, `leirasHu`, `
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `userName` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `userName` varchar(255) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
   `birthDate` date DEFAULT NULL,
   `lastLogin` date DEFAULT NULL,
   `admin` tinyint(1) DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `dolgozoId` bigint(20) UNSIGNED DEFAULT NULL,
@@ -532,21 +532,21 @@ INSERT INTO `users` (`id`, `name`, `userName`, `password`, `address`, `birthDate
 
 CREATE TABLE `uzlets` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nev` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bemutatkozasHu` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bemutatkozasEn` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `adoszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cegjegyzekszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `iranyitoszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telepules` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hazszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `utca` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bank` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bankszamlaszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `iban` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `swiftbic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `nev` varchar(255) DEFAULT NULL,
+  `bemutatkozasHu` text DEFAULT NULL,
+  `bemutatkozasEn` text DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `tel` varchar(255) DEFAULT NULL,
+  `adoszam` varchar(255) DEFAULT NULL,
+  `cegjegyzekszam` varchar(255) DEFAULT NULL,
+  `iranyitoszam` varchar(255) DEFAULT NULL,
+  `telepules` varchar(255) DEFAULT NULL,
+  `hazszam` varchar(255) DEFAULT NULL,
+  `utca` varchar(255) DEFAULT NULL,
+  `bank` varchar(255) DEFAULT NULL,
+  `bankszamlaszam` varchar(255) DEFAULT NULL,
+  `iban` varchar(255) DEFAULT NULL,
+  `swiftbic` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -638,9 +638,9 @@ INSERT INTO `valaszts` (`mennyiseg`, `kedvezmeny`, `rendeles_id`, `termek_id`) V
 
 CREATE TABLE `vasarlos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nev` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefonszam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nev` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `telefonszam` varchar(255) NOT NULL,
   `cegId` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -665,7 +665,7 @@ CREATE TABLE `wishlists` (
   `id` int(11) NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `wishlists`
@@ -880,7 +880,7 @@ ALTER TABLE `cegs`
 -- AUTO_INCREMENT a táblához `cimkes`
 --
 ALTER TABLE `cimkes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=262;
 
 --
 -- AUTO_INCREMENT a táblához `cims`
@@ -1061,7 +1061,7 @@ ALTER TABLE `rendeles`
 -- Megkötések a táblához `termeks`
 --
 ALTER TABLE `termeks`
-  ADD CONSTRAINT `cimkeid` FOREIGN KEY (`cimkeId`) REFERENCES `cimkes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `cimkeid` FOREIGN KEY (`cimkeId`) REFERENCES `cimkes` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Megkötések a táblához `users`

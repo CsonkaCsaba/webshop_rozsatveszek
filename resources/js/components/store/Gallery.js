@@ -21,7 +21,9 @@ export const GalleryStore = defineStore("Gallery",{
         file: '',
         oldPhotoName: null,
         noFile: false,
-        reload: 0
+        reload: 0,
+        slideIndex: 1,
+        currentImage: ""
         }
     },
     getters: {
@@ -35,6 +37,11 @@ export const GalleryStore = defineStore("Gallery",{
             try {
                     await axios.get('api/galeria').then(function(response){
                     gallery = response.data
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                 for(const element of gallery){
                         this.gallery.push(element);
@@ -194,6 +201,39 @@ export const GalleryStore = defineStore("Gallery",{
         receiveEmit(){
             this.modalStatus = false
         },
+        openModal(){
+            document.getElementById("myModal").style.display = "block";
+        },
+         closeModal(){
+            document.getElementById("myModal").style.display = "none";
+         },
+         prevSlides(){
+                for(let i = this.gallery.length -1; i >= 0; i--){
+                        if(this.gallery[i].id < this.currentImage.id){
+                            this.currentImage = this.gallery[i]
+                            break;
+                        }
+                }
+            }, 
+          nextSlides(){
+            for(const image of this.gallery){
+                if(image.id > this.currentImage.id){
+                    this.currentImage = image
+                    break;
+                }
+            }
+          },
+          currentSlide(n){
+            this.showSlides(n);
+          },
+           showSlides(n){
+            for(const image of this.gallery){
+                if(image.id == n){
+                    this.currentImage = image
+                }
+            }
+            document.getElementsByClassName("mySlides")[0].style.display = "block";
+          }
 
      },
      methods:{

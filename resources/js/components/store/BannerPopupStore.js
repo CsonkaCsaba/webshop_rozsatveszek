@@ -102,7 +102,12 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
             try {
                    await axios.get('api/banner').then(function(response){
                     banner = response.data;
-                    });
+                    }).catch(error => {
+                          if (error.response.status === 500) {
+                                location.reload();
+                                console.error('Internal Server Error: Please try again later.');
+                          } 
+                      });
                         this.banners.push(banner);
                         for(const bann of this.banners[0]){
                             if(bann.aktiv === 1){
@@ -140,7 +145,13 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
             let popup = [];
             try {
                    await axios.get('api/popup').then(function(response){
+                   
                     popup = response.data;
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                         this.popups.push(popup);
                         for(const popup of this.popups[0]){

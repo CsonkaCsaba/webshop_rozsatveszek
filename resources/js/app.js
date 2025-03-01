@@ -299,6 +299,16 @@ const LineChart = defineAsyncComponent({
 })
 app.component('lineCharta', LineChart);
 
+const Tags_list_Admin = defineAsyncComponent({
+    loader:() => import('./components/Tags_list_Admin.vue')
+})
+app.component('Tags_list_Admin', Tags_list_Admin);
+
+const Gallery_front = defineAsyncComponent({
+    loader:() => import('./components/Gallery_front.vue')
+})
+app.component('Gallery_front', Gallery_front);
+
 import Home from './components/Home.vue';
 app.component('Home', Home);
 

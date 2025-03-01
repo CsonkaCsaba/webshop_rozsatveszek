@@ -3,7 +3,8 @@ import { onServerPrefetch } from 'vue'
 import { storeToRefs } from 'pinia';
 import { OrdersStore } from './store/Orders';
 import { reload } from './store/Product';
-
+import { TagsStore } from './store/Tags';
+const {  rel } = storeToRefs(TagsStore());
 const store = OrdersStore()
 onServerPrefetch(async () => {
   await store.fetchData()
@@ -32,7 +33,7 @@ const { } = ProductStore()
 
 <products_admin_list v-if="!tags" :key="reload">
 </products_admin_list>
- <tagsComponent v-if="tags"></tagsComponent>
+ <tagsComponent v-if="tags" :key="rel"></tagsComponent>
 
 <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" >
 </Modal>

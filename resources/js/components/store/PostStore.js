@@ -24,7 +24,13 @@ export const PostStore = defineStore("post",{
             let uzlet = [];
             try {
                 await axios.get('api/uzlet').then(function(response){
+                   
                     uzlet = response.data[0]
+                }).catch(error => {
+                    if (error.response.status === 500) {
+                          location.reload();
+                          console.error('Internal Server Error: Please try again later.');
+                    } 
                 });
                 
                 this.posts.push({

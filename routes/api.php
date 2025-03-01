@@ -43,7 +43,7 @@ Route::middleware('web')->get('/user/orders', [UserController::class, 'orders'])
 Route::post('/termekadmin/create', [TermekController::class,'create']);
 Route::resource('/termekadmin', TermekController::class);
 Route::put('/termekadmin/{id}', [TermekController::class,'update']);
-Route::put('/termekCimkeUpdate/{id}', [TermekController::class,'updateCimke']);
+Route::put('/termekCimkeUpdate/{id}', [TermekController::class,'updateCimke'])->name('updateCimke');
 Route::put('/termekadminmennyiseg/{id}', [TermekController::class,'updateQuantity']);
 Route::get('/rendelesek', [OrderController::class,'show']);
 Route::get('/rendelesekCim', [OrderController::class,'cim']);
@@ -61,7 +61,9 @@ Route::get('/karbantartas', [KarbantartasController::class,'index']);
 Route::put('/karbantartas/{id}', [KarbantartasController::class,'update']);
 Route::post('/cimke/create', [CimkeController::class,'create']);
 Route::get('/cimkek', [CimkeController::class,'index']);
+Route::get('/utolsoCimke', [CimkeController::class,'last']);
 Route::delete('/tagdelete/{id}', [CimkeController::class,'destroy']);
+Route::put('/updateTag/{id}', [CimkeController::class,'update']);
 
 
 

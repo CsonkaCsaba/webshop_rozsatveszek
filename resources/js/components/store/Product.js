@@ -52,7 +52,13 @@ export const ProductStore = defineStore("Product",{
             let wishlistProducts = [];
             try {
                     await axios.get('api/user/wishlist').then(function(response){
+                        
                         wishlistProducts = response.data
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                     for(const product of wishlistProducts){
                         this.wishlist.push(product);
@@ -71,7 +77,13 @@ export const ProductStore = defineStore("Product",{
             let termekek = [];
             try {
                 await axios.get('api/termekek').then(function(response){
+                    
                     termekek = response.data
+                }).catch(error => {
+                    if (error.response.status === 500) {
+                          location.reload();
+                          console.error('Internal Server Error: Please try again later.');
+                    } 
                 });
                 for(const termek of termekek){
                     let localWish = JSON.parse(localStorage.getItem("wish")) 
@@ -98,7 +110,13 @@ export const ProductStore = defineStore("Product",{
             let termekek = [];
             try {
                     await axios.get('api/termekek').then(function(response){
+                       
                         termekek = response.data
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                     for(const termek of termekek){
                         termek.edit = false
@@ -114,7 +132,13 @@ export const ProductStore = defineStore("Product",{
                          } else {//logged in users
                             let wishlistProducts = [];
                             await axios.get('api/user/wishlist').then(function(response){
+                                
                                 wishlistProducts = response.data
+                            }).catch(error => {
+                                if (error.response.status === 500) {
+                                      location.reload();
+                                      console.error('Internal Server Error: Please try again later.');
+                                } 
                             });
                             if(wishlistProducts.length === 0){
                                 this.emptyMessage = true;
@@ -148,12 +172,13 @@ export const ProductStore = defineStore("Product",{
             this.file = file;
 
         },
-        createProduct(nev, szin, ar, keszlet, leiras){
+        createProduct(nev, szin, ar, akciosar, keszlet, leiras){
             let formNewProduct = document.getElementById('addNewproductForm');
 
             this.nev = nev,
             this.szin = szin,
             this.ar = ar,
+            this.akciosar = akciosar,
             this.keszlet = keszlet
             this.leiras = leiras
 
@@ -171,6 +196,7 @@ export const ProductStore = defineStore("Product",{
                     nev : this.nev,
                     szin : this.szin,
                     ar : this.ar,
+                    akciosar : this.akciosar,
                     keszlet: this.keszlet,
                     leiras: this.leiras,
                   });
@@ -189,6 +215,7 @@ export const ProductStore = defineStore("Product",{
                         nevHu : this.nev,
                         szin : this.szin,
                         ar : this.ar,
+                        akciosar : this.akciosar,
                         keszlet: this.keszlet,
                         leiras: this.leiras,
                         img: "../public/img/uploads/"+formDataObj.file.name
@@ -246,7 +273,7 @@ export const ProductStore = defineStore("Product",{
             this.showUp = false
         },
 
-        updateProduct(id, nevHu, szin, ar, keszlet, leirasHu){
+        updateProduct(id, nevHu, szin, ar, akciosar, keszlet, leirasHu){
             this.edit_id = id
             let product = this.products.find(product=>product.id == id)
             if(product != null){ 
@@ -254,6 +281,7 @@ export const ProductStore = defineStore("Product",{
                 this.nevHu = nevHu,
                 this.szin = szin,
                 this.ar = ar,
+                this.akciosar = akciosar,
                 this.keszlet = keszlet,
                 this.leirasHu = leirasHu
             }
@@ -262,6 +290,7 @@ export const ProductStore = defineStore("Product",{
                 nevHu : this.nevHu,
                 szin : this.szin,
                 ar : this.ar,
+                akciosar: this.akciosar,
                 keszlet: this.keszlet,
                 leirasHu: this.leirasHu
             }

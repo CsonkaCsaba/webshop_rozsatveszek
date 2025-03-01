@@ -139,7 +139,13 @@ export const OrdersStore = defineStore("OrdersStore",{
         async fetchAddresses(){
             let cimek = [];
             await axios.get('api/rendelesekCim').then(function(response){
+                
                     cimek = response.data
+            }).catch(error => {
+                if (error.response.status === 500) {
+                      location.reload();
+                      console.error('Internal Server Error: Please try again later.');
+                } 
             });
             this.addresses.push(cimek);
         },
@@ -151,7 +157,13 @@ export const OrdersStore = defineStore("OrdersStore",{
             let rendelesek = [];
             try {
                     await axios.get('api/rendelesek').then(function(response){
+                        
                         rendelesek = response.data
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                              location.reload();
+                              console.error('Internal Server Error: Please try again later.');
+                        } 
                     });
                     this.data = this.chartData.datasets[0].data;
                     this.dataCompleted = this.chartData.datasets[1].data;

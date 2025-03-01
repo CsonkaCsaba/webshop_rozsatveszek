@@ -10,6 +10,7 @@ use App\Models\Termek;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Events\NewOrder;
 use Exception;
 
 class OrderController extends Controller
@@ -169,6 +170,7 @@ class OrderController extends Controller
                     $shippingAddress = "A rendelt termék(ek) átvétele személyesen történik, kiszállításra nem kerül sor.";
                 }
                 app('App\Http\Controllers\EmailController')->sendThankYouOrderEmail($lastInsertedId, $email, $name, $products, $billingAddress, $shippingAddress, $total, $comment, $fizetes, $szallitas);
+
             };
         }catch(Exception $e){
             return $e->getMessage();

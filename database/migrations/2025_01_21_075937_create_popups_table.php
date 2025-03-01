@@ -15,12 +15,12 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('cim')->nullable();
             $table->string('szoveg')->nullable();
-            $table->foreignId('kepId')
+            $table->foreignId('kepid')->nullable()
             ->constrained(
-                table: 'kepeks', indexName: 'photoId'
+                table: 'kepeks', indexName: 'phoId'
             )
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
+            ->onUpdate('set null')
+            ->onDelete('set null');
             
             $table->boolean('aktiv')->nullable();
             $table->string('hatterszin')->nullable();

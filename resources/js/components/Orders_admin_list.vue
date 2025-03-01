@@ -4,7 +4,7 @@ import { OrdersStore, slicedOrders } from './store/Orders';
 import { reactive, computed } from 'vue'
 import { ref, watch } from 'vue';
 
-const { orders, selectedValue, addNewProduct,  showDown, showUp, accepted, currentPage, itemsPerPage, totalOrders, pagesShown, input, loading, width, radius, padding, lineCap, gradient, value, gradientDirection, fill, type, autoLineWidth, labels, currentMonth, numberOfTheCurrentMonth} = storeToRefs(OrdersStore());
+const { orders, selectedValue, addNewProduct,  showDown, showUp, accepted, currentPage, itemsPerPage, totalOrders, pagesShown, input, loading, width, radius, padding, lineCap, gradient, value, gradientDirection, fill, type, autoLineWidth, labels, currentMonth, numberOfTheCurrentMonth, newOrder} = storeToRefs(OrdersStore());
 
 const { update,  addNewProductBtn, onChange, createProduct, deleteOrd, orderOrdersByIdASC, orderOrdersByIdDESC, updateOrder, handlePageChange, inputChanged, displayOrders, daysInMonth, fetchOrders } = OrdersStore();
 
@@ -12,6 +12,8 @@ fetchOrders();
 watch(input, ()=>{
     inputChanged();
 })
+
+
 </script>
 
 <template>
@@ -26,6 +28,7 @@ watch(input, ()=>{
     </v-card-text>
 </v-card> -->
 <div class="container mb-4 pt-4 align-items-center">
+    <div v-if="newOrder">Új rendelés!</div>
     
     <div class="row row-cols-7 fw-bold fs-5 px-4">
         <div class="col d-flex justify-content-start align-items-start">

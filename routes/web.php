@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\HirekController;
 use Inertia\Inertia;
-
+use App\Events\NewOrder;
+use App\Models\Rendeles;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,12 @@ use Inertia\Inertia;
 |
 */
 // Route::get('/')->name('welcome');;
+Route::get('/broadcast',function(){
+    event(new App\Events\NewOrder());
+    $order = Rendeles::latest('id')->first();
+    broadcast(new NewOrder($order));
+    return $order;
+});
 
 Route::get('/', function () {
     return view('welcome');

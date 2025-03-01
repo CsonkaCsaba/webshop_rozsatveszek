@@ -12,6 +12,8 @@ export const OrdersStore = defineStore("OrdersStore",{
         orders: [
 
         ],
+        orderToAdd: '',
+        newOrder: false,
         addresses:[
 
         ],

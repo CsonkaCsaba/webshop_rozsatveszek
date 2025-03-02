@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Mar 01. 11:24
+-- Létrehozás ideje: 2025. Mar 02. 21:00
 -- Kiszolgáló verziója: 10.4.24-MariaDB
 -- PHP verzió: 8.1.4
 
@@ -33,7 +33,7 @@ CREATE TABLE `banners` (
   `hatterszin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `betuszin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `aktiv` tinyint(1) DEFAULT NULL,
-  `sebeseg` int(11) DEFAULT NULL,
+  `sebesseg` int(11) DEFAULT NULL,
   `betustilus` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `betutipus` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `betumeret` int(11) DEFAULT NULL
@@ -43,8 +43,8 @@ CREATE TABLE `banners` (
 -- A tábla adatainak kiíratása `banners`
 --
 
-INSERT INTO `banners` (`id`, `szoveg`, `hatterszin`, `betuszin`, `aktiv`, `sebeseg`, `betustilus`, `betutipus`, `betumeret`) VALUES
-(1, '🎉📣Megnyitottuk  webáruházunkat! 📣🎉 🌹Gyönyörű rózsák közvetlen a termelőtől!🌹😍', '#191919', '#E8E8E8', 1, 24, 'normal', '\'\\\'Nunito\\\', sans-serif\'', 16);
+INSERT INTO `banners` (`id`, `szoveg`, `hatterszin`, `betuszin`, `aktiv`, `sebesseg`, `betustilus`, `betutipus`, `betumeret`) VALUES
+(1, '🎉📣Megnyitottuk  webáruházunkat! 📣🎉 🌹Gyönyörű rózsák közvetlen a termelőtől!🌹😍dfgdsgsdfgsdfgdfgsdf', '#191919', '#E8E8E8', 1, 22, 'normal', '\'\\\'Nunito\\\', sans-serif\'', 16);
 
 -- --------------------------------------------------------
 
@@ -383,7 +383,7 @@ CREATE TABLE `popups` (
 --
 
 INSERT INTO `popups` (`id`, `cim`, `szoveg`, `kepid`, `aktiv`, `hatterszin`, `betuszin`, `fotomutat`, `betustilus`, `betutipus`, `betumeret`) VALUES
-(1, 'Boldog Nőnapot kívánunk!', 'Ezen a különleges napon szeretnénk kifejezni hálánkat és tiszteletünket mindazért a szeretetért, gondoskodásért és szépségért, amit nap mint nap hoztok az életünkbe. A magastörzsű rózsák eleganciája és bája tökéletesen tükrözi mindazt a csodát, amit Ti ké', 33, 1, '#191919', '#E8E8E8', 1, 'normal', '\'Nunito\', sans-serif', 24);
+(1, 'Boldog Nőnapot kívánunk!sdfsdf', 'Ezen a különleges napon szeretnénk kifejezni hálánkat és tiszteletünket mindazért a szeretetért, gondoskodásért és szépségért, amit nap mint nap hoztok az életünkbe. A magastörzsű rózsák eleganciája és bája tökéletesen tükrözi mindazt a csodát, amit Ti ké', NULL, 1, '#191919', '#E8E8E8', 1, 'normal', '\'Nunito\', sans-serif', 24);
 
 -- --------------------------------------------------------
 
@@ -494,7 +494,7 @@ CREATE TABLE `termeks` (
 --
 
 INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `akciosar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `created_at`, `updated_at`, `cimkeId`) VALUES
-(1, 'Mr. Lincolna', 'Mr. Lincolna', 2500, NULL, '../resources/assets/kepek/lincoln.jpg', '', 'Piros tearózsaa', 'Red tea rose', 'Piros', 'RED', 88, NULL, '2025-02-15 19:01:04', 18),
+(1, 'Mr. Lincolna', 'Mr. Lincolna', 2500, 2250, '../resources/assets/kepek/lincoln.jpg', '', 'Piros tearózsaa', 'Red tea rose', 'Piros', 'RED', 88, NULL, '2025-03-02 18:31:38', 18),
 (2, 'Bianca', 'Bianca', 2500, NULL, '../resources/assets/kepek/bianca.jpg\r\n', '', '', '', 'Fehér', 'White', 74, NULL, '2025-02-15 19:01:04', 17),
 (3, 'Monica', 'Monica', 2500, NULL, '../resources/assets/kepek/monica.jpg\r\n', '', '', '', 'Narancssárga', 'Orange', 58, NULL, '2024-10-08 14:49:51', NULL),
 (4, 'Caresse', 'Caresse', 2500, NULL, '../resources/assets/kepek/caresse.jpg\r\n', '', '', '', 'Rózsaszín', 'Pink', 95, NULL, '2024-10-05 15:41:42', NULL),

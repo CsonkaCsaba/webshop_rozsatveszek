@@ -72,7 +72,7 @@ export default {
             <hr class="cimalatt_hr mx-auto mt-0">
       </div>
     <div class="container-fluid">
-        <div class="row justify-content-center g-0 mt-5">
+        <div class="row justify-content-center">
             <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-5 product position-relative pb-4" v-for="prod in products" key="prod.id" id="box">
                 <a href="#" class="row">
                     <div v-if="prod.cimke !=null" class="cimke" :style="{'color': prod.cimke.betuszin, 'font-family': prod.cimke.betutipus, 'font-style': prod.cimke.betustilus, 'background': 'linear-gradient(to left bottom,'+prod.cimke.hatterszin+' 40%, transparent)'}">

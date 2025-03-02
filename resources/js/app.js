@@ -309,6 +309,16 @@ const Gallery_front = defineAsyncComponent({
 })
 app.component('Gallery_front', Gallery_front);
 
+const LoaderRose = defineAsyncComponent({
+    loader:() => import('./components/LoaderRose.vue')
+})
+app.component('LoaderRose', LoaderRose);
+
+const Tanacsok = defineAsyncComponent({
+    loader:() => import('./components/Tanacsok.vue')
+})
+app.component('Tanacsok', Tanacsok);
+
 import Home from './components/Home.vue';
 app.component('Home', Home);
 

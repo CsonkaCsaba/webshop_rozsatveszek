@@ -40,7 +40,7 @@ export const CookieStore = defineStore("CookieStore",{
                 saved: true
             };
             
-            this.setCookieSettings('cookieSettings', cookieData, 30);
+            this.setCookieSettings('cookieSettings', cookieData, 1);
             
         },
         acceptAllCookiesfromSettings(){

@@ -1,8 +1,8 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
 
-const GalleryFrontChild = defineAsyncComponent({
-  loader: () => import('./Gallery_Front_child.vue'),
+const TanacsokChild = defineAsyncComponent({
+  loader: () => import('./TanacsokChild.vue'),
  
 })
 </script>
@@ -11,8 +11,8 @@ const GalleryFrontChild = defineAsyncComponent({
   
   <Suspense>
             <template #default>
-                <GalleryFrontChild>
-                </GalleryFrontChild>
+                <TanacsokChild>
+                </TanacsokChild>
             </template>
             <template #fallback>
                 <LoaderRose>

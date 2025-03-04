@@ -66,6 +66,7 @@
                 <li>A rózsák tövét halmozzuk fel földdel vagy komposzttal, hogy megóvjuk a gyökereket a fagyoktól.</li>
             </ul>
         </div>
+        <div class="fw-bold text-center m-4" ><a class="text-dark" href="termekek">Válassz most gyönyörű és ellenálló rózsáink közül!</a></div>
 </div>
   </div>
 

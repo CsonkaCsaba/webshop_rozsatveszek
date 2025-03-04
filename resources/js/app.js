@@ -319,6 +319,12 @@ const Tanacsok = defineAsyncComponent({
 })
 app.component('Tanacsok', Tanacsok);
 
+const ModalForProductDetails = defineAsyncComponent({
+    loader:() => import('./components/ModalForProductDetails.vue')
+})
+app.component('ModalForProductDetails', ModalForProductDetails);
+
+
 import Home from './components/Home.vue';
 app.component('Home', Home);
 
@@ -389,6 +395,7 @@ import {
     faChartSimple,
     faAngleLeft,
     faTag,
+    faCircleInfo
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -441,7 +448,8 @@ library.add(
     faCookie,
     faChartSimple,
     faAngleLeft,
-    faTag
+    faTag,
+    faCircleInfo
 )
 
 const pinia = createPinia();

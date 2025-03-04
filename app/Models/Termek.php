@@ -37,6 +37,7 @@ class Termek extends Model
         'keszlet',
         'created_at',
         'updated_at',
-        'cimkeId'
+        'cimkeId',
+        'tagline'
     ];
 }

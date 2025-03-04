@@ -20,7 +20,7 @@ fetchProduct();
     <div class="addNewProduct p-2" v-if="addNewProduct">
     <Transition>
     <!--show if Add New Product button clicked-->
-    <form method="POST" @submit.prevent="createProduct(name, color, price, akciosar, stock, description)" id="addNewproductForm">
+    <form method="POST" @submit.prevent="createProduct(name, color, price, akciosar, stock, description, shortdescription)" id="addNewproductForm">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-4">
@@ -62,6 +62,11 @@ fetchProduct();
                     <div class="col-4">
                         <label for="description" class="p-1 col">Leírás</label>
                             <textarea id="description"  class="form-control fw-light" required placeholder="Leírás megadása" name="descriptionInput" v-model="description" rows="8">
+                            </textarea>
+                    </div>
+                    <div class="col-4">
+                        <label for="description" class="p-1 col">Egysoros</label>
+                            <textarea id="shortdescription"  class="form-control fw-light" required placeholder="Egysoros megadása" name="shortdescriptionInput" v-model="description" rows="4">
                             </textarea>
                     </div>
                     <div class=" col-4 form-floating mb-3">
@@ -136,7 +141,7 @@ fetchProduct();
                     </div>
                     <Transition>
                     <div class="row editProductForm" v-if="prod.edit">
-                        <form class="col ml-8" method="PUT" @submit.prevent="updateProduct(prod.id, prod.nevHu, prod.szin, prod.ar, prod.akciosar , prod.keszlet, prod.leirasHu)">
+                        <form class="col ml-8" method="PUT" @submit.prevent="updateProduct(prod.id, prod.nevHu, prod.szin, prod.ar, prod.akciosar , prod.keszlet, prod.leirasHu, prod.tagline)">
                             <div class="container">
                                 <div class="row justify-content-center text-center">
                                     <div class="col-4">
@@ -178,6 +183,11 @@ fetchProduct();
                                     <div class="col-4">
                                         <label for="description" class="p-1 col">Leírás</label>
                                             <textarea id="description"  class="form-control fw-light" required :placeholder=prod.leirasHu v-model="prod.leirasHu" rows="8">
+                                            </textarea>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="description" class="p-1 col">Egysoros</label>
+                                            <textarea id="shortdescription"  class="form-control fw-light" required :placeholder=prod.tagline v-model="prod.tagline" rows="4">
                                             </textarea>
                                     </div>
                                     <!-- <div class=" col-4 form-floating mb-3">

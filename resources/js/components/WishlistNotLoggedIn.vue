@@ -159,8 +159,6 @@ export default {
     border-radius: 11px;
 }
 #box:hover{
-    background: rgba(228, 160, 183, 0.67);
-    border: none;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
     transition: box-shadow 0.2s ease-in-out;
     .termek-kep{

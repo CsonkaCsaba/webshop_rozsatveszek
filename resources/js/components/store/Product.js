@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
 import {ref } from 'vue'
-
 export let reload = ref(0);
 export let elementsToWish = [];
 export let elementsToWishLoggedIn = [];
@@ -31,6 +30,8 @@ export const ProductStore = defineStore("Product",{
         add: true,
         loading: false,
         emptyMessage : false,
+        modalStatusProduct: false,
+        prod: null,
 
 //        uzenet: "Sikeres mentés ",
         updateSuccessful: false,
@@ -172,7 +173,7 @@ export const ProductStore = defineStore("Product",{
             this.file = file;
 
         },
-        createProduct(nev, szin, ar, akciosar, keszlet, leiras){
+        createProduct(nev, szin, ar, akciosar, keszlet, leiras, tagline){
             let formNewProduct = document.getElementById('addNewproductForm');
 
             this.nev = nev,
@@ -180,7 +181,9 @@ export const ProductStore = defineStore("Product",{
             this.ar = ar,
             this.akciosar = akciosar,
             this.keszlet = keszlet
-            this.leiras = leiras
+            this.leiras = leiras,
+            this.tagline = tagline
+
 
             const config = {
                 headers: {
@@ -199,6 +202,7 @@ export const ProductStore = defineStore("Product",{
                     akciosar : this.akciosar,
                     keszlet: this.keszlet,
                     leiras: this.leiras,
+                    tagline: this.tagline
                   });
 
                   formData.append('form_data', form_data)
@@ -218,6 +222,8 @@ export const ProductStore = defineStore("Product",{
                         akciosar : this.akciosar,
                         keszlet: this.keszlet,
                         leiras: this.leiras,
+                        leiras: this.leiras,
+                        tagline: this.tagline,
                         img: "../public/img/uploads/"+formDataObj.file.name
                     }
                    this.products.push(productPush);
@@ -251,7 +257,9 @@ export const ProductStore = defineStore("Product",{
         },
 
         receiveEmit(){
-            this.modalStatus = false
+            this.modalStatus = false;
+            this.modalStatusAccept = false;
+            this.modalStatusProduct = false;
             
         },
         orderByProductsAz(){
@@ -273,7 +281,7 @@ export const ProductStore = defineStore("Product",{
             this.showUp = false
         },
 
-        updateProduct(id, nevHu, szin, ar, akciosar, keszlet, leirasHu){
+        updateProduct(id, nevHu, szin, ar, akciosar, keszlet, leirasHu, tagline){
             this.edit_id = id
             let product = this.products.find(product=>product.id == id)
             if(product != null){ 
@@ -283,7 +291,8 @@ export const ProductStore = defineStore("Product",{
                 this.ar = ar,
                 this.akciosar = akciosar,
                 this.keszlet = keszlet,
-                this.leirasHu = leirasHu
+                this.leirasHu = leirasHu,
+                this.tagline = tagline
             }
             let form_data_update = {
                 id: this.id,
@@ -292,7 +301,8 @@ export const ProductStore = defineStore("Product",{
                 ar : this.ar,
                 akciosar: this.akciosar,
                 keszlet: this.keszlet,
-                leirasHu: this.leirasHu
+                leirasHu: this.leirasHu,
+                tagline: this.tagline
             }
             //form_data_update.push(element)
             axios.put('api/termekadmin/'+id, form_data_update).then((response)=>{
@@ -381,6 +391,11 @@ export const ProductStore = defineStore("Product",{
                 }
                 }).catch(console.error)
         },
+        detailsModal(prod){
+            this.modalStatusProduct = true;
+            this.prod = prod;
+        },
+        
 
         
         

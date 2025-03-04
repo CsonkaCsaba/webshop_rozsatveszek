@@ -5,8 +5,8 @@ import { storeToRefs } from 'pinia';
 import { ProductStore, elementsToWish } from './store/Product';
 
 
-const { products, modalStatusAccept,message, modalStatus, add, loading, cimkek} = storeToRefs(ProductStore())
-const { update, editStore, fetchWishlist, fetchProduct, addToWishlist, removeFromWishList, receiveEmit, deleteWish} = ProductStore()
+const { products, modalStatusAccept, modalStatusProduct, message, modalStatus, add, loading, cimkek, prod, edit_prod} = storeToRefs(ProductStore())
+const { update, editStore, fetchWishlist, fetchProduct, addToWishlist, removeFromWishList, receiveEmit, deleteWish, detailsModal, toCartFromModal} = ProductStore()
 fetchProduct();
 
 </script>
@@ -38,8 +38,10 @@ export default {
     },
     methods: {
       toModal (prod) {
+        ProductStore().modalStatusProduct = false,
         this.termek = prod,
         this.num=1
+        console.log(prod)
       },
       increment(){
         this.$refs.customNum.stepUp()
@@ -72,45 +74,63 @@ export default {
             <hr class="cimalatt_hr mx-auto mt-0">
       </div>
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-5 product position-relative pb-4" v-for="prod in products" key="prod.id" id="box">
-                <a href="#" class="row">
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-5  position-relative" v-for="prod in products" key="prod.id" id="box">
+                <a href="#" class="">
                     <div v-if="prod.cimke !=null" class="cimke" :style="{'color': prod.cimke.betuszin, 'font-family': prod.cimke.betutipus, 'font-style': prod.cimke.betustilus, 'background': 'linear-gradient(to left bottom,'+prod.cimke.hatterszin+' 40%, transparent)'}">
                         <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" :style="{'font-size': prod.cimke.betumeret+'px'}"> {{ prod.cimke.szoveg }} </h3>
                     </div>
-                    <div class="termek-kep">
-                        <img :src="prod.img" class="img-fluid img-maxDefault">
-                        <div v-if="prod.keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
-                        <div v-else class="keszleten px-2 text-start">Készleten</div>
-                    </div>
                 </a>
-                <div class="row justify-content-center m-1 detail container">
-                    <div class="row row-cols-1">
-                        <div class="szin">{{ prod.szin }}</div>
-                        <div class="nev">{{ prod.nevHu }}</div>
-                        <div class="row justify-content-center">
-                            <div class="col-sm-8 col-md-8 col-lg-8"><p class="ar text-center " :class="{ strikethrough : prod.cimke != null && prod.cimke.akciosarFt>0 || prod.akciosar > 0 }">{{ prod.ar }} ,-Ft</p></div>
-                            <div v-if="prod.cimke != null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ prod.akciosar }} ,-Ft</h2></div>
-                            <div v-else-if="prod.cimke == null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="text-center fw-bold" >{{ prod.akciosar }} ,-Ft</h2></div>
+                <v-card :loading="loading" class="">
+                    <template slot="progress">
+                        <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
+                    </template>
+                        <v-img :src="prod.img" class="termek-kep kep">
+                            <div v-if="prod.keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
+                            <div v-else class="keszleten px-2 text-start">Készleten</div>
+                        </v-img>
+                        <v-card-title class="pt-3 fw-bold">{{ prod.nevHu }}</v-card-title>
+                         <v-card-text>
+                            <div>{{ prod.szin }}</div> 
+                            <p class="fst-italic pt-2 text-muted">-{{ prod.tagline }}</p>
+                        </v-card-text class="p-0">
+                        <v-divider class="mx-4 my-0"></v-divider>
+                            <div class="product text-center align-items-center justify-content-center">
+                            <v-card-text align="center">
+                                <div v-if="!prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
+                                    <img src="../../assets/kepek/heart.png" class="heartIconEmpty"  alt="wishlist" @click="addToWishlist(prod.id)">
+                                </div>
+                                <div v-if="prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
+                                    <img src="../../assets/kepek/heartfull.png" class="heartIconEmpty heartIconFull"  alt="wishlist" @click="removeFromWishList(prod.id)">
+                                </div>
+                                <div class="col-sm-8 col-md-8 col-lg-8 "><p class="ar" :class="{ strikethrough : prod.cimke != null && prod.cimke.akciosarFt>0 || prod.akciosar > 0 }">{{ prod.ar }} ,-Ft</p></div>
+                                <div v-if="prod.cimke != null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class=" fw-bold" >{{ prod.akciosar }} ,-Ft</h2></div>
+                                <div v-else-if="prod.cimke == null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="fw-bold" >{{ prod.akciosar }} ,-Ft</h2></div>
+                            </v-card-text>
+
+                            <v-card-actions class="text-center align-items-center justify-content-center pb-4 m-0">
+                            <v-row class="p-0 m-0">
+                                <v-col class="p-0 m-0">
+                                    <button class="col-md-8 col-lg-6 col-xl-6 info text-center py-2" data-bs-toggle="modal" @click="detailsModal(prod)">
+                                        <font-awesome-icon :icon="['fas', 'circle-info']" /> 
+                                        Részletek
+                                    </button> 
+                                </v-col>
+                                <v-col class="p-0 m-0">
+                                    <button v-if="prod.keszlet > 0" class="col-md-8 col-lg-6 col-xl-6 kosarba kosarba-active text-center py-2 gombHover" data-bs-toggle="modal" data-bs-target="#KosarbaModal" v-on:click="toModal(prod)">
+                                        <font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon"/>
+                                        <span id="gombfelirat"> Kosárba</span>
+                                    </button> 
+                                    <button v-else disabled class="col-md-8 col-lg-10 col-xl-6  kosarba kosarba-active text-center gombHover" data-bs-toggle="modal" data-bs-target="#KosarbaModal">
+                                        <font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon"/>
+                                        Kosárba
+                                    </button>
+                                </v-col>
+                            </v-row>
+                            </v-card-actions>
                         </div>
-                        <div v-if="!prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
-                            <img src="../../assets/kepek/heart.png" class="heartIconEmpty"  alt="rolunk2" @click="addToWishlist(prod.id)">
-                        </div>
-                        <div v-if="prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
-                            <img src="../../assets/kepek/heartfull.png" class="heartIconEmpty heartIconFull"  alt="rolunk2" @click="removeFromWishList(prod.id)">
-                        </div>
-                        
-                        <button v-if="prod.keszlet > 0" class="col-md-8 col-lg-10 col-xl-10 kosarba kosarba-active text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal" v-on:click="toModal(prod)">
-                            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pt-1"/>
-                            Kosárba
-                        </button> 
-                        <button v-else disabled class="col-md-8 col-lg-10 col-xl-10  kosarba text-center" data-bs-toggle="modal" data-bs-target="#KosarbaModal">
-                            <font-awesome-icon :icon="['fas', 'cart-shopping']" class="pe-1"/>
-                            Kosárba
-                        </button>
-                    </div>
+                        </v-card>
                 </div>
-            </div>
         </div>
     </div>
 
@@ -180,21 +200,26 @@ export default {
 <modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @deleteWish="deleteWish"></modalAccept>
 <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" >
 </Modal>
+<ModalForProductDetails v-model="modalStatusProduct" :prod="prod" @modalStatus="modalStatusProduct = false" @toCartFromModal="toModal(prod)"></ModalForProductDetails>
 </template>
 
 <style>
 #box{
-    border: 1px solid white;
     border-radius: 11px;
+    margin:0;
+    padding: 0;
 }
 #box:hover{
-    background: rgba(228, 160, 183, 0.67);
-    border: none;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
-    transition: box-shadow 0.2s ease-in-out;
-    .termek-kep{
-        width: 100%;
+    box-shadow: 10px 10px 5px #ccc;
+    -moz-box-shadow: 10px 10px 5px #ccc;
+    -webkit-box-shadow: 10px 10px 5px #ccc;
+    transition: box-shadow 0.8s;
+    .kep {
+        transition: all 1.5s ease-out;
+        filter: brightness(120%);
+        
     }
+
 }
 
 .select-container{
@@ -202,12 +227,20 @@ export default {
 }
 
 .product{
-    background: rgba(228, 160, 183, 0.47);
-    border: 1px solid white;
+    background: rgb(228,160,183);
+    background: linear-gradient(0deg, rgba(228,160,183, 0.5) 0%, rgba(255,255,255,1) 100%);
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    margin: 0;
+
 }
 
 .termek-kep{
     position: relative;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 .elfogyott{
@@ -225,11 +258,11 @@ export default {
     position: absolute;
     font-size: 16px;
     bottom: 0;
-    color: #000;
+    color: #f1e9e9;
     font-weight: 400;
     width: 40%;
     background: linear-gradient(to right top, #60A448 40%, transparent);
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.85));
 }
 
 
@@ -256,25 +289,72 @@ export default {
     color: white;
     mix-blend-mode: multiply;
     font-size: 16px;
+    margin-bottom: 3%;
+    width: 80%;
+    filter: drop-shadow(0px 4px 4px rgba(233, 0, 0, 0.25));
 }
 
 .kosarba button{
     border: none;
-    background: #D9D9D9;
     opacity: 1;
     transition: 0.3s;
-    padding-left: 15px;
+    
+}
+.kosarba button:hover{
+    background-color: #ffffff;
+    border: 1px solid white;
+    color: rgb(24, 24, 24);
+    transition: all 0.5s ease-out;
+    
 }
 
-.kosarba-active:hover{
-    background-color: #161616;
+.kosarba-active button:hover{
+    background-color: #ffffff;
+    border: 1px solid white;
+    color: rgb(24, 24, 24);
+;
 }
+.gombHover:hover{
+    background: #60A448;
+    color: #ffffff;
+    transition: all 0.5s ease-out;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.45));
+    transform: scale(1.1, 1.1);
+    .icon{
+        transform: translateX(140%);
+        scale: 1.2;
+        transition: all 0.5s ease-out;
+        filter: drop-shadow(0px 4px 4px rgba(255, 255, 255, 0.45));
+    };
+    #gombfelirat{
+        visibility: hidden;
+        transition: all 0.1s ease-out;
+    }
 
+}
+.gombfelirat{
+    padding: 0;
+    margin: 0;
+}
+.info{
+    border-radius: 11px;
+    border: 0px;
+    background: #ffffff;
+    color: rgb(24, 24, 24);
+    font-size: 16px;
+    margin-bottom: 3%;
+    width: 80%;
+}
+.info:hover{
+    background: #030303;
+    color: rgb(243, 242, 242);
+    transition: all 0.5s ease-out;
+}
 #KosarbaModal, #KosarbaHelyezveModal{
     font-size: medium;
 }
 .img-maxDefault{
-    height: 250px;
+    height: 100%;
     width: 100%;
     border-radius: 9px;
 }
@@ -346,10 +426,10 @@ export default {
     }
 }
 .cimke{
-    width: 45%;
-    height: 18%;
-    right: -3%;
-    top: -9%;
+    width: 30%;
+    height: 10%;
+    right: -1%;
+    top: -1%;
     position: absolute;
     color: white;
     text-shadow: 0px 0px 6px rgba(255,255,255,0.7);

@@ -20,8 +20,8 @@
         <script>
             localStorage.clear();
         </script>
-        <div class="alert alert-info alert-dismissible fade show align-items-center text-center" role="alert">
-        <h4> Üdvözlünk @auth {{auth()->user()->name}} !</h4>
+        <div class="alert alert-info alert-dismissible fade show align-items-center text-center position-absolute w-100" role="alert">
+        <h4> 👋 Üdvözlünk @auth {{auth()->user()->name}} !</h4>
                 {{ session('status') }}
                 {{ __('You are logged in!') }}
                 @if(Auth::user() &&  Auth::user()->admin == 1)<br>

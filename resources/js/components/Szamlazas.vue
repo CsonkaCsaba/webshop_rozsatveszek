@@ -13,7 +13,7 @@ const cartData = ShoppingCart();
             <div class="col nav-item">Megrendelés</div>
         </div>
         <div v-if="cartData.cartItems.length > 0 ">
-            <div id="szamlazas-content" class="container-fluid d-flex row p-md-0">
+            <div id="szamlazas-content" class="container-fluid d-flex row">
                 <div class="flex-grow-1 col-12 col-sm-7 col-md-7 col-lg-8">
                     <div class="title my-3">Számlázási adatok</div>
                 <section class="szamlazasi-adatok">

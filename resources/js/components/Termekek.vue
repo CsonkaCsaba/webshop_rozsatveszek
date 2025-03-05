@@ -24,16 +24,16 @@ export default {
             },
             num: 1,
             message : [ 
-            {"id": 1, "message":"😍 Kiváló választás! Ez a magastörzsű rózsa biztosan feldobja kertjét!"},
-            {"id": 2, "message":"😍 Tökéletes döntés! A rózsája hamarosan a kertje ékköve lesz."}, 
-            {"id": 3, "message":"😍 Gratulálunk! Egy igazi szépséget választott, ami garantáltan örömet okoz."},
-            {"id": 4, "message":"😍 Remek választás! Ez a rózsa biztosan varázslatos hangulatot ad a kertjének."},
-            {"id": 5, "message":"😍 Ez a rózsa valóban különleges! Készülhet a kertje egy igazi látványossággal."},
-            {"id": 6, "message":"😍 Nagyszerű döntés! Egy ilyen gyönyörű magastörzsű rózsa nem hiányozhat a kertjéből."},
-            {"id": 7, "message":"😍 Szuper választás! Ezzel a rózsával garantáltan kitűnik majd a kertje."},
-            {"id": 8, "message":"😍 Ezt a rózsát nem lehet megunni! Kiváló döntés a kertje szépítésére."},
-            {"id": 9, "message":"😍 Ez a rózsa igazi dísze lesz a kertjének! Nagyon jó választás."},
-            {"id": 10, "message":"😍 Bámulatos! Ezzel a rózsával a kertje minden pillanatban varázslatos lesz."}
+            {"id": 1, "message":"😍 Kiváló választás! Ez a magastörzsű rózsa biztosan feldobja kerted!"},
+            {"id": 2, "message":"😍 Tökéletes döntés! A rózsád hamarosan a kerted ékköve lesz."}, 
+            {"id": 3, "message":"😍 Gratulálunk! Egy igazi szépséget választottál, ami garantáltan örömet okoz."},
+            {"id": 4, "message":"😍 Remek választás! Ez a rózsa biztosan varázslatos hangulatot ad a kertednek."},
+            {"id": 5, "message":"😍 Ez a rózsa valóban különleges! Készülhet a kerted egy igazi látványossággal."},
+            {"id": 6, "message":"😍 Nagyszerű döntés! Egy ilyen gyönyörű magastörzsű rózsa nem hiányozhat a kertedből."},
+            {"id": 7, "message":"😍 Szuper választás! Ezzel a rózsával garantáltan varázaltossá válik majd a kerted."},
+            {"id": 8, "message":"😍 Ezt a rózsát nem lehet megunni! Kiváló döntés a kerted szépítésére."},
+            {"id": 9, "message":"😍 Ez a rózsa igazi dísze lesz a kertednek! Nagyon jó választás."},
+            {"id": 10, "message":"😍 Bámulatos! Ezzel a rózsával a kerted minden pillanatban varázslatos lesz."}
         ],
         }
     },
@@ -140,7 +140,7 @@ export default {
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="KosarbaModalLabel">Kosárba</h5>
+                    <h5 class="modal-title" id="KosarbaModalLabel">Mennyiség megadása</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -151,6 +151,7 @@ export default {
                     </div>
                     <div class="szin">{{ termek.szin }}</div>
                     <div class="nev">{{ termek.nevHu }}</div>
+                    <p>Kérjük add meg a mennyiséget!</p>
                 </div>
                 <div class="d-flex d-row justify-content-center">
                     <div class="custom-num d-flex justify-content-center p-2" >
@@ -163,13 +164,13 @@ export default {
                             v-model="num"
                             ref="customNum" />
                         <font-awesome-icon class="plusSign" :icon="['fas', 'plus']" @click="increment"/>
-                    </div>
+                    </div> 
                 </div>
                 <div class="ModalKeszletUzenet d-flex justify-content-center p-2">
                         Készleten: {{ termek.keszlet }} db
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="addtocart(termek,num)">Kosárba</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="addtocart(termek,num)"><font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon"/> Kosárba</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>                    
                 </div>
             </div>
@@ -192,7 +193,7 @@ export default {
                     <p class="fst-italic" id="randomMessage"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tovább vásárolok</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Megnézem a többit is!</button>
                     <a href="kosar"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tovább a kosárhoz</button></a>                    
                 </div>
             </div>

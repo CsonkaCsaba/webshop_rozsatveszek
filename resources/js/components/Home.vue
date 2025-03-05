@@ -1,41 +1,10 @@
-<script setup>
-import { defineAsyncComponent } from 'vue'
-
-const AsyncAbout = defineAsyncComponent({
-  loader: () => import('./About.vue'),
- 
-})
-const News_front = defineAsyncComponent({
-  loader: () => import('./News_front.vue'),
- 
-})
-const Foot = defineAsyncComponent({
-  loader: () => import('./Foot.vue'),
- 
-})
-</script>
 
 <template>
-        <Suspense>
-            <template #default>
-                <AsyncAbout>
-                </AsyncAbout>
-            </template>
-            <template #fallback>
-                <LoaderRose>
-                </LoaderRose>
-            </template>
-        </Suspense>
-        <Suspense>
-            <template #default>
-                <News_front>
-                </News_front>
-            </template>
-            <template #fallback>
-                <LoaderRose>
-                </LoaderRose>
-            </template>
-        </Suspense>
+                <Popup_Front></Popup_Front>
+                <About id="about">
+                </About>      
+                <News_front_child id="hirek">
+                </News_front_child>
         <Suspense>
             <template #default>
                 <Foot>
@@ -48,6 +17,38 @@ const Foot = defineAsyncComponent({
         </Suspense>
 </template>
    
+<script setup>
+import { defineAsyncComponent } from 'vue'
+
+const Foot = defineAsyncComponent({
+  loader: () => import('./Foot.vue'),
+ 
+})
+
+
+window.addEventListener('DOMContentLoaded', function() {
+  // Get the URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+
+  // Get the value of the 'id' parameter
+  const divId = urlParams.get('id');
+
+  // If 'id' parameter exists and it's not an empty string, scroll to the element with that ID
+  if (divId && divId.trim() !== "") {
+    const element = document.getElementById(divId);
+    if (element) {
+      // Using setTimeout to ensure scrolling happens after the page has fully loaded
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth' }, true);
+      }, 100);
+    } else {
+      console.log(`Element with ID ${divId} not found`);
+    }
+  } else {
+    console.log('No valid ID parameter found in URL');
+  }
+});
+</script>
 
 <style lang="sass" scoped>
 </style>

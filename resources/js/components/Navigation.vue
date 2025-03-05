@@ -86,20 +86,20 @@ export default {
                                 </div>
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
                             Nyelv
                             <a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
                             <ul class="dropdown-menu">
                                 <li class="p-0 d-inline-block"><a class="dropdown-item p-1" href="#" id="hu"><span class="fi fi-hu m-1"></span>HU</a></li>
                                 <li class="p-0 d-inline-block"><a class="dropdown-item p-1" href="#" id="en"><span class="fi fi-gb m-1"></span>EN</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">
                     <li><a href="/webshop_rozsatveszek/public/">Kezdőlap</a></li> <!--átírandó-->
-                    <li><a href="/webshop_rozsatveszek/public/#about">Rólunk</a></li>
-                    <li><a href="/webshop_rozsatveszek/public/#hirek">Hírek</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/?id=about">Rólunk</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/?id=hirek">Hírek</a></li>
                     <li><a href="galeria">Galéria</a></li>
                     <li><a href="termekek">Termékek</a></li>
                     <li><a href="kivansaglista">Kívánságlista</a></li>
@@ -144,11 +144,11 @@ export default {
                     </div>
                     <div class="container">
                         <div class="row">
-                            <div class="col col-3 m-0 p-0">
+                            <!-- <div class="col col-3 m-0 p-0">
                                 <ul class="p-0">
                                     <li class="text-white nav-item dropdown m-0">Nyelv</li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <div class="col col-9">
                                 <li class="text-white nav-item dropdown">
                                     <a class="dropdown-toggle link" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
@@ -161,12 +161,12 @@ export default {
                         </div>
                     </div>
                     <li><a class="link" href="/webshop_rozsatveszek/public/">Kezdőlap</a></li><!--átírandó-->
-                    <li><a class="link" href="#rolunk">Rólunk</a></li>
-                    <li><a class="link" href="#hirek">Hírek</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/?id=about">Rólunk</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/?id=hirek">Hírek</a></li>
                     <li><a class="link" href="galeria">Galéria</a></li>
                     <li><a class="link" href="termekek">Termékek</a></li>
                     <li><a class="link" href="kivansaglista">Kívánságlista</a></li>
-                    <li><a class="link" href="#kapcsolat">Kapcsolat</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/#kapcsolat">Kapcsolat</a></li>
                     <li><a class="link" href="tanacsok">Tanácsok</a></li>
                 </ul>
             </transition> <!--animációhoz-->

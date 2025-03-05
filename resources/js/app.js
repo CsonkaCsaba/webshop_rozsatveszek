@@ -22,6 +22,8 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import Echo from "laravel-echo";
 import Pusher from "pusher-js"
 
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 const echo = new Echo({
     broadcaster: 'pusher',
@@ -46,6 +48,8 @@ const vuetify = createVuetify({
         iconfont: 'md',
       },
 })
+
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -89,10 +93,10 @@ const Navigation_log_Async = defineAsyncComponent({
 })
 app.component('Navigation_log', Navigation_log_Async);
 
-const News_front_child_Async = defineAsyncComponent({
-    loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/News_front_child.vue')
-})
-app.component('News_front_child', News_front_child_Async);
+// const News_front_child_Async = defineAsyncComponent({
+//     loader:() => import(/* webpackMode: "lazy" *//* webpackPrefetch: true */'./components/News_front_child.vue')
+// })
+// app.component('News_front_child', News_front_child_Async);
 
 const KosarAsync = defineAsyncComponent({
     loader:() => import('./components/Kosar.vue')
@@ -331,8 +335,13 @@ app.component('Home', Home);
 import About from './components/About.vue';
 app.component('About', About);
 
-import News_front from './components/News_front.vue';
-app.component('News_front', News_front);
+// import News_front from './components/News_front.vue';
+// app.component('News_front', News_front);
+
+import News_front_child from './components/News_front_child.vue';
+    
+app.component('News_front_child', News_front_child);
+
 
 import Foot from './components/Foot.vue';
 app.component('Foot', Foot);
@@ -461,10 +470,11 @@ watch(
     { deep: true }
     );
 
-
+AOS.init({ duration: 1200 });
 app.use(router);
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 app.use(vuetify);
 app.use(VueAwesomePaginate);
+app.use(AOS);
 app.component('font-awesome-icon', FontAwesomeIcon).mount('#app');

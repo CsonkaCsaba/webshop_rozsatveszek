@@ -14,7 +14,7 @@ fetchNews()
 </script>
 
 <template>
-<div class="tartalom pb-5" id="hirek">
+<div data-aos="zoom-in-up" class="tartalom pb-5 pt-5">
     <div id="fejlec d-flex flex-column justify-content-center">
             <h2 class="pb-2 text-center">Legfrisebb híreink</h2>
             <hr class="m-auto">
@@ -32,7 +32,7 @@ fetchNews()
                             </div>
                         </div>
                         <h5 class="news-title">{{ne.cim}}</h5>
-                        <button type="button" class="btn rozsaszingomb"  @click="modalOpen(ne.cim, ne.datum, ne.leiras, ne.photo.kepUtvonal)">Bővebben <font-awesome-icon :icon="['fas', 'angle-right']" class="fa-fw"/></button>
+                        <button type="button" class="btn btn-vasarlas"  @click="modalOpen(ne.cim, ne.datum, ne.leiras, ne.photo.kepUtvonal)">Bővebben <font-awesome-icon :icon="['fas', 'angle-right']" class="fa-fw"/></button>
                 </div>
                 
         </div>

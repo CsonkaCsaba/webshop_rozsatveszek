@@ -2,7 +2,7 @@
 
 </script>
 <template>
-  <div class="container-fluid pt-3">
+  <div data-aos="fade-up" class="container-fluid pt-3">
     <div class="">
     <h2 class="text-center">A magastörzsű rózsák ültetése és gondozása</h2>
     <h4 class="text-center pt-4"><b>Ültetés</b></h4>

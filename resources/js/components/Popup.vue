@@ -78,10 +78,15 @@ const PopupCookie = getCookie('hideThePopup');
 if (PopupCookie) {
     popupState = PopupCookie.popupState;
     viewed = PopupCookie.viewed; 
-}
-if( popupState == "hided" && viewed == true){
+    if( popupState == "hided" && viewed == true){
     show = false;
+    }
+    if( popupState == "updated" && viewed == false){
+    show = true;
+    BannerPopupStore().showPreviewPopup = true;
+    }
 }
+
 </script>
 <template>
      <v-dialog v-if="showPreviewPopup || show && !cookieaktiv && !cookieSettingsOpen" width="auto" v-model="showPreviewPopup" class="transition container-fluid popup">

@@ -26,14 +26,14 @@
                             </ul>
                         </li>
                         <li><font-awesome-icon :icon="['fas', 'cart-shopping']" class="p-3"/></li>
-                        <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
                             Nyelv
                             <a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
                             <ul class="dropdown-menu">
                                 <li class="p-0 d-inline-block"><a class="dropdown-item p-1" href="#" id="hu"><span class="fi fi-hu m-1"></span>HU</a></li>
                                 <li class="p-0 d-inline-block"><a class="dropdown-item p-1" href="#" id="en"><span class="fi fi-gb m-1"></span>EN</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>                
                 <ul v-show="!mobile" class="navigation border-top border-secondary p-0 down">

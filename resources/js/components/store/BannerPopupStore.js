@@ -335,7 +335,7 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
                 viewed: false,
             };
             
-            this.setThePopupCookie('hideThePopup', popupData, 7);
+            this.setThePopupCookie('hideThePopup', popupData, 1);
             reload += 1;
             this.loading = false;
 

@@ -12,6 +12,7 @@ fetchProduct();
 </script>
 
 <script>
+
 import { ShoppingCart } from './store/ShoppingCart';
 
 export default {
@@ -75,7 +76,7 @@ export default {
       </div>
     <div class="container-fluid">
         <div class="row justify-content-center mt-4">
-            <div class="col-lg-3 col-md-4 col-sm-5 col-8 m-5  position-relative" v-for="prod in products" key="prod.id" id="box">
+            <div data-aos="flip-left" class="col-lg-3 col-md-4 col-sm-5 col-8 m-5  position-relative" v-for="prod in products" key="prod.id" id="box">
                 <a href="#" class="">
                     <div v-if="prod.cimke !=null" class="cimke" :style="{'color': prod.cimke.betuszin, 'font-family': prod.cimke.betutipus, 'font-style': prod.cimke.betustilus, 'background': 'linear-gradient(to left bottom,'+prod.cimke.hatterszin+' 40%, transparent)'}">
                         <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" :style="{'font-size': prod.cimke.betumeret+'px'}"> {{ prod.cimke.szoveg }} </h3>

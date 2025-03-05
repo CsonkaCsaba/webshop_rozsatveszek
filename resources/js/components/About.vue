@@ -1,10 +1,9 @@
-<template>
-    <Suspense>
-        <template #default>
-            <div class="tartalom" id="about">
+
+        <template>
+            <div class="tartalom pb-4">
                 <div id="fejlec d-flex flex-column justify-content-center">
-                    <h2 class="pb-2 text-center pt-4">Rólunk</h2>
-                    <hr class="m-auto">
+                    <h2 class="pb-2 text-center pt-5 mt-5">Rólunk</h2>
+                    <hr class="m-auto rolunkhr">
                     <h3 class="pt-2 text-center">Üdvözöljük webshopunkban!</h3>
                 </div>
                 <div id="szoveg" class="container-fluid pt-3">
@@ -21,6 +20,7 @@
                                 lehető
                                 legjobb minőséget nyújtsa.
                             </p>
+                            <a href="termekek"><button type="button" class="btn btn-vasarlas">Termékeink</button></a>
                         </div>
                         <div data-aos="fade-left" class="col text-center my-auto">
                             <img src="../../assets/kepek/rolunk1.jpg" class="img-fluid mt-sm-auto mb-sm-auto rounded shadow"
@@ -37,7 +37,7 @@
                             <p class="about-title"><b>Munkánk során</b></p>
                             <p class="mt-md-2 about-text">arra törekszünk, hogy minőségi és gyönyörű rózsákat
                                 neveljünk,
-                                amelyek a legkiválóbb minőséget képviselik.Vállalkozásunk büszke arra, hogy hosszú évek
+                                amelyek a legkiválóbb minőséget képviselik. Vállalkozásunk büszke arra, hogy hosszú évek
                                 óta szolgálja ügyfeleinket,
                                 és kiemelkedő minőséget nyújt a rózsák terén. Ügyfeleink elégedettsége az elsődleges
                                 célunk, ezért mindig
@@ -47,23 +47,16 @@
                                 kérdésekre van szüksége,
                                 készséggel állunk rendelkezésére!
                             </p>
+                            <a href="tanacsok"><button type="button" class="btn btn-vasarlas">Tanácsaink</button></a>
                         </div>
                     </div>
                 </div>
             </div>
         </template>
-        <template #fallback>
-            <p>Loading...</p>
-        </template>
-    </Suspense>
-
-
-</template>
+       
 
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 // Function to initialize AOS
 function initializeAOS() {
@@ -88,6 +81,7 @@ onMounted(() => {
     window.removeEventListener('scroll', onScroll);
   });
 });
+
 </script>
 
 <style lang="sass" scoped>
@@ -100,9 +94,12 @@ $szurke_szoveg: #787878
 $vilagos_szoveg: #f7f5f5
 $rozsaszin: #E4A0B7
 
+.rolunkhr
+    color: #d95f88 
 .tartalom
     color: #ffffff
-    background-color: #9c9c9c
+    background: rgb(33,37,41)
+    background: linear-gradient(360deg, rgba(33,37,41, 0.9) 81%, rgba(228,160,183, 0.8) 100%)
     display: block
 
     #fejlec
@@ -110,8 +107,11 @@ $rozsaszin: #E4A0B7
         font-family: Inria Serif
 
     hr
-        border: solid 0.2rem $rozsaszin
+        border: solid 0.2rem #ffffff
         width: 10rem
+    img
+        box-shadow: 10px 10px 5px #ffffff
+
 
 @media((min-width: $small) and (max-width: $medium))
     .tartalom

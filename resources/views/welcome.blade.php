@@ -64,18 +64,18 @@
             </div>
         </div>
         @endif
-        <div id="cover-box" class="w-75 d-flex bg-white border-secondary">
+        <div id="cover-box" class="w-75 d-flex bg-white border-secondary shadow">
             <div class="container">
                 <div class="row justify-content-around m-2">
-                    <div class="col text-center">
+                    <div class="col text-center p-4">
                         <img class="services" src="../resources/assets/kepek/cover-box-trolley.png">
                         <p class="m-1">Megbízható<br> csomagolás és szállítás</p>
                     </div>
-                    <div class="col text-center">
+                    <div class="col text-center p-4">
                         <img class="services" src="../resources/assets/kepek/cover-box-card.png">
                         <p class="m-1">Biztonságos<br> fizetés</p>  
                     </div>
-                    <div class="col text-center">
+                    <div class="col text-center p-4">
                         <img class="services" src="../resources/assets/kepek/cover-box-discount.png">
                         <p class="m-1">Rendszeres<br> kedvezmények</p>  
                     </div>

@@ -66,7 +66,7 @@ fetchProduct();
                     </div>
                     <div class="col-4">
                         <label for="description" class="p-1 col">Egysoros</label>
-                            <textarea id="shortdescription"  class="form-control fw-light" required placeholder="Egysoros megadása" name="shortdescriptionInput" v-model="description" rows="4">
+                            <textarea id="shortdescription"  class="form-control fw-light" required placeholder="Egysoros megadása" name="shortdescriptionInput" v-model="shortdescription" rows="4">
                             </textarea>
                     </div>
                     <div class=" col-4 form-floating mb-3">

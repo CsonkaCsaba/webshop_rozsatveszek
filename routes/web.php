@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\HirekController;
 use Inertia\Inertia;
-use App\Events\NewOrder;
+use App\Events\OrderCreated;
 use App\Models\Rendeles;
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +24,8 @@ use App\Models\Rendeles;
 */
 // Route::get('/')->name('welcome');;
 Route::get('/broadcast',function(){
-    event(new App\Events\NewOrder());
     $order = Rendeles::latest('id')->first();
-    broadcast(new NewOrder($order));
+    broadcast(new OrderCreated($order));
     return $order;
 });
 

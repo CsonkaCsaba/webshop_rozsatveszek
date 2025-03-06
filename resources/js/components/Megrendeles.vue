@@ -71,6 +71,7 @@ import { ShoppingCart } from './store/ShoppingCart';
 import { useRouter } from 'vue-router';
 import { ref } from "vue";
 
+
 const router = useRouter();
 const cartData = ShoppingCart();
 
@@ -88,6 +89,7 @@ function toDB() {
         console.log(error)
     });
 }
+
 </script>
 
 <style scoped>

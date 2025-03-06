@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
-    'App\\Events\\NewOrder' => $baseDir . '/app/Events/NewOrder.php',
+    'App\\Events\\OrderCreated' => $baseDir . '/app/Events/OrderCreated.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -64,6 +64,7 @@ return array(
     'App\\Models\\Uzlet' => $baseDir . '/app/Models/Uzlet.php',
     'App\\Models\\Vasarlo' => $baseDir . '/app/Models/Vasarlo.php',
     'App\\Models\\Wishlist' => $baseDir . '/app/Models/Wishlist.php',
+    'App\\Observers\\OrderObserver' => $baseDir . '/app/Observers/OrderObserver.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

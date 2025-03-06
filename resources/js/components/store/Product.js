@@ -32,6 +32,7 @@ export const ProductStore = defineStore("Product",{
         emptyMessage : false,
         modalStatusProduct: false,
         prod: null,
+        reload: 0,
 
 //        uzenet: "Sikeres mentés ",
         updateSuccessful: false,
@@ -221,7 +222,7 @@ export const ProductStore = defineStore("Product",{
                         ar : this.ar,
                         akciosar : this.akciosar,
                         keszlet: this.keszlet,
-                        leiras: this.leiras,
+                        leirasHu: this.leiras,
                         leiras: this.leiras,
                         tagline: this.tagline,
                         img: "../public/img/uploads/"+formDataObj.file.name
@@ -248,7 +249,8 @@ export const ProductStore = defineStore("Product",{
                 axios.delete('api/termekadmin/'+id).then((response)=>{
                 if(response.status == 200){
                 let index = this.products.findIndex(termek=>termek.id == id);
-                this.products.splice(index, 1)
+                this.products.splice(index, 1);
+                this.reload += 1;
                 this.modalStatus = true;
                 this.message = "A terméket töröltük!";
                 }

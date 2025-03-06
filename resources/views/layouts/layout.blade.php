@@ -15,6 +15,7 @@
         <script>
             AOS.init();
         </script>
+        <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
         <!-- Styles -->
         <style>
         </style>

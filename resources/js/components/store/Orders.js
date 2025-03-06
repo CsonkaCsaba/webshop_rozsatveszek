@@ -13,7 +13,6 @@ export const OrdersStore = defineStore("OrdersStore",{
 
         ],
         orderToAdd: '',
-        newOrder: false,
         addresses:[
 
         ],
@@ -779,6 +778,9 @@ export const OrdersStore = defineStore("OrdersStore",{
               color += letters[Math.floor(Math.random() * 16)];
             }
             return color;
+          },
+          newOrderColor(){
+            // document.querySelectorAll("ul > li")[0].style.backgroundColor = "red";
           }
      }
 

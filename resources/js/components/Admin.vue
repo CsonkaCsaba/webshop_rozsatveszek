@@ -2,11 +2,38 @@
 import { register } from 'swiper/element/bundle';
 import { storeToRefs} from 'pinia';
 import { KarbantartasStore } from './store/KarbantartasStore';
+import { OrdersStore } from './store/Orders';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 
- const { karbatart, message, modalStatus } = storeToRefs(KarbantartasStore());
- const { switchkarbatartasAktiv, fetchKarbantartas, receiveEmit} = KarbantartasStore();
+ const { karbatart, message, modalStatus, newOrder } = storeToRefs(KarbantartasStore());
+ const { switchkarbatartasAktiv, fetchKarbantartas, receiveEmit, pageReload} = KarbantartasStore();
  fetchKarbantartas();
 register();
+
+window.Pusher = Pusher
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY,
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    forceTLS: false,
+    disableStats: true,
+});
+
+var audio = new Audio('../resources/assets/hangok/piano.mp3');
+window.Echo.channel('orders')
+    .listen('.OrderCreated', (e) => {
+        newOrder.value = true;
+        audio.play();
+        OrdersStore().orders = [];
+        OrdersStore().slicedOrders = [];
+        OrdersStore().fetchOrders();
+        OrdersStore().reload +=1;
+    });
+
 </script>
 
 <template>
@@ -16,6 +43,10 @@ register();
                 <label v-if="!karbatart"  class="form-check-label m-1 ps-2" for="popupCheckbox">Karbantartási üzemmód bekapcsolás</label>
                 <label v-if="karbatart" class="fw-bold form-check-label m-1 ps-2" for="bannerCheckbox" :class="{activekarbantart : karbatart}">Karbantartási üzemmód aktív</label>
             </div>
+        </div>
+        <div data-aos="fade-right" v-if="newOrder" class="alert alert-info alert-dismissible fade show align-items-center text-center position-fixed popmessage" role="alert">
+        <h4> 🎉 Gratulálok, új rendelésed érkezett! <br>Hozzáadtam a rendelések listájához!</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
         </div>
     <ul class="nav nav-tabs justify-content-center tabs" role="tablist">
          <li class="nav-item" role="presentation">
@@ -95,6 +126,7 @@ register();
     background-image: none
 .activekarbantart
     color: red
-
+.popmessage
+    z-index: 90
 
 </style>

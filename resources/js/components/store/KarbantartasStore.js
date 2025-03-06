@@ -11,7 +11,8 @@ export const KarbantartasStore = defineStore("KarbantartasStore",{
         ],
         karbatart: false,
         modalStatus: false,
-        message : ""
+        message : "",
+        newOrder: false
       }),
       
         getters: {
@@ -67,6 +68,9 @@ export const KarbantartasStore = defineStore("KarbantartasStore",{
                 receiveEmit(){
                   this.modalStatus = false;
                   this.modalStatusAccept = false;
+              },
+              pageReload(){
+                window.location.reload();
               }
             
             }

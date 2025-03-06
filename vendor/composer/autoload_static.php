@@ -704,7 +704,7 @@ class ComposerStaticInit6ba7e7d07c1100876f14499417ff7dc0
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
-        'App\\Events\\NewOrder' => __DIR__ . '/../..' . '/app/Events/NewOrder.php',
+        'App\\Events\\OrderCreated' => __DIR__ . '/../..' . '/app/Events/OrderCreated.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -761,6 +761,7 @@ class ComposerStaticInit6ba7e7d07c1100876f14499417ff7dc0
         'App\\Models\\Uzlet' => __DIR__ . '/../..' . '/app/Models/Uzlet.php',
         'App\\Models\\Vasarlo' => __DIR__ . '/../..' . '/app/Models/Vasarlo.php',
         'App\\Models\\Wishlist' => __DIR__ . '/../..' . '/app/Models/Wishlist.php',
+        'App\\Observers\\OrderObserver' => __DIR__ . '/../..' . '/app/Observers/OrderObserver.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

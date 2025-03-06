@@ -11,7 +11,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import VueAwesomePaginate from "vue-awesome-paginate";
 
 import "vue-awesome-paginate/dist/style.css";
-//import LoadingComponent from './components/LoadingComponent.vue';
+
 
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
@@ -19,30 +19,17 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { createVuetify } from 'vuetify';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 
-import Echo from "laravel-echo";
-import Pusher from "pusher-js"
+
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-const echo = new Echo({
-    broadcaster: 'pusher',
-    key: "local",
-    wsHost:import.meta.env.VUE_APP_WEBSOCKETS_SERVER,
-    wsPort: 6001,
-    cluster: "mt1",
-    forceTLS: false,
-    disableStats: true,
-});
 
-//window.Echo.channel('rendeles').listen('NewOrder', (e) => {
-    //this.newOrder = true;
-    //this.orders.push(e.rendeles);
-    //console.log(e);
-//})
-echo.channel('rendeles').listen('NewOrder', (e) => {
-    console.log(e);
-})
+
+
+
+
+
 const vuetify = createVuetify({
     icons: {
         iconfont: 'md',

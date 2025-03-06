@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NewOrder;
+use App\Events\OrderCreated;
 use Exception;
 
 class OrderController extends Controller
@@ -172,6 +173,7 @@ class OrderController extends Controller
                 app('App\Http\Controllers\EmailController')->sendThankYouOrderEmail($lastInsertedId, $email, $name, $products, $billingAddress, $shippingAddress, $total, $comment, $fizetes, $szallitas);
 
             };
+            OrderCreated::dispatch($rendeles);
         }catch(Exception $e){
             return $e->getMessage();
         }

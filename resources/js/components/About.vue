@@ -20,7 +20,7 @@
                                 lehető
                                 legjobb minőséget nyújtsa.
                             </p>
-                            <a href="termekek"><button type="button" class="btn btn-vasarlas">Termékeink<font-awesome-icon :icon="['fas', 'angle-right']" class="fa-fw"/></button></a>
+                            <a href="termekek"><button type="button" class="btn btn-vasarlas">Termékeink<font-awesome-icon :icon="['fas', 'angle-right']" class="fa-fw icon"/></button></a>
                         </div>
                         <div data-aos="fade-left" class="col text-center my-auto">
                             <img src="../../assets/kepek/rolunk1.jpg" class="img-fluid mt-sm-auto mb-sm-auto rounded shadow"
@@ -47,7 +47,7 @@
                                 kérdésekre van szüksége,
                                 készséggel állunk rendelkezésére!
                             </p>
-                            <a href="tanacsok"><button type="button" class="btn btn-vasarlas">Tanácsaink<font-awesome-icon :icon="['fas', 'angle-right']" class="fa-fw"/></button></a>
+                            <a href="tanacsok"><button type="button" class="btn btn-vasarlas">Tanácsaink<font-awesome-icon :icon="['fas', 'angle-right']" class="fa-fw icon"/></button></a>
                         </div>
                     </div>
                 </div>

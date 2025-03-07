@@ -10,7 +10,7 @@
     <div class="szoveg">
     <h5><b>Hely kiválasztása</b></h5>
             <ul>
-                <li>Érdemes tavasszal ültetni, februártól áprilisig tartó időszakban, vagy ősszel, októbertúl novemberig.</li>
+                <li>Érdemes tavasszal ültetni, februártól áprilisig tartó időszakban, vagy ősszel, októbertől novemberig.</li>
                 <li>Válasszunk egy napos helyet, ahol a rózsák legalább 6 órán át kapnak napfényt.</li>
                 <li>A talaj legyen jól vízáteresztő, laza és tápanyagban gazdag.</li>
                 <li>Kerüljük azokat a helyeket, ahol a rózsák gyökerei állandóan nedvesek lehetnek, mert ez gyökérrothadáshoz vezethet.</li>

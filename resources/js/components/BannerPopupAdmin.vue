@@ -12,14 +12,14 @@ const { modalStatus, message, loading, activeBanner, banners, popups, showPrevie
 
 <div class="container fontcolor cim">
     <div class="justify-content-center text-center p-2">
-        <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'window-maximize']" /> Banner & Popup </span><span></span></div>
-        <img src="../../assets/kepek/popup.png" alt="desk" width="90" height="100">
+        <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'window-maximize']" /> BANNER & POPUP </span><span></span></div>
+        <img src="../../assets/kepek/popup.png" alt="desk" width="80" height="80">
     </div>
 </div>
 <loader v-if="loading"></loader>
-<Banner_Admin></Banner_Admin :key="reload">
+<Banner_Admin :key="reload"></Banner_Admin >
 
-<Popup_Admin></Popup_Admin :key="reload">
+<Popup_Admin :key="reload"></Popup_Admin >
 <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
 </template>
 

@@ -89,7 +89,7 @@ export const ProductStore = defineStore("Product",{
                 });
                 for(const termek of termekek){
                     let localWish = JSON.parse(localStorage.getItem("wish")) 
-                    if(localWish.length > 0){
+                    if(localWish.length !== 0){
                         for(const wish of localWish){                         
                             if(termek.id ===  wish.id){  
                                 termek.addedToWishlist = true;

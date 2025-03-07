@@ -52,8 +52,8 @@
         </div>
         <div class="container">
             <div class="row mt-3 align-items-center">
-                <div class="col-6 d-flex justify-content-start"><a href="szallitas"><button type="button" class="btn btn-vasarlas m-0">Vissza</button></a></div>
-                <div class="col-6 d-flex justify-content-end"><button type="submit" class="btn btn-vasarlas m-0" @click="toDB">Megrendelés</button></div>
+                <div class="col-6 d-flex justify-content-start"><a href="szallitas"><button type="button" class="btn btn-vasarlas m-0"><font-awesome-icon :icon="['fas', 'angle-left']" class="iconBack"/> Vissza</button></a></div>
+                <div class="col-6 d-flex justify-content-end"><button type="submit" class="btn btn-vasarlas m-0" @click="toDB"><font-awesome-icon :icon="['fas', 'truck']" /> Megrendelés</button></div>
             </div>
         </div>
     </div>

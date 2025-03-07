@@ -17,83 +17,74 @@ watch(input, ()=>{
 </script>
 
 <template>
-<!-- <v-card class="mt-8 mx-auto overflow-visible text-center" max-width="800">
-        <v-sparkline :auto-line-width="autoLineWidth" :fill="fill" :gradient="gradient" :gradient-direction="gradientDirection" :line-width="width" :model-value="value" :padding="padding"
-            :smooth="radius || false" :stroke-linecap="lineCap" :type="type" auto-draw :labels="labels"
-        ></v-sparkline>
-        <v-card-text>
-      <div class="text-h4 font-weight-thin justify-center">
-        <b>{{ currentMonth[numberOfTheCurrentMonth] }}</b>
-      </div>
-    </v-card-text>
-</v-card> -->
-<div class="container mb-4 pt-4 align-items-center">
-
-    
-    <div class="row row-cols-7 fw-bold fs-5 px-4">
-        <div class="col d-flex justify-content-start align-items-start">
-            <button v-if="showDown" class="btn btn-light fw-bold fs-5 btnorder" @click="orderOrdersByIdASC">
-                <font-awesome-icon :icon="['fas', 'angle-down']" />
-            </button>
-            <button v-if="showUp" class="btn btn-light fw-bold fs-5 btnorder" @click="orderOrdersByIdDESC">
-                <font-awesome-icon :icon="['fas', 'angle-up']" />
-            </button>
-            <p>Azonosító</p>
-        </div>
-        <div class="col "><p>Vevő neve</p></div>
-        <div class="col"><p>Dátum</p></div>
-        <div class="col"><p id="vegosszeg">Végösszeg</p></div>
-        <div class="col"><p id="fizmod">Fizetési mód</p></div>
-        <div class="col"><p>Állapot</p></div>
-        <div class="col"><p>Műveletek</p></div>
-    </div>
-</div>
 <div class="container justify-content-center align-items-center">
     <div class="d-inline-flex  ps-3">
         <input type="text" v-model="input" placeholder="Keresés..." class="form-control ms-2"/>
 </div>
 
 <div class="d-inline-flex justify-content-center align-items-center ps-4" v-if="input&&slicedOrders.length == 0">
-     <h4>Sajnálom, nincs ilyen névvel regisztrált vevő a rendszerben!</h4>
+     <h4 class="text-danger">Sajnálom, nincs ilyen névvel regisztrált vevő a rendszerben!</h4>
   </div>
 </div>
+<div class="container mb-4 pt-4 align-items-center">
+
+    
+    <div class="row row-cols-7 fw-bold fs-5 px-4">
+        <div class="col-1 d-flex justify-content-start align-items-start">
+            <button v-if="showDown" class="btn btn-light fw-bold fs-5 btnorder" @click="orderOrdersByIdASC">
+                <font-awesome-icon :icon="['fas', 'angle-down']" />
+            </button>
+            <button v-if="showUp" class="btn btn-light fw-bold fs-5 btnorder" @click="orderOrdersByIdDESC">
+                <font-awesome-icon :icon="['fas', 'angle-up']" />
+            </button>
+            <p class="fs-6">Azonosító</p>
+        </div>
+        <div class="col-2 text-start ps-5 fs-6"><p>Vevő neve</p></div>
+        <div class="col-1 text-center fs-6"><p>Időpont</p></div>
+        <div class="col-1 text-center fs-6"><p id="vegosszeg">Végösszeg</p></div>
+        <div class="col-1 text-center fs-6"><p id="fizmod">Fizetési mód</p></div>
+        <div class="col-2 text-center fs-6"><p>Állapot</p></div>
+        <div class="col text-center fs-6"><p>Műveletek</p></div>
+    </div>
+</div>
+
 <loader v-if="loading"></loader>
 <div class="container mb-4 pt-4">
     <ul class="list">
-        <li  class="row row-cols-7 mt-2 p-4" v-for="order in slicedOrders" :key="order.id">
-            <div class="col"><p class="">{{ order.id }} </p> </div>
-            <div class="col"><p class=" fw-bold">{{ order.vasarlo.nev}} </p></div>
-            <div class="col"><p class="">{{ order.rogzitDatum }}</p></div>
-            <div class="col ms-4"><p class="">{{ order.vegosszeg }},-Ft</p></div>
-            <div class="col"><p class="">{{ order.fizetesiMod }}</p></div>
-            <div class="col-2 d-flex align-items-center">
+        <li  class="row mt-2 py-4 ps-4" v-for="order in slicedOrders" :key="order.id">
+            <div class="col-1 pt-4 px-0"><p class="fs-6">{{ order.id }} </p> </div>
+            <div class="col-2 pt-4 px-0"><p class="fs-6 fw-bold">{{ order.vasarlo.nev}} </p></div>
+            <div class="col pt-2 px-0"><span class="fs-6">{{ order.rogzitDatum }}<br></span><span class="fs-6 text-muted p-0 m-0">{{ order.rogzitOra }}</span></div>
+            <div class="col pt-4 px-0"><p class="fs-6">{{ order.vegosszeg }},-Ft</p></div>
+            <div class="col pt-4 px-0"><p class="fs-6">{{ order.fizetesiMod }}</p></div>
+            <div class="col-3 d-flex align-items-center">
                 <select class="form-select fs-6 px-2" :v-model="selectedValue" @change="onChange(order.id, $event)">
-                    <option :value="order.allapot">{{ order.allapot }}</option>
-                    <option v-for="option in order.optionsFinal" :key="option.id" :value="option.option">{{ option.option }}</option>
+                    <option :value="order.allapot" class="fs-6">{{ order.allapot }}</option>
+                    <option v-for="option in order.optionsFinal" :key="option.id" :value="option.option" class="fs-6">{{ option.option }}</option>
                 </select>
-                <font-awesome-icon  v-if="order.allapot == 'Feldolgozás alatt'" :icon="['fa', 'hourglass']" class="ps-3" color="#7a7d80"/>
-                <font-awesome-icon v-if="order.allapot == 'Kiszállítás alatt'" :icon="['fa', 'truck']" class="ps-3" color="#1679c9"/>
-                <font-awesome-icon v-if="order.allapot == 'Teljesítve'" :icon="['fa', 'check']" class="ps-3" color="#64c916"/>
-                <font-awesome-icon  v-if="order.allapot == 'Visszamondott'" :icon="['fa', 'ban']" class="ps-3" color="#d41e1e"/>
-                <font-awesome-icon v-if="order.allapot == 'Sikertelen kézbesítés'" :icon="['fa', 'xmark']" class="ps-3" color="#d41e1e"/>
-                <font-awesome-icon v-if="order.allapot == 'Utalás ellenőrzése'" :icon="['fas', 'question']" class="ps-3"/>
+                <font-awesome-icon  v-if="order.allapot == 'Feldolgozás alatt'" :icon="['fa', 'hourglass']" class="ps-2" color="#7a7d80"/>
+                <font-awesome-icon v-if="order.allapot == 'Kiszállítás alatt'" :icon="['fa', 'truck']" class="ps-2" color="#1679c9"/>
+                <font-awesome-icon v-if="order.allapot == 'Teljesítve'" :icon="['fa', 'check']" class="ps-2" color="#64c916"/>
+                <font-awesome-icon  v-if="order.allapot == 'Visszamondott'" :icon="['fa', 'ban']" class="ps-2" color="#d41e1e"/>
+                <font-awesome-icon v-if="order.allapot == 'Sikertelen kézbesítés'" :icon="['fa', 'xmark']" class="ps-2" color="#d41e1e"/>
+                <font-awesome-icon v-if="order.allapot == 'Utalás ellenőrzése'" :icon="['fas', 'question']" class="ps-2"/>
                 
             </div>
-            <div class="col-2 buttons align-items-center">
+            <div class="col-3 buttons align-items-center mt-3">
                 <button type="button" class="btn secoundaryBtna btn-lg ms-2" @click="updateOrder(order.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Mentés" ><font-awesome-icon :icon="['fas', 'floppy-disk']" /></button>
                 <button type="button" class="btn secoundaryBtna btn-lg ms-2" :class="{ rotateBtn : order.edit}" @click="order.edit = !order.edit, showDown = !showDown" :key="order.id" data-bs-toggle="tooltip" data-bs-placement="top" title="Tovább" ><font-awesome-icon :icon="['fas', 'angle-down']" /></button>
                 <button type="button" class="btn secoundaryBtnb btn-lg ms-2" @click="deleteOrd(order.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Törlés"><font-awesome-icon :icon="['fas', 'trash']" /></button>
             </div>
-            <div  v-if="order.edit">
+            <div  v-if="order.edit" class="fs-6">
                 <hr class=""/>
-                <h5 class="text-uppercase fw-bold"><font-awesome-icon :icon="['fas', 'phone']"/> Kapcsolat</h5>
+                <h5 class="text-uppercase fw-bold fs-6"><font-awesome-icon :icon="['fas', 'phone']"/> Kapcsolat</h5>
                 <div class="row row-cols-3 mt-2 align-items-center">
                     <div class="col"><p class="fw-bold">Telefonszám: <br></p>{{ order.vasarlo.telefonszam }} </div>
                     <div class="col"><p class="fw-bold">Email: <br></p>{{ order.vasarlo.email }}</div>
                     <div class="col"><p class="fw-bold">Megjegyzés: <br></p>{{ order.megjegyzes }}</div>
                 </div>
                 <hr class=""/>
-                <h5 class="text-uppercase fw-bold"><font-awesome-icon :icon="['fas', 'truck-fast']" /> Címek</h5>
+                <h5 class="text-uppercase fw-bold fs-6"><font-awesome-icon :icon="['fas', 'truck-fast']" /> Címek</h5>
                 <div class="row row-cols-3 mt-2 align-items-center">
                     <div v-if="order.szallitasi_cim == null">Személyes átvétel</div>
                     <div v-else class="col"><p class="fw-bold">Szállítási cím</p> {{ 
@@ -108,15 +99,15 @@ watch(input, ()=>{
                         order.szamlazasi_cim.hazszam}} </div>
                 </div>
                 <hr class=""/>
-                <h5 class="text-uppercase fw-bold"><font-awesome-icon :icon="['fas', 'cart-shopping']"/> Rendelt termékek</h5>
-                <div class="container mb-4 pt-4 flex-fill">
+                <h5 class="text-uppercase fw-bold fs-6"><font-awesome-icon :icon="['fas', 'cart-shopping']"/> Rendelt termékek</h5>
+                <div class="container mb-4 pt-4 flex-fill fs-6">
                     <div class="row row-cols-6 fw-bold fs-5 px-5 ">
-                        <div class="col"><p>Termékkép</p></div>
-                        <div class="col "><p>Terméknév</p></div>
-                        <div class="col"><p>Mennyiség</p></div>
-                        <div class="col"><p id="">Szín</p>
-                        </div><div class="col"><p id="">Egységár</p></div>
-                        <div class="col"><p>Részösszesen</p></div>
+                        <div class="col fs-6"><p>Termékkép</p></div>
+                        <div class="col fs-6"><p>Terméknév</p></div>
+                        <div class="col fs-6"><p>Mennyiség</p></div>
+                        <div class="col fs-6"><p id="">Szín</p>
+                        </div><div class="col fs-6"><p id="">Egységár</p></div>
+                        <div class="col fs-6"><p>Részösszesen</p></div>
                     </div>
                 </div>
             
@@ -138,7 +129,8 @@ watch(input, ()=>{
             
             </li>
     </ul>
-<div class="example-six align-items-center justify-content-center text-center">
+<div class="row example-six text-center">
+    <div class="col-10">
     <vue-awesome-paginate v-model="currentPage" :total-items="totalOrders" :items-per-page="itemsPerPage" :max-pages-shown="pagesShown" @click="handlePageChange" :container-class="'pagination-container'">
         <template #prev-button id="nextBtn">
         <span>  Előző</span>
@@ -148,6 +140,7 @@ watch(input, ()=>{
         <span> Következő  ></span>
     </template>
     </vue-awesome-paginate>
+    </div>
 </div>
 </div>  
 
@@ -157,7 +150,7 @@ watch(input, ()=>{
     
 .example-six 
     .pagination-container 
-        column-gap: 8%
+        column-gap: 5%
 
 .secoundaryBtna,
 .btnorder

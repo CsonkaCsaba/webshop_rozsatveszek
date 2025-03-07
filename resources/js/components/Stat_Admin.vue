@@ -7,7 +7,13 @@ const { currentYear, salesSum,deliveredSum, deliverySum, prepare, canceled, notD
 </script>
 
 <template>
-    <div class="container text-center mt-2">
+<div class="container fontcolor">
+    <div class="justify-content-center text-center">
+        <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'chart-simple']" /> STATISZTIKA</span><span></span></div>
+        <img src="../../assets/kepek/charts.webp" alt="desk" width="120" height="120">
+    </div>
+</div>
+    <div class="container text-center">
         <div class="row">
             <div class="col-12">
                 <h2 class="pt-4 mt-4"><span @click="minusYear" class="pointer"><font-awesome-icon :icon="['fas', 'angle-left']"/></span> {{ currentYear }}.év <span class="pointer" @click="plusYear"><font-awesome-icon :icon="['fas', 'angle-right']"/></span></h2>

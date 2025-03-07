@@ -14,7 +14,7 @@ const { message, photoMessage, modalStatusAccept, modalStatus} = storeToRefs(New
 <div class="container fontcolor">
 <div class="justify-content-center text-center p-2">
     <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fa', 'newspaper']" /> HÍREK</span><span></span></div>
-    <img src="../../assets/kepek/newsicon.png" alt="desk" width="100" height="100">
+    <img src="../../assets/kepek/newsicon.png" alt="desk" width="80" height="80">
 </div>
 </div>
 

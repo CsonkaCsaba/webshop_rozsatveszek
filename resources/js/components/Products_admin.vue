@@ -23,7 +23,7 @@ const { } = ProductStore()
 <div class="container fontcolor">
     <div class="justify-content-center text-center p-2">
         <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'bars']" /> TERMÉKEK</span><span></span></div>
-        <img src="../../assets/kepek/products1.png" alt="desk" width="80" height="80">
+        <img src="../../assets/kepek/products1.png" alt="desk" width="70" height="70">
         <div class="m-4">
           <button type="button" class="btn secoundaryBtnb tagsBtn secoundaryBtna m-2" @click="tags=false" :class="{ activeBtn: !tags }"><font-awesome-icon :icon="['fas', 'bars']" /> Termékek</button>
           <button type="button" class="btn secoundaryBtnb tagsBtn secoundaryBtna m-2" @click="tags=true" :class="{ activeBtn: tags }"><font-awesome-icon :icon="['fas', 'tag']" /> Címkék</button>

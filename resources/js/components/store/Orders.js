@@ -38,7 +38,7 @@ export const OrdersStore = defineStore("OrdersStore",{
         currentPage:1,
         itemsPerPage: 10,
         totalOrders: 0,
-        pagesShown: 1,
+        pagesShown: 5,
         startIndex: 0,
         endIndex: 10,
         loading: false,
@@ -104,6 +104,7 @@ export const OrdersStore = defineStore("OrdersStore",{
         orderYear: 2000,
         orderYears: [],
         orderMonth: "",
+        orderTime: "",
         data: [0,0,0,0,0,0,0,0,0,0,0,0],
         dataCompleted: [0,0,0,0,0,0,0,0,0,0,0,0],
         dataCompletedDb: [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -193,7 +194,7 @@ export const OrdersStore = defineStore("OrdersStore",{
 
                         localStorage.setItem('orders', JSON.stringify(rendelesek));
                         this.totalOrders = rendelesek.length;
-                        this.pagesShown = Math.ceil(this.totalOrders/ this.itemsPerPage);
+                        //this.pagesShown = Math.ceil(this.totalOrders/ this.itemsPerPage);
                         slicedOrders = this.orders.slice(this.startIndex, this.endIndex)
                  
                 }
@@ -662,6 +663,10 @@ export const OrdersStore = defineStore("OrdersStore",{
             this.orderMonth = rendelesD[1];
             this.orderYear = rendelesD[0];
             rendeles.rogzitDatum = rendelesDate;
+            if(spl[1] !== undefined){
+                const splTime = spl[1].split('.');
+                rendeles.rogzitOra = splTime[0];
+            }
         },
         emptyingTheVariables(){
             this.transaction = 0;

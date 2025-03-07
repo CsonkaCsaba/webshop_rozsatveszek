@@ -86,7 +86,7 @@ export default {
                     <template slot="progress">
                         <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
                     </template>
-                        <v-img :src="prod.img" class="termek-kep kep">
+                        <v-img :src="prod.img" class="termek-kep kep" @click="detailsModal(prod)">
                             <div v-if="prod.keszlet <= 0" class="elfogyott px-2 text-start">Elfogyott</div>
                             <div v-else class="keszleten px-2 text-start">Készleten</div>
                         </v-img>
@@ -94,7 +94,7 @@ export default {
                          <v-card-text>
                             <div>{{ prod.szin }}</div> 
                             <p class="fst-italic pt-2 text-muted">-{{ prod.tagline }}</p>
-                        </v-card-text class="p-0">
+                        </v-card-text>
                         <v-divider class="mx-4 my-0"></v-divider>
                             <div class="product text-center align-items-center justify-content-center">
                             <v-card-text align="center">
@@ -193,8 +193,8 @@ export default {
                     <p class="fst-italic" id="randomMessage"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Megnézem a többit is!</button>
-                    <a href="kosar"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tovább a kosárhoz</button></a>                    
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">🧐 Megnézem a többit is!</button>
+                    <a href="kosar"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon"/> Tovább a kosárhoz</button></a>                    
                 </div>
             </div>
         </div>
@@ -243,6 +243,7 @@ export default {
     height: 100%;
     width: 100%;
     object-fit: cover;
+    cursor: pointer
 }
 
 .elfogyott{
@@ -317,7 +318,7 @@ export default {
 ;
 }
 .gombHover:hover{
-    background: #60A448;
+    background: #f7f5f0;
     color: #ffffff;
     transition: all 0.5s ease-out;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.45));
@@ -327,6 +328,7 @@ export default {
         scale: 1.2;
         transition: all 0.5s ease-out;
         filter: drop-shadow(0px 4px 4px rgba(255, 255, 255, 0.45));
+        color: #212529
     };
     #gombfelirat{
         visibility: hidden;

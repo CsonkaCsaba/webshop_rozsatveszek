@@ -74,8 +74,8 @@ const cartData = ShoppingCart();
             </div>
             <div class="container">
                 <div class="row mt-3 align-items-center">
-                    <div class="col-6 d-flex justify-content-start"><a href="kosar"><button type="button" class="btn btn-vasarlas m-0">Vissza</button></a></div>
-                    <div class="col-6 d-flex justify-content-end"><button type="submit" form="billing-form" class="btn btn-vasarlas m-0">Folytatás<font-awesome-icon :icon="['fas', 'angle-right']" class="ps-1" /></button></div>
+                    <div class="col-6 d-flex justify-content-start"><a href="kosar"><button type="button" class="btn btn-vasarlas m-0"><font-awesome-icon :icon="['fas', 'angle-left']" class="iconBack"/> Vissza</button></a></div>
+                    <div class="col-6 d-flex justify-content-end"><button type="submit" form="billing-form" class="btn btn-vasarlas m-0">Folytatás<font-awesome-icon :icon="['fas', 'angle-right']" class="ps-1 icon" /></button></div>
                 </div>
             </div>
         </div>  

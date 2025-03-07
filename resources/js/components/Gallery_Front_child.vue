@@ -18,7 +18,7 @@ import { ref } from 'vue';
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 gallery-grid">
       <div data-aos="flip-left" class="col" v-for="gall in gallery">
         <div class="gallery-item " href="">
-          <img :src="gall.kepUtvonal" class="img-fluid" alt="gall.kepLeiras" @click="openModal(), currentSlide(gall.id)">
+          <img :src="gall.kepUtvonal" class="img-fluid" alt="gall.kepLeiras" @click="openModal(), currentSlide(gall.id)" style="cursor: pointer">
         </div>
       </div>
     </div>

@@ -7,6 +7,15 @@ $extra-large: 1200px
 $szurke: #d1ecf1
 $rozsaszin: #E4A0B7
 
+.btn-vasarlas
+  &:hover
+      .icon
+          transform: translateX(4px)
+          transition: all 0.1s ease-out
+      .iconBack
+          transform: translateX(-4px)
+          transition: all 0.1s ease-out
+          
 .paginate-buttons 
   height: 100%
   width: 120%
@@ -106,7 +115,7 @@ $rozsaszin: #E4A0B7
   background-color: #414a4c
   border: 1px solid grey
   &:hover
-    border: 1px solid black
+    border: 1px solid black !important
 
 
 #underheader-about-container
@@ -498,7 +507,7 @@ a
   font-size: 24px
   text-align: center 
   width: 100% 						
-  margin: 40px auto
+  margin: 25px auto
   span 
       display: table-cell
       position: relative
@@ -577,7 +586,7 @@ a
 
 .closebutton
   text-align: right
-  position: relative
+  position: absolute
   left: 85%
   font-weight: bold
   a

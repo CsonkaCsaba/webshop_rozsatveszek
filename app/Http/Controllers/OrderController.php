@@ -35,6 +35,7 @@ class OrderController extends Controller
     }
 
     public function storeOrder(Request $request){
+        date_default_timezone_set('Europe/Budapest');
         
         try{
             $email = $request->billingAddress['email'];

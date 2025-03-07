@@ -315,6 +315,10 @@ const ModalForProductDetails = defineAsyncComponent({
 })
 app.component('ModalForProductDetails', ModalForProductDetails);
 
+const Users_Admin = defineAsyncComponent({
+    loader:() => import('./components/Users_Admin.vue')
+})
+app.component('users_admin', Users_Admin);
 
 import Home from './components/Home.vue';
 app.component('Home', Home);

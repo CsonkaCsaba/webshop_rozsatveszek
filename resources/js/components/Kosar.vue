@@ -37,7 +37,7 @@ const cartData = ShoppingCart();
         <div class="container">
             <div class="row">
                 <div class="col-6 d-flex justify-content-start"><a href="termekek"><button type="button" class="btn btn-vasarlas m-0">Tovább vásárolok</button></a></div>
-                <div class="col-6 d-flex justify-content-end"><a href="szamlazas"><button type="button" class="btn btn-vasarlas m-0">Folytatás<font-awesome-icon :icon="['fas', 'angle-right']" class="ps-1" /></button></a></div>
+                <div class="col-6 d-flex justify-content-end"><a href="szamlazas"><button type="button" class="btn btn-vasarlas m-0">Folytatás<font-awesome-icon :icon="['fas', 'angle-right']" class="ps-1 icon" /></button></a></div>
             </div>
         </div>        
     </div>

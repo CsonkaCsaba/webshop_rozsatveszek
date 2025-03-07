@@ -99,15 +99,15 @@ const cartData = ShoppingCart();
         <div class="container">
             <div class="row mt-3 align-items-center">
                 <div class="col-6 d-flex justify-content-start"><a href="szamlazas"><button type="button"
-                            class="btn btn-vasarlas m-0">Vissza</button></a>
+                            class="btn btn-vasarlas m-0"><font-awesome-icon :icon="['fas', 'angle-left']" class="iconBack"/> Vissza</button></a>
                 </div>
                 <div v-if="cartData.db_data.delivery=='tohouse'" class="col-6 d-flex justify-content-end"><button type="submit" form="shipping-form"
                         class="btn btn-vasarlas m-0">Folytatás<font-awesome-icon :icon="['fas', 'angle-right']"
-                            class="ps-1" /></button>
+                            class="ps-1 icon" /></button>
                 </div>
                 <div v-else class="col-6 d-flex justify-content-end"><a href="megrendeles"><button type="button"
                             class="btn btn-vasarlas m-0">Folytatás<font-awesome-icon :icon="['fas', 'angle-right']"
-                            class="ps-1" /></button></a>
+                            class="ps-1 icon" /></button></a>
                 </div>
             </div>
         </div>

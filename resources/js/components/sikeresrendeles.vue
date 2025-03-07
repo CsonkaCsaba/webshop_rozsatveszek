@@ -5,9 +5,10 @@
     <h4>
       <br>Köszönjük, hogy megtisztelt bizalmával!
       <br>A vásárlás állapotáról e-mailben értesítjük.
-      <br>Keressen minket bizalommal!
+      <br>Felmerülő kérdések esetén keressen minket bizalommal!
     </h4>
-    <div class="d-flex flex-row my-5 align-items-center justify-content-center">
+    <img src="../../assets/kepek/koszonjuk1.webp" alt="köszönjük" height="280px" width="auto"/>
+    <div class="d-flex flex-row align-items-center justify-content-center">
       <div class="">
         <a href="termekek"><button class="mx-auto btn btn-vasarlas"> Vissza a webshopba </button></a>
       </div>

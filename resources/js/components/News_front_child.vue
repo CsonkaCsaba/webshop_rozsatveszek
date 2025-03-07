@@ -32,7 +32,7 @@ fetchNews()
                             </div>
                         </div>
                         <h5 class="news-title">{{ne.cim}}</h5>
-                        <button type="button" class="btn btn-vasarlas"  @click="modalOpen(ne.cim, ne.datum, ne.leiras, ne.photo.kepUtvonal)">Bővebben <font-awesome-icon :icon="['fas', 'angle-right']" class="fa-fw"/></button>
+                        <button type="button" class="btn btn-vasarlas"  @click="modalOpen(ne.cim, ne.datum, ne.leiras, ne.photo.kepUtvonal)">Bővebben <font-awesome-icon :icon="['fas', 'angle-right']" class="fa-fw icon"/></button>
                 </div>
                 
         </div>

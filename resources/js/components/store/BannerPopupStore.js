@@ -87,7 +87,8 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
             {"id":12, "option": 28},  
         ],
         optionsFinalFontSize: [],
-        chooseFromGallery: false
+        chooseFromGallery: false,
+        loadedOnce: false,  
         }
         
     },
@@ -97,47 +98,52 @@ export const BannerPopupStore = defineStore("BannerPopupStore",{
     actions: {
 
         async fetchBanners(){
-            this.loading = true;
-            let banner = [];
-            try {
-                   await axios.get('api/banner').then(function(response){
-                    banner = response.data;
-                    }).catch(error => {
-                          if (error.response.status === 500) {
-                                location.reload();
-                                console.error('Internal Server Error: Please try again later.');
-                          } 
-                      });
-                        this.banners.push(banner);
-                        for(const bann of this.banners[0]){
-                            if(bann.aktiv === 1){
-                                this.activeBanner = true
-                            };
-                            bann.optionsFinalFontStyle = this.optionsFontStyle.filter(option => option.option !== bann.betustilus);
-                            bann.optionsFinalFontFamily = this.optionsFontFamily.filter(option => option.option !== bann.betutipus);
-                            bann.optionsFinalFontSize = this.optionsFontSize.filter(option => option.option !== bann.betumeret);
-                            this.edit_id = bann.id;
-                            this.message = bann.szoveg;
-                            this.defaultBackroundColor = bann.hatterszin;
-                            this.defaultFontColor = bann.betuszin;
-                            this.defaultSpeed = bann.sebesseg;
-                            this.defaultFontType = bann.betutipus;
-                            this.defaultFontStyle = bann.betustilus;
-                            this.defaultFontSize = bann.betumeret;
-                            bann.sebesseg = String(bann.sebesseg);
+            if(this.loadedOnce === true){
+                return
+            }else {
+                this.loading = true;
+                let banner = [];
+                try {
+                    await axios.get('api/banner').then(function(response){
+                        banner = response.data;
+                        }).catch(error => {
+                            if (error.response.status === 500) {
+                                    location.reload();
+                                    console.error('Internal Server Error: Please try again later.');
+                            } 
+                        });
+                            this.banners.push(banner);
+                            for(const bann of this.banners[0]){
+                                if(bann.aktiv === 1){
+                                    this.activeBanner = true
+                                };
+                                bann.optionsFinalFontStyle = this.optionsFontStyle.filter(option => option.option !== bann.betustilus);
+                                bann.optionsFinalFontFamily = this.optionsFontFamily.filter(option => option.option !== bann.betutipus);
+                                bann.optionsFinalFontSize = this.optionsFontSize.filter(option => option.option !== bann.betumeret);
+                                this.edit_id = bann.id;
+                                this.message = bann.szoveg;
+                                this.defaultBackroundColor = bann.hatterszin;
+                                this.defaultFontColor = bann.betuszin;
+                                this.defaultSpeed = bann.sebesseg;
+                                this.defaultFontType = bann.betutipus;
+                                this.defaultFontStyle = bann.betustilus;
+                                this.defaultFontSize = bann.betumeret;
+                                bann.sebesseg = String(bann.sebesseg);
 
-                            // if(bann.szoveg != ""){
-                            //     let string1 = bann.szoveg;
-                            //     let string2 = bann.szoveg;
-                            //     let string3 = bann.szoveg;
-                            //     let string4 = bann.szoveg;
-                            //     bann.szoveg = string1 + " " +string2+" "+string3+ " "+string4
-                            // }
-                        }
-                        this.loading = false;
-                }
-                 catch(error){
-                    console.log(error)
+                                // if(bann.szoveg != ""){
+                                //     let string1 = bann.szoveg;
+                                //     let string2 = bann.szoveg;
+                                //     let string3 = bann.szoveg;
+                                //     let string4 = bann.szoveg;
+                                //     bann.szoveg = string1 + " " +string2+" "+string3+ " "+string4
+                                // }
+                            }
+                            this.loading = false;
+                    }
+                    catch(error){
+                        console.log(error)
+                   }
+                   this.loadedOnce = true;
                 }
         },
         async fetchPopups(){

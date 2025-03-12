@@ -20,6 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //Rendeles::observe(OrderObserver::class);
+        Rendeles::observe(OrderObserver::class);
     }
 }

@@ -64,6 +64,8 @@ Route::get('/cimkek', [CimkeController::class,'index']);
 Route::get('/utolsoCimke', [CimkeController::class,'last']);
 Route::delete('/tagdelete/{id}', [CimkeController::class,'destroy']);
 Route::put('/updateTag/{id}', [CimkeController::class,'update']);
+Route::get('/users', [UserController::class,'index']);
+Route::put('/users/{id}', [UserController::class,'updateRole']);
 
 
 

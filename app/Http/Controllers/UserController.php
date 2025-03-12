@@ -26,4 +26,22 @@ class UserController extends Controller
         ->get();
         return response()->json($wishes);;
     }
+    public function index(Request $request)
+    {
+        return User::all();
+    }
+
+    public function updateRole(Request $request , $id)
+    {
+        $user = User::find($id);
+        $user->role = $request->role;
+        $user->save();
+        
+        $email = $request->email;
+        $name = $request->name;
+        $role = $request->role;
+
+        app('App\Http\Controllers\EmailController')->sendUpdateRoleEmail($email, $name, $role);
+       
+    }
 }

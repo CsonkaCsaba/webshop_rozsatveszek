@@ -5,25 +5,11 @@
                 </About>      
                 <News_front_child id="hirek">
                 </News_front_child>
-        <Suspense>
-            <template #default>
-                <Foot>
-                </Foot>
-            </template>
-            <template #fallback>
-                <LoaderRose>
-                </LoaderRose>
-            </template>
-        </Suspense>
+                <Footer id="kapcsolat">
+                </Footer>
 </template>
    
 <script setup>
-import { defineAsyncComponent } from 'vue'
-
-const Foot = defineAsyncComponent({
-  loader: () => import('./Foot.vue'),
- 
-})
 
 
 window.addEventListener('DOMContentLoaded', function() {

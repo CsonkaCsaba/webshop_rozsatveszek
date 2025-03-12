@@ -227,6 +227,7 @@ header
 .scrolled-nav
     background-color: #d3d3d3
     box-shadow: 0 4px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -0px rgba(0, 0, 0, 0.06)
+    z-index: 99
     
 
     .navigation li

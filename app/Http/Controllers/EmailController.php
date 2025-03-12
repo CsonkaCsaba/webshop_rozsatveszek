@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ThankYouOrderEmail;
 use App\Mail\updateStatusEmail;
 use App\Mail\WelcomeEmail;
+use App\Mail\UpdateRoleEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -46,5 +47,15 @@ class EmailController extends Controller
 
         $response = Mail::to($toEmail)->send(new ThankYouOrderEmail($id, $mailSubject, $userName, $products, $billingAddress, $shippingAddress, $total, $comment, $pay, $szallitas));
 
+    }
+
+    public function sendUpdateRoleEmail($email, $name, $role){
+        $toEmail = $email;
+        $mailSubject = 'Szerepköröd módosításra került!';
+        $mailMessage = 'Ezúton értesítünk, hogy szerepköröd megváltozott!';
+        $userName = $name;
+        $userRole = $role;
+
+        $response = Mail::to($toEmail)->send(new UpdateRoleEmail($mailMessage, $mailSubject, $userName, $userRole));
     }
 }

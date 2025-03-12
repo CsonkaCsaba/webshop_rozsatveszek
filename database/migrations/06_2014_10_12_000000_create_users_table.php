@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->date('birthDate')->nullable();
             $table->date('lastLogin')->nullable();
-            $table->boolean('admin')->nullable();
+            $table->string('role')->nullable();
+            $table->boolean('subscriber')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

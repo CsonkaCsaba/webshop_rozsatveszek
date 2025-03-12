@@ -11,7 +11,8 @@ export const PostStore = defineStore("post",{
         uzenet: "Sikeres mentés ",
         updateSuccessful: false,
         modalStatus: false,
-        message : ""
+        message : "",
+        loadedOnce: false,
        
         }
     },
@@ -21,40 +22,45 @@ export const PostStore = defineStore("post",{
     actions: {
 
         async fetchStore(){
-            let uzlet = [];
-            try {
-                await axios.get('api/uzlet').then(function(response){
-                   
-                    uzlet = response.data[0]
-                }).catch(error => {
-                    if (error.response.status === 500) {
-                          location.reload();
-                          console.error('Internal Server Error: Please try again later.');
-                    } 
-                });
-                
-                this.posts.push({
-                    id: uzlet.id,
-                    nev: uzlet.nev,
-                    bemutatkozasHu: uzlet.bemutatkozasHu,
-                    bemutatkozasEn: uzlet.bemutatkozasEn,
-                    iranyitoszam: uzlet.iranyitoszam,
-                    telepules: uzlet.telepules,
-                    utca:uzlet.utca,
-                    hazszam:uzlet.hazszam,
-                    tel:uzlet.tel,
-                    email: uzlet.email,
-                    adoszam:uzlet.adoszam,
-                    cegjegyzekszam: uzlet.cegjegyzekszam,
-                    bank: uzlet.bank,
-                    bankszamlaszam: uzlet.bankszamlaszam,
-                    iban: uzlet.iban,
-                    swiftbic: uzlet.swiftbic
+            if(this.loadedOnce === true){
+                return
+            } else {
+                let uzlet = [];
+                try {
+                    await axios.get('api/uzlet').then(function(response){
+                    
+                        uzlet = response.data[0]
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                            location.reload();
+                            console.error('Internal Server Error: Please try again later.');
+                        } 
+                    });
+                    
+                    this.posts.push({
+                        id: uzlet.id,
+                        nev: uzlet.nev,
+                        bemutatkozasHu: uzlet.bemutatkozasHu,
+                        bemutatkozasEn: uzlet.bemutatkozasEn,
+                        iranyitoszam: uzlet.iranyitoszam,
+                        telepules: uzlet.telepules,
+                        utca:uzlet.utca,
+                        hazszam:uzlet.hazszam,
+                        tel:uzlet.tel,
+                        email: uzlet.email,
+                        adoszam:uzlet.adoszam,
+                        cegjegyzekszam: uzlet.cegjegyzekszam,
+                        bank: uzlet.bank,
+                        bankszamlaszam: uzlet.bankszamlaszam,
+                        iban: uzlet.iban,
+                        swiftbic: uzlet.swiftbic
 
-                })
-                
-                } catch(error){
-                    console.log(error.response.data)
+                    })
+                    
+                    } catch(error){
+                        console.log(error.response.data)
+                    }
+                    this.loadedOnce = true;
                 }
         },
 

@@ -103,7 +103,7 @@ export default {
                     <li><a href="galeria">Galéria</a></li>
                     <li><a href="termekek">Termékek</a></li>
                     <li><a href="kivansaglista">Kívánságlista</a></li>
-                    <li><a href="/webshop_rozsatveszek/public/#kapcsolat">Kapcsolat</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/?id=kapcsolat">Kapcsolat</a></li>
                     <li><a href="tanacsok">Tanácsok</a></li>
                 </ul>
             </div>
@@ -166,7 +166,7 @@ export default {
                     <li><a class="link" href="galeria">Galéria</a></li>
                     <li><a class="link" href="termekek">Termékek</a></li>
                     <li><a class="link" href="kivansaglista">Kívánságlista</a></li>
-                    <li><a href="/webshop_rozsatveszek/public/#kapcsolat">Kapcsolat</a></li>
+                    <li><a href="/webshop_rozsatveszek/public/?id=kapcsolat">Kapcsolat</a></li>
                     <li><a class="link" href="tanacsok">Tanácsok</a></li>
                 </ul>
             </transition> <!--animációhoz-->
@@ -289,6 +289,7 @@ header
 .scrolled-nav
     background-color: #d3d3d3
     box-shadow: 0 4px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -0px rgba(0, 0, 0, 0.06)
+    z-index: 99
     
 
     .navigation li

@@ -66,10 +66,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if (!isset($data['subscribe'])) {
+            $data['subscribe'] = null;
+        } 
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => 'Regisztrált felhasználó',
+            'subscriber' => $data['subscribe']
         ]);
     }
 

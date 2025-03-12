@@ -4,56 +4,154 @@ import { OrdersStore, slicedOrders } from './store/Orders';
 import { reactive, computed } from 'vue'
 import { ref, watch } from 'vue';
 
-const { orders, selectedValue, addNewProduct,  showDown, showUp, accepted, currentPage, itemsPerPage, totalOrders, pagesShown, input, loading, width, radius, padding, lineCap, gradient, value, gradientDirection, fill, type, autoLineWidth, labels, currentMonth, numberOfTheCurrentMonth} = storeToRefs(OrdersStore());
+const { orders, selectedValue, addNewProduct,  showDown, showUp, accepted, currentPage, itemsPerPage, totalOrders, pagesShown, input, loading, width, radius, padding, lineCap, gradient, value, gradientDirection, fill, type, autoLineWidth, labels, currentMonth, numberOfTheCurrentMonth, reload} = storeToRefs(OrdersStore());
 
-const { update,  addNewProductBtn, onChange, createProduct, deleteOrd, orderOrdersByIdASC, orderOrdersByIdDESC, updateOrder, handlePageChange, inputChanged, displayOrders, daysInMonth, fetchOrders } = OrdersStore();
+const { update,  addNewProductBtn, onChange, createProduct, deleteOrd, orderOrdersByIdASC, orderOrdersByIdDESC, updateOrder, handlePageChange, inputChanged, displayOrders, daysInMonth, fetchOrders, clearlist, show } = OrdersStore();
 
 fetchOrders();
 watch(input, ()=>{
     inputChanged();
 })
 
+const isActive1 = ref(false);
+const isActive2 = ref(false);
+const isActive3 = ref(false);
+const isActive4 = ref(false);
+const isActive5 = ref(false);
+const isActive6 = ref(false);
 
+const toggleChip = (button) => {
+    if (button === "button1"){
+        isActive1.value = !isActive1.value;
+        if(isActive1.value == true){
+            show('Feldolgozás alatt');
+            isActive2.value = false;
+            isActive3.value = false;
+            isActive4.value = false;
+            isActive5.value = false;
+            isActive6.value = false;
+        }else {
+            clearlist();
+        }
+    } 
+    if (button === "button2"){
+        isActive2.value = !isActive2.value;
+        if(isActive2.value == true){
+            show('Kiszállítás alatt');
+            isActive1.value = false;
+            isActive3.value = false;
+            isActive4.value = false;
+            isActive5.value = false;
+            isActive6.value = false;
+        }else{
+            clearlist();
+        }
+    } 
+    if (button === "button3"){
+        isActive3.value = !isActive3.value;
+        if(isActive3.value == true){
+            show('Teljesítve');
+            isActive2.value = false;
+            isActive1.value = false;
+            isActive4.value = false;
+            isActive5.value = false;
+            isActive6.value = false;
+        }else{
+            clearlist();
+        }
+        
+    } 
+    if (button === "button4") {
+        isActive4.value = !isActive4.value;
+        if(isActive4.value == true){
+            show('Visszamondott');
+            isActive2.value = false;
+            isActive3.value = false;
+            isActive1.value = false;
+            isActive5.value = false;
+            isActive6.value = false;
+        }else{
+            clearlist();
+        }
+        
+    }
+    if (button === "button5") {
+        isActive5.value = !isActive5.value;
+        if(isActive5.value == true){
+            show('Sikertelen kézbesítés');
+            isActive2.value = false;
+            isActive3.value = false;
+            isActive1.value = false;
+            isActive4.value = false;
+            isActive6.value = false;
+        }else{
+            clearlist();
+        }
+    }
+    if (button === "button6") {
+        isActive6.value = !isActive6.value;
+        if(isActive6.value == true){
+            show('Utalás ellenőrzése');
+            isActive2.value = false;
+            isActive3.value = false;
+            isActive1.value = false;
+            isActive4.value = false;
+            isActive5.value = false;
+        }else{
+            clearlist();
+        }
+        
+        }
+    }
 </script>
 
 <template>
 <div class="container justify-content-center align-items-center">
-    <div class="d-inline-flex  ps-3">
-        <input type="text" v-model="input" placeholder="Keresés..." class="form-control ms-2"/>
+    <div class="d-inline-flex pt-2">
+        <input type="text" v-model="input" placeholder="Keresés..." class="form-control ms-2" autofocus="on"/>
+        <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive1 }" @click="toggleChip('button1')">Feldolgozás alatt </button>
+        <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive6 }" @click="toggleChip('button6')">
+            Utalás ellenőrzése </button>
+        <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive2 }" @click="toggleChip('button2')">Kiszállítás alatt</button>
+        <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive3 }" @click="toggleChip('button3')">Teljesítve</button>
+        <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive4 }" @click="toggleChip('button4')">
+        Visszamondott </button>
+        <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive5 }" @click="toggleChip('button5')">
+        Sikertelen kézbesítés </button>
 </div>
 
-<div class="d-inline-flex justify-content-center align-items-center ps-4" v-if="input&&slicedOrders.length == 0">
-     <h4 class="text-danger">Sajnálom, nincs ilyen névvel regisztrált vevő a rendszerben!</h4>
+<div class="d-inline-flex justify-content-center align-items-center" v-if="input&&slicedOrders.length == 0">
+     <h4 class="text-danger pt-4">Sajnálom, nincs ilyen névvel regisztrált vevő a rendszerben!</h4>
   </div>
 </div>
-<div class="container mb-4 pt-4 align-items-center">
-
-    
-    <div class="row row-cols-7 fw-bold fs-5 px-4">
-        <div class="col-1 d-flex justify-content-start align-items-start">
+<div class="container pt-4 align-items-center">
+    <div class="col-1 d-flex justify-content-start align-items-start">
             <button v-if="showDown" class="btn btn-light fw-bold fs-5 btnorder" @click="orderOrdersByIdASC">
                 <font-awesome-icon :icon="['fas', 'angle-down']" />
             </button>
             <button v-if="showUp" class="btn btn-light fw-bold fs-5 btnorder" @click="orderOrdersByIdDESC">
                 <font-awesome-icon :icon="['fas', 'angle-up']" />
             </button>
-            <p class="fs-6">Azonosító</p>
+            
         </div>
-        <div class="col-2 text-start ps-5 fs-6"><p>Vevő neve</p></div>
-        <div class="col-1 text-center fs-6"><p>Időpont</p></div>
-        <div class="col-1 text-center fs-6"><p id="vegosszeg">Végösszeg</p></div>
-        <div class="col-1 text-center fs-6"><p id="fizmod">Fizetési mód</p></div>
-        <div class="col-2 text-center fs-6"><p>Állapot</p></div>
-        <div class="col text-center fs-6"><p>Műveletek</p></div>
+    
+    <div class="row text-center fw-bold fs-5">
+        <div class="col-1 text-center fs-6 pt-4"><p>Azonosító</p></div>
+        <div class="col-2 text-center ps-5 fs-6 pt-4"><p>Vevő neve</p></div>
+        <div class="col-1 text-center fs-6 pt-4"><p>Időpont</p></div>
+        <div class="col-1 text-center fs-6 pt-4"><p id="vegosszeg">Végösszeg</p></div>
+        <div class="col-1 text-center fs-6 pt-4"><p id="fizmod">Fizetési mód</p></div>
+        <div class="col-2 text-center fs-6 pt-4"><p>Állapot</p></div>
+        <div class="col text-center fs-6 pt-4"><p>Műveletek</p></div>
     </div>
 </div>
 
 <loader v-if="loading"></loader>
 <div class="container mb-4 pt-4">
-    <ul class="list">
+    <ul class="list text-center">
         <li  class="row mt-2 py-4 ps-4" v-for="order in slicedOrders" :key="order.id">
             <div class="col-1 pt-4 px-0"><p class="fs-6">{{ order.id }} </p> </div>
-            <div class="col-2 pt-4 px-0"><p class="fs-6 fw-bold">{{ order.vasarlo.nev}} </p></div>
+            <div class="col-2 pt-4 px-0"><p class="fs-6 fw-bold" :class="{ ready : order.allapot == 'Teljesítve', delivery : order.allapot == 'Kiszállítás alatt', notready : order.allapot == 'Sikertelen kézbesítés' || order.allapot == 'Visszamondott'}" ><img src="../../assets/kepek/shoppingcart2.webp" width="40" height="auto" alt="cart icon" class="m-2"/> {{ order.vasarlo.nev}} </p></div>
             <div class="col pt-2 px-0"><span class="fs-6">{{ order.rogzitDatum }}<br></span><span class="fs-6 text-muted p-0 m-0">{{ order.rogzitOra }}</span></div>
             <div class="col pt-4 px-0"><p class="fs-6">{{ order.vegosszeg }},-Ft</p></div>
             <div class="col pt-4 px-0"><p class="fs-6">{{ order.fizetesiMod }}</p></div>
@@ -91,7 +189,7 @@ watch(input, ()=>{
                         order.szallitasi_cim.iranyitoszam + " " + 
                         order.szallitasi_cim.telepules + ", " +
                         order.szallitasi_cim.utca + " " +
-                        order.szallitasi_cim.hazszam}}</div>
+                        order.szallitasi_cim.hazszam}} </div>
                     <div class="col "><p class="fw-bold">Számlázási cím</p> {{ 
                         order.szamlazasi_cim.iranyitoszam + " " + 
                         order.szamlazasi_cim.telepules + ", " +
@@ -129,9 +227,9 @@ watch(input, ()=>{
             
             </li>
     </ul>
-<div class="row example-six text-center">
+<div class="row example-six text-center" :key="reload">
     <div class="col-10">
-    <vue-awesome-paginate v-model="currentPage" :total-items="totalOrders" :items-per-page="itemsPerPage" :max-pages-shown="pagesShown" @click="handlePageChange" :container-class="'pagination-container'">
+    <vue-awesome-paginate v-if="totalOrders > 9" v-model="currentPage" :total-items="totalOrders" :items-per-page="itemsPerPage" :max-pages-shown="pagesShown" @click="handlePageChange" :container-class="'pagination-container'">
         <template #prev-button id="nextBtn">
         <span>  Előző</span>
     </template>
@@ -283,4 +381,30 @@ li:nth-child(odd)
 .v-leave-to 
   opacity: 0
 
+.ready
+    color: #64c916
+.delivery
+    color: #1679c9
+.notready
+    color: #d41e1e
+
+.custom-btn 
+    transition: none !important 
+    white-space: nowrap
+    overflow: visible
+    text-overflow: ellipsis
+    max-width: 100%
+    font-size: 0.7rem !important
+    
+    
+.custom-btn:hover 
+    background-color: #232526 !important
+    border-color: #232526 !important
+    color: white
+    
+    
+.active-btn 
+    background-color: #232526 !important
+    color: white !important
+    border-color: #232526 !important
 </style>

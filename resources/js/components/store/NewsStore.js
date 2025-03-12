@@ -24,7 +24,8 @@ export const NewsStore = defineStore("NewsStore",{
         message : "",
         photoMessage : "",
         photo: {},
-        loading: false
+        loading: false,
+        loadedOnce: false,
         }
     },
     getters: {
@@ -33,24 +34,29 @@ export const NewsStore = defineStore("NewsStore",{
     actions: {
 
         async fetchNews(){
-            //this.news = [];
-            let news = [];
-            try {
-                   await axios.get('api/hirek').then(function(response){
-                    
-                   news = response.data;
-                   
-                    }).catch(error => {
-                        if (error.response.status === 500) {
-                              location.reload();
-                              console.error('Internal Server Error: Please try again later.');
-                        } 
-                    });
-                        this.news.push(news);
-                }
-                 catch(error){
-                    console.log(error)
-                }
+            if(this.loadedOnce === true){
+                return;
+            } else {
+                    //this.news = [];
+                    let news = [];
+                    try {
+                        await axios.get('api/hirek').then(function(response){
+                            
+                        news = response.data;
+                        
+                            }).catch(error => {
+                                if (error.response.status === 500) {
+                                    location.reload();
+                                    console.error('Internal Server Error: Please try again later.');
+                                } 
+                            });
+                                this.news.push(news);
+                        }
+                        catch(error){
+                            console.log(error)
+                        }
+                        this.loadedOnce = true;
+                    }
         },
         async fetchNewsadmin(){
             let news = [];

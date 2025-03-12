@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 04. 14:49
+-- Létrehozás ideje: 2025. Már 12. 14:40
 -- Kiszolgáló verziója: 10.4.28-MariaDB
 -- PHP verzió: 8.2.4
 
@@ -78,7 +78,8 @@ CREATE TABLE `cimes` (
 
 INSERT INTO `cimes` (`cim_id`, `vasarlo_id`, `szallitasi`, `szamlazasi`) VALUES
 (6, 5, 1, 1),
-(7, 5, 1, 0);
+(7, 5, 1, 0),
+(8, 4, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -131,7 +132,8 @@ INSERT INTO `cims` (`id`, `iranyitoszam`, `telepules`, `utca`, `hazszam`) VALUES
 (4, '7855', 'Szeged', 'Légió', '20'),
 (5, '6770', 'Győr', 'Virág', '10'),
 (6, '6782', 'Mórahalom', 'Mező', '12'),
-(7, '6782', 'Mórahalom', 'Mező', '13');
+(7, '6782', 'Mórahalom', 'Mező', '13'),
+(8, '6782', 'Mórahalom', 'Mező utca', '12');
 
 -- --------------------------------------------------------
 
@@ -411,7 +413,7 @@ CREATE TABLE `rendeles` (
 
 INSERT INTO `rendeles` (`id`, `megjegyzes`, `fizetesiMod`, `ceges`, `allapot`, `rogzitDatum`, `vegosszeg`, `szallitas`, `fk_vasarloId`, `fk_userId`, `fk_szamlazasiCim`, `fk_szallitasiCim`) VALUES
 (1, 'Próba2', 'Utánvét', 0, 'Kiszállítás alatt', '2024-10-05 12:01:58', 2500, 'Személyes átvétel', 5, NULL, 6, NULL),
-(2, 'Próba2', 'Utánvét', 0, 'Feldolgozás alatt', '2024-10-05 15:19:05', 2500, 'Személyes átvétel', 5, NULL, 6, NULL),
+(2, 'Próba2', 'Utánvét', 0, 'Teljesítve', '2024-10-05 15:19:05', 2500, 'Személyes átvétel', 5, NULL, 6, NULL),
 (3, 'Próba2', 'Utánvét', 0, 'Feldolgozás alatt', '2024-10-05 15:22:28', 2500, 'Személyes átvétel', 5, NULL, 6, NULL),
 (4, 'Próba2', 'Utánvét', 0, 'Feldolgozás alatt', '2024-10-05 15:26:53', 2500, 'Személyes átvétel', 5, NULL, 6, NULL),
 (5, 'Próba2', 'Utánvét', 0, 'Feldolgozás alatt', '2024-10-05 15:27:50', 2500, 'Személyes átvétel', 5, NULL, 6, NULL),
@@ -451,7 +453,106 @@ INSERT INTO `rendeles` (`id`, `megjegyzes`, `fizetesiMod`, `ceges`, `allapot`, `
 (42, 'uizopgg', 'Előre utalás', 0, 'Utalás ellenőrzése', '2025-02-05 17:36:23', 2500, 'Személyes átvétel', 5, NULL, 6, 7),
 (43, NULL, 'Utánvét', 0, 'Teljesítve', '2025-01-15 17:37:10', 5000, 'Házhoz szállítás', 5, NULL, 6, 7),
 (48, 'Kérem nyomja a kapucsengőt!', 'Utánvét', 0, 'Feldolgozás alatt', '2025-02-14 18:25:07', 5000, 'Házhoz szállítás', 5, NULL, 6, 6),
-(49, 'Kérem nyomja a kapucsengőt!', 'Utánvét', 0, 'Feldolgozás alatt', '2025-02-14 18:29:46', 2500, 'Házhoz szállítás', 5, NULL, 6, 6);
+(49, 'Kérem nyomja a kapucsengőt!', 'Utánvét', 0, 'Feldolgozás alatt', '2025-02-14 18:29:46', 2500, 'Házhoz szállítás', 5, NULL, 6, 6),
+(50, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 10:45:02', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(51, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 10:46:11', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(52, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 10:49:03', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(53, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 10:49:34', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(54, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 10:49:50', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(55, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:03:55', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(56, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:04:46', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(57, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:09:31', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(58, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:11:48', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(59, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:18:40', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(60, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:18:50', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(61, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:23:38', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(62, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:25:21', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(63, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:27:41', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(64, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:27:50', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(65, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:28:55', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(66, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:29:17', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(67, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:38:03', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(68, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:41:36', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(69, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:48:23', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(70, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:54:55', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(71, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 11:57:27', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(72, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:02:12', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(73, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:02:53', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(74, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:04:23', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(75, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:21:38', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(76, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:22:55', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(77, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:28:50', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(78, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:30:22', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(79, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:32:24', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(80, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:33:36', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(81, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:38:48', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(82, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:41:59', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(83, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 12:46:44', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(84, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:03:25', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(85, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:05:31', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(86, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:06:58', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(87, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:14:56', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(88, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:16:59', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(89, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:18:26', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(90, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:18:31', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(91, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:20:24', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(92, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:21:59', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(93, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:24:08', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(94, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-05 13:24:10', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(95, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:26:32', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(96, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:34:43', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(97, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:41:05', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(98, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:50:11', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(99, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:50:46', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(100, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:51:49', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(101, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:53:47', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(102, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:55:29', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(103, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:57:37', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(104, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 07:59:47', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(105, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 08:00:20', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(106, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 08:02:22', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(107, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 08:03:33', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(108, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 08:05:05', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(109, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 09:35:46', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(110, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 09:40:20', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(111, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 09:42:11', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(112, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 09:45:05', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(113, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 09:47:31', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(114, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 09:51:02', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(115, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 09:53:16', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(116, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 09:53:36', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(117, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 09:57:20', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(118, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:02:10', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(119, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:04:13', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(120, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:05:10', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(121, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:07:58', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(122, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:16:28', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(123, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:17:09', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(124, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:17:37', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(125, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:17:57', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(126, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:18:23', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(127, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 10:19:21', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(128, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 11:01:55', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(129, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 11:02:55', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(130, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 11:06:05', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(131, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 11:06:31', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(132, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 11:07:38', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(133, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 11:08:16', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(134, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 11:23:26', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(135, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 11:23:58', 4000, 'Személyes átvétel', 4, 16, 8, NULL),
+(136, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 13:24:53', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(137, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 13:37:32', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(138, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 13:38:40', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(139, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 13:41:13', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(140, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 13:41:34', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(141, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 13:42:12', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(142, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 13:42:43', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(143, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 13:43:18', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(144, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-06 14:03:45', 4000, 'Személyes átvétel', 4, NULL, 8, NULL),
+(145, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-10 06:25:29', 2000, 'Személyes átvétel', 4, 16, 8, NULL),
+(146, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Sikertelen kézbesítés', '2025-03-10 06:27:23', 2000, 'Személyes átvétel', 4, 16, 8, NULL),
+(147, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Visszamondott', '2025-03-10 06:28:28', 2000, 'Személyes átvétel', 4, 16, 8, NULL),
+(148, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-12 09:11:04', 2000, 'Személyes átvétel', 5, 62, 6, NULL);
 
 -- --------------------------------------------------------
 
@@ -483,8 +584,8 @@ CREATE TABLE `termeks` (
 --
 
 INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `akciosar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `created_at`, `updated_at`, `cimkeId`, `tagline`) VALUES
-(1, 'Mr. Lincolna', 'Mr. Lincolna', 2500, 2250, '../resources/assets/kepek/lincolnresize.webp', '', 'A Mr. Lincoln egy ikonikus, mélyvörös színű magastörzsű rózsa, amely minden kert elegáns és romantikus éke lehet. Bársonyos szirmainak intenzív illata messziről érezhető, így ideális választás lehet olyan helyekre, ahol a látvány mellett az illat is fontos szerepet kap. A virágai nagyméretűek és tartósak, ezért vágott virágnak is kiválóak. Folyamatos virágzásának köszönhetően júniustól egészen az első fagyokig újra és újra gyönyörű szirmokat bont. Erőteljes növekedésű, ellenálló fajta, amely megfelelő gondozás mellett hosszú éveken át díszítheti kertedet vagy teraszodat.\r\nSzín: Mélyvörös, bársonyos szirmokkal\r\nIllat: Erőteljes, édes és fűszeres árnyalatokkal\r\nVirágzás: Júniustól a fagyokig folyamatos\r\nFényigény: Napos helyet kedvel, félárnyékban gyengébben virágzik\r\nTélállóság: Jól tűri a hideget, de a magastörzsű fajtáknál a gyökérzónát és a szemzés helyét érdemes védeni. Télen takarást igényel, amit vastag mulcsréteggel (pl. fenyőkéreg, komposzt vagy lomb) biztosíthatunk. A koronát is érdemes jutazsákkal, szalmával vagy speciális kertészeti fátyolfóliával védeni a fagykártól.', 'Red tea rose', 'Piros', 'RED', 88, NULL, '2025-02-27 12:43:48', 257, 'minden kert elegáns és romantikus éke'),
-(2, 'Bianca', 'Bianca', 2000, 2000, '../resources/assets/kepek/biancaresize.webp\r\n', '', 'A Bianca egy klasszikusan elegáns fehér magastörzsű rózsa, amely finom, letisztult szépséget kölcsönöz minden kertnek vagy terasznak. Tiszta fehér virágai tökéletes kontrasztot alkotnak a mélyzöld levelekkel, így különösen jól mutat sötétebb hátterek előtt vagy színes virágágyásokba ültetve. Kellemesen lágy illata van, amely nem túl erős, így azok számára is ideális, akik az enyhébb illatú virágokat részesítik előnyben. Kiválóan alkalmas cserépben nevelésre is, így erkélyekre és teraszokra egyaránt ajánlott.\r\nSzín: Tiszta hófehér\r\nIllat: Enyhe, lágy\r\nVirágzás: Nyártól késő őszig folyamatosan\r\nFényigény: Napfényes vagy félárnyékos helyet igényel\r\nTélállóság: Jól bírja a hideget, de a magastörzsű rózsák általában érzékenyebbek a fagyokra. A gyökereket ajánlott takarni mulccsal vagy lombbal, míg a koronát jutazsákkal vagy kerti fátyolfóliával borítani. Különösen erős fagyok esetén a törzset is érdemes szalmával vagy zsákvászonnal védeni.', '', 'Fehér', 'White', 74, NULL, '2025-02-27 12:30:48', 257, 'finom, letisztult külső'),
+(1, 'Mr. Lincoln', 'Mr. Lincoln', 2500, 2250, '../resources/assets/kepek/lincolnresize.webp', '', 'A Mr. Lincoln egy ikonikus, mélyvörös színű magastörzsű rózsa, amely minden kert elegáns és romantikus éke lehet. Bársonyos szirmainak intenzív illata messziről érezhető, így ideális választás lehet olyan helyekre, ahol a látvány mellett az illat is fontos szerepet kap. A virágai nagyméretűek és tartósak, ezért vágott virágnak is kiválóak. Folyamatos virágzásának köszönhetően júniustól egészen az első fagyokig újra és újra gyönyörű szirmokat bont. Erőteljes növekedésű, ellenálló fajta, amely megfelelő gondozás mellett hosszú éveken át díszítheti kertedet vagy teraszodat.\r\nSzín: Mélyvörös, bársonyos szirmokkal\r\nIllat: Erőteljes, édes és fűszeres árnyalatokkal\r\nVirágzás: Júniustól a fagyokig folyamatos\r\nFényigény: Napos helyet kedvel, félárnyékban gyengébben virágzik\r\nTélállóság: Jól tűri a hideget, de a magastörzsű fajtáknál a gyökérzónát és a szemzés helyét érdemes védeni. Télen takarást igényel, amit vastag mulcsréteggel (pl. fenyőkéreg, komposzt vagy lomb) biztosíthatunk. A koronát is érdemes jutazsákkal, szalmával vagy speciális kertészeti fátyolfóliával védeni a fagykártól.', 'Red tea rose', 'Piros', 'RED', 88, NULL, '2025-03-05 09:40:49', 257, 'minden kert elegáns és romantikus éke'),
+(2, 'Bianca', 'Bianca', 2000, 2000, '../resources/assets/kepek/biancaresize.webp\r\n', '', 'A Bianca egy klasszikusan elegáns fehér magastörzsű rózsa, amely finom, letisztult szépséget kölcsönöz minden kertnek vagy terasznak. Tiszta fehér virágai tökéletes kontrasztot alkotnak a mélyzöld levelekkel, így különösen jól mutat sötétebb hátterek előtt vagy színes virágágyásokba ültetve. Kellemesen lágy illata van, amely nem túl erős, így azok számára is ideális, akik az enyhébb illatú virágokat részesítik előnyben. Kiválóan alkalmas cserépben nevelésre is, így erkélyekre és teraszokra egyaránt ajánlott.\r\nSzín: Tiszta hófehér\r\nIllat: Enyhe, lágy\r\nVirágzás: Nyártól késő őszig folyamatosan\r\nFényigény: Napfényes vagy félárnyékos helyet igényel\r\nTélállóság: Jól bírja a hideget, de a magastörzsű rózsák általában érzékenyebbek a fagyokra. A gyökereket ajánlott takarni mulccsal vagy lombbal, míg a koronát jutazsákkal vagy kerti fátyolfóliával borítani. Különösen erős fagyok esetén a törzset is érdemes szalmával vagy zsákvászonnal védeni.', '', 'Fehér', 'White', 2881, NULL, '2025-03-12 09:11:03', 257, 'finom, letisztult külső'),
 (3, 'Monica', 'Monica', 2500, 2125, '../resources/assets/kepek/monicaresize.webp\r\n', '', 'A Monica egy igazán élénk, ragyogó narancssárga magastörzsű rózsa, amely garantáltan feldobja kerted hangulatát. Látványos, nagy méretű virágai napfényben különleges ragyogást kapnak, így ideális választás olyan kertekbe, ahol a vibráló színek dominálnak. Közepesen erős illata friss és energikus hatású, ami kellemes atmoszférát teremt a pihenéshez. Jó ellenállóképességű fajta, amely hosszan és bőségesen virágzik.\r\nSzín: Élénk narancssárga\r\nIllat: Közepesen erős, enyhén citrusos jegyekkel\r\nVirágzás: Májustól az első fagyokig\r\nFényigény: Napfényes helyen fejlődik a legszebben\r\nTélállóság: Mérsékelten télálló, ezért a gyökérzónát vastag mulccsal, szalmával vagy lombbal kell takarni, a koronát pedig ajánlott jutazsákba vagy fátyolfóliába burkolni. Erős fagyok esetén a törzs védelméről is gondoskodni kell.', '', 'Narancssárga', 'Orange', 58, NULL, '2025-02-27 12:31:18', NULL, 'látványos, vibráló színek'),
 (4, 'Caresse', 'Caresse', 2500, 2125, '../resources/assets/kepek/caresseresize.webp\r\n', '', 'A Caresse egy romantikus megjelenésű, lágy rózsaszín árnyalatú magastörzsű rózsa, amely a klasszikus kertek egyik legnépszerűbb fajtája. Nagyméretű, telt virágai csodálatosan illatoznak, így tökéletes választás olyan helyekre, ahol a látvány mellett az illat is fontos szerepet játszik. Gazdag és hosszan tartó virágzása miatt a kert folyamatos színpompában tündököl általa.\r\nSzín: Pasztell rózsaszín\r\nIllat: Kellemesen édes és virágos\r\nVirágzás: Késő tavasztól késő őszig\r\nFényigény: Napfényt kedveli\r\nTélállóság: Viszonylag jól bírja a hideget, de a magastörzsű fajták koronája érzékenyebb lehet. A gyökérzónát mulccsal vagy lombbal érdemes védeni, a koronát pedig kerti fátyolfóliával, jutazsákkal vagy szalmával kell beburkolni.\r\n', '', 'Rózsaszín', 'Pink', 95, NULL, '2025-02-27 12:31:18', NULL, 'lágy rózsaszín árnyalat, hosszan tartó virágzás'),
 (5, 'Golden Leader', 'Golden Leader', 2500, 1800, '../resources/assets/kepek/golden.webp\r\n', '', 'A Golden Leader igazi napfényt varázsol a kertbe élénk citromsárga virágaival. Nagy, látványos virágai nemcsak szépek, hanem kellemesen friss illatot is árasztanak. Folyamatosan virágzó fajta, amely hosszú időn át díszíti a kertet vagy a teraszt. Erős, egyenes szárának köszönhetően stabil és elegáns megjelenésű.\r\nSzín: Ragyogó citromsárga\r\nIllat: Frissítő, közepesen intenzív\r\nVirágzás: Nyár elejétől késő őszig folyamatos\r\nFényigény: Napos helyet igényel\r\nTélállóság: Mérsékelt télállóságú, ezért a gyökereket vastag mulccsal vagy lombbal kell védeni, a koronát pedig jutazsákkal vagy szalmával ajánlott betakarni. Erős hidegek esetén a törzs köré szigetelő réteget érdemes helyezni.', '', 'Citromsárga', 'Yellow', 90, NULL, '2025-02-27 12:58:38', NULL, ' stabil és elegáns megjelenés, napfényt varázsol a kertbe');
@@ -503,7 +604,8 @@ CREATE TABLE `users` (
   `address` varchar(255) DEFAULT NULL,
   `birthDate` date DEFAULT NULL,
   `lastLogin` date DEFAULT NULL,
-  `admin` tinyint(1) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL,
+  `subscriber` tinyint(1) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
@@ -517,11 +619,12 @@ CREATE TABLE `users` (
 -- A tábla adatainak kiíratása `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `userName`, `password`, `address`, `birthDate`, `lastLogin`, `admin`, `email`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`, `dolgozoId`, `vasarloId`) VALUES
-(1, 'Szűcs Tímea', NULL, '$2y$10$TPh4sGGHeTG3Izzha9HHDu68LQ5gz3HK3koxM4hWRNQxKRLiU0kDm', NULL, NULL, NULL, NULL, 'szucstimea02@gmail.com', NULL, NULL, '2024-09-01 15:04:33', '2024-09-01 15:04:33', NULL, NULL),
-(2, 'Szűcs Tímea', NULL, '$2y$10$biM3tRGFNMBHXQ2iwxFfO.qw1QI4fx7kh8TAAVde7CXB/7xDv6e2S', NULL, NULL, NULL, NULL, 'szucsmeja@gmail.com', NULL, NULL, '2024-09-01 15:16:10', '2024-09-01 15:16:10', NULL, NULL),
-(16, 'Csonka Csaba', NULL, '$2y$10$wFV0TGTkbjBr1cs52fQSA.1IwMvatH0gq0UQb6AgAMJ1Ss443bBG.', NULL, NULL, NULL, 1, 'csonkacsaba1986@gmail.com', '2024-09-20 19:10:06', NULL, '2024-09-20 19:09:46', '2024-09-20 19:10:06', NULL, NULL),
-(48, 'Csonka Csaba', NULL, '$2y$10$Cf2qmpVdrRPscT27xbR.qe0H4zryd.bPhu9Quz3osXHjq45sd4v4e', NULL, NULL, NULL, NULL, 'conkacabi@gmail.com', '2024-10-07 16:20:04', NULL, '2024-10-07 16:18:55', '2024-10-07 16:20:04', NULL, NULL);
+INSERT INTO `users` (`id`, `name`, `userName`, `password`, `address`, `birthDate`, `lastLogin`, `role`, `subscriber`, `email`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`, `dolgozoId`, `vasarloId`) VALUES
+(1, 'Szűcs Tímea', NULL, '$2y$10$TPh4sGGHeTG3Izzha9HHDu68LQ5gz3HK3koxM4hWRNQxKRLiU0kDm', NULL, NULL, NULL, NULL, NULL, 'szucstimea02@gmail.com', NULL, NULL, '2024-09-01 15:04:33', '2024-09-01 15:04:33', NULL, 3),
+(2, 'Szűcs Tímea', NULL, '$2y$10$biM3tRGFNMBHXQ2iwxFfO.qw1QI4fx7kh8TAAVde7CXB/7xDv6e2S', NULL, NULL, NULL, NULL, NULL, 'szucsmeja@gmail.com', NULL, NULL, '2024-09-01 15:16:10', '2024-09-01 15:16:10', NULL, NULL),
+(16, 'Csonka Csaba', NULL, '$2y$10$wFV0TGTkbjBr1cs52fQSA.1IwMvatH0gq0UQb6AgAMJ1Ss443bBG.', NULL, NULL, NULL, 'Adminisztrátor', NULL, 'csonkacsaba1986@gmail.com', '2024-09-20 19:10:06', NULL, '2024-09-20 19:09:46', '2025-03-05 10:45:02', NULL, 4),
+(62, 'Csonka Csaba', NULL, '$2y$10$yU2EkV/vVhUV6tWArmKjVuvP4so.sHbhUCO4reSH/2vP2Wbwn/c4i', NULL, NULL, NULL, 'Adminisztrátor', 1, 'conkacabi@gmail.com', '2025-03-10 13:39:22', NULL, '2025-03-10 13:37:04', '2025-03-12 12:39:43', NULL, 5),
+(70, 'Csonka Csaba', NULL, '$2y$10$yU2EkV/vVhUV6tWArmKjVuvP4so.sHbhUCO4reSH/2vP2Wbwn/c4i', NULL, NULL, NULL, '', 1, 'conkacab@gmail.com', '2025-03-10 13:39:22', NULL, '2025-03-10 13:37:04', '2025-03-12 08:17:47', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -627,7 +730,103 @@ INSERT INTO `valaszts` (`mennyiseg`, `kedvezmeny`, `rendeles_id`, `termek_id`) V
 (1, NULL, 42, 3),
 (2, NULL, 43, 3),
 (2, NULL, 48, 2),
-(1, NULL, 49, 2);
+(1, NULL, 49, 2),
+(2, NULL, 50, 2),
+(2, NULL, 51, 2),
+(2, NULL, 52, 2),
+(2, NULL, 53, 2),
+(2, NULL, 54, 2),
+(2, NULL, 55, 2),
+(2, NULL, 56, 2),
+(2, NULL, 57, 2),
+(2, NULL, 58, 2),
+(2, NULL, 59, 2),
+(2, NULL, 60, 2),
+(2, NULL, 61, 2),
+(2, NULL, 62, 2),
+(2, NULL, 63, 2),
+(2, NULL, 64, 2),
+(2, NULL, 65, 2),
+(2, NULL, 66, 2),
+(2, NULL, 67, 2),
+(2, NULL, 68, 2),
+(2, NULL, 69, 2),
+(2, NULL, 70, 2),
+(2, NULL, 71, 2),
+(2, NULL, 72, 2),
+(2, NULL, 73, 2),
+(2, NULL, 74, 2),
+(2, NULL, 75, 2),
+(2, NULL, 76, 2),
+(2, NULL, 77, 2),
+(2, NULL, 78, 2),
+(2, NULL, 79, 2),
+(2, NULL, 80, 2),
+(2, NULL, 81, 2),
+(2, NULL, 82, 2),
+(2, NULL, 83, 2),
+(2, NULL, 85, 2),
+(2, NULL, 86, 2),
+(2, NULL, 87, 2),
+(2, NULL, 88, 2),
+(2, NULL, 89, 2),
+(2, NULL, 90, 2),
+(2, NULL, 91, 2),
+(2, NULL, 92, 2),
+(2, NULL, 93, 2),
+(2, NULL, 94, 2),
+(2, NULL, 95, 2),
+(2, NULL, 96, 2),
+(2, NULL, 97, 2),
+(2, NULL, 98, 2),
+(2, NULL, 99, 2),
+(2, NULL, 100, 2),
+(2, NULL, 101, 2),
+(2, NULL, 102, 2),
+(2, NULL, 103, 2),
+(2, NULL, 104, 2),
+(2, NULL, 105, 2),
+(2, NULL, 106, 2),
+(2, NULL, 107, 2),
+(2, NULL, 108, 2),
+(2, NULL, 109, 2),
+(2, NULL, 110, 2),
+(2, NULL, 111, 2),
+(2, NULL, 112, 2),
+(2, NULL, 113, 2),
+(2, NULL, 114, 2),
+(2, NULL, 117, 2),
+(2, NULL, 118, 2),
+(2, NULL, 119, 2),
+(2, NULL, 120, 2),
+(2, NULL, 121, 2),
+(2, NULL, 122, 2),
+(2, NULL, 123, 2),
+(2, NULL, 124, 2),
+(2, NULL, 125, 2),
+(2, NULL, 126, 2),
+(2, NULL, 127, 2),
+(2, NULL, 128, 2),
+(2, NULL, 129, 2),
+(2, NULL, 130, 2),
+(2, NULL, 131, 2),
+(2, NULL, 132, 2),
+(2, NULL, 133, 2),
+(2, NULL, 134, 2),
+(2, NULL, 135, 2),
+(2, NULL, 136, 2),
+(2, NULL, 137, 2),
+(2, NULL, 138, 2),
+(2, NULL, 139, 2),
+(2, NULL, 140, 2),
+(2, NULL, 141, 2),
+(2, NULL, 142, 2),
+(2, NULL, 143, 2),
+(2, NULL, 144, 2),
+(1, NULL, 145, 2),
+(1, NULL, 146, 2),
+(1, NULL, 147, 2),
+(1, NULL, 148, 2);
 
 -- --------------------------------------------------------
 
@@ -652,7 +851,7 @@ INSERT INTO `vasarlos` (`id`, `nev`, `email`, `telefonszam`, `cegId`) VALUES
 (2, 'Szűcs Tímea', 'szucstimea@gmail.com', '0123', NULL),
 (3, 'Szűcs Tímea', 'szucstimea02@gmail.com', '06201234567', NULL),
 (4, 'Csonka Csaba', 'csonkacsaba1986@gmail.com', '06306417604', NULL),
-(5, 'Csonka Csaba', 'conkacabi@gmail.com', '06306417604', NULL);
+(5, 'Csonka Csaba', 'conkacabi@gmail.com', '+36 30 641 76 04', NULL);
 
 -- --------------------------------------------------------
 
@@ -673,8 +872,7 @@ CREATE TABLE `wishlists` (
 INSERT INTO `wishlists` (`id`, `user_id`, `product_id`) VALUES
 (1, 1, 1),
 (2, 1, 2),
-(4, 16, 4),
-(62, 48, 4);
+(4, 16, 4);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -885,7 +1083,7 @@ ALTER TABLE `cimkes`
 -- AUTO_INCREMENT a táblához `cims`
 --
 ALTER TABLE `cims`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT a táblához `dolgozo`
@@ -933,7 +1131,7 @@ ALTER TABLE `kategorizals`
 -- AUTO_INCREMENT a táblához `kepeks`
 --
 ALTER TABLE `kepeks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT a táblához `migrations`
@@ -957,19 +1155,19 @@ ALTER TABLE `popups`
 -- AUTO_INCREMENT a táblához `rendeles`
 --
 ALTER TABLE `rendeles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT a táblához `termeks`
 --
 ALTER TABLE `termeks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT a táblához `uzlets`

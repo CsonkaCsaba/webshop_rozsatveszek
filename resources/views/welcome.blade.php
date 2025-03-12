@@ -24,7 +24,7 @@
         <h4> 👋 Üdvözlünk @auth {{auth()->user()->name}} !</h4>
                 {{ session('status') }}
                 {{ __('You are logged in!') }}
-                @if(Auth::user() &&  Auth::user()->admin == 1)<br>
+                @if( Auth::user()->role == "Adminisztrátor")<br>
                 <!-- <script>window.location = "http://localhost/webshop_rozsatveszek/public/dolgozoi";</script>  -->
                 <a class="link" href="dolgozoi" id="admin"> <button type="button" class="btn btn-dark mt-4">Tovább a dolgozói felületre</button></a>
                 @endif

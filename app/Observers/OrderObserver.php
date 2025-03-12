@@ -11,7 +11,7 @@ class OrderObserver
      */
     public function created(Rendeles $rendeles): void
     {
-        //event(new OrderCreated($rendeles));
+        event(new OrderCreated($rendeles));
         //Log::info('Order created from Observer: ' . $rendeles->id);
     }
 

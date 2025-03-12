@@ -90,25 +90,25 @@ const KosarAsync = defineAsyncComponent({
 })
 app.component('Kosar', KosarAsync);
 
-const CompanyDataAsync = defineAsyncComponent({
-    loader:() => import('./components/CompanyData.vue')
-})
-app.component('companydata', CompanyDataAsync);
+// const CompanyDataAsync = defineAsyncComponent({
+//     loader:() => import('./components/CompanyData.vue')
+// })
+// app.component('companydata', CompanyDataAsync);
 
-const GalleryAsync = defineAsyncComponent({
-    loader:() => import('./components/Gallery.vue')
-})
-app.component('gallery', GalleryAsync);
+// const GalleryAsync = defineAsyncComponent({
+//     loader:() => import('./components/Gallery.vue')
+// })
+// app.component('gallery', GalleryAsync);
 
 const SwiperGalleryAsync = defineAsyncComponent({
     loader:() => import('./components/Swiper_gallery.vue')
 })
 app.component('swiper_gallery', SwiperGalleryAsync);
 
-const News_admin_Async = defineAsyncComponent({
-    loader:() => import('./components/News_admin.vue')
-})
-app.component('news_admin', News_admin_Async);
+// const News_admin_Async = defineAsyncComponent({
+//     loader:() => import('./components/News_admin.vue')
+// })
+// app.component('news_admin', News_admin_Async);
 
 const Swiper_news_Async = defineAsyncComponent({
     loader:() => import('./components/Swiper_news.vue')
@@ -160,10 +160,10 @@ const AddNews_Async = defineAsyncComponent({
 })
 app.component('addnews', AddNews_Async);
 
-const Products_admin_Async = defineAsyncComponent({
-    loader:() => import('./components/Products_admin.vue')
-})
-app.component('products_admin', Products_admin_Async);
+// const Products_admin_Async = defineAsyncComponent({
+//     loader:() => import('./components/Products_admin.vue')
+// })
+// app.component('products_admin', Products_admin_Async);
 
 const Products_admin_list_Async = defineAsyncComponent({
     loader:() => import('./components/Products_admin_list.vue')
@@ -220,10 +220,10 @@ const Loader = defineAsyncComponent({
 })
 app.component('loader', Loader);
 
-const BannerPopup = defineAsyncComponent({
-    loader:() => import('./components/BannerPopupAdmin.vue')
-})
-app.component('BannerPopupAdmin', BannerPopup);
+// const BannerPopup = defineAsyncComponent({
+//     loader:() => import('./components/BannerPopupAdmin.vue')
+// })
+// app.component('BannerPopupAdmin', BannerPopup);
 
 const Banner_Admin = defineAsyncComponent({
     loader:() => import('./components/Banner_Admin.vue')
@@ -315,10 +315,10 @@ const ModalForProductDetails = defineAsyncComponent({
 })
 app.component('ModalForProductDetails', ModalForProductDetails);
 
-const Users_Admin = defineAsyncComponent({
-    loader:() => import('./components/Users_Admin.vue')
-})
-app.component('users_admin', Users_Admin);
+// const Users_Admin = defineAsyncComponent({
+//     loader:() => import('./components/Users_Admin.vue')
+// })
+// app.component('users_admin', Users_Admin);
 
 import Home from './components/Home.vue';
 app.component('Home', Home);
@@ -334,8 +334,8 @@ import News_front_child from './components/News_front_child.vue';
 app.component('News_front_child', News_front_child);
 
 
-import Foot from './components/Foot.vue';
-app.component('Foot', Foot);
+import Footer from './components/Footer.vue';
+app.component('Footer', Footer);
 
 import Wishlist from './components/Wishlist.vue';
 app.component('kivansaglista', Wishlist);
@@ -365,6 +365,7 @@ import {
     faMinus,
     faPhone,
     faUser,
+    faUserCircle,
     faTrash,
     faPen,
     faPlus,
@@ -418,6 +419,7 @@ library.add(
     faMagnifyingGlass,
     faPhone,
     faUser,
+    faUserCircle,
     faYoutube,
     faTrash,
     faPen,

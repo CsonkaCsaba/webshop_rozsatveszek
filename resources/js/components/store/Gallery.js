@@ -23,7 +23,8 @@ export const GalleryStore = defineStore("Gallery",{
         noFile: false,
         reload: 0,
         slideIndex: 1,
-        currentImage: ""
+        currentImage: "",
+        loadedOnce: false,
         }
     },
     getters: {
@@ -32,23 +33,28 @@ export const GalleryStore = defineStore("Gallery",{
     actions: {
 
         async fetchGallery(){
-            this.gallery = [];
-            let gallery = [];
-            try {
-                    await axios.get('api/galeria').then(function(response){
-                    gallery = response.data
-                    }).catch(error => {
-                        if (error.response.status === 500) {
-                              location.reload();
-                              console.error('Internal Server Error: Please try again later.');
-                        } 
-                    });
-                for(const element of gallery){
-                        this.gallery.push(element);
+            if(this.loadedOnce === true){
+                return
+            } else {
+                this.gallery = [];
+                let gallery = [];
+                try {
+                        await axios.get('api/galeria').then(function(response){
+                        gallery = response.data
+                        }).catch(error => {
+                            if (error.response.status === 500) {
+                                location.reload();
+                                console.error('Internal Server Error: Please try again later.');
+                            } 
+                        });
+                    for(const element of gallery){
+                            this.gallery.push(element);
+                        }
                     }
-                }
-                 catch(error){
-                    console.log(error.response.data)
+                    catch(error){
+                        console.log(error.response.data)
+                    }
+                    this.loadedOnce = true;
                 }
         },
         deletePhoto(id){

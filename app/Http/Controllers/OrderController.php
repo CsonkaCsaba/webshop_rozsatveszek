@@ -174,7 +174,7 @@ class OrderController extends Controller
                 app('App\Http\Controllers\EmailController')->sendThankYouOrderEmail($lastInsertedId, $email, $name, $products, $billingAddress, $shippingAddress, $total, $comment, $fizetes, $szallitas);
 
             };
-            OrderCreated::dispatch($rendeles);
+            //OrderCreated::dispatch($rendeles);
         }catch(Exception $e){
             return $e->getMessage();
         }

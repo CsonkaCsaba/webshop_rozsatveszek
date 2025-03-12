@@ -40,7 +40,8 @@ export const ProductStore = defineStore("Product",{
             photo: {},
         },
         tags: false,
-        addNewTag: false
+        addNewTag: false,
+        loadedOnce: false,
        
         }
     },
@@ -108,60 +109,65 @@ export const ProductStore = defineStore("Product",{
             }
         },
         async fetchProduct(){
-            this.loading = true;
-            let termekek = [];
-            try {
-                    await axios.get('api/termekek').then(function(response){
-                       
-                        termekek = response.data
-                    }).catch(error => {
-                        if (error.response.status === 500) {
-                              location.reload();
-                              console.error('Internal Server Error: Please try again later.');
-                        } 
-                    });
-                    for(const termek of termekek){
-                        termek.edit = false
-                        let localWish = JSON.parse(localStorage.getItem("wish")) 
-                        if(localWish != null){//logged in users
-                            for(const wish of localWish){                         
-                                if(wish.product_id || wish.id){ 
-                                    if(termek.id === wish.product_id || termek.id === wish.id){  
-                                        termek.addedToWishlist = true
+            if(this.loadedOnce === true){
+                return
+            }else {
+                this.loading = true;
+                let termekek = [];
+                try {
+                        await axios.get('api/termekek').then(function(response){
+                        
+                            termekek = response.data
+                        }).catch(error => {
+                            if (error.response.status === 500) {
+                                location.reload();
+                                console.error('Internal Server Error: Please try again later.');
+                            } 
+                        });
+                        for(const termek of termekek){
+                            termek.edit = false
+                            let localWish = JSON.parse(localStorage.getItem("wish")) 
+                            if(localWish != null){//logged in users
+                                for(const wish of localWish){                         
+                                    if(wish.product_id || wish.id){ 
+                                        if(termek.id === wish.product_id || termek.id === wish.id){  
+                                            termek.addedToWishlist = true
+                                        } 
+                                    }
+                                }
+                            } else {//logged in users
+                                let wishlistProducts = [];
+                                await axios.get('api/user/wishlist').then(function(response){
+                                    
+                                    wishlistProducts = response.data
+                                }).catch(error => {
+                                    if (error.response.status === 500) {
+                                        location.reload();
+                                        console.error('Internal Server Error: Please try again later.');
                                     } 
+                                });
+                                if(wishlistProducts.length === 0){
+                                    this.emptyMessage = true;
                                 }
+                                localStorage.setItem('wish', JSON.stringify(wishlistProducts));
+                                let localW = JSON.parse(localStorage.getItem("wish"))
+                                    for(const wish of localW){  
+                                        if(termek.id === wish.product_id){
+                                            termek.addedToWishlist = true
+                                            }
+                                    }
                             }
-                         } else {//logged in users
-                            let wishlistProducts = [];
-                            await axios.get('api/user/wishlist').then(function(response){
                                 
-                                wishlistProducts = response.data
-                            }).catch(error => {
-                                if (error.response.status === 500) {
-                                      location.reload();
-                                      console.error('Internal Server Error: Please try again later.');
-                                } 
-                            });
-                            if(wishlistProducts.length === 0){
-                                this.emptyMessage = true;
-                            }
-                            localStorage.setItem('wish', JSON.stringify(wishlistProducts));
-                            let localW = JSON.parse(localStorage.getItem("wish"))
-                                for(const wish of localW){  
-                                    if(termek.id === wish.product_id){
-                                        termek.addedToWishlist = true
-                                        }
-                                }
-                         }
-                            
-                        this.products.push(termek);
+                            this.products.push(termek);
+                        }
                     }
-                }
-                 catch(error){
-                    console.log(error)
-                }
+                    catch(error){
+                        console.log(error)
+                    }
 
-        this.loading = false;
+                this.loading = false;
+                this.loadedOnce = true;
+            }
         },
         addNewProductBtn(){
             this.addNewProduct = true

@@ -25,9 +25,13 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
          {
-        if ( $user->admin == 1 ) {// do your magic here
+        if ( $user->role == "Adminisztrátor") {// do your magic here
             return redirect('/dolgozoi');
-        }else{
+
+        } elseif ( $user->role == "Bolt kezelő") {
+            return redirect('/boltkezeloi');
+        }
+        else{
             return redirect('/');
             }
         }

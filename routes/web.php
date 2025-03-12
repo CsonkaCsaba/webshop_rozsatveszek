@@ -23,11 +23,11 @@ use App\Models\Rendeles;
 |
 */
 // Route::get('/')->name('welcome');;
-Route::get('/broadcast',function(){
-    $order = Rendeles::latest('id')->first();
-    broadcast(new OrderCreated($order));
-    return $order;
-});
+// Route::get('/broadcast',function(){
+//     $order = Rendeles::latest('id')->first();
+//     broadcast(new OrderCreated($order));
+//     return $order;
+// });
 
 Route::get('/', function () {
     return view('welcome');
@@ -88,8 +88,11 @@ Auth::routes(['verify' => true]);
 
 Route::get('/dolgozoi', function () {
     return view('dolgozoi');
-});
+})->middleware('admin');
 
+Route::get('/boltkezeloi', function () {
+    return view('boltkezeloi');
+})->middleware('boltkezelo');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('send-mail',[EmailController::class, 'sendWelcomeEmail']);

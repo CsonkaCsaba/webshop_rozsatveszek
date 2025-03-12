@@ -31,7 +31,8 @@ export const OrdersStore = defineStore("OrdersStore",{
                         {"id": 2, "option":"Kiszállítás alatt"}, 
                         {"id": 3, "option":"Teljesítve"},
                         {"id": 4, "option":"Visszamondott"},
-                        {"id": 5, "option":"Sikertelen kézbesítés"}],
+                        {"id": 5, "option":"Sikertelen kézbesítés"},
+                        {"id": 6, "option":"Utalás ellenőrzése"}],
         optionsFinal:[],
         updateSuccessful: false,
         accepted: false,
@@ -127,7 +128,7 @@ export const OrdersStore = defineStore("OrdersStore",{
             },
         elementId: 0,
         linemonth: true,
-        salesSumDelivered: 0
+        salesSumDelivered: 0,
         }
     },
     getters: {
@@ -392,6 +393,30 @@ export const OrdersStore = defineStore("OrdersStore",{
                 slicedOrders = this.orders.filter((order) =>
                 order.vasarlo.nev.toLowerCase().includes(this.input.toLowerCase())
             ).slice(this.startIndex, this.endIndex);
+        },
+        show(status){
+            const startIndex = (this.currentPage * this.itemsPerPage) - this.itemsPerPage;
+            const endIndex = startIndex + this.itemsPerPage; 
+            slicedOrders = [];
+            const slicedOrdersFilter = this.orders.filter((order) =>
+                order.allapot.toLowerCase().includes(status.toLowerCase())
+            )
+            localStorage.clear();
+            localStorage.setItem('orders', JSON.stringify(slicedOrdersFilter));
+            //console.log(slicedOrdersFilter);
+            this.totalOrders = slicedOrdersFilter.length;
+            slicedOrders = slicedOrdersFilter.slice(this.startIndex,this.endIndex);
+            console.log(slicedOrders);
+            this.reload += 1;
+        },
+        clearlist(){
+            const startIndex = (this.currentPage * this.itemsPerPage) - this.itemsPerPage;
+            const endIndex = startIndex + this.itemsPerPage; 
+            slicedOrders = this.orders.slice(startIndex, endIndex);
+            this.totalOrders = this.orders.length;
+            localStorage.clear();
+            localStorage.setItem('orders', JSON.stringify(this.orders));
+            this.reload += 1;
         },
         minusYear(){
             this.currentYear -= 1;

@@ -19,26 +19,10 @@
     <body>
 <div id="">
     <div class="under-header">
-        <p>A FELÜLETRE A BELÉPÉS <br>CSAK DOLGOZÓI JOGOSULTÁGGAL LEHETSÉGES</p>
+        <p class="fs-4">A FELÜLETRE A BELÉPÉS <br>CSAK DOLGOZÓI JOGOSULTÁGGAL LEHETSÉGES</p>
         <hr>
-        <a href="termekek"><button type="button" class="btn btn-vasarlas">Vásárlás</button></a>
+
         <div id="cover-box" class="w-75 d-flex bg-white border-secondary">
-            <div class="container">
-                <div class="row justify-content-around m-2">
-                    <div class="col text-center">
-                        <img class="services" src="../resources/assets/kepek/cover-box-trolley.png">
-                        <p class="m-1">Megbízható<br> csomagolás és szállítás</p>
-                    </div>
-                    <div class="col text-center">
-                        <img class="services" src="../resources/assets/kepek/cover-box-card.png">
-                        <p class="m-1">Biztonságos<br> fizetés</p>  
-                    </div>
-                    <div class="col text-center">
-                        <img class="services" src="../resources/assets/kepek/cover-box-discount.png">
-                        <p class="m-1">Rendszeres<br> kedvezmények</p>  
-                    </div>
-                </div>
-            </div>
         </div>
             <div class="row justify-content-center" id="logreg">
                 <div class="col-md-8">
@@ -83,15 +67,11 @@
                                     </div>
                                 </div>
 
-                                <div class="row mb-3">
-                                    <div class="col-md-6 offset-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                            <label class="form-check-label" for="remember">
-                                                {{ __('Remember Me') }}
-                                            </label>
-                                        </div>
+                                <div class="row mb-0">
+                                    <div class="col-md-8 offset-md-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Login') }}
+                                        </button>
                                     </div>
                                 </div>
                             </form>

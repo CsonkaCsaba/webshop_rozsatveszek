@@ -64,6 +64,7 @@ const cartData = ShoppingCart();
 
 .nav-container .nav-item:first-of-type{
     clip-path: polygon(calc(100% - 1.5rem) 0,100% 50%,calc(100% - 1.5rem) 100%,0 100%,0 50%,0 0);
+   
 }
 
 .nav-container .nav-item:last-of-type{
@@ -72,19 +73,20 @@ const cartData = ShoppingCart();
 
 .nav-container .active{
     background: #E4A0B7;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
 }
 
 .btn-vasarlas{
     font-size: 20px;
     border-radius: 18px;
-    background: #E4A0B7;
+    background: #d95f88 ;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     color: #fff;
 }
 
 .btn-vasarlas:hover{
     color: #fff;
-    background: #d95f88;
+    background: #E4A0B7;
     transition: .5s ease all;
 }
 

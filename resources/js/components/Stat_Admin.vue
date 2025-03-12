@@ -8,7 +8,7 @@ const { currentYear, salesSum,deliveredSum, deliverySum, prepare, canceled, notD
 
 <template>
 <div class="container fontcolor">
-    <div class="justify-content-center text-center">
+    <div class="justify-content-center text-center pt-2">
         <div class="divider fontcolor"><span></span><span><font-awesome-icon :icon="['fas', 'chart-simple']" /> STATISZTIKA</span><span></span></div>
         <img src="../../assets/kepek/charts.webp" alt="desk" width="120" height="120">
     </div>

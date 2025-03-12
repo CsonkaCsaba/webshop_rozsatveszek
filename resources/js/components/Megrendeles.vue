@@ -3,7 +3,7 @@ import { ShoppingCart } from './store/ShoppingCart';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { ref } from "vue";
-const {notApproved} = storeToRefs(ShoppingCart())
+const { approved } = storeToRefs(ShoppingCart())
 const { checkConsent} = ShoppingCart()
 
 const router = useRouter();
@@ -12,7 +12,7 @@ const cartData = ShoppingCart();
 let errorMsg = ref("");
 
 function toDB() {
-    let consent = document.getElementById('consent').validity.valid
+    
     if(consent){
         cartData.storeToDB()
             .then((response) => {
@@ -23,8 +23,6 @@ function toDB() {
             .catch((error) => {
                 console.log(error)
             });
-        }else{
-            notApproved = true;
         }
 }
 
@@ -89,7 +87,7 @@ function toDB() {
                     
                 </div>
         </div>
-        <div v-if="notApproved" class="text-danger" >A továbblépéshez kérjük, hogy fogadja el az Adatvédelmi és adtakezelési szabályzatunkat!</div>
+        <div v-if="approved" class="text-danger" >A továbblépéshez kérjük, hogy fogadja el az Adatvédelmi és adtakezelési szabályzatunkat!</div>
         <div class="container">
             <div class="row mt-3 align-items-center">
                 <div class="col-6 d-flex justify-content-start"><a href="szallitas"><button type="button" class="btn btn-vasarlas m-0"><font-awesome-icon :icon="['fas', 'angle-left']" class="iconBack"/> Vissza</button></a></div>

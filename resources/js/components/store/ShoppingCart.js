@@ -37,7 +37,7 @@ export const ShoppingCart = defineStore("ShoppingCart",{
                 comments: '',
                 vegosszeg: 0
             },
-            notApproved: false,
+            approved: false,
         }
     },
 
@@ -110,7 +110,14 @@ export const ShoppingCart = defineStore("ShoppingCart",{
             }catch(error) {
                 alert(error)
             };
+        },
+        checkConsent(){
+            let consent = document.getElementById('consent').validity.valid
+            if(consent){
+                approved = true;
+            }
         }
+        
     },                                                               
     
     persist: {

@@ -37,7 +37,7 @@
     }
     table, tr{
     width: 40% !important;
-    font-size: 10px;
+    font-size: 8px;
     margin-left: 7%;
     }
   }
@@ -47,17 +47,16 @@
 <body style="background-image: url('https://renoma.hu/wp-content/uploads/2024/09/kezdokep.jpg'); background-repeat: no-repeat;background-position: center; align-items: center; align-content: center; width: 80%; margin: auto; text-align: center; border: 1px solid white;border-radius: 15px; padding: 20px;">
 <img src="https://renoma.hu/wp-content/uploads/2025/01/rozsatveszek_logo_kicsi.webp" class="logo" alt="Rózsát veszek webshop" style="border: 1px solid white;border-radius: 15px;" width="150">
 
-    <h1 class="title" style="background-color: white; border: 1px solid black; border-radius: 15px; width: 60%; margin-left: 22%">KÖSZÖNJÜK RENDELÉSÉT!</h1>
+    <h1 class="title" style="background-color: white; border: 1px solid black; border-radius: 15px; width: 60%; margin-left: 22%">👋🏻🟢Köszönjük a rendelésed!🛒✔️🥰</h1>
     <div class="content" style="background-color: white; border: 1px solid black; border-radius: 15px; width: 60%; margin-left: 22%">
         <h3>Kedves {{$name}}!</h3><br>
         <p>
-        Értesítjük, hogy a webáruházunkban leadott <b>rendelése a(z) {{$id}} azonosítószámon </b> megérkezett! <br>
-        A rendelés feldolgozása megkezdődött, szíves türelmét kérjük annak feldolgozásáig.<br>
+        ✔️ Értesítünk, hogy a webáruházunkban leadott <b>rendelésed a(z) {{$id}} azonosítószámon </b> megérkezett!🎉<br>
+        ⏰ A rendelés feldolgozása megkezdődött, szíves türelmed kérjük annak feldolgozásáig.<br>
 
         Fizetés készpénzben vagy bankkártyával átvételkor.<br>
-        <b>Fizetési mód:</b> <br>{{ $pay }}<br>
+        <b>💳 Fizetési mód:</b> <br>{{ $pay }}<br>
         <?php
-        if($pay == "Előre utalás")
             echo"<p><b>Figyelem!</b> <br> Tekintettel arra, hogy előreutalási fizetési módot választott, <br> a rendelése csak abban az esetben lesz érvényes ha az utalás teljesül.<br>
             <b>Bank neve:</b> Teszt bank<br>
             <b>Bankszámlaszám:</b> 12345678-12345678-12345678-12345678<br>
@@ -65,7 +64,7 @@
             <b>SWIFT kód:</b> TPVHUHB <br>
             A közleménybe kérjük, hogy a megrendelés azonosítószámát szíveskedjen feltüntetni!</p><br> ";
         ?>
-        <b>Szállítási mód:</b> <br>{{ $szallitas }}<br>
+        <b>🚚📦 Szállítási mód:</b> <br>{{ $szallitas }}<br>
         </p>
         <p><b>Számlázási cím:</b><br>{{ $billingAddress }}</p><br>
         <p><b>Szállítási cím:</b><br>{{ $shippingAddress }}</p><br>
@@ -95,7 +94,7 @@
             echo"<p><b>Megjegyzés:</b> <br> $comment </p><br> ";
         ?>
         
-        <p stlye="padding: 15px;">Köszöjük, hogy bennünket választott! További kellemes böngészést és vásárlást kívánunk!</p>
+        <p stlye="padding: 15px;">💝 Köszöjük, hogy bennünket választottál! További kellemes böngészést és vásárlást kívánunk! 🛒</p>
         <p stlye="padding: 15px;">{{-- Footer --}}
         © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')</p>
 

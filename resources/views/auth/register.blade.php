@@ -95,14 +95,12 @@ document.getElementById("subscribe").indeterminate = true;
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-12 px-5 text-justify fs-6 fw-light text-muted ">
-                            <span class="text-center"> A regisztrációval, űrlapok kitöltésével kijelentem, hogy önkéntes és befolyásmentes hozzájárulásomat adom ahhoz, hogy a regisztrációkor/feliratkozáskor és weboldal használata során megadott személyes adataimat (név, e-mail cím, telefonszám, adott esetben egyéb adatok) a weboldal üzemeltetője az előzetesen   megismert, ide kattintva elérhető „Adatvédelmi és adtakezelési szabályzat” szerint kezelje.</span>
+                            <div class="col-md-12 fs-6 fw-light text-muted ">
+                                <label for="consent" class="col-md-4 col-form-label" ></label>
+                                <input id="consent" type="checkbox" class="form-check-input ms-2" name="consent" required >
+                                <span class="fw-light text-muted" style="font-size: 75%;"> Elolvastam, tudomásulvettem és elfogadom az „Adatvédelmi és adtakezelési szabályzat” tartalmát.</span>
                             </div>
                             
-                        </div>
-                        <div class="row mb-3 text-center fs-6 fw-light text-muted">
-                            <label for="consent" class="col-md-4 col-form-label text-md-end text-start" >Igen</label>
-                            <input id="consent" type="checkbox" class="form-check-input mt-2" name="consent" required >
                         </div>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">

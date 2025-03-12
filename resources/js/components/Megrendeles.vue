@@ -1,3 +1,34 @@
+<script setup>
+import { ShoppingCart } from './store/ShoppingCart';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+import { ref } from "vue";
+const {notApproved} = storeToRefs(ShoppingCart())
+const { checkConsent} = ShoppingCart()
+
+const router = useRouter();
+const cartData = ShoppingCart();
+
+let errorMsg = ref("");
+
+function toDB() {
+    let consent = document.getElementById('consent').validity.valid
+    if(consent){
+        cartData.storeToDB()
+            .then((response) => {
+                console.log(response);
+                window.location.href = 'sikeresrendeles';
+                cartData.cartItems = []
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+        }else{
+            notApproved = true;
+        }
+}
+
+</script>
 <template>
     <div class="mt-8 mb-5 mx-auto p-2 row container nav-container">
         <div class="col nav-item">Kosár</div>
@@ -50,10 +81,19 @@
             </div>
             <ShoppingCartSide />        
         </div>
+        <div class="row text-center">
+                <div class="col-8 fs-6 fw-light text-muted ">
+                    <label for="consent" class="" ></label>
+                    <input id="consent" type="checkbox" class="form-check-input ms-2" name="consent" required >
+                    <span class="fw-light text-muted"> Elolvastam, tudomásulvettem és elfogadom az „Adatvédelmi és adtakezelési szabályzat” tartalmát.<br></span>
+                    
+                </div>
+        </div>
+        <div v-if="notApproved" class="text-danger" >A továbblépéshez kérjük, hogy fogadja el az Adatvédelmi és adtakezelési szabályzatunkat!</div>
         <div class="container">
             <div class="row mt-3 align-items-center">
                 <div class="col-6 d-flex justify-content-start"><a href="szallitas"><button type="button" class="btn btn-vasarlas m-0"><font-awesome-icon :icon="['fas', 'angle-left']" class="iconBack"/> Vissza</button></a></div>
-                <div class="col-6 d-flex justify-content-end"><button type="submit" class="btn btn-vasarlas m-0" @click="toDB"><font-awesome-icon :icon="['fas', 'truck']" /> Megrendelés</button></div>
+                <div class="col-6 d-flex justify-content-end"><button type="submit" class="btn btn-vasarlas m-0" @click="toDB, checkConsent"><font-awesome-icon :icon="['fas', 'truck']" /> Megrendelés</button></div>
             </div>
         </div>
     </div>
@@ -66,31 +106,6 @@
 
 </template>
 
-<script setup>
-import { ShoppingCart } from './store/ShoppingCart';
-import { useRouter } from 'vue-router';
-import { ref } from "vue";
-
-
-const router = useRouter();
-const cartData = ShoppingCart();
-
-let errorMsg = ref("");
-
-function toDB() {
-
-  cartData.storeToDB()
-    .then((response) => {
-        console.log(response);
-        window.location.href = 'sikeresrendeles';
-        cartData.cartItems = []
-    })
-    .catch((error) => {
-        console.log(error)
-    });
-}
-
-</script>
 
 <style scoped>
 

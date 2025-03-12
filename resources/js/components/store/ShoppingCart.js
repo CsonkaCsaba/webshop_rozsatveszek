@@ -37,6 +37,7 @@ export const ShoppingCart = defineStore("ShoppingCart",{
                 comments: '',
                 vegosszeg: 0
             },
+            notApproved: false,
         }
     },
 

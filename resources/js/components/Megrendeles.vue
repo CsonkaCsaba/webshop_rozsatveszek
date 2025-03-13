@@ -1,32 +1,4 @@
-<script setup>
-import { ShoppingCart } from './store/ShoppingCart';
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
-import { ref } from "vue";
-const { approved } = storeToRefs(ShoppingCart())
-const { checkConsent} = ShoppingCart()
 
-const router = useRouter();
-const cartData = ShoppingCart();
-
-let errorMsg = ref("");
-
-function toDB() {
-    
-    if(consent){
-        cartData.storeToDB()
-            .then((response) => {
-                console.log(response);
-                window.location.href = 'sikeresrendeles';
-                cartData.cartItems = []
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-        }
-}
-
-</script>
 <template>
     <div class="mt-8 mb-5 mx-auto p-2 row container nav-container">
         <div class="col nav-item">Kosár</div>
@@ -35,38 +7,43 @@ function toDB() {
         <div class="col nav-item active">Megrendelés</div>
     </div>
     <div v-if="cartData.cartItems.length > 0 ">
-        <div id="megrendeles-content" class="container-fluid d-flex row p-md-0">
-            <div class="flex-grow-1 col-12 col-sm-7 col-md-7 col-lg-8 font-20">
-                <div><b>Számlázási adatok</b>
-                    <div class="ms-5 text-start font-15"><b>Név: </b> {{ cartData.billingAddress.name }}</div>
-                    <div v-if="cartData.billingAddress.company == 'yes'" class="ms-5 text-start font-15"><b>Adószám: </b> {{ cartData.billingAddress.taxNumber }}</div>
-                    <div class="ms-5 text-start font-15"><b>E-mail cím: </b> {{ cartData.billingAddress.email }}</div>
-                    <div class="ms-5 text-start font-15"><b>Telefonszám: </b> {{ cartData.billingAddress.phone }}</div>
-                    <div class="ms-5 text-start font-15"><b>Irányítószám: </b> {{ cartData.billingAddress.zipCode }}</div>
-                    <div class="ms-5 text-start font-15"><b>Település: </b> {{ cartData.billingAddress.city }}</div>
-                    <div class="ms-5 text-start font-15"><b>Utca: </b> {{ cartData.billingAddress.street }}</div>
-                    <div class="ms-5 text-start font-15"><b>Házszám: </b> {{ cartData.billingAddress.house }}</div>
+        <div id="megrendeles-content" class="container">
+            <div class="row pb-4">
+            <div class="col-sm-12 col-md-12 col-lg-7 font-20 mt-2">
+                <div class="pt-2"><b>Megrendelés összesítése</b>
+                    <hr class="cimalatt_hr m-auto mb-4 mt-3">
+                    <div class="row">
+                        <div class="fw-bold text-center">Számlázási adatok</div>
+                        <div class="ms-5 text-start font-15"><b>Név: </b> {{ cartData.billingAddress.name }}</div>
+                        <div v-if="cartData.billingAddress.company == 'yes'" class="ms-5 text-start font-15"><b>Adószám: </b> {{ cartData.billingAddress.taxNumber }}</div>
+                        <div class="ms-5 text-start font-15"><b>E-mail cím: </b> {{ cartData.billingAddress.email }}</div>
+                        <div class="ms-5 text-start font-15"><b>Telefonszám: </b> {{ cartData.billingAddress.phone }}</div>
+                        <div class="ms-5 text-start font-15"><b>Irányítószám: </b> {{ cartData.billingAddress.zipCode }}</div>
+                        <div class="ms-5 text-start font-15"><b>Település: </b> {{ cartData.billingAddress.city }}</div>
+                        <div class="ms-5 text-start font-15"><b>Utca: </b> {{ cartData.billingAddress.street }}</div>
+                        <div class="ms-5 text-start font-15"><b>Házszám: </b> {{ cartData.billingAddress.house }}</div>
+                    </div>
                 </div>
-                <div v-if="cartData.db_data.delivery=='tohouse' && cartData.shippingAddress.new == 'no'" class="my-3"><b>Szállítási adatok</b>
+                <div v-if="cartData.db_data.delivery=='tohouse' && cartData.shippingAddress.new == 'no'" class="fw-bold text-center mt-4"><b>Szállítási adatok</b>
                     <div class="font-15">A számlázási adatokkal megegyeznek.</div>
                 </div>
-                <div v-if="cartData.db_data.delivery=='tohouse' && cartData.shippingAddress.new == 'yes'" class="my-3"><b>Szállítási adatok</b>
+                <div v-if="cartData.db_data.delivery=='tohouse' && cartData.shippingAddress.new == 'yes'" class="fw-bold text-center  mt-4"><b>Szállítási adatok</b>
                     <div class="ms-5 text-start font-15"><b>Név: </b> {{ cartData.shippingAddress.name }}</div>
                     <div class="ms-5 text-start font-15"><b>Irányítószám: </b> {{ cartData.shippingAddress.zipCode }}</div>
                     <div class="ms-5 text-start font-15"><b>Település: </b> {{ cartData.shippingAddress.city }}</div>
                     <div class="ms-5 text-start font-15"><b>Utca: </b> {{ cartData.shippingAddress.street }}</div>
                     <div class="ms-5 text-start font-15"><b>Házszám: </b> {{ cartData.shippingAddress.house }}</div>
                 </div>
-                <div v-if="cartData.db_data.delivery=='personal' && cartData.shippingAddress.new == 'no'" class="my-3"><b>Szállítási adatok</b>
-                    <div class="font-15">Személyes átvétel.</div>
+                <div v-if="cartData.db_data.delivery=='personal' && cartData.shippingAddress.new == 'no'" class="fw-bold text-center  mt-4"><b>Szállítási adatok</b>
+                    <div class="text-start font-15 ms-5">Személyes átvétel.</div>
                 </div>
-                <div class="comments container">
+                <div class="comments text-center ms-5 mt-4">
                     <b>Egyéb megjegyzések</b>
                     <form>
-                        <textarea class="mt-2" v-model="cartData.comment"></textarea>
+                        <textarea class="w-75" v-model="cartData.comment"></textarea>
                     </form>
                 </div>
-                <div class="my-3"><b>Fizetési mód</b>
+                <div class="my-1"><b>Fizetési mód</b>
                     <label class="container" for="delivery">
                         Utánvét
                         <input type="radio" id="delivery" value="delivery" v-model="cartData.payment" name="payment"/>
@@ -76,22 +53,29 @@ function toDB() {
                         <input type="radio" id="transfer" value="transfer" v-model="cartData.payment" name="payment"/>
                     </label>
                 </div>
-            </div>
-            <ShoppingCartSide />        
-        </div>
-        <div class="row text-center">
+                
+                </div>
+                <ShoppingCartSide />  
+                <div class="row text-center">
                 <div class="col-8 fs-6 fw-light text-muted ">
                     <label for="consent" class="" ></label>
-                    <input id="consent" type="checkbox" class="form-check-input ms-2" name="consent" required >
+                    <input id="consent" type="checkbox" class="form-check-input ms-2 messageCheckbox" v-model="approvedConsent" name="consent" required>
                     <span class="fw-light text-muted"> Elolvastam, tudomásulvettem és elfogadom az „Adatvédelmi és adtakezelési szabályzat” tartalmát.<br></span>
-                    
                 </div>
+                <div  v-if="errorMsgConsent" class="row mt-1 ms-5">
+                <div class="col-10 text-start ms-5">
+                    <span  class="text-danger fs-6 fw-light text-start fw-bold" ><font-awesome-icon :icon="['fas', 'angle-up']" /> A továbblépéshez kérjük, hogy ismerje meg és fogadja el az Adatvédelmi és adtakezelési         szabályzatunkat!</span>
+                </div>
+            </div>
+        </div>    
+            </div>
+             
         </div>
-        <div v-if="approved" class="text-danger" >A továbblépéshez kérjük, hogy fogadja el az Adatvédelmi és adtakezelési szabályzatunkat!</div>
-        <div class="container">
+        <div class="container"> 
             <div class="row mt-3 align-items-center">
                 <div class="col-6 d-flex justify-content-start"><a href="szallitas"><button type="button" class="btn btn-vasarlas m-0"><font-awesome-icon :icon="['fas', 'angle-left']" class="iconBack"/> Vissza</button></a></div>
-                <div class="col-6 d-flex justify-content-end"><button type="submit" class="btn btn-vasarlas m-0" @click="toDB, checkConsent"><font-awesome-icon :icon="['fas', 'truck']" /> Megrendelés</button></div>
+                <div class="col-6 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-vasarlas m-0 gombHover" @click="toDB"><font-awesome-icon :icon="['fas', 'truck']" class="icon"/> <span id="gombfelirat">Megrendelés</span></button></div>
             </div>
         </div>
     </div>
@@ -103,7 +87,39 @@ function toDB() {
     </div>
 
 </template>
+<script setup>
+import { ShoppingCart } from './store/ShoppingCart';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+import { ref } from "vue";
+const { approved } = storeToRefs(ShoppingCart())
+const { } = ShoppingCart()
+//let consent = document.getElementById("consent");
+let approvedConsent = ref(false);
+let errorMsgConsent = ref(false);
+const router = useRouter();
+const cartData = ShoppingCart();
 
+
+let errorMsg = ref("");
+
+function toDB() {
+    
+    if(approvedConsent.value === true){
+        cartData.storeToDB()
+            .then((response) => {
+                window.location.href = 'sikeresrendeles';
+                cartData.cartItems = []
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+        }else{
+            errorMsgConsent.value = true;
+        }
+}
+
+</script>
 
 <style scoped>
 
@@ -155,16 +171,37 @@ function toDB() {
   height: 100px;
   padding: 12px 20px;
   box-sizing: border-box;
-  border: 2px solid #ccc;
+  border: 0.1rem solid #e6e6e6;
   border-radius: 4px;
   background-color: #f8f8f8;
   font-size: 16px;
   resize: none;
 }
-
+#megrendeles-content {
+    border: 0.1rem solid #e6e6e6;
+    padding: 0px;
+}
 .kosar-ures{
     font-size: 20px;
     justify-content: center;
 }
 
+.gombHover:hover{
+    background: #f7f5f0;
+    color: #ffffff;
+    transition: all 0.5s ease-out;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.45));
+    transform: scale(1.1, 1.1);
+    .icon{
+        transform: translateX(180%);
+        scale: 1.2;
+        transition: all 0.5s ease-out;
+        filter: drop-shadow(0px 4px 4px rgba(255, 255, 255, 0.45));
+        color: #212529
+    };
+    #gombfelirat{
+        visibility: hidden;
+        transition: all 0.1s ease-out;
+    }
+}
 </style>

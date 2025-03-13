@@ -194,7 +194,7 @@ export default {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">🧐 Megnézem a többit is!</button>
-                    <a href="kosar"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon"/> Tovább a kosárhoz</button></a>                    
+                    <a href="kosar"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon"/> Tovább a kosárhoz <font-awesome-icon :icon="['fas', 'angle-right']" class="ps-1 icon" /></button></a>                    
                 </div>
             </div>
         </div>

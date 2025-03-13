@@ -16,9 +16,10 @@ const cartData = ShoppingCart();
 </script>
 
 <template>
-<div class="col-12 col-sm-5 col-md-5 col-lg-4 kosar-tartalma">
+<div class="col-sm-12 col-md-12 col-lg-5 kosar-tartalma">
     <section class="px-2">
-        <div class="my-3">Kosár tartalma</div>
+        <div class="my-3 fw-bolder"><font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon"/>  Kosár tartalma</div>
+        <hr class="cimalatt_hr m-auto mb-4">
         <table class="m-auto">
             <tr class="mb-3">
                 <th>Termék</th>
@@ -26,9 +27,12 @@ const cartData = ShoppingCart();
                 <th>Mennyiség/db</th>
             </tr>
             <tr v-for="product in cartData.cartItems">
-                <td>{{ product.nevHu }}</td>
+                <td><img :src="product.img" class="img-fluid img-max rounded w-25 h-auto">  {{ product.nevHu }}</td>
                 <td>{{ product.ar }}</td>
                 <td>{{ product.quantity }}</td>
+                <td><font-awesome-icon class="plusSign mt-3" :icon="['fas', 'plus']" @click="cartData.increment(product)"/>
+                    <font-awesome-icon class="minusSign" :icon="['fas', 'minus']" @click="cartData.decrement(product)"/></td> 
+                <td><font-awesome-icon :icon="['fas', 'trash']" class="trash" @click="cartData.removeFromCart(product)" /></td>    
             </tr>
             <!-- <tr>
                 <td colspan="2" class="table-foot"><b>Végösszeg: </b></td>
@@ -39,8 +43,11 @@ const cartData = ShoppingCart();
                 <td class="table-foot no-border"><b>+{{ szallitas }} Ft</b></td>
             </tr> -->
             <tr>
+                <td id="fizetendo" colspan="3" class="table-foot no-border"><a href="termekek">+ Tegyünk még hozzá további csodálatos rózsákat!🌹💖</a></td>
+            </tr>
+            <tr>
                 <!-- <td id="fizetendo" colspan="3" class="table-foot no-border"><b>Fizetendő: {{ cartData.countTotal() + szallitas }} Ft</b></td> -->
-                <td id="fizetendo" colspan="3" class="table-foot no-border"><b>Termékek végösszege: {{ cartData.countTotal()}} Ft</b></td>
+                <td id="fizetendo" colspan="3" class="table-foot no-border"><b>Termékek végösszege: {{ cartData.countTotal().toLocaleString('hu-HU')}} ,-Ft</b></td>
             </tr>
         </table>
     </section>
@@ -74,5 +81,9 @@ const cartData = ShoppingCart();
 
 #fizetendo{
     font-size: 15px;
+}
+.plusSign, .minusSign{
+    font-size: 1em;
+    cursor: pointer;
 }
 </style>

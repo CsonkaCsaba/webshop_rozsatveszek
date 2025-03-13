@@ -10,12 +10,12 @@ const cartData = ShoppingCart();
         <div class="col nav-item active">Kosár</div>
         <div class="col nav-item">Számlázás</div>
         <div class="col nav-item">Szállítás</div>
-        <div class="col nav-item">Fizetés</div>
+        <div class="col nav-item">Megrendelés</div>
     </div>
     <div v-if="cartData.cartItems.length > 0 " class="container">
         <div v-for="item in cartData.cartItems" class="row product-container m-2">
             <img :src="item.img" class="img-fluid img-max m-2 col">
-            <div class="product-name col d-flex align-items-center">{{ item.nevHu }}</div>
+            <div class="product-name col d-flex align-items-center ">{{ item.nevHu }}</div>
             <div class="col egysegar d-flex align-items-center flex-column m-auto">
                 <div>Egységár</div>
                 <div>{{ item.ar }} Ft</div>
@@ -36,7 +36,7 @@ const cartData = ShoppingCart();
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-6 d-flex justify-content-start"><a href="termekek"><button type="button" class="btn btn-vasarlas m-0">Tovább vásárolok</button></a></div>
+                <div class="col-6 d-flex justify-content-start"><a href="termekek"><button type="button" class="btn btn-vasarlas m-0"><font-awesome-icon :icon="['fas', 'cart-shopping']" class="iconBack"/> Tovább vásárolok</button></a></div>
                 <div class="col-6 d-flex justify-content-end"><a href="szamlazas"><button type="button" class="btn btn-vasarlas m-0">Folytatás<font-awesome-icon :icon="['fas', 'angle-right']" class="ps-1 icon" /></button></a></div>
             </div>
         </div>        

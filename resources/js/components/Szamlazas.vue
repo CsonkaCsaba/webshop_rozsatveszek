@@ -13,21 +13,23 @@ const cartData = ShoppingCart();
             <div class="col nav-item">Megrendelés</div>
         </div>
         <div v-if="cartData.cartItems.length > 0 ">
-            <div id="szamlazas-content" class="container-fluid d-flex row">
-                <div class="flex-grow-1 col-12 col-sm-7 col-md-7 col-lg-8">
-                    <div class="title my-3">Számlázási adatok</div>
-                <section class="szamlazasi-adatok">
-                        <div class="row my-3" id="forcompany">
-                            <div class="col d-inline-flex">
-                                <div class="checkbox-wrapper-21">
-                                    <label class="control control--checkbox ps-5 container" for="company">
-                                        Cég számára kérem a számlát.
-                                        <input type="checkbox" id="company" value="company" v-model="cartData.billingAddress.company" true-value="yes" false-value="no" name="company"/>
-                                        <div class="control__indicator ms-3"></div>
-                                    </label>
+            <div id="szamlazas-content" class="container">
+                <div class="row ">
+                    <div class="col-sm-12 col-md-12 col-lg-7">
+                    <div class="title my-3 fw-bolder">Számlázási adatok</div>
+                    <hr class="cimalatt_hr m-auto mb-4">
+                    <section class="szamlazasi-adatok">
+                            <div class="row my-3" id="forcompany">
+                                <div class="col d-inline-flex">
+                                    <div class="checkbox-wrapper-21">
+                                        <label class="control control--checkbox ps-5 container" for="company">
+                                            Cég számára kérem a számlát.
+                                            <input type="checkbox" id="company" value="company" v-model="cartData.billingAddress.company" true-value="yes" false-value="no" name="company"/>
+                                            <div class="control__indicator ms-3"></div>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         <div class="mb-3">
                                 <form id="billing-form" action="http://localhost/webshop_rozsatveszek/public/szallitas" class="d-lg-inline-flex">
                                     <div class="d-inline-flex flex-column">
@@ -68,9 +70,13 @@ const cartData = ShoppingCart();
                                     </div>                            
                                 </form>
                             </div>
-                </section>
+                        
+                    </section>
+                    
                 </div>
-                <ShoppingCartSide />        
+                <ShoppingCartSide /> 
+                </div>
+                       
             </div>
             <div class="container">
                 <div class="row mt-3 align-items-center">

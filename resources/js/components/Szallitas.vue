@@ -13,9 +13,11 @@ const cartData = ShoppingCart();
         <div class="col nav-item">Megrendelés</div>
     </div>
     <div v-if="cartData.cartItems.length > 0">
-        <div id="szallitas-content" class="container-fluid d-flex row p-md-0">
-            <div class="flex-grow-1 col-12 col-sm-7 col-md-7 col-lg-8">
-                <div class="title my-3">Szállítási adatok</div>
+        <div id="szallitas-content" class="container">
+            <div class="row ">
+            <div class="col-sm-12 col-md-12 col-lg-7">
+                <div class="title my-3 fw-bolder">Szállítási adatok</div>
+                <hr class="cimalatt_hr m-auto mb-4">
                 <section class="szallitasi-adatok">
                     <div class="col my-3">
                         <div>
@@ -95,6 +97,7 @@ const cartData = ShoppingCart();
                 </section>
             </div>
             <ShoppingCartSide />
+            </div>
         </div>
         <div class="container">
             <div class="row mt-3 align-items-center">

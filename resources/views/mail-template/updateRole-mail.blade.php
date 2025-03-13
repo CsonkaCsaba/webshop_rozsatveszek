@@ -34,7 +34,7 @@
         <h3>Kedves {{$userName}}!</h3><br>
         <p>{{$mailMessage}}</p>
         <p>📝Mostantól az alábbi jogosultságokkal rendelkezel: </p>
-        <p style="text-transform: uppercase;"><b>{{$userRole}}<b></p><br>
+        <p style="text-transform: uppercase;">✨<b>{{$userRole}}<b>✨</p><br>
         <p>💝 Köszöjük, hogy bennünket választottál! További kellemes böngészést és vásárlást kívánunk! 🛒</p>
         {{-- Footer --}}
         © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')

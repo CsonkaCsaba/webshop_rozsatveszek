@@ -47,11 +47,11 @@
 <body style="background-image: url('https://renoma.hu/wp-content/uploads/2024/09/kezdokep.jpg'); background-repeat: no-repeat;background-position: center; align-items: center; align-content: center; width: 80%; margin: auto; text-align: center; border: 1px solid white;border-radius: 15px; padding: 20px;">
 <img src="https://renoma.hu/wp-content/uploads/2025/01/rozsatveszek_logo_kicsi.webp" class="logo" alt="Rózsát veszek webshop" style="border: 1px solid white;border-radius: 15px;" width="150">
 
-    <h1 class="title" style="background-color: white; border: 1px solid black; border-radius: 15px; width: 60%; margin-left: 22%">👋🏻🟢Köszönjük a rendelésed!🛒✔️🥰</h1>
+    <h1 class="title" style="background-color: white; border: 1px solid black; border-radius: 15px; width: 60%; margin-left: 22%">🟢🛒Köszönjük a rendelésed!🥰</h1>
     <div class="content" style="background-color: white; border: 1px solid black; border-radius: 15px; width: 60%; margin-left: 22%">
-        <h3>Kedves {{$name}}!</h3><br>
+        <h3> Kedves {{$name}}!👋🏻</h3><br>
         <p>
-        ✔️ Értesítünk, hogy a webáruházunkban leadott <b>rendelésed a(z) {{$id}} azonosítószámon </b> megérkezett!🎉<br>
+        Értesítünk, hogy a webáruházunkban leadott <b>rendelésed a(z) {{$id}} azonosítószámon </b> megérkezett!✔️🎉<br>
         ⏰ A rendelés feldolgozása megkezdődött, szíves türelmed kérjük annak feldolgozásáig.<br>
 
         Fizetés készpénzben vagy bankkártyával átvételkor.<br>

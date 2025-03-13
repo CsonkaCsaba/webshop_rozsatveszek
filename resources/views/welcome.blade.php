@@ -35,7 +35,7 @@
 
         <p>Vásároljon rózsát<br> közvetlen a termelőtől!</p>
         <hr>
-        <a href="termekek"><button type="button" class="btn btn-vasarlas">Vásárlás</button></a>
+        <a href="termekek"><button type="button" class="btn btn-vasarlas"> Vásárlás <font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon"/> </button></a>
             @if(session('success'))
             <div class="container">
             <div class="row justify-content-center">

@@ -3,7 +3,11 @@ import { storeToRefs } from 'pinia';
 import { OrdersStore, slicedOrders } from './store/Orders';
 import { reactive, computed } from 'vue'
 import { ref, watch } from 'vue';
+import { defineAsyncComponent } from 'vue'
 
+const AsyncInfo = defineAsyncComponent(() =>
+  import('./InformationsForOrders.vue')
+)
 const { orders, selectedValue, addNewProduct,  showDown, showUp, accepted, currentPage, itemsPerPage, totalOrders, pagesShown, input, loading, width, radius, padding, lineCap, gradient, value, gradientDirection, fill, type, autoLineWidth, labels, currentMonth, numberOfTheCurrentMonth, reload} = storeToRefs(OrdersStore());
 
 const { update,  addNewProductBtn, onChange, createProduct, deleteOrd, orderOrdersByIdASC, orderOrdersByIdDESC, updateOrder, handlePageChange, inputChanged, displayOrders, daysInMonth, fetchOrders, clearlist, show } = OrdersStore();
@@ -12,7 +16,7 @@ fetchOrders();
 watch(input, ()=>{
     inputChanged();
 })
-
+let open = ref(false);
 const isActive1 = ref(false);
 const isActive2 = ref(false);
 const isActive3 = ref(false);
@@ -128,7 +132,7 @@ const toggleChip = (button) => {
 }
 </script>
 
-<template>
+<template>  
 <div class="container justify-content-center align-items-center">
     <div class="d-inline-flex pt-2">
         <input type="text" v-model="input" placeholder="Keresés..." class="form-control ms-2" autofocus="on"/>
@@ -140,9 +144,13 @@ const toggleChip = (button) => {
         <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive4 }" @click="toggleChip('button4')">
         Visszamondott </button>
         <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive5 }" @click="toggleChip('button5')">
-        Sikertelen kézbesítés </button>
+        Sikertelen kézbesítés </button> 
+        <div  @click="open = !open">
+            <font-awesome-icon :icon="['fas', 'circle-info']" class="info" /> 
+        </div> 
+                                     
 </div>
-
+<AsyncInfo v-if="open"></AsyncInfo> 
 <div class="d-inline-flex justify-content-center align-items-center" v-if="input&&slicedOrders.length == 0">
      <h4 class="text-danger pt-4">Sajnálom, nincs ilyen névvel regisztrált vevő a rendszerben!</h4>
   </div>
@@ -431,4 +439,8 @@ li:nth-child(odd)
     background-color: #232526 !important
     color: white !important
     border-color: #232526 !important
+.info
+    margin: 60%
+    cursor: pointer
+
 </style>

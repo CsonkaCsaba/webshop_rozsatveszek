@@ -2,6 +2,12 @@
 import { storeToRefs } from 'pinia';
 import { UsersStore_Admin } from './store/UsersStore_Admin';
 import { ref, watch } from 'vue';
+import { defineAsyncComponent } from 'vue'
+
+const AsyncInfo = defineAsyncComponent(() =>
+  import('./InformationsForUsers.vue')
+)
+let open = ref(false);
 const { slicedUsers, selectedValue, showDown, showUp, accepted, currentPage, itemsPerPage, totalUsers, pagesShown, input, loading, reload, message, modalStatusAccept, modalStatus} = storeToRefs(UsersStore_Admin());
 
 const { update,  addNewProductBtn, onChange, createProduct, deleteOrd, orderUsersByIdASC, orderUsersByIdDESC, updateUser, handlePageChange, inputChanged, displayusers, daysInMonth, fetchUsers, show, clearlist, receiveEmit, saveUpdate} = UsersStore_Admin();
@@ -78,10 +84,11 @@ const toggleChip = (button) => {
         <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive2 }" @click="toggleChip('button2')">Bolt kezelő </button>
         <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive3 }" @click="toggleChip('button3')">Regisztrált felhasználó</button>
         <button type="button" class="btn btn-outline-dark custom-btn ms-2 rounded-pill p-2" :class="{ 'active-btn': isActive4 }" @click="toggleChip('button4')">Vásárló </button>
-
-
+        <div  @click="open = !open">
+            <font-awesome-icon :icon="['fas', 'circle-info']" class="info" /> 
+        </div> 
 </div>
-
+<AsyncInfo v-if="open"></AsyncInfo> 
 <div class="d-inline-flex justify-content-center align-items-center ps-4" v-if="input&&slicedUsers.length == 0">
      <h4 class="text-danger">Sajnálom, nincs ilyen névvel regisztrált felhasználó a rendszerben!</h4>
   </div>
@@ -218,4 +225,7 @@ li:nth-child(odd)
     font-weight: 200
     font-style: italic
     text-align: start
+.info
+    margin: 60%
+    cursor: pointer
 </style>

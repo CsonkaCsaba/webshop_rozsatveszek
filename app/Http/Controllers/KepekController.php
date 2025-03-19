@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Kepek;
 use Illuminate\Http\Request;
-
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 class KepekController extends Controller
 {
     public function __invoke(Request $request)
@@ -108,19 +109,26 @@ class KepekController extends Controller
         ]);
 
         $media = new Kepek;
-
-        if($request->file()){
-            $file_name = $request->file->getClientOriginalName();
+        
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $file_name = pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME);
             if(Kepek::where('kepNev', 'LIKE', $file_name)->exists()){
                 $exist_image = Kepek::where('kepNev', 'LIKE', $file_name)->get();
                 return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezze át vagy válasszon másikat!', 'error' => 422)); 
 
             } else {
-                $request->file('file')->move(public_path('img/uploads/'), $request->file('file')->getClientOriginalName());
+                $manager = new ImageManager(new Driver());
+                $image = $manager->read($file);
+                $image->resize(833, 720);
+                $encoded = $image->toWebp(60)->save('img/uploads/'.$file_name.'.webp');
+
+
+                //$request->file('file')->move(public_path('img/uploads/'), $request->file('file')->getClientOriginalName());
                 $uzletId = 1;
                 $media->kepNev = $file_name;
                 $media->kepLeiras = $file_name;
-                $media->kepUtvonal = '../public/img/uploads/'.$file_name;
+                $media->kepUtvonal = '../public/img/uploads/'.$file_name.'.webp';
                 $media->uzletId = $uzletId;
                 $media->save();
                 $media->id;

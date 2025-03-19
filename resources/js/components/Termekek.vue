@@ -104,9 +104,9 @@ export default {
                                 <div v-if="prod.addedToWishlist" class="col-md-2 col-lg-col-2 col-xl-2 imagebuttondiv wishlist">
                                     <img src="../../assets/kepek/heartfull.png" class="heartIconEmpty heartIconFull"  alt="wishlist" @click="removeFromWishList(prod.id)">
                                 </div>
-                                <div class="col-sm-8 col-md-8 col-lg-8 "><p class="ar" :class="{ strikethrough : prod.cimke != null && prod.cimke.akciosarFt>0 || prod.akciosar > 0 }">{{ prod.ar }} ,-Ft</p></div>
-                                <div v-if="prod.cimke != null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class=" fw-bold" >{{ prod.akciosar }} ,-Ft</h2></div>
-                                <div v-else-if="prod.cimke == null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="fw-bold" >{{ prod.akciosar }} ,-Ft</h2></div>
+                                <div class="col-sm-8 col-md-8 col-lg-8 "><p class="ar" :class="{ strikethrough : prod.cimke != null && prod.cimke.akciosarFt>0 || prod.akciosar > 0 }">{{ prod.ar }},-Ft/{{ prod.egyseg }}</p></div>
+                                <div v-if="prod.cimke != null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class=" fw-bold" >{{ prod.akciosar }},-Ft/{{ prod.egyseg }}</h2></div>
+                                <div v-else-if="prod.cimke == null &&  prod.akciosar>0" class="col-sm-8 col-md-8 col-lg-8"><h2 class="fw-bold" >{{ prod.akciosar }},-Ft/{{ prod.egyseg }}</h2></div>
                             </v-card-text>
 
                             <v-card-actions class="text-center align-items-center justify-content-center pb-4 m-0">

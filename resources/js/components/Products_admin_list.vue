@@ -1,9 +1,18 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
-const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading} = storeToRefs(ProductStore())
-const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction} = ProductStore()
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination, Navigation, Scrollbar } from 'swiper/modules';
+
+  const modules = [Pagination, Navigation, Scrollbar]
+
+const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery} = storeToRefs(ProductStore())
+const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn} = ProductStore()
 fetchProduct();
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementsByClassName('swiper-button-prev').stlye.top = '20% !important';
+    document.getElementsByClassName('swiper-button-next').stlye.top = '20% !important';
+});
 
 </script>
 
@@ -20,17 +29,29 @@ fetchProduct();
     <div class="addNewProduct p-2" v-if="addNewProduct">
     <Transition>
     <!--show if Add New Product button clicked-->
-    <form method="POST" @submit.prevent="createProduct(name, color, price, akciosar, stock, description, shortdescription)" id="addNewproductForm">
+    <form method="POST" @submit.prevent="createProduct(name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription)" id="addNewproductForm">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-4">
                         <label for="name" class="p-1 col">Név</label>
                         <input id="nameInput" type="text" class="form-control fw-light" required placeholder="Név megadása" name="nameInput" v-model="name"/>
                     </div>
+                </div>
+                <div class="row justify-content-center text-center">
                     <div class="col-4">
                     <div>
                         <label for="color" class="p-1 col">Szín</label>
                         <input id="color" type="text" class="form-control fw-light" required placeholder="Szín megadása" name="colorInput" v-model="color"/>
+                    </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="name" class="p-1 col">Egység (db, szál, kg. stb.)</label>
+                        <input id="nameInput" type="text" class="form-control fw-light" required placeholder="Egység megadása" name="nameInput" v-model="egyseg"/>
+                    </div>
+                    <div class="col-4">
+                    <div>
+                        <label for="color" class="p-1 col">Cikszám</label>
+                        <input id="color" type="number" class="form-control fw-light"  placeholder="Cikszám megadása" name="colorInput" v-model="cikkszam"/>
                     </div>
                     </div>
                 </div>
@@ -44,17 +65,17 @@ fetchProduct();
                         </div>
                     </div>
                     <div class="col-4">
-                        <label for="akciosar" class="p-1 col">Ár</label>
+                        <label for="akciosar" class="p-1 col">Kedvezményes ár</label>
                         <div class="input-group mb-3">
-                            <input id="price" type="number"  class="form-control fw-light" required placeholder="Akciós ár megadása" name="priceInput" v-model="akciosar"/>
-                            <span class="input-group-text">-Ft</span> 
+                            <input id="price" type="number"  class="form-control fw-light" required placeholder="Kedvezményes ár megadása" name="priceInput" v-model="akciosar"/>
+                            <span class="input-group-text">-Ft/{{ egyseg }}</span> 
                         </div>
                     </div>
                     <div class="col-4">
                         <label for="stock" class="p-1 col">Készlet</label>
                         <div class="input-group mb-3">
                             <input id="stock" type="number"  class="form-control fw-light" required placeholder="Készlet megadása" name="stockInput" v-model="stock"/>
-                            <span class="input-group-text">db</span>  
+                            <span class="input-group-text">{{egyseg}}</span>  
                         </div>
                     </div>
                 </div>
@@ -71,6 +92,7 @@ fetchProduct();
                     </div>
                     <div class=" col-4 form-floating mb-3">
                         <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó hozzáadása</p> 
+                        <p class="text-muted fs-6"><font-awesome-icon :icon="['fas', 'circle-info']"/> A legjobb teljesítmény elérése érdekében a feltöltésre kerülő fotókat automatikisan konvertáljuk .webp kiterjesztésre és 1280*710 pixel méretre állítjuk!</p>
                         <input id="uploadInput" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
                         <p class="text-danger">{{ photoMessage }}</p>
                     </div>
@@ -90,7 +112,7 @@ fetchProduct();
     <div class="container fw-bold mb-4 justify-content-center text-center">
     <div class="row">
         
-        <div class="col-sm">
+        <div class="col-4">
             <div v-if="showDown">
                 <button class="btn fw-bold fs-5" @click="orderByProductsAz">
                     Termék <font-awesome-icon :icon="['fas', 'arrow-down-a-z']" />
@@ -101,14 +123,11 @@ fetchProduct();
                     Termék <font-awesome-icon :icon="['fas', 'arrow-up-a-z']" />
                 </button>
             </div>
-            
-        
-        
         </div>
-        <div class="col-sm artop fw-bold fs-5">
+        <div class="col-4 fw-bold fs-5 text-end pe-5">
             Ár
         </div>
-        <div class="col-sm szerkeszttop fw-bold fs-5">
+        <div class="col-4  fw-bold fs-5 text-center">
             Szerkesztés
         </div>
     </div>
@@ -124,7 +143,7 @@ fetchProduct();
                     </div>
                     <div class="col-2 keszlet">
                         <p v-if="prod.keszlet <= 0" class="elfogyott">Elfogyott</p>
-                        <p v-else class="keszleten">Készleten: <br><b>{{ prod.keszlet }} db</b></p>
+                        <p v-else class="keszleten">Készleten: <br><b>{{ prod.keszlet }} {{ prod.egyseg }}</b></p>
                         <p v-if ="prod.keszlet > 1 && prod.keszlet <= 10" class=""> <span class="position-absolute translate-middle badge rounded-pill bg-danger figyelem">
                             A készlet hamarosan elfogy!</span></p>
                     </div>
@@ -132,55 +151,67 @@ fetchProduct();
                         <p class="name">{{ prod.nevHu }}</p><br>
                         <p class="color">{{ prod.szin }}</p>
                     </div>
-                    <div class="col align-self-center">
-                        {{ prod.ar }} Ft
+                    <div class="col-2 align-self-center text-start">
+                        {{ prod.ar }} Ft/{{ prod.egyseg }}
                     </div>
-                    <div class="col-sm align-self-center buttons">
+                    <div class="col-2 align-self-center buttons">
                         <button type="button" class="btn secoundaryBtna btn-lg m-4" @click="prod.edit = true" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék szerkesztése" ><font-awesome-icon :icon="['fas', 'pen']" /></button>
                         <button type="button" class="btn secoundaryBtnb btn-lg" @click="removeProduct(prod.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék törlése"><font-awesome-icon :icon="['fas', 'trash']" /></button>
                     </div>
                     <Transition>
                     <div class="row editProductForm" v-if="prod.edit">
-                        <form class="col ml-8" method="PUT" @submit.prevent="updateProduct(prod.id, prod.nevHu, prod.szin, prod.ar, prod.akciosar , prod.keszlet, prod.leirasHu, prod.tagline)">
+                        <form class="col ml-8" method="PUT" @submit.prevent="updateProduct(prod.id, prod.nevHu, prod.szin, prod.egyseg, prod.cikkszam, prod.ar, prod.akciosar , prod.keszlet, prod.leirasHu, prod.tagline)">
                             <div class="container">
                                 <div class="row justify-content-center text-center">
                                     <div class="col-4">
                                         <label for="name" class="p-1 col">Név</label>
                                         <input id="nameInput" type="text" class="form-control fw-light" required :placeholder=prod.nevHu v-model="prod.nevHu"/>
                                     </div>
+                                    
+                                </div>
+                                <div class="row justify-content-center text-center mt-2">
+                                    <div class="col-2">
+                                        <div>
+                                            <label for="color" class="p-1 col">Szín</label>
+                                            <input id="color" type="text" class="form-control fw-light" required :placeholder=prod.szin  v-model="prod.szin"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <label for="name" class="p-1 col">Egység</label>
+                                        <input id="nameInput" type="text" class="form-control fw-light" required :placeholder=prod.egyseg name="nameInput" v-model="prod.egyseg"/>
+                                    </div>
                                     <div class="col-4">
                                     <div>
-                                        <label for="color" class="p-1 col">Szín</label>
-                                        <input id="color" type="text" class="form-control fw-light" required :placeholder=prod.szin  v-model="prod.szin"/>
+                                        <label for="color" class="p-1 col">Cikszám</label>
+                                        <input id="color" type="number" class="form-control fw-light"  :placeholder=prod.cikkszam name="colorInput" v-model="prod.cikkszam" value=0/>
                                     </div>
                                     </div>
                                 </div>
-
                                 <div class="row justify-content-center text-center mt-2">
                                     <div class="col-2">
                                         <label for="price" class="p-1 col">Ár</label>
                                         <div class="input-group mb-3">
                                             <input id="price" type="number"  class="form-control fw-light" required :placeholder=prod.ar  v-model="prod.ar"/>
-                                            <span class="input-group-text">-Ft</span> 
+                                            <span class="input-group-text">-Ft/{{ prod.egyseg }}</span> 
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <label for="price" class="p-1 col">Akciós ár</label>
                                         <div class="input-group mb-3">
                                             <input id="akciosar" type="number"  class="form-control fw-light" required :placeholder=prod.akciosar  v-model="prod.akciosar"/>
-                                            <span class="input-group-text">-Ft</span> 
+                                            <span class="input-group-text">-Ft/{{ prod.egyseg }}</span> 
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <label for="stock" class="p-1 col">Készlet</label>
                                         <div class="input-group mb-3">
                                             <input id="stock" type="number"  class="form-control fw-light" required :placeholder=prod.keszlet v-model="prod.keszlet"/>
-                                            <span class="input-group-text">db</span>  
+                                            <span class="input-group-text">{{prod.egyseg}}</span>  
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center text-center">
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <label for="description" class="p-1 col">Leírás</label>
                                             <textarea id="description"  class="form-control fw-light" required :placeholder=prod.leirasHu v-model="prod.leirasHu" rows="8">
                                             </textarea>
@@ -196,9 +227,50 @@ fetchProduct();
                                         <p class="text-danger">{{ photoMessage }}</p>
                                     </div> -->
                                 </div>
+                                <div class="row justify-content-center text-center pt-2">
+                                    <div class="col-6 border-end">
+                                        <p class="p-1">Termékfotó</p>
+                                        <div v-if ="!addAnewPhoto" >
+                                            <img :src="prod.img" class="w-50 float-center img-fluid rounded mx-auto d-block"/>
+                                            <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="changeMainPhoto"><font-awesome-icon :icon="['fas', 'camera']" /> Új termékfotót töltök fel</button>
+                                        </div>
+                                        <div v-else>
+                                            <p class="p-1">Új termékfotó feltöltése</p>
+                                            <p class="text-muted fs-6"><font-awesome-icon :icon="['fas', 'circle-info']"/> A legjobb teljesítmény elérése érdekében a feltöltésre kerülő fotókat automatikisan konvertáljuk .webp kiterjesztésre és egységesen 1280*710 pixel méretre állítjuk!</p>
+                                            <input id="uploadInputUpdate" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
+                                            <p class="text-muted">{{ photoMessage }}</p>
+                                            <button type="button" class="btn secoundaryBtna m-1 pt-2" @click="updateProductImage(prod.id, prod.img, null)"><font-awesome-icon :icon="['fas', 'cloud-arrow-up']" /> Feltöltés</button>
+                                            <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="updateProductImage(prod.id, defaultImage, true)"><font-awesome-icon :icon="['fas', 'rotate-left']" /> Visszaállít</button>
+                                            <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="photoMessage = '', addAnewPhoto = false">X Bezár</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 ">
+                                        <p class="p-1">Termékgaléria</p>
+                                        <div v-if ="!addAnewPhotoToProductGallery" class="container swipercontainer">
+                                            <swiper :slides-per-view="1"  :navigation="true" :pagination="true" >
+                                                <swiper-slide v-for="ph in prod.galeria">
+                                                    <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto"/>
+                                                </swiper-slide>
+
+                                            </swiper>
+                                        
+                                            <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="addAnewPhotoToProductGalleryBtn"><font-awesome-icon :icon="['fas', 'camera']" /> Új termékfotót töltök fel a galériába</button>
+                                        </div>
+                                        <div v-else>
+                                            <p class="p-1">Új termékfotó feltöltése</p>
+                                            <p class="text-muted fs-6"><font-awesome-icon :icon="['fas', 'circle-info']"/> A legjobb teljesítmény elérése érdekében a feltöltésre kerülő fotókat automatikisan konvertáljuk .webp kiterjesztésre és egységesen 1280*710 pixel méretre állítjuk!</p>
+
+                                            <input id="uploadInputUpdate" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
+                                            <p class="text-muted">{{ photoMessageProduct }}</p>
+                                            <button type="button" class="btn secoundaryBtna m-1 pt-2" @click="updateProductImage(prod.id, prod.img, null)"><font-awesome-icon :icon="['fas', 'cloud-arrow-up']" /> Feltöltés</button>
+                                            <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="updateProductImage(prod.id, defaultImage, true)"><font-awesome-icon :icon="['fas', 'rotate-left']" /> Visszaállít</button>
+                                            <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="photoMessageProduct = '', addAnewPhotoToProductGallery = false">X Bezár</button>
+                                        </div>
+                                    </div>
+                                </div>
                                     <div class="justify-content-center text-center">
                                     <div class="d-inline-flex p-4 mt-2">
-                                        <button type="submit" class="btn m-1 secoundaryBtna">Módosítás</button>
+                                        <button type="submit" class="btn m-1 secoundaryBtna">Mentés</button>
                                         <button type="button" class="btn secoundaryBtnb m-1" @click="prod.edit= false">Mégsem</button>
                                     </div>
                                     </div>
@@ -297,8 +369,7 @@ li:nth-child(odd)
 .buttons
     margin-left: 85px
 
-.artop
-    margin-left: 45px
+
 .addNewProd
     margin-left: 80px
     font-size: 16px 
@@ -307,8 +378,6 @@ li:nth-child(odd)
     float: right
     margin-right: 100px
 
-.szerkeszttop
-    margin-right: 15px
 
 .v-enter-active
     transition: opacity 0.8s ease
@@ -318,4 +387,16 @@ li:nth-child(odd)
 .v-leave-to 
   opacity: 0
 
+.swiper-button-prev
+.swiper-button-next
+.swiper-pagination
+    top: 20% !important
+.swiper-slide
+    max-width: 500px
+    max-height:450px
+    padding: 2px
+    margin-bottom: 5px
+
+.swipercontainer
+    margin-bottom: 1px
 </style>

@@ -42,6 +42,11 @@ export const ProductStore = defineStore("Product",{
         tags: false,
         addNewTag: false,
         loadedOnce: false,
+        addAnewPhoto: false,
+        uploadedPhotoUrl: "",
+        defaultImage: "",
+        addAnewPhotoToProductGallery: false,
+        photoMessageProduct: "",
        
         }
     },
@@ -178,16 +183,21 @@ export const ProductStore = defineStore("Product",{
             let file;
             file = e.target.files[0];
             this.file = file;
-
+            file = null;
+            this.photoMessage = '';
         },
-        createProduct(nev, szin, ar, akciosar, keszlet, leiras, tagline){
+        createProduct(nev, szin, egyseg, cikkszam, ar, akciosar, keszlet, leiras, tagline){
             let formNewProduct = document.getElementById('addNewproductForm');
-
+            if(cikkszam == null || cikkszam == ""){
+                cikkszam = 0;
+            }
             this.nev = nev,
             this.szin = szin,
+            this.egyseg = egyseg,
+            this.cikkszam = cikkszam,
             this.ar = ar,
             this.akciosar = akciosar,
-            this.keszlet = keszlet
+            this.keszlet = keszlet,
             this.leiras = leiras,
             this.tagline = tagline
 
@@ -205,6 +215,8 @@ export const ProductStore = defineStore("Product",{
                 let form_data = JSON.stringify({
                     nev : this.nev,
                     szin : this.szin,
+                    egyseg: this.egyseg,
+                    cikkszam: this.cikkszam,
                     ar : this.ar,
                     akciosar : this.akciosar,
                     keszlet: this.keszlet,
@@ -215,6 +227,12 @@ export const ProductStore = defineStore("Product",{
                   formData.append('form_data', form_data)
                  
                     axios.post('api/termekadmin/create',formData, config).then((response)=>{
+                    if (response.data.error === 422){
+                        this.photoMessage = response.data.message;
+                        document.getElementById('uploadInput').value = null;
+                        this.file = null;
+                        return;
+                    }
                     if(response.status == 200){
                     this.lastInsertproductId = response.data.product_Id;
                     this.message = "Új termék létrehozása sikeres!";
@@ -225,13 +243,15 @@ export const ProductStore = defineStore("Product",{
                         id: this.lastInsertproductId,
                         nevHu : this.nev,
                         szin : this.szin,
+                        egyseg: this.egyseg,
+                        cikkszam: this.cikkszam,
                         ar : this.ar,
                         akciosar : this.akciosar,
                         keszlet: this.keszlet,
                         leirasHu: this.leiras,
                         leiras: this.leiras,
                         tagline: this.tagline,
-                        img: "../public/img/uploads/"+formDataObj.file.name
+                        img: response.data.kepUtvonal
                     }
                    this.products.push(productPush);
                    formNewProduct.reset();
@@ -289,13 +309,15 @@ export const ProductStore = defineStore("Product",{
             this.showUp = false
         },
 
-        updateProduct(id, nevHu, szin, ar, akciosar, keszlet, leirasHu, tagline){
+        updateProduct(id, nevHu, szin, egyseg, cikkszam, ar, akciosar, keszlet, leirasHu, tagline){
             this.edit_id = id
             let product = this.products.find(product=>product.id == id)
             if(product != null){ 
                 this.id = id,
                 this.nevHu = nevHu,
                 this.szin = szin,
+                this.egyseg = egyseg,
+                this.cikkszam = cikkszam,
                 this.ar = ar,
                 this.akciosar = akciosar,
                 this.keszlet = keszlet,
@@ -306,6 +328,8 @@ export const ProductStore = defineStore("Product",{
                 id: this.id,
                 nevHu : this.nevHu,
                 szin : this.szin,
+                egyseg: this.egyseg,
+                cikkszam: this.cikkszam,
                 ar : this.ar,
                 akciosar: this.akciosar,
                 keszlet: this.keszlet,
@@ -325,6 +349,69 @@ export const ProductStore = defineStore("Product",{
                 }
                 }).catch(console.error) 
             
+        },
+        updateProductImage(id, defaultImage, reset){
+            
+            this.defaultImage = defaultImage;
+            this.edit_id = id;
+            if(reset === true){
+                let form_data = {
+                    id : id,
+                    img: defaultImage
+                  };
+                    axios.post('api/termekadmin/updateimage',form_data).then((response)=>{
+                    if(response.status == 200){
+                    this.uploadedPhotoUrl = response.data.kepUtvonal
+                    this.photoMessage = "A termékképet visszaállítottuk!";
+                    this.file = null;
+                    this.products.forEach(element => {
+                    if(element.id == id){
+                        element.img = this.defaultImage
+                            }
+                        })  
+                    document.getElementById('uploadInputUpdate').value = null;  
+                    }
+                    }).catch(console.error)
+
+            } else {
+            const config = {
+                headers: {
+                    'content-type':'multipart/form-data'
+                }
+            }
+            let formData = new FormData();
+
+            if(this.file !== null){
+                formData.append('file', this.file);
+            }else {
+                this.photoMessage = "Nem választott ki fájlt a feltöltéshez!";
+                return
+            }
+            let form_data = JSON.stringify({
+                id : this.edit_id
+              });
+
+              formData.append('form_data', form_data)
+              
+              axios.post('api/termekadmin/updateimage',formData, config).then((response)=>{
+                if (response.data.error === 422){
+                    this.photoMessage = response.data.message;
+                    document.getElementById('uploadInputUpdate').value = null;
+                    this.file = null;
+                    return;
+                }
+                if(response.status == 200){
+                this.uploadedPhotoUrl = response.data.kepUtvonal
+                this.photoMessage = "A feltöltés és a termékkép módosítása sikeres!";
+                this.products.forEach(element => {
+                if(element.id == id){
+                    element.img = this.uploadedPhotoUrl
+                        }
+                    })    
+                } 
+                
+                }).catch(console.error);
+            }
         },
         removeFromWishList(id){
             this.edit_id = id;
@@ -403,7 +490,13 @@ export const ProductStore = defineStore("Product",{
             this.modalStatusProduct = true;
             this.prod = prod;
         },
-        
+        changeMainPhoto(){
+            this.addAnewPhoto = true;
+        },
+        addAnewPhotoToProductGalleryBtn(){
+            this.addAnewPhotoToProductGallery = true;
+        }
+       
 
         
         

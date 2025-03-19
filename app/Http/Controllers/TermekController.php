@@ -7,7 +7,8 @@ use App\Models\Kepek;
 use Illuminate\Http\Request;
 use Illuminate\Http\MultipartFormRequest;
 use Illuminate\Http\MultipartFormResource;
-
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 class TermekController extends Controller
 {
     /**
@@ -16,13 +17,18 @@ class TermekController extends Controller
 
     public function __invoke(Request $request)
     {
-        $termekek = Termek::query()->with(['cimke'])->get();
+        $termekek = Termek::query()
+        ->with(['cimke'])
+        ->with(['galeria'])
+        ->get();
         return response()->json($termekek);
     }
 
     public function index()
     {
-        $termekek = Termek::query()->with(['cimke'])->get();
+        $termekek = Termek::query()
+        ->with(['cimke'])
+        ->with(['galeria'])->get();
         return response()->json($termekek);
         
     }
@@ -35,8 +41,8 @@ class TermekController extends Controller
      
 
         if ($request->hasFile('file')) {
-            $files = $request->file('file'); 
-            $file_name = $files->getClientOriginalName();
+            $file = $request->file('file'); 
+            $file_name = pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME);
             
 
             if (Kepek::where('kepNev', 'LIKE', $file_name)->exists()){
@@ -44,12 +50,22 @@ class TermekController extends Controller
                 return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezze át vagy válasszon másikat!', 'error' => 422)); 
 
             } else {
-                $imgUrl = '../public/img/uploads/'.$file_name;
+                $manager = new ImageManager(new Driver());
+                $image = $manager->read($file);
+                $image->resize(1280, 710);
+                $encoded = $image->toWebp(60)->save('img/uploads/'.$file_name.'.webp');
+
+
+
+
+                $imgUrl = '../public/img/uploads/'.$file_name.'.webp';
                 $form_data = json_decode($request->form_data);
                 $product = Termek::create([
                     'nevHu'=> $form_data->nev,
                     'nevEn'=> $form_data->nev,
                     'szin'=> $form_data->szin,
+                    'egyseg'=> $form_data->egyseg,
+                    'cikkszam'=> $form_data->cikkszam,
                     'ar'=> $form_data->ar,
                     'akciosar'=> $form_data->akciosar,
                     'leirasHu' =>$form_data->leiras,
@@ -61,10 +77,10 @@ class TermekController extends Controller
 
                 $media = new Kepek;
 
-                $files->storeAs('img/uploads/', $file_name);
+                //$file->storeAs('img/uploads/', $file_name);
                 $media->kepNev = $file_name;
                 $media->kepLeiras = $file_name;
-                $media->kepUtvonal = '../public/img/uploads/'.$file_name;
+                $media->kepUtvonal = '../public/img/uploads/'.$file_name.'.webp';
                 $media->uzletId = 1;
                 $media->termekId = $productId;
                 $media->save();
@@ -135,6 +151,8 @@ class TermekController extends Controller
                 $product->nevHu = $request->nevHu;
                 $product->nevEn = $request->nevHu;
                 $product->szin = $request->szin;
+                $product->egyseg = $request->egyseg;
+                $product->cikkszam = $request->cikkszam;
                 $product->ar = $request->ar;
                 $product->akciosar = $request->akciosar;
                 $product->leirasHu = $request->leirasHu;
@@ -178,6 +196,53 @@ public function updateQuantity(Request $request, $id)
 
 }
 
+public function updateimage(Request $request)
+{
+    if ($request->hasFile('file')) {
+        $file = $request->file('file');
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+       
+        $file_name = pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME);
+            if (Kepek::where('kepNev', 'LIKE', $file_name)->exists()){
+                $exist_image = Kepek::where('kepNev', 'LIKE', $file_name)->get();
+                return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezd át vagy válasszon másikat!', 'error' => 422)); 
+            } else {
+
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file);
+            $image->resize(1280, 710);
+            $encoded = $image->toWebp(60)->save('img/uploads/'.$file_name.'.webp');
+
+
+
+            $media = new Kepek;
+            //$file->storeAs('img/uploads/', $file_name);
+            $media->kepNev = $file_name;
+            $media->kepLeiras = $file_name;
+            $media->kepUtvonal = '../public/img/uploads/'.$file_name.'.webp';
+            $media->uzletId = 1;
+            $media->save();
+
+            $form_data = json_decode($request->form_data);
+            $id = $form_data->id;        
+            $product = Termek::find($id);
+            $imgUrl = '../public/img/uploads/'.$file_name.'.webp';
+            $product->img = $imgUrl;
+            $product->save();
+            return response()->json(array('message' => 'Sikeres feltöltés!', 'kepUtvonal'=>$imgUrl),200);
+            }
+    } else {
+
+        $id = $request->id;
+        $imgUrl = $request->img;
+        $product = Termek::find($id);
+        $product->img = $imgUrl;
+        $product->save();
+        return response()->json(array('message' => 'Sikeres feltöltés!', 'kepUtvonal'=>$imgUrl),200);
+    }
+}
     /**
      * Remove the specified resource from storage.
      */

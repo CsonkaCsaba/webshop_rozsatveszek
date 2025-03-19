@@ -170,8 +170,8 @@ export const GalleryStore = defineStore("Gallery",{
 
                     } else if (response.data.error === 422)
                     {
-                         this.modalStatus= true;
-                         this.message = response.data.message;
+                         
+                         this.message_button = response.data.message;
                          uploadinput.value = null;
                          this.file = null;
                     }

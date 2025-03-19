@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class Termek extends Model
@@ -20,6 +20,10 @@ class Termek extends Model
     public function cimke(): BelongsTo
     {
         return $this->belongsTo(Cimke::class, 'cimkeId');
+    }
+    public function galeria(): HasMany
+    {
+        return $this->hasMany(TermekGaleria::class, 'termekid');
     }
 
     protected $fillable =[
@@ -35,6 +39,8 @@ class Termek extends Model
         'szin',
         'color',
         'keszlet',
+        'egyseg',
+        'cikkszam',
         'created_at',
         'updated_at',
         'cimkeId',

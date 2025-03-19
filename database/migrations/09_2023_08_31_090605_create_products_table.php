@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('szin');
             $table->string('color')->nullable();
             $table->integer('keszlet');
+            $table->string('egyseg')->nullable();
+            $table->integer('cikkszam')->nullable();
             $table->timestamps();
 
             $table->foreignId('cimkeId')->nullable()

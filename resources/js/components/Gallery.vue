@@ -27,9 +27,10 @@ const { onChange, uploadPoto, receiveEmit, emitRecive, deleteImageAccepted} = Ga
     <form enctype="multipart/form-data" @submit.prevent ="uploadPoto">
         <div class="form-group p-3">
             <h3>Fotó hozzáadása a galériához</h3>
+            <p class="text-muted fs-6"><font-awesome-icon :icon="['fas', 'circle-info']"/> A legjobb teljesítmény elérése érdekében a feltöltésre kerülő fotókat automatikisan konvertáljuk .webp kiterjesztésre és 833*720 pixel méretre állítjuk!</p>
             <input type="file" @change="onChange" class="form-control" accept="image/jpg, image/png, image/jpeg" id="uploadinput"/>
             <p v-if="noFile" class="text-danger">Nem választott ki fájlt a feltöltéshez!</p>
-            <p v-if="message" class="text-danger">{{ message_button }}</p>
+            <p v-if="message_button !=''" class="text-danger">{{ message_button }}</p>
         </div>
         <div class="form-group p-3">
             <button type="submit" class="btn lilagombKicsi mt-1"><font-awesome-icon :icon="['fas', 'cloud-arrow-up']" /> Fotó feltöltése</button>

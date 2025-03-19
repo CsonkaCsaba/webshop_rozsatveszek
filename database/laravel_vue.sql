@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 12. 14:40
+-- Létrehozás ideje: 2025. Már 19. 16:25
 -- Kiszolgáló verziója: 10.4.28-MariaDB
 -- PHP verzió: 8.2.4
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `banners` (
-  `id` int(11) NOT NULL,
+  `id` bigint(11) NOT NULL,
   `szoveg` varchar(255) DEFAULT NULL,
   `hatterszin` varchar(255) DEFAULT NULL,
   `betuszin` varchar(255) DEFAULT NULL,
@@ -277,7 +277,9 @@ INSERT INTO `kepeks` (`id`, `kepNev`, `kepUtvonal`, `kepLeiras`, `termekId`, `ka
 (3, 'asfdasf', 'https://i00.eu/img/605/466x466/7vkm65tw/356380.webp', 'asfasdf', NULL, NULL, 1),
 (4, 'sdfasdf', 'https://i00.eu/img/605/466x466/7vkm65tw/356380.webp', 'asdfasdf', NULL, NULL, 1),
 (12, 'sdfasdf', 'https://i00.eu/img/605/466x466/7vkm65tw/356380.webp', 'asdfasdf', NULL, NULL, 1),
-(33, 'roses-3520094_960_720.jpg', '../public/img/uploads/roses-3520094_960_720.jpg', 'roses-3520094_960_720.jpg', NULL, NULL, 1);
+(33, 'roses-3520094_960_720.jpg', '../public/img/uploads/roses-3520094_960_720.jpg', 'roses-3520094_960_720.jpg', NULL, NULL, 1),
+(57, 'golden', '../public/img/uploads/golden.webp', 'golden', NULL, NULL, 1),
+(58, 'working', '../public/img/uploads/working.webp', 'working', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -552,7 +554,15 @@ INSERT INTO `rendeles` (`id`, `megjegyzes`, `fizetesiMod`, `ceges`, `allapot`, `
 (145, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-10 06:25:29', 2000, 'Személyes átvétel', 4, 16, 8, NULL),
 (146, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Sikertelen kézbesítés', '2025-03-10 06:27:23', 2000, 'Személyes átvétel', 4, 16, 8, NULL),
 (147, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Visszamondott', '2025-03-10 06:28:28', 2000, 'Személyes átvétel', 4, 16, 8, NULL),
-(148, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-12 09:11:04', 2000, 'Személyes átvétel', 5, 62, 6, NULL);
+(148, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-12 09:11:04', 2000, 'Személyes átvétel', 5, 62, 6, NULL),
+(149, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-13 05:50:18', 4000, 'Személyes átvétel', 5, NULL, 6, NULL),
+(150, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-13 05:50:22', 4000, 'Személyes átvétel', 5, NULL, 6, NULL),
+(151, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-13 05:50:23', 4000, 'Személyes átvétel', 5, NULL, 6, NULL),
+(152, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-13 05:57:04', 2000, 'Személyes átvétel', 5, NULL, 6, NULL),
+(153, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-13 06:29:28', 2000, 'Személyes átvétel', 5, NULL, 6, NULL),
+(154, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-13 06:36:29', 2000, 'Személyes átvétel', 5, NULL, 6, NULL),
+(155, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-13 07:12:09', 4000, 'Személyes átvétel', 5, NULL, 6, NULL),
+(156, 'Egyéb megjegyzés...', 'Utánvét', 0, 'Feldolgozás alatt', '2025-03-13 09:52:27', 14500, 'Házhoz szállítás', 5, NULL, 6, 7);
 
 -- --------------------------------------------------------
 
@@ -573,6 +583,8 @@ CREATE TABLE `termeks` (
   `szin` varchar(255) NOT NULL,
   `color` varchar(255) DEFAULT NULL,
   `keszlet` int(11) NOT NULL,
+  `egyseg` varchar(255) DEFAULT NULL,
+  `cikkszam` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `cimkeId` bigint(20) UNSIGNED DEFAULT NULL,
@@ -583,12 +595,34 @@ CREATE TABLE `termeks` (
 -- A tábla adatainak kiíratása `termeks`
 --
 
-INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `akciosar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `created_at`, `updated_at`, `cimkeId`, `tagline`) VALUES
-(1, 'Mr. Lincoln', 'Mr. Lincoln', 2500, 2250, '../resources/assets/kepek/lincolnresize.webp', '', 'A Mr. Lincoln egy ikonikus, mélyvörös színű magastörzsű rózsa, amely minden kert elegáns és romantikus éke lehet. Bársonyos szirmainak intenzív illata messziről érezhető, így ideális választás lehet olyan helyekre, ahol a látvány mellett az illat is fontos szerepet kap. A virágai nagyméretűek és tartósak, ezért vágott virágnak is kiválóak. Folyamatos virágzásának köszönhetően júniustól egészen az első fagyokig újra és újra gyönyörű szirmokat bont. Erőteljes növekedésű, ellenálló fajta, amely megfelelő gondozás mellett hosszú éveken át díszítheti kertedet vagy teraszodat.\r\nSzín: Mélyvörös, bársonyos szirmokkal\r\nIllat: Erőteljes, édes és fűszeres árnyalatokkal\r\nVirágzás: Júniustól a fagyokig folyamatos\r\nFényigény: Napos helyet kedvel, félárnyékban gyengébben virágzik\r\nTélállóság: Jól tűri a hideget, de a magastörzsű fajtáknál a gyökérzónát és a szemzés helyét érdemes védeni. Télen takarást igényel, amit vastag mulcsréteggel (pl. fenyőkéreg, komposzt vagy lomb) biztosíthatunk. A koronát is érdemes jutazsákkal, szalmával vagy speciális kertészeti fátyolfóliával védeni a fagykártól.', 'Red tea rose', 'Piros', 'RED', 88, NULL, '2025-03-05 09:40:49', 257, 'minden kert elegáns és romantikus éke'),
-(2, 'Bianca', 'Bianca', 2000, 2000, '../resources/assets/kepek/biancaresize.webp\r\n', '', 'A Bianca egy klasszikusan elegáns fehér magastörzsű rózsa, amely finom, letisztult szépséget kölcsönöz minden kertnek vagy terasznak. Tiszta fehér virágai tökéletes kontrasztot alkotnak a mélyzöld levelekkel, így különösen jól mutat sötétebb hátterek előtt vagy színes virágágyásokba ültetve. Kellemesen lágy illata van, amely nem túl erős, így azok számára is ideális, akik az enyhébb illatú virágokat részesítik előnyben. Kiválóan alkalmas cserépben nevelésre is, így erkélyekre és teraszokra egyaránt ajánlott.\r\nSzín: Tiszta hófehér\r\nIllat: Enyhe, lágy\r\nVirágzás: Nyártól késő őszig folyamatosan\r\nFényigény: Napfényes vagy félárnyékos helyet igényel\r\nTélállóság: Jól bírja a hideget, de a magastörzsű rózsák általában érzékenyebbek a fagyokra. A gyökereket ajánlott takarni mulccsal vagy lombbal, míg a koronát jutazsákkal vagy kerti fátyolfóliával borítani. Különösen erős fagyok esetén a törzset is érdemes szalmával vagy zsákvászonnal védeni.', '', 'Fehér', 'White', 2881, NULL, '2025-03-12 09:11:03', 257, 'finom, letisztult külső'),
-(3, 'Monica', 'Monica', 2500, 2125, '../resources/assets/kepek/monicaresize.webp\r\n', '', 'A Monica egy igazán élénk, ragyogó narancssárga magastörzsű rózsa, amely garantáltan feldobja kerted hangulatát. Látványos, nagy méretű virágai napfényben különleges ragyogást kapnak, így ideális választás olyan kertekbe, ahol a vibráló színek dominálnak. Közepesen erős illata friss és energikus hatású, ami kellemes atmoszférát teremt a pihenéshez. Jó ellenállóképességű fajta, amely hosszan és bőségesen virágzik.\r\nSzín: Élénk narancssárga\r\nIllat: Közepesen erős, enyhén citrusos jegyekkel\r\nVirágzás: Májustól az első fagyokig\r\nFényigény: Napfényes helyen fejlődik a legszebben\r\nTélállóság: Mérsékelten télálló, ezért a gyökérzónát vastag mulccsal, szalmával vagy lombbal kell takarni, a koronát pedig ajánlott jutazsákba vagy fátyolfóliába burkolni. Erős fagyok esetén a törzs védelméről is gondoskodni kell.', '', 'Narancssárga', 'Orange', 58, NULL, '2025-02-27 12:31:18', NULL, 'látványos, vibráló színek'),
-(4, 'Caresse', 'Caresse', 2500, 2125, '../resources/assets/kepek/caresseresize.webp\r\n', '', 'A Caresse egy romantikus megjelenésű, lágy rózsaszín árnyalatú magastörzsű rózsa, amely a klasszikus kertek egyik legnépszerűbb fajtája. Nagyméretű, telt virágai csodálatosan illatoznak, így tökéletes választás olyan helyekre, ahol a látvány mellett az illat is fontos szerepet játszik. Gazdag és hosszan tartó virágzása miatt a kert folyamatos színpompában tündököl általa.\r\nSzín: Pasztell rózsaszín\r\nIllat: Kellemesen édes és virágos\r\nVirágzás: Késő tavasztól késő őszig\r\nFényigény: Napfényt kedveli\r\nTélállóság: Viszonylag jól bírja a hideget, de a magastörzsű fajták koronája érzékenyebb lehet. A gyökérzónát mulccsal vagy lombbal érdemes védeni, a koronát pedig kerti fátyolfóliával, jutazsákkal vagy szalmával kell beburkolni.\r\n', '', 'Rózsaszín', 'Pink', 95, NULL, '2025-02-27 12:31:18', NULL, 'lágy rózsaszín árnyalat, hosszan tartó virágzás'),
-(5, 'Golden Leader', 'Golden Leader', 2500, 1800, '../resources/assets/kepek/golden.webp\r\n', '', 'A Golden Leader igazi napfényt varázsol a kertbe élénk citromsárga virágaival. Nagy, látványos virágai nemcsak szépek, hanem kellemesen friss illatot is árasztanak. Folyamatosan virágzó fajta, amely hosszú időn át díszíti a kertet vagy a teraszt. Erős, egyenes szárának köszönhetően stabil és elegáns megjelenésű.\r\nSzín: Ragyogó citromsárga\r\nIllat: Frissítő, közepesen intenzív\r\nVirágzás: Nyár elejétől késő őszig folyamatos\r\nFényigény: Napos helyet igényel\r\nTélállóság: Mérsékelt télállóságú, ezért a gyökereket vastag mulccsal vagy lombbal kell védeni, a koronát pedig jutazsákkal vagy szalmával ajánlott betakarni. Erős hidegek esetén a törzs köré szigetelő réteget érdemes helyezni.', '', 'Citromsárga', 'Yellow', 90, NULL, '2025-02-27 12:58:38', NULL, ' stabil és elegáns megjelenés, napfényt varázsol a kertbe');
+INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `akciosar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `egyseg`, `cikkszam`, `created_at`, `updated_at`, `cimkeId`, `tagline`) VALUES
+(1, 'Mr. Lincoln', 'Mr. Lincoln', 2500, 2250, '../resources/assets/kepek/lincolnresize.webp', '', 'A Mr. Lincoln egy ikonikus, mélyvörös színű magastörzsű rózsa, amely minden kert elegáns és romantikus éke lehet. Bársonyos szirmainak intenzív illata messziről érezhető, így ideális választás lehet olyan helyekre, ahol a látvány mellett az illat is fontos szerepet kap. A virágai nagyméretűek és tartósak, ezért vágott virágnak is kiválóak. Folyamatos virágzásának köszönhetően júniustól egészen az első fagyokig újra és újra gyönyörű szirmokat bont. Erőteljes növekedésű, ellenálló fajta, amely megfelelő gondozás mellett hosszú éveken át díszítheti kertedet vagy teraszodat.\r\nSzín: Mélyvörös, bársonyos szirmokkal\r\nIllat: Erőteljes, édes és fűszeres árnyalatokkal\r\nVirágzás: Júniustól a fagyokig folyamatos\r\nFényigény: Napos helyet kedvel, félárnyékban gyengébben virágzik\r\nTélállóság: Jól tűri a hideget, de a magastörzsű fajtáknál a gyökérzónát és a szemzés helyét érdemes védeni. Télen takarást igényel, amit vastag mulcsréteggel (pl. fenyőkéreg, komposzt vagy lomb) biztosíthatunk. A koronát is érdemes jutazsákkal, szalmával vagy speciális kertészeti fátyolfóliával védeni a fagykártól.', 'Red tea rose', 'Piros', 'RED', 88, 'db', 123456789, NULL, '2025-03-19 12:03:28', 257, 'minden kert elegáns és romantikus éke'),
+(2, 'Bianca', 'Bianca', 2000, 2000, '../resources/assets/kepek/biancaresize.webp\r\n', '', 'A Bianca egy klasszikusan elegáns fehér magastörzsű rózsa, amely finom, letisztult szépséget kölcsönöz minden kertnek vagy terasznak. Tiszta fehér virágai tökéletes kontrasztot alkotnak a mélyzöld levelekkel, így különösen jól mutat sötétebb hátterek előtt vagy színes virágágyásokba ültetve. Kellemesen lágy illata van, amely nem túl erős, így azok számára is ideális, akik az enyhébb illatú virágokat részesítik előnyben. Kiválóan alkalmas cserépben nevelésre is, így erkélyekre és teraszokra egyaránt ajánlott.\r\nSzín: Tiszta hófehér\r\nIllat: Enyhe, lágy\r\nVirágzás: Nyártól késő őszig folyamatosan\r\nFényigény: Napfényes vagy félárnyékos helyet igényel\r\nTélállóság: Jól bírja a hideget, de a magastörzsű rózsák általában érzékenyebbek a fagyokra. A gyökereket ajánlott takarni mulccsal vagy lombbal, míg a koronát jutazsákkal vagy kerti fátyolfóliával borítani. Különösen erős fagyok esetén a törzset is érdemes szalmával vagy zsákvászonnal védeni.', '', 'Fehér', 'White', 2869, 'db', NULL, NULL, '2025-03-17 06:21:36', 257, 'finom, letisztult külső'),
+(3, 'Monica', 'Monica', 2500, 2125, '../resources/assets/kepek/monicaresize.webp\r\n', '', 'A Monica egy igazán élénk, ragyogó narancssárga magastörzsű rózsa, amely garantáltan feldobja kerted hangulatát. Látványos, nagy méretű virágai napfényben különleges ragyogást kapnak, így ideális választás olyan kertekbe, ahol a vibráló színek dominálnak. Közepesen erős illata friss és energikus hatású, ami kellemes atmoszférát teremt a pihenéshez. Jó ellenállóképességű fajta, amely hosszan és bőségesen virágzik.\r\nSzín: Élénk narancssárga\r\nIllat: Közepesen erős, enyhén citrusos jegyekkel\r\nVirágzás: Májustól az első fagyokig\r\nFényigény: Napfényes helyen fejlődik a legszebben\r\nTélállóság: Mérsékelten télálló, ezért a gyökérzónát vastag mulccsal, szalmával vagy lombbal kell takarni, a koronát pedig ajánlott jutazsákba vagy fátyolfóliába burkolni. Erős fagyok esetén a törzs védelméről is gondoskodni kell.', '', 'Narancssárga', 'Orange', 53, 'db', NULL, NULL, '2025-03-17 06:21:44', NULL, 'látványos, vibráló színek'),
+(4, 'Caresse', 'Caresse', 2500, 2125, '../resources/assets/kepek/caresseresize.webp\r\n', '', 'A Caresse egy romantikus megjelenésű, lágy rózsaszín árnyalatú magastörzsű rózsa, amely a klasszikus kertek egyik legnépszerűbb fajtája. Nagyméretű, telt virágai csodálatosan illatoznak, így tökéletes választás olyan helyekre, ahol a látvány mellett az illat is fontos szerepet játszik. Gazdag és hosszan tartó virágzása miatt a kert folyamatos színpompában tündököl általa.\r\nSzín: Pasztell rózsaszín\r\nIllat: Kellemesen édes és virágos\r\nVirágzás: Késő tavasztól késő őszig\r\nFényigény: Napfényt kedveli\r\nTélállóság: Viszonylag jól bírja a hideget, de a magastörzsű fajták koronája érzékenyebb lehet. A gyökérzónát mulccsal vagy lombbal érdemes védeni, a koronát pedig kerti fátyolfóliával, jutazsákkal vagy szalmával kell beburkolni.', '', 'Rózsaszín', 'Pink', 95, 'db', NULL, NULL, '2025-03-17 06:21:54', NULL, 'lágy rózsaszín árnyalat, hosszan tartó virágzás'),
+(5, 'Golden Leader', 'Golden Leader', 2500, 1800, '../resources/assets/kepek/golden.webp\r\n', '', 'A Golden Leader igazi napfényt varázsol a kertbe élénk citromsárga virágaival. Nagy, látványos virágai nemcsak szépek, hanem kellemesen friss illatot is árasztanak. Folyamatosan virágzó fajta, amely hosszú időn át díszíti a kertet vagy a teraszt. Erős, egyenes szárának köszönhetően stabil és elegáns megjelenésű.\r\nSzín: Ragyogó citromsárga\r\nIllat: Frissítő, közepesen intenzív\r\nVirágzás: Nyár elejétől késő őszig folyamatos\r\nFényigény: Napos helyet igényel\r\nTélállóság: Mérsékelt télállóságú, ezért a gyökereket vastag mulccsal vagy lombbal kell védeni, a koronát pedig jutazsákkal vagy szalmával ajánlott betakarni. Erős hidegek esetén a törzs köré szigetelő réteget érdemes helyezni.', '', 'Citromsárga', 'Yellow', 90, 'db', NULL, NULL, '2025-03-17 06:22:06', NULL, 'stabil és elegáns megjelenés, napfényt varázsol a kertbe');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `termek_galerias`
+--
+
+CREATE TABLE `termek_galerias` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `kepNev` varchar(255) DEFAULT NULL,
+  `kepUtvonal` varchar(255) DEFAULT NULL,
+  `kepLeiras` varchar(255) DEFAULT NULL,
+  `termekid` bigint(20) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `termek_galerias`
+--
+
+INSERT INTO `termek_galerias` (`id`, `kepNev`, `kepUtvonal`, `kepLeiras`, `termekid`) VALUES
+(1, 'working', '../public/img/uploads/working.webp', 'working', 1),
+(2, 'working', '../public/img/uploads/kezdokep.webp', 'working', 1);
 
 -- --------------------------------------------------------
 
@@ -826,7 +860,16 @@ INSERT INTO `valaszts` (`mennyiseg`, `kedvezmeny`, `rendeles_id`, `termek_id`) V
 (1, NULL, 145, 2),
 (1, NULL, 146, 2),
 (1, NULL, 147, 2),
-(1, NULL, 148, 2);
+(1, NULL, 148, 2),
+(2, NULL, 149, 2),
+(2, NULL, 150, 2),
+(2, NULL, 151, 2),
+(1, NULL, 152, 2),
+(1, NULL, 153, 2),
+(1, NULL, 154, 2),
+(2, NULL, 155, 2),
+(1, NULL, 156, 2),
+(5, NULL, 156, 3);
 
 -- --------------------------------------------------------
 
@@ -1020,6 +1063,13 @@ ALTER TABLE `termeks`
   ADD KEY `cimkeid` (`cimkeId`);
 
 --
+-- A tábla indexei `termek_galerias`
+--
+ALTER TABLE `termek_galerias`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `termid` (`termekid`);
+
+--
 -- A tábla indexei `users`
 --
 ALTER TABLE `users`
@@ -1065,7 +1115,7 @@ ALTER TABLE `wishlists`
 -- AUTO_INCREMENT a táblához `banners`
 --
 ALTER TABLE `banners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT a táblához `cegs`
@@ -1131,7 +1181,7 @@ ALTER TABLE `kategorizals`
 -- AUTO_INCREMENT a táblához `kepeks`
 --
 ALTER TABLE `kepeks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT a táblához `migrations`
@@ -1155,13 +1205,19 @@ ALTER TABLE `popups`
 -- AUTO_INCREMENT a táblához `rendeles`
 --
 ALTER TABLE `rendeles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- AUTO_INCREMENT a táblához `termeks`
 --
 ALTER TABLE `termeks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT a táblához `termek_galerias`
+--
+ALTER TABLE `termek_galerias`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT a táblához `users`
@@ -1259,6 +1315,12 @@ ALTER TABLE `rendeles`
 --
 ALTER TABLE `termeks`
   ADD CONSTRAINT `cimkeid` FOREIGN KEY (`cimkeId`) REFERENCES `cimkes` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+--
+-- Megkötések a táblához `termek_galerias`
+--
+ALTER TABLE `termek_galerias`
+  ADD CONSTRAINT `termid` FOREIGN KEY (`termekid`) REFERENCES `termeks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Megkötések a táblához `users`

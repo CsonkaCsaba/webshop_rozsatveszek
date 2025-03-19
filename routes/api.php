@@ -41,6 +41,7 @@ Route::post('/hirekadmin/create', [HirekController::class,'create']);
 Route::middleware('web')->post('/megrendeles/storeOrder', [OrderController::class, 'storeOrder']);
 Route::middleware('web')->get('/user/orders', [UserController::class, 'orders']);
 Route::post('/termekadmin/create', [TermekController::class,'create']);
+Route::post('/termekadmin/updateimage', [TermekController::class,'updateimage']);
 Route::resource('/termekadmin', TermekController::class);
 Route::put('/termekadmin/{id}', [TermekController::class,'update']);
 Route::put('/termekCimkeUpdate/{id}', [TermekController::class,'updateCimke'])->name('updateCimke');

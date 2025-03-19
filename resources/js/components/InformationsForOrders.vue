@@ -18,7 +18,7 @@
         <p><b><font-awesome-icon :icon="['fa', 'truck']" class="ps-2" color="#1679c9"/>  Kiszállítás alatt: </b><br> A megrendelt termék(ek) átadásra került(ek) a futárnak. A kiszállítási folyamat megkezdődött.</p>
     </div>
     <div class="col-6 ms-6 ">
-        <p><font-awesome-icon :icon="['fa', 'check']" class="ps-2" color="#64c916"/> <b> Teljesítve: </b><br> A megrendelt terméke(ke)t a vásárló átvette a futártól. A kiszállítás terljesült.</p>
+        <p><font-awesome-icon :icon="['fa', 'check']" class="ps-2" color="#64c916"/> <b> Teljesítve: </b><br> A megrendelt terméke(ke)t a vásárló átvette a futártól. A kiszállítás teljesült.</p>
         <p><font-awesome-icon :icon="['fa', 'ban']" class="ps-2" color="#d41e1e"/> <b> Visszamondott: </b><br>A megrendelt terméke(ke)t a vásárló kiszállítás előtt visszamondta.</p>
         <p><font-awesome-icon :icon="['fa', 'xmark']" class="ps-2" color="#d41e1e"/><b> Sikertelen kézbesítés: </b><br>A megrendelt terméke(ke)t a vásárló nem vette át a futártól.</p>
     </div>

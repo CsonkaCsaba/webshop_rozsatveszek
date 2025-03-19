@@ -1,7 +1,10 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination, Navigation, Scrollbar } from 'swiper/modules';
 
+  const modules = [Pagination, Navigation, Scrollbar]
 
 const {modalStatusProduct } = storeToRefs(ProductStore())
 
@@ -48,7 +51,14 @@ function toCartFromModal() {
                     </div>
                 </div>
                 <div class="col-6 img-hover-zoom">
-                    <img :src="prod.img" alt="productimage" class="termek-kep kep" style="border-radius: 11px;">
+                    <img :src="prod.img" alt="productimage" class="termek-kep kep" style="border-radius: 11px;" :class="{ maxSize: prod.galeria.length > 0 }" />
+                    <div v-if="prod.galeria.length > 0" class="swipercontainer ">
+                    <swiper :slides-per-view="1"  :navigation="true" :pagination="false" >
+                        <swiper-slide v-for="ph in prod.galeria">
+                            <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="" style="border-radius: 11px;"/>
+                        </swiper-slide>
+                        </swiper>
+                    </div>
                 </div>
             </div>
       </v-card>
@@ -70,11 +80,23 @@ function toCartFromModal() {
 
 .img-hover-zoom
     overflow: hidden
-    &:hover
-        img
-            transform: scale(1.1) 
-            transform-origin: 50% 65%
-            transition: transform 5s, filter 3s ease-in-out
-    
 
+.swiper-button-prev
+.swiper-button-next
+.swiper-pagination
+    top: 20% !important
+
+.swiper-slide
+    max-width: 50%
+    max-height: 5%
+    padding: 2px
+    margin-bottom: 5px
+
+.swipercontainer
+    margin-bottom: 1%
+    margin-top: 1%
+
+.maxSize
+    max-height: 65%
+    height: auto
 </style>

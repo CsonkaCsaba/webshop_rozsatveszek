@@ -1,12 +1,10 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { ProductStore } from './store/Product';
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination, Navigation, Scrollbar } from 'swiper/modules';
 
-  const modules = [Pagination, Navigation, Scrollbar]
 
 const {modalStatusProduct } = storeToRefs(ProductStore())
+
 
 const props = defineProps({
     prod: {
@@ -23,14 +21,19 @@ function modalStatus() {
 function toCartFromModal() {
     emit('toCartFromModal');
 }
-
+ function chagePhoto(url){
+    document.getElementById('mainPhoto').src = url;
+}
+function changePhotoBack(url){
+    document.getElementById('mainPhoto').src = url;
+}
 </script>
 <template>
     <v-dialog  class="transition m-4 " id="dialog">
         <div class="vdialogclosebutton" @click="modalStatus" >X</div>
         <v-card class="rounded border border-1 p-4 align-items-center" id="cardForProduct">
            <div class="row">
-            <div class="col-6 text-justify lh-lg p-4">
+            <div data-aos="fade-right" class="col-6 text-justify lh-lg p-4">
                     <h1>{{prod.nevHu}}</h1>
                     <h2>{{prod.szin}}</h2>
                     <p class="fst-italic pt-2 text-muted">-{{ prod.tagline }}</p>
@@ -51,13 +54,15 @@ function toCartFromModal() {
                     </div>
                 </div>
                 <div class="col-6 img-hover-zoom">
-                    <img :src="prod.img" alt="productimage" class="termek-kep kep" style="border-radius: 11px;" :class="{ maxSize: prod.galeria.length > 0 }" />
-                    <div v-if="prod.galeria.length > 0" class="swipercontainer ">
-                    <swiper :slides-per-view="1"  :navigation="true" :pagination="false" >
-                        <swiper-slide v-for="ph in prod.galeria">
-                            <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="" style="border-radius: 11px;"/>
-                        </swiper-slide>
-                        </swiper>
+                    <img data-aos="fade-left" :src="prod.img" alt="productimage" class="termek-kep kep" style="border-radius: 11px;"  :class="{ maxSize: prod.galeria.length > 0 }" id="mainPhoto"/>
+                        <div v-if="prod.galeria.length > 0" class="container" @mouseleave="changePhotoBack(prod.img)">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-6">
+                        <div data-aos="fade-right" class="d-flex flex-row" v-for="ph in prod.galeria" >
+                            <div class="gallery-item d-inline-flex pt-4" href="">
+                            <img :src="ph.kepUtvonal" class="" :alt=ph.kepLeiras @click="chagePhoto(ph.kepUtvonal)" style="cursor: pointer; border-radius: 11px;" >
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,22 +86,18 @@ function toCartFromModal() {
 .img-hover-zoom
     overflow: hidden
 
-.swiper-button-prev
-.swiper-button-next
-.swiper-pagination
-    top: 20% !important
-
-.swiper-slide
-    max-width: 50%
-    max-height: 5%
-    padding: 2px
-    margin-bottom: 5px
-
-.swipercontainer
-    margin-bottom: 1%
-    margin-top: 1%
-
 .maxSize
-    max-height: 65%
+    max-height: 80%
+    max-width: auto
+
+.gallery-item img 
+    width: 100%
     height: auto
+    filter: grayscale(50%)
+
+.gallery-item:hover img 
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.05)
+  filter: grayscale(0%)
+  transition: transform 1.9s 
+
 </style>

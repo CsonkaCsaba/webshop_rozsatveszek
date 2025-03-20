@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Termek;
 use App\Models\Kepek;
+use App\Models\TermekGaleria;
 use Illuminate\Http\Request;
 use Illuminate\Http\MultipartFormRequest;
 use Illuminate\Http\MultipartFormResource;
@@ -243,6 +244,41 @@ public function updateimage(Request $request)
         return response()->json(array('message' => 'Sikeres feltöltés!', 'kepUtvonal'=>$imgUrl),200);
     }
 }
+
+    public function addImageToGallery(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $request->validate([
+                'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+           
+            $file_name = pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME);
+                if (TermekGaleria::where('kepNev', 'LIKE', $file_name)->exists()){
+                    $exist_image = TermekGaleria::where('kepNev', 'LIKE', $file_name)->get();
+                    return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezd át vagy válasszon másikat!', 'error' => 422)); 
+                } else {
+    
+                $manager = new ImageManager(new Driver());
+                $image = $manager->read($file);
+                $image->resize(1280, 710);
+                $encoded = $image->toWebp(60)->save('img/uploads/'.$file_name.'.webp');
+                    
+                $form_data = json_decode($request->form_data);
+                $id = $form_data->id; 
+                $imgUrl = '../public/img/uploads/'.$file_name.'.webp';
+                $media = new TermekGaleria;
+                $media->kepNev = $file_name;
+                $media->kepLeiras = $file_name;
+                $media->kepUtvonal = $imgUrl;
+                $media->termekid = $id;
+                $media->save();
+                $lastId = $media->id;     
+                return response()->json(array('message' => 'Sikeres feltöltés!', 'kepUtvonal'=>$imgUrl, 'id' => $lastId, 'kepLeiras' => $file_name, 'kepNev' => $file_name, 'termekid' => $id),200);
+                }
+        } 
+
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -251,4 +287,12 @@ public function updateimage(Request $request)
         $hirek = Termek::find($id);
         $hirek->delete();
     }
+
+    public function removeImageFromGallery($id)
+    {
+        $galeriafoto = TermekGaleria::find($id);
+        $galeriafoto->delete();
+    }
+
+    
 }

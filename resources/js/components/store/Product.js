@@ -7,15 +7,12 @@ export let elementsToWishLoggedIn = [];
 export const ProductStore = defineStore("Product",{
     state: () => {
       return {
-        products: [
-
-        ],
-        wishlist: [
-
-        ],
-        cimkek: [
-
-        ],
+        products: [],
+        wishlist: [],
+        cimkek: [],
+        temporaryGallery: [],
+        temporaryNewProductPhoto : null,
+        temporarySrc: null,
         addNewProduct: false,
         disableBtnAdd: false,
         photoMessage : "",
@@ -47,6 +44,8 @@ export const ProductStore = defineStore("Product",{
         defaultImage: "",
         addAnewPhotoToProductGallery: false,
         photoMessageProduct: "",
+        showDelete: false,
+        termekId: null,
        
         }
     },
@@ -185,6 +184,15 @@ export const ProductStore = defineStore("Product",{
             this.file = file;
             file = null;
             this.photoMessage = '';
+            this.photoMessageProduct = '';
+        },
+        onChangeNewProductGalleryPhoto(e){
+            let newProductGalleryPhotoFile;
+            newProductGalleryPhotoFile = e.target.files[0];
+           // this.file = file;
+            newProductGalleryPhotoFile = null;
+            this.photoMessage = '';
+            this.photoMessageProduct = '';
         },
         createProduct(nev, szin, egyseg, cikkszam, ar, akciosar, keszlet, leiras, tagline){
             let formNewProduct = document.getElementById('addNewproductForm');
@@ -413,6 +421,57 @@ export const ProductStore = defineStore("Product",{
                 }).catch(console.error);
             }
         },
+        addImageToGallery(id){
+            this.edit_id = id;
+            const config = {
+                headers: {
+                    'content-type':'multipart/form-data'
+                }
+            }
+            let formData = new FormData();
+
+            if(this.file !== null){
+                formData.append('file', this.file);
+            }else {
+                this.photoMessageProduct = "Nem választott ki fájlt a feltöltéshez!";
+                return
+            }
+            let form_data = JSON.stringify({
+                id : this.edit_id
+              });
+
+              formData.append('form_data', form_data)
+              
+              axios.post('api/termekadmin/addImageToGallery',formData, config).then((response)=>{
+                if (response.data.error === 422){
+                    this.photoMessageProduct = response.data.message;
+                    document.getElementById('uploadInputAdd').value = null;
+                    this.file = null;
+                    return;
+                }
+                if(response.status == 200){
+                this.photoMessageProduct = "A fotó feltöltése a galériába sikeres!";
+                this.uploadedPhotoUrl = response.data.kepUtvonal;
+                let imagePush = {
+                    id: response.data.id,
+                    kepLeiras: response.data.kepLeiras,
+                    kepNev: response.data.kepNev,
+                    kepUtvonal: response.data.kepUtvonal,
+                    termekid: response.data.termekid,
+                    
+                }
+               //this.products.push(productPush);
+                this.products.forEach(element => {
+                if(element.id == id){
+                    element.galeria.push(imagePush)
+                        }
+                    })  
+                this.reload += 1;  
+                } 
+                
+                }).catch(console.error);
+            
+        },
         removeFromWishList(id){
             this.edit_id = id;
             this.message = 'Biztos benne, hogy törölni szeretné a kívánságlistáról a terméket?';
@@ -495,7 +554,41 @@ export const ProductStore = defineStore("Product",{
         },
         addAnewPhotoToProductGalleryBtn(){
             this.addAnewPhotoToProductGallery = true;
+        },
+        deleteImageFromGallery(fotoid, termekid){
+            this.edit_id = fotoid;
+            this.termekId = termekid;
+            this.message = 'Biztos benne, hogy törölni szeretné a fotót a gelériából?';
+            this.modalStatusAccept = true;
+        },
+        deleteImageAccepted(){
+            axios.delete('api/termekadmin/removeImageFromGallery/'+this.edit_id).then((response)=>{
+                if(response.status == 200){
+
+                // let index = this.wishlist.findIndex(termek=>termek.id == id);
+                // this.wishlist.splice(index, 1)
+                for(const termek of this.products){
+                    if(termek.id === this.termekId){  
+                        for(const foto of termek.galeria){
+                            if(foto.id === this.edit_id){
+                                const index = termek.galeria.indexOf(foto);
+                                if (index > -1) { 
+                                    termek.galeria.splice(index, 1); // 2nd parameter means remove one item only
+                                  }
+                            }
+                        }
+                        }
+                    }
+                this.message = 'A fotó törlése a galériából sikeres';
+                this.modalStatus = true;
+                }
+            });
+        },
+        changeStateBt(){
+            this.showDelete = !this.showDelete
         }
+        
+        
        
 
         

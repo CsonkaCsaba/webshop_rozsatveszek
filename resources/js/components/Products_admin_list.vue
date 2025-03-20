@@ -6,14 +6,34 @@ import { Pagination, Navigation, Scrollbar } from 'swiper/modules';
 
   const modules = [Pagination, Navigation, Scrollbar]
 
-const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery} = storeToRefs(ProductStore())
-const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn} = ProductStore()
+const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete, temporaryGallery, temporarySrc, file} = storeToRefs(ProductStore())
+const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, deleteImageFromGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto} = ProductStore()
 fetchProduct();
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementsByClassName('swiper-button-prev').stlye.top = '20% !important';
     document.getElementsByClassName('swiper-button-next').stlye.top = '20% !important';
 });
 
+function previewFile() {
+  const preview = document.getElementById('previewNewProductPhoto');
+  const file = document.getElementById('uploadInput').files[0];
+  ProductStore().file = file;
+  const reader = new FileReader();
+
+  reader.addEventListener("load", function () {
+    preview.src = reader.result;
+  }, false);
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+}
+function deleteTemporaryProductImageUrl(){
+    ProductStore().showDelete = false;
+    ProductStore().file = '';
+    ProductStore().changeStateBt;
+    document.getElementById('previewNewProductPhoto').src = '';
+    document.getElementById('uploadInput').value = null;
+}
 </script>
 
 <template>
@@ -80,21 +100,52 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 </div>
                 <div class="row justify-content-center text-center">
-                    <div class="col-4">
+                    <div class="col-6">
                         <label for="description" class="p-1 col">Leírás</label>
                             <textarea id="description"  class="form-control fw-light" required placeholder="Leírás megadása" name="descriptionInput" v-model="description" rows="8">
                             </textarea>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <label for="description" class="p-1 col">Egysoros</label>
                             <textarea id="shortdescription"  class="form-control fw-light" required placeholder="Egysoros megadása" name="shortdescriptionInput" v-model="shortdescription" rows="4">
                             </textarea>
                     </div>
-                    <div class=" col-4 form-floating mb-3">
-                        <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó hozzáadása</p> 
-                        <p class="text-muted fs-6"><font-awesome-icon :icon="['fas', 'circle-info']"/> A legjobb teljesítmény elérése érdekében a feltöltésre kerülő fotókat automatikisan konvertáljuk .webp kiterjesztésre és 1280*710 pixel méretre állítjuk!</p>
-                        <input id="uploadInput" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
+                    
+                </div>
+                <div class="row justify-content-center text-center pt-4">
+                    <div class=" col-6">
+                        <p class="text-muted fs-6"><font-awesome-icon :icon="['fas', 'circle-info']"/> A legjobb teljesítmény elérése érdekében a feltöltésre kerülő fotókat automatikisan konvertáljuk .webp   kiterjesztésre és 1280*710 pixel méretre állítjuk!</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center text-center">
+                    <div class=" col-6 form-floating mb-3 border-end">
+                        <p class="mt-4 form-label form-label-top pt-2 mb-4">Termékfotó hozzáadása</p>
+                        <div v-if="showDelete" style="position: absolute; right: 2%; color: red; cursor: pointer; z-index: 15" class="">
+                        <button type="button" class="btn deleteBtnNewProd" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> Törlés</button> 
+                        </div>
+                        <img id="previewNewProductPhoto" src="" class="w-50 float-center img-fluid rounded mx-auto d-block" @mouseenter="showDelete = true">
+
+                        <input id="uploadInput" type="file" @change="previewFile()" class="form-control" accept="image/*" name="photo" reqired/>
                         <p class="text-danger">{{ photoMessage }}</p>
+                    </div>
+                    <div class=" col-6 form-floating mb-3 border-end">
+                        <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó hozzáadása a galériához</p>
+
+                        
+                        <img id="preview" src="" class="card-img-top galleryphoto"  @mouseenter="showDelete = true">
+                        <input id="uploadInputAdd" type="file" @change="previewFile()" class="form-control" accept="image/*" name="photo" reqired/>
+
+                            <div v-if="temporaryGallery.length > 0" class="container swipercontainer">
+                                <swiper :slides-per-view="1"  :navigation="true" :pagination="true" :key="reload" @mouseleave="changeStateBt">
+                                    <swiper-slide v-for="ph in temporaryGallery">
+                                        <div v-if="showDelete" style="position: absolute; right: 2%; color: red; cursor: pointer; z-index: 15">
+                                            <button type="button" class="btn deleteBtn" @click="deleteImageFromTemporaryGallery(ph.id)"><font-awesome-icon :icon="['fas', 'trash']" /> Törlés</button></div>
+                                        <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto" @mouseenter="showDelete = true"/>
+                                    </swiper-slide>
+                                </swiper>
+                                
+                                <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="addAnewPhotoToTemporaryGalleryBtn"><font-awesome-icon :icon="['fas', 'camera']" /> Új termékfotót töltök fel a galériába</button>
+                            </div>
                     </div>
                 </div>
                     <div class="justify-content-center text-center">
@@ -139,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <li class="text-left" v-for="prod in products" :key="prod.id">
                 <div class="row ">
                     <div class="col-5 ">
-                        <img :src="prod.img" class="image">
+                        <img :src="prod.img" class="image" @click="prod.edit = !prod.edit" style="cursor:pointer;">
                     </div>
                     <div class="col-2 keszlet">
                         <p v-if="prod.keszlet <= 0" class="elfogyott">Elfogyott</p>
@@ -148,14 +199,14 @@ document.addEventListener("DOMContentLoaded", function() {
                             A készlet hamarosan elfogy!</span></p>
                     </div>
                     <div class="col-2 align-self-center">
-                        <p class="name">{{ prod.nevHu }}</p><br>
+                        <p class="name" @click="prod.edit = !prod.edit" style="cursor:pointer;">{{ prod.nevHu }}</p><br>
                         <p class="color">{{ prod.szin }}</p>
                     </div>
                     <div class="col-2 align-self-center text-start">
                         {{ prod.ar }} Ft/{{ prod.egyseg }}
                     </div>
                     <div class="col-2 align-self-center buttons">
-                        <button type="button" class="btn secoundaryBtna btn-lg m-4" @click="prod.edit = true" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék szerkesztése" ><font-awesome-icon :icon="['fas', 'pen']" /></button>
+                        <button type="button" class="btn secoundaryBtna btn-lg m-4" @click="prod.edit = !prod.edit"  data-bs-toggle="tooltip" data-bs-placement="top" title="Termék szerkesztése" ><font-awesome-icon :icon="['fas', 'pen']" /></button>
                         <button type="button" class="btn secoundaryBtnb btn-lg" @click="removeProduct(prod.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék törlése"><font-awesome-icon :icon="['fas', 'trash']" /></button>
                     </div>
                     <Transition>
@@ -246,10 +297,12 @@ document.addEventListener("DOMContentLoaded", function() {
                                     </div>
                                     <div class="col-4 ">
                                         <p class="p-1">Termékgaléria</p>
-                                        <div v-if ="!addAnewPhotoToProductGallery" class="container swipercontainer">
-                                            <swiper :slides-per-view="1"  :navigation="true" :pagination="true" >
+                                        <div v-if ="prod.galeria.length > 0 && addAnewPhotoToProductGallery == false " class="container swipercontainer">
+                                            <swiper :slides-per-view="1"  :navigation="true" :pagination="true" :key="reload" @mouseleave="changeStateBt">
                                                 <swiper-slide v-for="ph in prod.galeria">
-                                                    <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto"/>
+                                                    <div v-if="showDelete" style="position: absolute; right: 2%; color: red; cursor: pointer; z-index: 15">
+                                                        <button type="button" class="btn deleteBtn" @click="deleteImageFromGallery(ph.id, prod.id)"><font-awesome-icon :icon="['fas', 'trash']" /> Törlés</button></div>
+                                                    <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto" @mouseenter="showDelete = true"/>
                                                 </swiper-slide>
 
                                             </swiper>
@@ -257,13 +310,12 @@ document.addEventListener("DOMContentLoaded", function() {
                                             <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="addAnewPhotoToProductGalleryBtn"><font-awesome-icon :icon="['fas', 'camera']" /> Új termékfotót töltök fel a galériába</button>
                                         </div>
                                         <div v-else>
-                                            <p class="p-1">Új termékfotó feltöltése</p>
+                                            <p class="p-1">Új termékfotó feltöltése a galériába</p>
                                             <p class="text-muted fs-6"><font-awesome-icon :icon="['fas', 'circle-info']"/> A legjobb teljesítmény elérése érdekében a feltöltésre kerülő fotókat automatikisan konvertáljuk .webp kiterjesztésre és egységesen 1280*710 pixel méretre állítjuk!</p>
 
-                                            <input id="uploadInputUpdate" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
-                                            <p class="text-muted">{{ photoMessageProduct }}</p>
-                                            <button type="button" class="btn secoundaryBtna m-1 pt-2" @click="updateProductImage(prod.id, prod.img, null)"><font-awesome-icon :icon="['fas', 'cloud-arrow-up']" /> Feltöltés</button>
-                                            <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="updateProductImage(prod.id, defaultImage, true)"><font-awesome-icon :icon="['fas', 'rotate-left']" /> Visszaállít</button>
+                                            <input id="uploadInputAdd" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
+                                            <p class="text-muted fs-6">{{ photoMessageProduct }}</p>
+                                            <button type="button" class="btn secoundaryBtna m-1 pt-2" @click="addImageToGallery(prod.id)"><font-awesome-icon :icon="['fas', 'cloud-arrow-up']" /> Feltöltés</button>
                                             <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="photoMessageProduct = '', addAnewPhotoToProductGallery = false">X Bezár</button>
                                         </div>
                                     </div>
@@ -284,7 +336,7 @@ document.addEventListener("DOMContentLoaded", function() {
             </li>
         </ul>
     </div>
-<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @deleteProduct="deleteProduct"></modalAccept>
+<modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @deleteProduct="deleteProduct" @deleteImageAccepted="deleteImageAccepted"></modalAccept>
 <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
 </template>
 
@@ -399,4 +451,22 @@ li:nth-child(odd)
 
 .swipercontainer
     margin-bottom: 1px
+
+.deleteBtn
+    background-color: #414a4c
+    color: white
+    font-size: 70%
+    &:hover
+        background-color: #212529
+        
+.deleteBtnNewProd
+    background-color: #414a4c
+    align-content: center
+    margin-left: 0px
+    margin-right: 160px
+    color: white
+    font-size: 80%
+    &:hover
+        background-color: #212529
+
 </style>

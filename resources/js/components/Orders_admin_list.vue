@@ -182,7 +182,7 @@ const toggleChip = (button) => {
     <ul class="list text-center">
         <li  class="row mt-2 py-4 ps-4" v-for="order in slicedOrders" :key="order.id" >
             <div class="col-1 pt-4 px-0"><p class="fs-6">{{ order.id }} </p> </div>
-            <div class="col-2 pt-4 px-0"><p class="fs-6 fw-bold" :class="{ ready : order.allapot == 'Teljesítve', delivery : order.allapot == 'Kiszállítás alatt', notready : order.allapot == 'Sikertelen kézbesítés' || order.allapot == 'Visszamondott'}" ><img src="../../assets/kepek/shoppingcart2.webp" width="40" height="auto" alt="cart icon" class="m-2"/> {{ order.vasarlo.nev}} </p></div>
+            <div class="col-2 pt-4 px-0"><p  @click="order.edit = !order.edit, showDown = !showDown" style="cursor:pointer;" class="fs-6 fw-bold" :class="{ ready : order.allapot == 'Teljesítve', delivery : order.allapot == 'Kiszállítás alatt', notready : order.allapot == 'Sikertelen kézbesítés' || order.allapot == 'Visszamondott'}" ><img src="../../assets/kepek/shoppingcart2.webp" width="40" height="auto" alt="cart icon" class="m-2"/> {{ order.vasarlo.nev}} </p></div>
             <div class="col pt-2 px-0"><span class="fs-6">{{ order.rogzitDatum }}<br></span><span class="fs-6 text-muted p-0 m-0">{{ order.rogzitOra }}</span></div>
             <div class="col pt-4 px-0"><p class="fs-6">{{ order.vegosszeg }},-Ft</p></div>
             <div class="col pt-4 px-0"><p class="fs-6">{{ order.fizetesiMod }}</p></div>

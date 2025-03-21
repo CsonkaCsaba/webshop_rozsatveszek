@@ -48,7 +48,7 @@ class TermekController extends Controller
 
             if (Kepek::where('kepNev', 'LIKE', $file_name)->exists()){
                 $exist_image = Kepek::where('kepNev', 'LIKE', $file_name)->get();
-                return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezze át vagy válasszon másikat!', 'error' => 422)); 
+                return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Egy termékfotó csak egy termékhez tartozhat! Kérjük, hogy feltöltés előtt nevezze át vagy válasszon másikat!', 'error' => 422)); 
 
             } else {
                 $manager = new ImageManager(new Driver());
@@ -202,7 +202,7 @@ public function updateimage(Request $request)
     if ($request->hasFile('file')) {
         $file = $request->file('file');
         $request->validate([
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
         ]);
        
         $file_name = pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME);
@@ -250,7 +250,7 @@ public function updateimage(Request $request)
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $request->validate([
-                'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
             ]);
            
             $file_name = pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME);
@@ -279,6 +279,37 @@ public function updateimage(Request $request)
         } 
 
     }
+    public function addImageToGalleryFromNewProduct(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $request->validate([
+                'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
+            ]);
+           
+             $file_name = pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME);
+            //     if (TermekGaleria::where('kepNev', 'LIKE', $file_name)->exists()){
+            //         $exist_image = TermekGaleria::where('kepNev', 'LIKE', $file_name)->get();
+            //         return response()->json(array('message' => 'Van már ilyen nevű fotónk!: '.$exist_image[0]->kepNev.' Kérjük, hogy feltöltés előtt nevezd át vagy válasszon másikat!', 'error' => 422)); 
+            //     } else {
+    
+                $manager = new ImageManager(new Driver());
+                $image = $manager->read($file);
+                $image->resize(1280, 710);
+                $encoded = $image->toWebp(60)->save('img/uploads/'.$file_name.'.webp');
+                    
+                $form_data = json_decode($request->form_data);
+                $id = $form_data->id; 
+                $imgUrl = '../public/img/uploads/'.$file_name.'.webp';
+                $media = new TermekGaleria;
+                $media->kepNev = $file_name;
+                $media->kepLeiras = $file_name;
+                $media->kepUtvonal = $imgUrl;
+                $media->termekid = $id;
+                $media->save();   
+                return response()->json(array('message' => 'Sikeres feltöltés!', 'kepUtvonal'=>$imgUrl, 'kepLeiras' => $file_name, 'kepNev' => $file_name, 'termekid' => $id),200);
+                }
+    } 
     /**
      * Remove the specified resource from storage.
      */

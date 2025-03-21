@@ -43,6 +43,7 @@ Route::middleware('web')->get('/user/orders', [UserController::class, 'orders'])
 Route::post('/termekadmin/create', [TermekController::class,'create']);
 Route::post('/termekadmin/updateimage', [TermekController::class,'updateimage']);
 Route::post('/termekadmin/addImageToGallery', [TermekController::class,'addImageToGallery']);
+Route::post('/termekadmin/addImageToGalleryFromNewProduct', [TermekController::class,'addImageToGalleryFromNewProduct']);
 Route::delete('/termekadmin/removeImageFromGallery/{id}', [TermekController::class,'removeImageFromGallery']);
 Route::resource('/termekadmin', TermekController::class);
 Route::put('/termekadmin/{id}', [TermekController::class,'update']);

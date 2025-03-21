@@ -32,18 +32,32 @@ function changePhotoBack(url){
     <v-dialog  class="transition m-4 " id="dialog">
         <div class="vdialogclosebutton" @click="modalStatus" >X</div>
         <v-card class="rounded border border-1 p-4 align-items-center" id="cardForProduct">
-           <div class="row">
-            <div data-aos="fade-right" class="col-6 text-justify lh-lg p-4">
-                    <h1>{{prod.nevHu}}</h1>
-                    <h2>{{prod.szin}}</h2>
-                    <p class="fst-italic pt-2 text-muted">-{{ prod.tagline }}</p>
-                    <hr class="cimalatt_hr mt-0">
-                    
-                    <span style="white-space: pre-wrap; width: 100%;">{{ prod.leirasHu }}</span><br>
-                    <div class="fw-bold " ><a class="text-dark" href="tanacsok">Tanácsok ültetéshez és gondozáshoz</a></div>
-                    <div class="row">
-                        <div class="col-3 lh-lg mt-4">
-                            <button v-if="prod.keszlet > 0" class="col-md-8 col-lg-6 col-xl-6 kosarba kosarba-active text-center py-2 gombHover" data-bs-toggle="modal" data-bs-target="#KosarbaModal" @click="toCartFromModal">
+           <div class="row row-cols-sm-1 row-cols-xs-1 row-cols-md-2">
+                <div data-aos="fade-right" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-justify lh-lg p-4">
+                        <h1>{{prod.nevHu}}</h1>
+                        <h2>{{prod.szin}}</h2>
+                        <p class="fst-italic pt-2 text-muted">-{{ prod.tagline }}</p>
+                        <hr class="cimalatt_hr mt-0">
+                        
+                        <span style="white-space: pre-wrap; width: 100%;">{{ prod.leirasHu }}</span><br>
+                        <div class="fw-bold " ><a class="text-dark" href="tanacsok">Tanácsok ültetéshez és gondozáshoz</a></div>
+                        
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 img-hover-zoom ">
+                    <img data-aos="fade-left" :src="prod.img" alt="productimage" class="termek-kep kep img-fluid" style="border-radius: 11px;"  :class="{ maxSize: prod.galeria.length > 0 }" id="mainPhoto"/>
+                        <div v-if="prod.galeria.length > 0" class="" @mouseleave="changePhotoBack(prod.img)">
+                        <div class="row row-cols-6 row-cols-sm-6 row-cols-xs-6 row-cols-md-5 row-cols-lg-6 row-cols-xl-6">
+                        <div data-aos="fade-right" class="col" v-for="ph in prod.galeria" >
+                            <div class="gallery-item pt-4" href="">
+                            <img :src="ph.kepUtvonal" class="img-fluid" :alt=ph.kepLeiras @click="chagePhoto(ph.kepUtvonal)" style="cursor: pointer; border-radius: 11px;" >
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 lh-lg mt-4">
+                            <button v-if="prod.keszlet > 0" class="kosarba kosarba-active text-center py-2 gombHover" data-bs-toggle="modal" data-bs-target="#KosarbaModal" @click="toCartFromModal">
                                     <font-awesome-icon :icon="['fas', 'cart-shopping']" class="icon"/>
                                     <span id="gombfelirat"> Kosárba</span>
                                 </button> <br>
@@ -52,19 +66,6 @@ function changePhotoBack(url){
                             <!-- <button class=" btnOk px-4 mt-4" @click="modalStatus"> Bezár </button> -->
                         </div>
                     </div>
-                </div>
-                <div class="col-6 img-hover-zoom">
-                    <img data-aos="fade-left" :src="prod.img" alt="productimage" class="termek-kep kep" style="border-radius: 11px;"  :class="{ maxSize: prod.galeria.length > 0 }" id="mainPhoto"/>
-                        <div v-if="prod.galeria.length > 0" class="container" @mouseleave="changePhotoBack(prod.img)">
-                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-6">
-                        <div data-aos="fade-right" class="d-flex flex-row" v-for="ph in prod.galeria" >
-                            <div class="gallery-item d-inline-flex pt-4" href="">
-                            <img :src="ph.kepUtvonal" class="" :alt=ph.kepLeiras @click="chagePhoto(ph.kepUtvonal)" style="cursor: pointer; border-radius: 11px;" >
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
             </div>
       </v-card>
   </v-dialog>
@@ -91,7 +92,7 @@ function changePhotoBack(url){
     max-width: auto
 
 .gallery-item img 
-    width: 100%
+    max-width: 100%
     height: auto
     filter: grayscale(50%)
 

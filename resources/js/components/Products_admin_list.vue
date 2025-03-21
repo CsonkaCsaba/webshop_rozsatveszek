@@ -6,7 +6,7 @@ import { Pagination, Navigation, Scrollbar } from 'swiper/modules';
 
   const modules = [Pagination, Navigation, Scrollbar]
 
-const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete, temporaryGallery, temporarySrc, file} = storeToRefs(ProductStore())
+const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete,  photoMessageNewProductGalleryPhoto, galleryPhotoCounter, temporaryGallery} = storeToRefs(ProductStore())
 const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, deleteImageFromGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto} = ProductStore()
 fetchProduct();
 document.addEventListener("DOMContentLoaded", function() {
@@ -33,7 +33,8 @@ function deleteTemporaryProductImageUrl(){
     ProductStore().changeStateBt;
     document.getElementById('previewNewProductPhoto').src = '';
     document.getElementById('uploadInput').value = null;
-}
+};
+
 </script>
 
 <template>
@@ -119,7 +120,8 @@ function deleteTemporaryProductImageUrl(){
                 </div>
                 <div class="row justify-content-center text-center">
                     <div class=" col-6 form-floating mb-3 border-end">
-                        <p class="mt-4 form-label form-label-top pt-2 mb-4">Termékfotó hozzáadása</p>
+                        <p class="mt-4 form-label form-label-top pt-2 mb-5">Termékfotó hozzáadása</p>
+                        <p class="text-muted fs-6">Termékenként egy termékfotó jelölhetsz ki. További fotókat a termékgaláriában adhatsz hozzá.</p>
                         <div v-if="showDelete" style="position: absolute; right: 2%; color: red; cursor: pointer; z-index: 15" class="">
                         <button type="button" class="btn deleteBtnNewProd" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> Törlés</button> 
                         </div>
@@ -130,26 +132,16 @@ function deleteTemporaryProductImageUrl(){
                     </div>
                     <div class=" col-6 form-floating mb-3 border-end">
                         <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó hozzáadása a galériához</p>
-
-                        
-                        <img id="preview" src="" class="card-img-top galleryphoto"  @mouseenter="showDelete = true">
-                        <input id="uploadInputAdd" type="file" @change="previewFile()" class="form-control" accept="image/*" name="photo" reqired/>
-
-                            <div v-if="temporaryGallery.length > 0" class="container swipercontainer">
-                                <swiper :slides-per-view="1"  :navigation="true" :pagination="true" :key="reload" @mouseleave="changeStateBt">
-                                    <swiper-slide v-for="ph in temporaryGallery">
-                                        <div v-if="showDelete" style="position: absolute; right: 2%; color: red; cursor: pointer; z-index: 15">
-                                            <button type="button" class="btn deleteBtn" @click="deleteImageFromTemporaryGallery(ph.id)"><font-awesome-icon :icon="['fas', 'trash']" /> Törlés</button></div>
-                                        <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto" @mouseenter="showDelete = true"/>
-                                    </swiper-slide>
-                                </swiper>
-                                
-                                <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="addAnewPhotoToTemporaryGalleryBtn"><font-awesome-icon :icon="['fas', 'camera']" /> Új termékfotót töltök fel a galériába</button>
-                            </div>
+                        <p class="text-muted fs-6">A galériában lévő fotók száma: {{ galleryPhotoCounter }} (javasolt max.: 4-5 db)</p>
+                        <div class="col-6 justify-content-center text-center d-inline-flex" id="photoGalleryNewProduct"></div>
+                        <img id="previewNewProductGalleryPhoto" src="" class="w-50 float-center img-fluid rounded mx-auto d-block"  @mouseenter="showDelete = true">
+                        <input id="uploadInputAdd" type="file" @change="onChangeNewProductGalleryPhoto" class="form-control" accept="image/*" name="photo" reqired/>
+                        <p class="text-muted s-6">{{ photoMessageNewProductGalleryPhoto }}</p>
                     </div>
                 </div>
                     <div class="justify-content-center text-center">
                     <div class="d-inline-flex p-4 mt-2">
+                        <loader v-if="loading"></loader>
                         <button type="submit" class="btn m-1 secoundaryBtna" :disabled="disableBtn">Hozzáadás</button>
                         <button type="button" class="btn secoundaryBtnb m-1" @click="addNewProduct = false; disableBtnAdd = false">Mégsem</button>
                     </div>
@@ -315,6 +307,7 @@ function deleteTemporaryProductImageUrl(){
 
                                             <input id="uploadInputAdd" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
                                             <p class="text-muted fs-6">{{ photoMessageProduct }}</p>
+                                            galleryPhotoCounter
                                             <button type="button" class="btn secoundaryBtna m-1 pt-2" @click="addImageToGallery(prod.id)"><font-awesome-icon :icon="['fas', 'cloud-arrow-up']" /> Feltöltés</button>
                                             <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="photoMessageProduct = '', addAnewPhotoToProductGallery = false">X Bezár</button>
                                         </div>

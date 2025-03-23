@@ -7,7 +7,7 @@ import { Pagination, Navigation, Scrollbar } from 'swiper/modules';
   const modules = [Pagination, Navigation, Scrollbar]
 
 const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete,  photoMessageNewProductGalleryPhoto, galleryPhotoCounter, temporaryGallery} = storeToRefs(ProductStore())
-const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, deleteImageFromGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto} = ProductStore()
+const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, deleteImageFromGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto, deleteTemporaryProductImageFromGallery} = ProductStore()
 fetchProduct();
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementsByClassName('swiper-button-prev').stlye.top = '20% !important';
@@ -35,6 +35,38 @@ function deleteTemporaryProductImageUrl(){
     document.getElementById('uploadInput').value = null;
 };
 
+
+let galleryphoto1 = document.getElementById("foto1");
+if(galleryphoto1){
+    galleryphoto1.addEventListener("click", addDeleteBtn(1));
+}
+
+if(document.getElementById("foto2")){
+    let galleryphoto2 = document.getElementById("foto2");
+    galleryphoto2.addEventListener("mouseover", addDeleteBtn(2));
+    galleryphoto2.addEventListener("mouseout", hideDeleteBtn(2));
+}
+if(document.getElementById("foto3")){
+    let galleryphoto3 = document.getElementById("foto3");
+    galleryphoto3.addEventListener("mouseover", addDeleteBtn(3));
+    galleryphoto3.addEventListener("mouseout", hideDeleteBtn(3));
+}
+if(document.getElementById("foto4")){
+    let galleryphoto4 = document.getElementById("foto4");
+    galleryphoto4.addEventListener("mouseover", addDeleteBtn(4));
+    galleryphoto4.addEventListener("mouseout", hideDeleteBtn(4));
+}
+if(document.getElementById("foto5")){
+    let galleryphoto5 = document.getElementById("foto5");
+    galleryphoto5.addEventListener("mouseover", addDeleteBtn(5));
+    galleryphoto5.addEventListener("mouseout", hideDeleteBtn(5));
+}
+function addDeleteBtn(id){
+console.log(id)
+}
+function hideDeleteBtn(id){
+    console.log('hide'+id)
+}
 </script>
 
 <template>
@@ -132,18 +164,33 @@ function deleteTemporaryProductImageUrl(){
                     </div>
                     <div class=" col-6 form-floating mb-3 border-end">
                         <p class="mt-4 form-label form-label-top pt-2 mb-4">Fotó hozzáadása a galériához</p>
-                        <p class="text-muted fs-6">A galériában lévő fotók száma: {{ galleryPhotoCounter }} (javasolt max.: 4-5 db)</p>
-                        <div class="col-6 justify-content-center text-center d-inline-flex" id="photoGalleryNewProduct"></div>
-                        <img id="previewNewProductGalleryPhoto" src="" class="w-50 float-center img-fluid rounded mx-auto d-block"  @mouseenter="showDelete = true">
-                        <input id="uploadInputAdd" type="file" @change="onChangeNewProductGalleryPhoto" class="form-control" accept="image/*" name="photo" reqired/>
+                        <p class="text-muted fs-6">A galériában lévő fotók száma: {{ galleryPhotoCounter }} (feltölthető fotók száma max.: 5 db)</p>
+                        <div class="d-flex d-inline-flex m-4">
+                            <div style="width: 20%" class="" id="photoGalleryNewProduct1">
+                                <button v-if="galleryPhotoCounter > 0" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button> 
+                            </div>
+                            <div style="width: 20%" class="" id="photoGalleryNewProduct2">
+                                <button v-if="galleryPhotoCounter > 1" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
+                            <div style="width: 20%" class="" id="photoGalleryNewProduct3">
+                                <button v-if="galleryPhotoCounter > 2" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
+                            <div style="width: 20%" class="" id="photoGalleryNewProduct4">
+                                <button v-if="galleryPhotoCounter > 3" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
+                            <div style="width: 20%" class="" id="photoGalleryNewProduct5">
+                                <button v-if="galleryPhotoCounter > 4" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
+                        </div>
+                        <img id="previewNewProductGalleryPhoto" src="" class="w-50 float-center img-fluid rounded mx-auto d-block">
+                    
+                        <input v-if="galleryPhotoCounter < 5" id="uploadInputAdd" type="file" @change="onChangeNewProductGalleryPhoto" class="form-control" accept="image/*" name="photo" reqired/>
                         <p class="text-muted s-6">{{ photoMessageNewProductGalleryPhoto }}</p>
+                        <p v-if="galleryPhotoCounter == 5" class="text-muted s-6">Elérted az egy termékhez galériájához maximálisan feltölthető fotók számát!</p>
+                        
                     </div>
                 </div>
                     <div class="justify-content-center text-center">
                     <div class="d-inline-flex p-4 mt-2">
                         <loader v-if="loading"></loader>
                         <button type="submit" class="btn m-1 secoundaryBtna" :disabled="disableBtn">Hozzáadás</button>
-                        <button type="button" class="btn secoundaryBtnb m-1" @click="addNewProduct = false; disableBtnAdd = false">Mégsem</button>
+                        <button type="button" class="btn secoundaryBtnb m-1" @click="addNewProduct = false; disableBtnAdd = false, galleryPhotoCounter = 0">Mégsem</button>
                     </div>
                     </div>
                 </div>
@@ -462,4 +509,13 @@ li:nth-child(odd)
     &:hover
         background-color: #212529
 
+.deleteBtnNewProdGallery
+    background-color: #414a4c
+    align-content: center
+    margin-left: 0px
+    margin-right: 0px
+    top: -15%
+    color: white
+    font-size: 80%
+    position: relative
 </style>

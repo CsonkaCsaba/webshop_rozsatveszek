@@ -209,7 +209,7 @@ export const ProductStore = defineStore("Product",{
             this.galleryPhotoCounter += 1;
             if(this.galleryPhotoCounter > 0){
                 this.imgId += 1;
-                const previewDIV = document.getElementById('photoGalleryNewProduct');
+                const previewDIV = document.getElementById('photoGalleryNewProduct'+this.imgId);
                 const lastPhoto = this.temporaryGallery[this.temporaryGallery.length - 1];
                 const img = document.createElement('img');
                     const reader = new FileReader();
@@ -219,37 +219,30 @@ export const ProductStore = defineStore("Product",{
                     if (lastPhoto) {
                         reader.readAsDataURL(lastPhoto);
                     }
-                    img.style.width = '40%';
+                    img.style.width = '80%';
                     img.style.height = 'auto';
                     img.style.margin = '1px';
                     img.style.padding = '1px';
                     img.style.border = '1px solid black';
                     img.id = this.imgId;
                     img.className = 'img';
-                    img.addEventListener('mouseover', () => {
-                        const button = document.createElement('p');
-                        button.textContent = 'Törlés';
-                        // button.style.position = 'absolute';
-                        // button.style.top = '0';
-                        // button.style.right = '0';
-                        // button.style.zIndex = '15';
-                        // button.style.backgroundColor = '#414a4c';
-                        // button.style.color = 'white';
-                        // button.style.fontSize = '70%';
-                        // button.style.padding = '1px';
-                        img.appendChild(button);
-                      });
-                    // img.onclick = function() {
-                    //     previewDIV.removeChild(previewDIV.children[img.id-1]);
-                    //     document.getElementById('uploadInputAdd').value = null;
-                    // };
+                    // let div = document.createElement('div');
+                    // div.style.width = '1%';
+                    // div.innerHTML = '<button type="button" class="btn" style="position: relative; color: white; top: -15%; right: 300%; background-color: black; cursor: pointer; z-index: 15; border: 1px solid white;" id="foto'+img.id+'">x</button>';
                     previewDIV.appendChild(img);
+                    // previewDIV.appendChild(div);
             }
         },
         deleteImageFromTemporaryGallery(id){
             let img = document.getElementById(id);
             let index = this.temporaryGallery.findIndex(photo=>photo == img.src);
             this.temporaryGallery.splice(index, 1);
+            img.remove();
+            this.galleryPhotoCounter -= 1;
+        },
+        deleteTemporaryProductImageFromGallery(id){
+            console.log(id)
+            this.temporaryGallery.splice(id-1, 1);
             img.remove();
             this.galleryPhotoCounter -= 1;
         },

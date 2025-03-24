@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
 import {ref } from 'vue'
+import { el } from 'vuetify/locale';
 export let reload = ref(0);
 export let elementsToWish = [];
 export let elementsToWishLoggedIn = [];
@@ -51,6 +52,21 @@ export const ProductStore = defineStore("Product",{
         imgId: 0,
         newProductGallery: [],
         deleteTheProduct: false,
+        hasImg1: false,
+        hasImg2: false,
+        hasImg3: false,
+        hasImg4: false,
+        hasImg5: false,
+        deletedIds: [],
+        name: "",
+        color: "",
+        egyseg: "", 
+        cikkszam: "", 
+        price: "",
+        akciosar: "",
+        stock: "",
+        description: "",
+        shortdescription: "",
        
         }
     },
@@ -181,7 +197,11 @@ export const ProductStore = defineStore("Product",{
         addNewProductBtn(){
             this.addNewProduct = true
             this.disableBtnAdd = true;
-            
+            this.newProductGallery = [];
+            this.temporaryGallery = [];
+            for( const product of this.products){
+                product.edit = false;
+            }
         },
         onChange(e){
             let file;
@@ -208,29 +228,66 @@ export const ProductStore = defineStore("Product",{
             this.photoMessageNewProductGalleryPhoto = 'Sikeres feltöltés a galériába!';
             this.galleryPhotoCounter += 1;
             if(this.galleryPhotoCounter > 0){
-                this.imgId += 1;
-                const previewDIV = document.getElementById('photoGalleryNewProduct'+this.imgId);
-                const lastPhoto = this.temporaryGallery[this.temporaryGallery.length - 1];
-                const img = document.createElement('img');
-                    const reader = new FileReader();
-                    reader.addEventListener("load", function () {
-                        img.src = reader.result;
-                    }, false);
-                    if (lastPhoto) {
-                        reader.readAsDataURL(lastPhoto);
+                if(this.deletedIds.length == 0){
+                    this.imgId += 1;
+                    const previewDIV = document.getElementById('photoGalleryNewProduct'+this.imgId);
+                    const lastPhoto = this.temporaryGallery[this.temporaryGallery.length - 1];
+                    const img = document.createElement('img');
+                        const reader = new FileReader();
+                        reader.addEventListener("load", function () {
+                            img.src = reader.result;
+                        }, false);
+                        if (lastPhoto) {
+                            reader.readAsDataURL(lastPhoto);
+                        }
+                        img.style.width = '80%';
+                        img.style.height = 'auto';
+                        img.style.margin = '1px';
+                        img.style.padding = '1px';
+                        img.style.border = '1px solid black';
+                        img.id = this.imgId;
+                        switch(this.imgId){
+                            case 1:
+                                this.hasImg1 = true;
+                                break;
+                            case 2:
+                                this.hasImg2 = true;
+                                break;
+                            case 3:                         
+                                this.hasImg3 = true;
+                                break;
+                            case 4: 
+                                this.hasImg4 = true;
+                                break;
+                            case 5:
+                                this.hasImg5 = true;
+                                break;
+                        }
+                        img.className = 'img';
+                        previewDIV.appendChild(img);
+                    }else {
+                        this.imgId = this.deletedIds[0];
+                        const previewDIV = document.getElementById('photoGalleryNewProduct'+this.imgId);
+                        const lastPhoto = this.temporaryGallery[this.temporaryGallery.length - 1];
+                        const img = document.createElement('img');
+                            const reader = new FileReader();
+                            reader.addEventListener("load", function () {
+                                img.src = reader.result;
+                            }, false);
+                            if (lastPhoto) {
+                                reader.readAsDataURL(lastPhoto);
+                            }
+                            img.style.width = '80%';
+                            img.style.height = 'auto';
+                            img.style.margin = '1px';
+                            img.style.padding = '1px';
+                            img.style.border = '1px solid black';
+                            img.id = this.imgId;
+                            this[`hasImg${img.id}`] = true;
+                            img.className = 'img';
+                            previewDIV.appendChild(img);
+                            this.deletedIds.shift();
                     }
-                    img.style.width = '80%';
-                    img.style.height = 'auto';
-                    img.style.margin = '1px';
-                    img.style.padding = '1px';
-                    img.style.border = '1px solid black';
-                    img.id = this.imgId;
-                    img.className = 'img';
-                    // let div = document.createElement('div');
-                    // div.style.width = '1%';
-                    // div.innerHTML = '<button type="button" class="btn" style="position: relative; color: white; top: -15%; right: 300%; background-color: black; cursor: pointer; z-index: 15; border: 1px solid white;" id="foto'+img.id+'">x</button>';
-                    previewDIV.appendChild(img);
-                    // previewDIV.appendChild(div);
             }
         },
         deleteImageFromTemporaryGallery(id){
@@ -241,9 +298,28 @@ export const ProductStore = defineStore("Product",{
             this.galleryPhotoCounter -= 1;
         },
         deleteTemporaryProductImageFromGallery(id){
-            console.log(id)
             this.temporaryGallery.splice(id-1, 1);
-            img.remove();
+            const previewDIV = document.getElementById('photoGalleryNewProduct'+id);
+            const imageToDelete = document.getElementById(id);
+            imageToDelete.remove();
+            switch(id){
+                case 1:
+                    this.hasImg1 = false;
+                    break;
+                case 2:
+                    this.hasImg2 = false;
+                    break;
+                case 3:                         
+                    this.hasImg3 = false;
+                    break;
+                case 4: 
+                    this.hasImg4 = false;
+                    break;
+                case 5:
+                    this.hasImg5 = false;
+                    break;
+            }
+            this.deletedIds.push(id);
             this.galleryPhotoCounter -= 1;
         },
         createProduct(nev, szin, egyseg, cikkszam, ar, akciosar, keszlet, leiras, tagline){
@@ -296,15 +372,16 @@ export const ProductStore = defineStore("Product",{
                     }
                     if(response.status == 200){
                     this.lastInsertproductId = response.data.product_Id;
-                    if(this.temporaryGallery.length > 0){
-                        for(const photo of this.temporaryGallery){
-                            this.addImageToGalleryFromNewProduct(photo, this.lastInsertproductId);
+                        if(this.temporaryGallery.length > 0){
+                            for(const photo of this.temporaryGallery){
+                                this.addImageToGalleryFromNewProduct(photo, this.lastInsertproductId);
+                                
+                            }
                         }
-                    }
-                    this.message = "Új termék létrehozása sikeres!";
-                    this.modalStatus = true;
-                    const formDataObj = {};
-                    formData.forEach((value, key) => (formDataObj[key] = value));
+                    
+                    // const formDataObj = {};
+                    // formData.forEach((value, key) => (formDataObj[key] = value));
+                    
                     let productPush = {
                         id: this.lastInsertproductId,
                         nevHu : this.nev,
@@ -323,17 +400,37 @@ export const ProductStore = defineStore("Product",{
                         edit: false
                     }
                    this.products.push(productPush);
-                   this.newProductGallery = [];
-                   this.temporaryGallery = [];
-                   formNewProduct.reset();
-                   this.disableBtnAdd = false
-                   this.addNewProduct = false
+                    this.message = "Új termék létrehozása sikeres!";
+                    this.modalStatus = true;
                     }
+                    
                     }).catch(console.error) 
             }else {
                 this.photoMessage = "Nem választott ki fájlt a feltöltéshez!";
                 }
-            this.loading = false;
+
+            
+            this.addNewProduct = false;
+            this.name = "";
+            this.color = "";
+            this.egyseg = "";
+            this.cikkszam= "";
+            this.price= "";
+            this.akciosar= "";
+            this.stock= "";
+            this.description= "";
+            this.shortdescription = "";
+            this.reload += 1;
+            this.hasImg1 = false;
+            this.hasImg2 = false;
+            this.hasImg3 = false;
+            this.hasImg4 = false;
+            this.hasImg5 = false;
+            formNewProduct.reset();
+            document.getElementById('uploadInput').value = null;
+            this.galleryPhotoCounter = 0;
+            this.imgId = 0;
+            this.loading = false; 
         },
         removeProduct(id){
             this.deleteTheProduct = true;
@@ -573,7 +670,7 @@ export const ProductStore = defineStore("Product",{
                         termekid: response.data.termekid,
                         
                     }
-                    this.newProductGallery.push(imagePush); 
+                    this.newProductGallery.push(imagePush);
                  } 
                 
                 }).catch(console.error);

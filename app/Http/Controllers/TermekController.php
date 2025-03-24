@@ -306,8 +306,9 @@ public function updateimage(Request $request)
                 $media->kepLeiras = $file_name;
                 $media->kepUtvonal = $imgUrl;
                 $media->termekid = $id;
-                $media->save();   
-                return response()->json(array('message' => 'Sikeres feltöltés!', 'kepUtvonal'=>$imgUrl, 'kepLeiras' => $file_name, 'kepNev' => $file_name, 'termekid' => $id),200);
+                $media->save(); 
+                $media->id;  
+                return response()->json(array('message' => 'Sikeres feltöltés!', 'id'=>$media->id, 'kepUtvonal'=>$imgUrl, 'kepLeiras' => $file_name, 'kepNev' => $file_name, 'termekid' => $id),200);
                 }
     } 
     /**

@@ -6,7 +6,7 @@ import { Pagination, Navigation, Scrollbar } from 'swiper/modules';
 
   const modules = [Pagination, Navigation, Scrollbar]
 
-const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete,  photoMessageNewProductGalleryPhoto, galleryPhotoCounter, temporaryGallery} = storeToRefs(ProductStore())
+const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete,  photoMessageNewProductGalleryPhoto, galleryPhotoCounter, temporaryGallery, hasImg1, hasImg2, hasImg3, hasImg4, hasImg5,name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription} = storeToRefs(ProductStore())
 const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, deleteImageFromGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto, deleteTemporaryProductImageFromGallery} = ProductStore()
 fetchProduct();
 document.addEventListener("DOMContentLoaded", function() {
@@ -36,37 +36,6 @@ function deleteTemporaryProductImageUrl(){
 };
 
 
-let galleryphoto1 = document.getElementById("foto1");
-if(galleryphoto1){
-    galleryphoto1.addEventListener("click", addDeleteBtn(1));
-}
-
-if(document.getElementById("foto2")){
-    let galleryphoto2 = document.getElementById("foto2");
-    galleryphoto2.addEventListener("mouseover", addDeleteBtn(2));
-    galleryphoto2.addEventListener("mouseout", hideDeleteBtn(2));
-}
-if(document.getElementById("foto3")){
-    let galleryphoto3 = document.getElementById("foto3");
-    galleryphoto3.addEventListener("mouseover", addDeleteBtn(3));
-    galleryphoto3.addEventListener("mouseout", hideDeleteBtn(3));
-}
-if(document.getElementById("foto4")){
-    let galleryphoto4 = document.getElementById("foto4");
-    galleryphoto4.addEventListener("mouseover", addDeleteBtn(4));
-    galleryphoto4.addEventListener("mouseout", hideDeleteBtn(4));
-}
-if(document.getElementById("foto5")){
-    let galleryphoto5 = document.getElementById("foto5");
-    galleryphoto5.addEventListener("mouseover", addDeleteBtn(5));
-    galleryphoto5.addEventListener("mouseout", hideDeleteBtn(5));
-}
-function addDeleteBtn(id){
-console.log(id)
-}
-function hideDeleteBtn(id){
-    console.log('hide'+id)
-}
 </script>
 
 <template>
@@ -74,15 +43,15 @@ function hideDeleteBtn(id){
     <div class="container">
         <div class="row m-4">
             <div class="col-4">
-                <button type="button" class="btn secoundaryBtnb addNewProd" @click="addNewProductBtn" :disabled="disableBtnAdd"><font-awesome-icon :icon="['fas', 'plus']" /> Új termék hozzáadás </button>
+                <button type="button" class="btn secoundaryBtnb addNewProd" @click="addNewProductBtn"><font-awesome-icon :icon="['fas', 'plus']" /> Új termék hozzáadás </button>
             </div>
         </div>
     </div>
   
     <div class="addNewProduct p-2" v-if="addNewProduct">
-    <Transition>
+  
     <!--show if Add New Product button clicked-->
-    <form method="POST" @submit.prevent="createProduct(name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription)" id="addNewproductForm">
+    <form method="POST" @submit.prevent="createProduct(name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription)" id="addNewproductForm" autocomplete="off">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-4">
@@ -155,7 +124,7 @@ function hideDeleteBtn(id){
                         <p class="mt-4 form-label form-label-top pt-2 mb-5">Termékfotó hozzáadása</p>
                         <p class="text-muted fs-6">Termékenként egy termékfotó jelölhetsz ki. További fotókat a termékgaláriában adhatsz hozzá.</p>
                         <div v-if="showDelete" style="position: absolute; right: 2%; color: red; cursor: pointer; z-index: 15" class="">
-                        <button type="button" class="btn deleteBtnNewProd" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> Törlés</button> 
+                        <button type="button" class="btn deleteBtnNewProd" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /></button> 
                         </div>
                         <img id="previewNewProductPhoto" src="" class="w-50 float-center img-fluid rounded mx-auto d-block" @mouseenter="showDelete = true">
 
@@ -167,16 +136,16 @@ function hideDeleteBtn(id){
                         <p class="text-muted fs-6">A galériában lévő fotók száma: {{ galleryPhotoCounter }} (feltölthető fotók száma max.: 5 db)</p>
                         <div class="d-flex d-inline-flex m-4">
                             <div style="width: 20%" class="" id="photoGalleryNewProduct1">
-                                <button v-if="galleryPhotoCounter > 0" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button> 
+                                <button v-if="hasImg1" id="deleteBtn1" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageFromGallery(1)"><font-awesome-icon :icon="['fas', 'trash']"/> </button> 
                             </div>
                             <div style="width: 20%" class="" id="photoGalleryNewProduct2">
-                                <button v-if="galleryPhotoCounter > 1" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
+                                <button v-if="hasImg2" id="deleteBtn2" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageFromGallery(2)"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
                             <div style="width: 20%" class="" id="photoGalleryNewProduct3">
-                                <button v-if="galleryPhotoCounter > 2" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
+                                <button v-if="hasImg3" id="deleteBtn3" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageFromGallery(3)"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
                             <div style="width: 20%" class="" id="photoGalleryNewProduct4">
-                                <button v-if="galleryPhotoCounter > 3" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
+                                <button v-if="hasImg4" id="deleteBtn4" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageFromGallery(4)"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
                             <div style="width: 20%" class="" id="photoGalleryNewProduct5">
-                                <button v-if="galleryPhotoCounter > 4" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageUrl"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
+                                <button v-if="hasImg5" id="deleteBtn5" type="button" class="btn deleteBtnNewProdGallery" @click="deleteTemporaryProductImageFromGallery(5)"><font-awesome-icon :icon="['fas', 'trash']" /> </button></div>
                         </div>
                         <img id="previewNewProductGalleryPhoto" src="" class="w-50 float-center img-fluid rounded mx-auto d-block">
                     
@@ -185,17 +154,15 @@ function hideDeleteBtn(id){
                         <p v-if="galleryPhotoCounter == 5" class="text-muted s-6">Elérted az egy termékhez galériájához maximálisan feltölthető fotók számát!</p>
                         
                     </div>
-                </div>
+                </div><loader v-if="loading"></loader>
                     <div class="justify-content-center text-center">
                     <div class="d-inline-flex p-4 mt-2">
-                        <loader v-if="loading"></loader>
-                        <button type="submit" class="btn m-1 secoundaryBtna" :disabled="disableBtn">Hozzáadás</button>
+                        <button type="submit" class="btn m-1 secoundaryBtna" :disabled="disableBtn">+ Termék létrehozása</button>
                         <button type="button" class="btn secoundaryBtnb m-1" @click="addNewProduct = false; disableBtnAdd = false, galleryPhotoCounter = 0">Mégsem</button>
                     </div>
                     </div>
                 </div>
         </form>
-    </Transition>
     </div>
   
 
@@ -337,16 +304,16 @@ function hideDeleteBtn(id){
                                     <div class="col-4 ">
                                         <p class="p-1">Termékgaléria</p>
                                         <div v-if ="prod.galeria.length > 0 && addAnewPhotoToProductGallery == false " class="container swipercontainer">
-                                            <swiper :slides-per-view="1"  :navigation="true" :pagination="true" :key="reload" @mouseleave="changeStateBt">
+                                            <swiper :slides-per-view="1"  :navigation="true" :pagination="true" :key="reload">
                                                 <swiper-slide v-for="ph in prod.galeria">
-                                                    <div v-if="showDelete" style="position: absolute; right: 2%; color: red; cursor: pointer; z-index: 15">
+                                                    <div style="position: absolute; right: 2%; color: red; cursor: pointer; z-index: 15">
                                                         <button type="button" class="btn deleteBtn" @click="deleteImageFromGallery(ph.id, prod.id)"><font-awesome-icon :icon="['fas', 'trash']" /> Törlés</button></div>
-                                                    <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto" @mouseenter="showDelete = true"/>
+                                                    <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto"/>
                                                 </swiper-slide>
 
                                             </swiper>
                                         
-                                            <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="addAnewPhotoToProductGalleryBtn"><font-awesome-icon :icon="['fas', 'camera']" /> Új termékfotót töltök fel a galériába</button>
+                                            <button v-if ="prod.galeria.length < 5" type="button" class="btn secoundaryBtnb m-1 pt-2" @click="addAnewPhotoToProductGalleryBtn"><font-awesome-icon :icon="['fas', 'camera']" /> Új termékfotót töltök fel a galériába</button>
                                         </div>
                                         <div v-else>
                                             <p class="p-1">Új termékfotó feltöltése a galériába</p>
@@ -354,7 +321,6 @@ function hideDeleteBtn(id){
 
                                             <input id="uploadInputAdd" type="file" @change="onChange" class="form-control" accept="image/*" name="photo" reqired/>
                                             <p class="text-muted fs-6">{{ photoMessageProduct }}</p>
-                                            galleryPhotoCounter
                                             <button type="button" class="btn secoundaryBtna m-1 pt-2" @click="addImageToGallery(prod.id)"><font-awesome-icon :icon="['fas', 'cloud-arrow-up']" /> Feltöltés</button>
                                             <button type="button" class="btn secoundaryBtnb m-1 pt-2" @click="photoMessageProduct = '', addAnewPhotoToProductGallery = false">X Bezár</button>
                                         </div>
@@ -481,8 +447,9 @@ li:nth-child(odd)
 
 .swiper-button-prev
 .swiper-button-next
-.swiper-pagination
-    top: 20% !important
+    padding-top: 15% 
+    top: 50% 
+
 .swiper-slide
     max-width: 500px
     max-height:450px

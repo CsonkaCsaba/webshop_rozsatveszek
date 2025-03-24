@@ -52,7 +52,8 @@ function deleteImageAccepted() {
           <button v-if="message =='Biztos benne, hogy törölni szeretné a kívánságlistáról a terméket?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteWish()"> Törlés </button>
           <button v-if="message =='Biztos benne, hogy törölni szeretné a terméket?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteProduct()"> Termék törlése </button>
           <button v-if="message =='Biztos benne, hogy véglegesen törölni szeretné a hírt?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteNewsAccepted()"> Törlés </button>
-          <button v-if="message =='Biztos benne, hogy véglegesen törölni szeretné a fotót?' || 'Biztos benne, hogy törölni szeretné a fotót a gelériából?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteImageAccepted()"> Fotó törlése </button>
+          <button v-if="message =='Biztos benne, hogy véglegesen törölni szeretné a fotót?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteImageAccepted()"> Fotó törlése </button>
+          <button v-if="message =='Biztos benne, hogy törölni szeretné a fotót a gelériából?'" class="btn lilagombKicsi w100 me-4 px-4" @click="deleteImageAccepted()"> Fotó törlése </button>
           <button v-if="message =='A módosítással email értesítést küldünk ki a felhasználónak. Biztosan mented a szerepkör módosítást?'" class="btn lilagombKicsi w100 me-4 px-4" @click="saveUpdate()"> Mentés </button>
           <button class="btn btn-primary w100 px-4" @click="modalStatus()"> MÉGSEM </button>
         </div>

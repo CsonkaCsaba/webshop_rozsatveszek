@@ -7,7 +7,7 @@ import { watch } from 'vue';
   const modules = [Pagination, Navigation, Scrollbar]
 
 const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete,  photoMessageNewProductGalleryPhoto, galleryPhotoCounter, temporaryGallery, hasImg1, hasImg2, hasImg3, hasImg4, hasImg5,name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription, input, totalProducts, currentPage, itemsPerPage, pagesShown,} = storeToRefs(ProductStore())
-const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, deleteImageFromGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto, deleteTemporaryProductImageFromGallery, inputChanged, handlePageChange} = ProductStore()
+const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto, deleteTemporaryProductImageFromGallery, inputChanged, handlePageChange} = ProductStore()
 fetchProduct();
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementsByClassName('swiper-button-prev').stlye.top = '20% !important';
@@ -37,7 +37,11 @@ function deleteTemporaryProductImageUrl(){
 
 watch(input, ()=>{
     inputChanged();
-})
+});
+function deleteImageFromGalleryProxy(ph_id, prod_id){
+    console.log(ph_id, prod_id);
+    ProductStore().deleteImageFromGallery(ph_id, prod_id);
+}
 </script>
 
 <template>
@@ -96,10 +100,12 @@ watch(input, ()=>{
                     </div>
                     <div class="col-4">
                         <label for="akciosar" class="p-1 col">Kedvezményes ár</label>
+                        
                         <div class="input-group mb-3">
                             <input id="price" type="number"  class="form-control fw-light" required placeholder="Kedvezményes ár megadása" name="priceInput" v-model="akciosar"/>
                             <span class="input-group-text">-Ft/{{ egyseg }}</span> 
                         </div>
+                        <p class="text-danger" v-if="akciosar >= price">Az akciós árnak alacsonyabbnak kell lennie!</p>
                     </div>
                     <div class="col-4">
                         <label for="stock" class="p-1 col">Készlet</label>
@@ -136,7 +142,7 @@ watch(input, ()=>{
                         </div>
                         <img id="previewNewProductPhoto" src="" class="w-50 float-center img-fluid rounded mx-auto d-block" @mouseenter="showDelete = true">
 
-                        <input id="uploadInput" type="file" @change="previewFile()" class="form-control" accept="image/*" name="photo" reqired/>
+                        <input id="uploadInput" type="file" @change="previewFile()" class="form-control mt-4" accept="image/*" name="photo" reqired/>
                         <p class="text-danger">{{ photoMessage }}</p>
                     </div>
                     <div class=" col-6 form-floating mb-3 border-end">
@@ -311,11 +317,11 @@ watch(input, ()=>{
                                     </div>
                                     <div class="col-4 ">
                                         <p class="p-1">Termékgaléria</p>
-                                        <div v-if ="prod.galeria.length > 0 && addAnewPhotoToProductGallery == false " class="container swipercontainer">
+                                        <div v-if ="prod.galeria.length > 0 && addAnewPhotoToProductGallery == false " class="container swipercontainer" :key="prod.id">
                                             <div class="row">
-                                            <div v-for="ph in prod.galeria" class="col-4">
+                                            <div v-for="ph in prod.galeria" class="col-4" :key="ph.id">
                                                 <div style="position: relative; right: 2%; color: red; cursor: pointer; z-index: 15">
-                                                    <button type="button" class="btn deleteBtn" @click="deleteImageFromGallery(ph.id, prod.id)"><font-awesome-icon :icon="['fas', 'trash']" /></button></div>
+                                                    <button type="button" class="btn deleteBtn" @click="deleteImageFromGalleryProxy(ph.id, prod.id)"><font-awesome-icon :icon="['fas', 'trash']" /></button></div>
                                                 <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto"/>
                                             </div>
                                             </div>

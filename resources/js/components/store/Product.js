@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
 import {ref } from 'vue'
-import { el } from 'vuetify/locale';
+import { el, fa } from 'vuetify/locale';
+import { nextTick } from 'vue';
 export let reload = ref(0);
 export let elementsToWish = [];
 export let elementsToWishLoggedIn = [];
@@ -417,7 +418,10 @@ export const ProductStore = defineStore("Product",{
                         addedToWishlist: false,
                         edit: false
                     }
-                   this.products.push(productPush);
+                    this.products.push(productPush);
+                    slicedProducts = this.products.slice(this.startIndex, this.endIndex);
+                    this.totalProducts = this.products.length;
+                    localStorage.setItem('products', JSON.stringify(this.products));
                     this.message = "Új termék létrehozása sikeres!";
                     this.modalStatus = true;
                     }
@@ -458,32 +462,32 @@ export const ProductStore = defineStore("Product",{
             this.modalStatusAccept = true;
 
         },
-        deleteProduct(){
+        async deleteProduct() {
+            try {
                 let id = this.edit_id;
-                axios.delete('api/termekadmin/'+id).then((response)=>{
-                if(response.status == 200){
-                    let index = this.products.findIndex(termek=>termek.id == id);
-                    this.products.splice(index, 1);
+                const response =  await axios.delete('api/termekadmin/'+id);
+                if((response && response.status === 200) || (response && response.status === 204)){
+                    // let index = this.products.findIndex(termek=>termek.id == id);
+                    // this.products.splice(index, 1);
+                    this.products = this.products.filter(product => product.id !== id);
+                    this.products = [...this.products];
+                    slicedProducts = this.products.slice(this.startIndex, this.endIndex);
+                    this.reload += 1;
+                    await nextTick();
+                    
                     this.modalStatusAccept = false;
                     this.modalStatus = true;
                     this.message = "A terméket töröltük!";
-                    //let localProducts = JSON.parse(localStorage.getItem('products')) 
-                    // if(localOrders.length > 0){
-                    //     for(const product of localProducts){  
-                    //         if(product.id === id){
-                    //             let ind = localProducts.indexOf(product);
-                    //             localProducts.splice(ind, 1);
-                    //             }
-                    //     }
-                    //     localStorage.setItem('products', JSON.stringify(this.products));
-                    // }
-                    slicedProducts = this.products.slice(this.startIndex, this.endIndex);
                     this.totalProducts = this.products.length;
                     localStorage.setItem('products', JSON.stringify(this.products));
-                    this.reload += 1;
+                    this.deleteTheProduct = false;
                     
+                } else {
+                    console.error("Váratlan HTTP válasz:", response.status);
                 }
-                }).catch(console.error)
+                }catch(error){
+                    console.error("Hiba történt a törlés során:", error);
+                }
 
         },
 
@@ -792,12 +796,13 @@ export const ProductStore = defineStore("Product",{
         addAnewPhotoToProductGalleryBtn(){
             this.addAnewPhotoToProductGallery = true;
         },
-        deleteImageFromGallery(fotoid, termekid){
+        deleteImageFromGallery(ph_id, prod_id){
             if(!this.deleteTheProduct){
-                this.edit_id = fotoid;
-                this.termekId = termekid;
+                this.edit_id = ph_id;
+                this.termekId = prod_id;
                 this.message = 'Biztos benne, hogy törölni szeretné a fotót a gelériából?';
                 this.modalStatusAccept = true;
+                
             }
         },
         deleteImageAccepted(){
@@ -810,10 +815,12 @@ export const ProductStore = defineStore("Product",{
                     if(termek.id === this.termekId){  
                         for(const foto of termek.galeria){
                             if(foto.id === this.edit_id){
-                                const index = termek.galeria.indexOf(foto);
-                                if (index > -1) { 
-                                    termek.galeria.splice(index, 1); // 2nd parameter means remove one item only
-                                  }
+                                // const index = termek.galeria.indexOf(foto);
+                                // if (index > -1) { 
+                                //     termek.galeria.splice(index, 1); // 2nd parameter means remove one item only
+                                //   }
+                                termek.galeria = termek.galeria.filter(photo => photo.id !== this.edit_id);
+                                termek.galeria = [...termek.galeria];
                             }
                         }
                         }

@@ -5,6 +5,7 @@ import { el } from 'vuetify/locale';
 export let reload = ref(0);
 export let elementsToWish = [];
 export let elementsToWishLoggedIn = [];
+export let slicedProducts =[];
 export const ProductStore = defineStore("Product",{
     state: () => {
       return {
@@ -67,10 +68,23 @@ export const ProductStore = defineStore("Product",{
         stock: "",
         description: "",
         shortdescription: "",
+        input: "",
+        currentPage:1,
+        itemsPerPage: 10,
+        totalOrders: 0,
+        pagesShown: 5,
+        startIndex: 0,
+        endIndex: 10,
+        totalProducts: 0,
        
         }
     },
     getters: {
+        displayedProducts(){
+            const startIndex = (this.currentPage * this.itemsPerPage) - this.itemsPerPage;
+            const endIndex = startIndex + this.itemsPerPage; 
+            slicedProducts = this.products.slice(startIndex, endIndex)
+        },
 
     },
     actions: {
@@ -175,16 +189,20 @@ export const ProductStore = defineStore("Product",{
                                     this.emptyMessage = true;
                                 }
                                 localStorage.setItem('wish', JSON.stringify(wishlistProducts));
-                                let localW = JSON.parse(localStorage.getItem("wish"))
+                                let localW = JSON.parse(localStorage.getItem("wish"));
                                     for(const wish of localW){  
                                         if(termek.id === wish.product_id){
                                             termek.addedToWishlist = true
                                             }
                                     }
                             }
-                                
+                            
                             this.products.push(termek);
+                            
                         }
+                        this.totalProducts = this.products.length;
+                        localStorage.setItem('products', JSON.stringify(this.products));
+                        slicedProducts = this.products.slice(this.startIndex, this.endIndex)
                     }
                     catch(error){
                         console.log(error)
@@ -444,11 +462,26 @@ export const ProductStore = defineStore("Product",{
                 let id = this.edit_id;
                 axios.delete('api/termekadmin/'+id).then((response)=>{
                 if(response.status == 200){
-                let index = this.products.findIndex(termek=>termek.id == id);
-                this.products.splice(index, 1);
-                this.reload += 1;
-                this.modalStatus = true;
-                this.message = "A terméket töröltük!";
+                    let index = this.products.findIndex(termek=>termek.id == id);
+                    this.products.splice(index, 1);
+                    this.modalStatusAccept = false;
+                    this.modalStatus = true;
+                    this.message = "A terméket töröltük!";
+                    //let localProducts = JSON.parse(localStorage.getItem('products')) 
+                    // if(localOrders.length > 0){
+                    //     for(const product of localProducts){  
+                    //         if(product.id === id){
+                    //             let ind = localProducts.indexOf(product);
+                    //             localProducts.splice(ind, 1);
+                    //             }
+                    //     }
+                    //     localStorage.setItem('products', JSON.stringify(this.products));
+                    // }
+                    slicedProducts = this.products.slice(this.startIndex, this.endIndex);
+                    this.totalProducts = this.products.length;
+                    localStorage.setItem('products', JSON.stringify(this.products));
+                    this.reload += 1;
+                    
                 }
                 }).catch(console.error)
 
@@ -792,7 +825,23 @@ export const ProductStore = defineStore("Product",{
         },
         changeStateBt(){
             this.showDelete = !this.showDelete
-        }
+        },
+         inputChanged(){
+            slicedProducts = this.products.filter((product) =>
+            product.nevHu.toLowerCase().includes(this.input.toLowerCase())
+            ).slice(this.startIndex, this.endIndex);
+        },
+        handlePageChange(){
+            const startIndex = (this.currentPage * this.itemsPerPage) - this.itemsPerPage;
+            const endIndex = startIndex + this.itemsPerPage; 
+            let localOrders = JSON.parse(localStorage.getItem('products')) 
+                if(localOrders.length > 0){
+                    slicedProducts = localOrders.slice(startIndex, endIndex)
+                } else{
+                    slicedProducts = this.products.slice(startIndex, endIndex)
+                }
+            
+        },
         
         
        

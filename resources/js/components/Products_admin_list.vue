@@ -1,13 +1,13 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { ProductStore } from './store/Product';
+import { ProductStore, slicedProducts } from './store/Product';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation, Scrollbar } from 'swiper/modules';
-
+import { watch } from 'vue';
   const modules = [Pagination, Navigation, Scrollbar]
 
-const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete,  photoMessageNewProductGalleryPhoto, galleryPhotoCounter, temporaryGallery, hasImg1, hasImg2, hasImg3, hasImg4, hasImg5,name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription} = storeToRefs(ProductStore())
-const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, deleteImageFromGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto, deleteTemporaryProductImageFromGallery} = ProductStore()
+const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete,  photoMessageNewProductGalleryPhoto, galleryPhotoCounter, temporaryGallery, hasImg1, hasImg2, hasImg3, hasImg4, hasImg5,name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription, input, totalProducts, currentPage, itemsPerPage, pagesShown,} = storeToRefs(ProductStore())
+const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, deleteImageFromGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto, deleteTemporaryProductImageFromGallery, inputChanged, handlePageChange} = ProductStore()
 fetchProduct();
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementsByClassName('swiper-button-prev').stlye.top = '20% !important';
@@ -35,19 +35,27 @@ function deleteTemporaryProductImageUrl(){
     document.getElementById('uploadInput').value = null;
 };
 
-
+watch(input, ()=>{
+    inputChanged();
+})
 </script>
 
 <template>
     <loader v-if="loading"></loader>
     <div class="container">
         <div class="row m-4">
-            <div class="col-4">
+            <div class="col-3">
+                <div class="d-inline-flex justify-content-center align-items-center" v-if="input&&slicedProducts.length == 0">
+                    <p class="text-danger pt-4">Sajnálom, nincs ilyen termék a rendszerben!</p>
+                </div>
+                <input type="text" v-model="input" placeholder="Keresés..." class="form-control ms-4" autofocus="on"/>
+            </div>
+            <div class="col-4 ms-4">
                 <button type="button" class="btn secoundaryBtnb addNewProd" @click="addNewProductBtn"><font-awesome-icon :icon="['fas', 'plus']" /> Új termék hozzáadás </button>
             </div>
         </div>
     </div>
-  
+    
     <div class="addNewProduct p-2" v-if="addNewProduct">
   
     <!--show if Add New Product button clicked-->
@@ -192,8 +200,8 @@ function deleteTemporaryProductImageUrl(){
 
 
     <div class="container mb-4">
-        <ul class="list">
-            <li class="text-left" v-for="prod in products" :key="prod.id">
+        <ul class="list" :key="reload">
+            <li class="text-left" v-for="prod in slicedProducts" :key="prod.id">
                 <div class="row ">
                     <div class="col-5 ">
                         <img :src="prod.img" class="image" @click="prod.edit = !prod.edit" style="cursor:pointer;">
@@ -304,14 +312,21 @@ function deleteTemporaryProductImageUrl(){
                                     <div class="col-4 ">
                                         <p class="p-1">Termékgaléria</p>
                                         <div v-if ="prod.galeria.length > 0 && addAnewPhotoToProductGallery == false " class="container swipercontainer">
-                                            <swiper :slides-per-view="1"  :navigation="true" :pagination="true" :key="reload">
+                                            <div class="row">
+                                            <div v-for="ph in prod.galeria" class="col-4">
+                                                <div style="position: relative; right: 2%; color: red; cursor: pointer; z-index: 15">
+                                                    <button type="button" class="btn deleteBtn" @click="deleteImageFromGallery(ph.id, prod.id)"><font-awesome-icon :icon="['fas', 'trash']" /></button></div>
+                                                <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto"/>
+                                            </div>
+                                            </div>
+                                            <!-- <swiper :slides-per-view="1"  :navigation="true" :pagination="true" :key="reload">
                                                 <swiper-slide v-for="ph in prod.galeria">
                                                     <div style="position: absolute; right: 2%; color: red; cursor: pointer; z-index: 15">
                                                         <button type="button" class="btn deleteBtn" @click="deleteImageFromGallery(ph.id, prod.id)"><font-awesome-icon :icon="['fas', 'trash']" /> Törlés</button></div>
                                                     <img :src="ph.kepUtvonal" :alt="ph.kepLeiras" class="card-img-top galleryphoto"/>
                                                 </swiper-slide>
 
-                                            </swiper>
+                                            </swiper> -->
                                         
                                             <button v-if ="prod.galeria.length < 5" type="button" class="btn secoundaryBtnb m-1 pt-2" @click="addAnewPhotoToProductGalleryBtn"><font-awesome-icon :icon="['fas', 'camera']" /> Új termékfotót töltök fel a galériába</button>
                                         </div>
@@ -342,6 +357,19 @@ function deleteTemporaryProductImageUrl(){
             </li>
         </ul>
     </div>
+    <div class="row example-six text-center" :key="reload">
+        <div class="col-10">
+            <vue-awesome-paginate v-if="totalProducts > 9" v-model="currentPage" :total-items="totalProducts" :items-per-page="itemsPerPage" :max-pages-shown="pagesShown" @click="handlePageChange" :container-class="'pagination-container'">
+                <template #prev-button id="nextBtn">
+                <span>  Előző</span>
+            </template>
+
+            <template #next-button>
+                <span> Következő  ></span>
+            </template>
+            </vue-awesome-paginate>
+    </div>
+</div>
 <modalAccept v-model="modalStatusAccept" :message="message" @modalStatus="receiveEmit" @deleteProduct="deleteProduct" @deleteImageAccepted="deleteImageAccepted"></modalAccept>
 <Modal v-model="modalStatus" :message="message" @modalStatus="receiveEmit" ></Modal>
 </template>
@@ -429,8 +457,7 @@ li:nth-child(odd)
 
 
 .addNewProd
-    margin-left: 80px
-    font-size: 16px 
+    font-size: 12px 
 
 .tagsBtn
     float: right
@@ -485,4 +512,8 @@ li:nth-child(odd)
     color: white
     font-size: 80%
     position: relative
+
+.example-six 
+.pagination-container 
+    column-gap: 5%
 </style>

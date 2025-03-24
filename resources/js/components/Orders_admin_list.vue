@@ -152,7 +152,7 @@ const toggleChip = (button) => {
 </div>
 <AsyncInfo v-if="open"></AsyncInfo> 
 <div class="d-inline-flex justify-content-center align-items-center" v-if="input&&slicedOrders.length == 0">
-     <h4 class="text-danger pt-4">Sajnálom, nincs ilyen névvel regisztrált vevő a rendszerben!</h4>
+     <p class="text-danger pt-4">Sajnálom, nincs ilyen névvel regisztrált vevő a rendszerben!</p>
   </div>
 </div>
 <div class="container pt-4 align-items-center">

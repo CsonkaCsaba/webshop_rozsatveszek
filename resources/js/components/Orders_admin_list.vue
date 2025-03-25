@@ -257,7 +257,7 @@ let time = new Date().toLocaleTimeString();
                         </li>
                     
                     </ul>
-                    <div class="col-12 text-center pe-4">
+                    <div class="col-12 text-center mt-5">
                         <div class="pe-4">
                             <a href="tel:{{ order.vasarlo.telefonszam }}"><button type="button" class="btn secoundaryBtna btn-lg ms-2"><font-awesome-icon :icon="['fas', 'phone']" /></button></a>
                             <a href="mailto:{{ order.vasarlo.email }}"><button type="button" class="btn secoundaryBtna btn-lg ms-2"><font-awesome-icon :icon="['fas', 'envelope']" /></button></a>
@@ -279,8 +279,9 @@ let time = new Date().toLocaleTimeString();
                         <p>Fizetési mód: {{ order.fizetesiMod }}</p>
                         <p>Rendelés állapota: {{ order.allapot }}</p>
                         <p>Redeléshez fűzött megjegyzés: {{ order.megjegyzes }}</p>
-                        <p>Szállítási cím: {{ order.szallitasi_cim.iranyitoszam + " " + order.szallitasi_cim.telepules + ", " + order.szallitasi_cim.utca + " " + order.szallitasi_cim.hazszam}}</p>
-                        <p>Számlázási cím: {{ order.szamlazasi_cim.iranyitoszam + " " + order.szamlazasi_cim.telepules + ", " + order.szamlazasi_cim.utca + " " + order.szamlazasi_cim.hazszam}}</p>
+                        <p v-if="order.szallitasi_cim != null">Szállítási cím: {{ order.szallitasi_cim.iranyitoszam + " " + order.szallitasi_cim.telepules + ", " + order.szallitasi_cim.utca + " " + order.szallitasi_cim.hazszam}}</p>
+                        <p v-if="order.szallitasi_cim == null">Szállítási cím: Személyes átvétel</p>
+                        <p v-if="order.szamlazasi_cim != null">Számlázási cím: {{ order.szamlazasi_cim.iranyitoszam + " " + order.szamlazasi_cim.telepules + ", " + order.szamlazasi_cim.utca + " " + order.szamlazasi_cim.hazszam}}</p>
                         <p style="text-decoration: underline;"><b>Rendelt termékek: </b></p>
                         <ul>
                             <li v-for="termek in order.termek">

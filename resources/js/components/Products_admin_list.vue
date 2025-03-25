@@ -105,7 +105,7 @@ function deleteImageFromGalleryProxy(ph_id, prod_id){
                             <input id="price" type="number"  class="form-control fw-light" required placeholder="Kedvezményes ár megadása" name="priceInput" v-model="akciosar"/>
                             <span class="input-group-text">-Ft/{{ egyseg }}</span> 
                         </div>
-                        <p class="text-danger" v-if="akciosar >= price">Az akciós árnak alacsonyabbnak kell lennie!</p>
+                        <p class="text-danger" v-if="akciosar !== '' && price !== '' && akciosar >= price">Az akciós árnak alacsonyabbnak kell lennie!</p>
                     </div>
                     <div class="col-4">
                         <label for="stock" class="p-1 col">Készlet</label>

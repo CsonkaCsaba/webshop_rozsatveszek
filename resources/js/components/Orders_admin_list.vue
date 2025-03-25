@@ -4,7 +4,7 @@ import { OrdersStore, slicedOrders } from './store/Orders';
 import { reactive, computed } from 'vue'
 import { ref, watch } from 'vue';
 import { defineAsyncComponent } from 'vue'
-
+let showPrint = ref(false);
 const AsyncInfo = defineAsyncComponent(() =>
   import('./InformationsForOrders.vue')
 )
@@ -108,7 +108,8 @@ const toggleChip = (button) => {
         }
     }
 
-    function printDiv() {
+function printDiv() {
+  showPrint = !showPrint;
   let contents = document.getElementById("printable").innerHTML;
                 let frame1 = document.createElement('iframe');
                 frame1.name = "frame1";
@@ -130,6 +131,9 @@ const toggleChip = (button) => {
                 }, 500);
                 return false;
 }
+let app_name = import.meta.env.VITE_APP_NAME;
+let timestamp = new Date().toLocaleDateString();
+let time = new Date().toLocaleTimeString();
 </script>
 
 <template>  
@@ -253,10 +257,47 @@ const toggleChip = (button) => {
                         </li>
                     
                     </ul>
+                    <div class="col-12 text-center pe-4">
+                        <div class="pe-4">
+                            <a href="tel:{{ order.vasarlo.telefonszam }}"><button type="button" class="btn secoundaryBtna btn-lg ms-2"><font-awesome-icon :icon="['fas', 'phone']" /></button></a>
+                            <a href="mailto:{{ order.vasarlo.email }}"><button type="button" class="btn secoundaryBtna btn-lg ms-2"><font-awesome-icon :icon="['fas', 'envelope']" /></button></a>
+                            <button type="button" class="btn secoundaryBtna btn-lg ms-2" @click="printDiv()"><font-awesome-icon :icon="['fas', 'print']" /></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="printable" class="visually-hidden">
+                    <div style="align-items: center;  width: 90%; text-align: center;">
+                    <img src="../../assets/kepek/rozsatveszek_logo_kicsi-removebg-preview.webp" style="max-width: 25%;">
+                        <h3  style="margin-top: 10%;"><font-awesome-icon :icon="['fas', 'cart-shopping']" style="max-width: 5%;"/> {{ order.id }} sorszámú rendelés</h3>
+                        <p style="text-decoration: underline;"><b>Vásárló adatai </b></p>
+                        <p>Vásárló neve: {{ order.vasarlo.nev}}</p>
+                        <p>Vásárló telefonszáma: {{ order.vasarlo.telefonszam }}</p>
+                        <p>Vásárló email címe: {{ order.vasarlo.email }}</p>
+                        <p style="text-decoration: underline;"><b>Rendelés adatai </b></p>
+                        <p>Rendelés időpontja: {{ order.rogzitDatum }}  {{ order.rogzitOra }}</p>
+                        <p>Rendelés végösszege: {{ order.vegosszeg }} Ft</p>
+                        <p>Fizetési mód: {{ order.fizetesiMod }}</p>
+                        <p>Rendelés állapota: {{ order.allapot }}</p>
+                        <p>Redeléshez fűzött megjegyzés: {{ order.megjegyzes }}</p>
+                        <p>Szállítási cím: {{ order.szallitasi_cim.iranyitoszam + " " + order.szallitasi_cim.telepules + ", " + order.szallitasi_cim.utca + " " + order.szallitasi_cim.hazszam}}</p>
+                        <p>Számlázási cím: {{ order.szamlazasi_cim.iranyitoszam + " " + order.szamlazasi_cim.telepules + ", " + order.szamlazasi_cim.utca + " " + order.szamlazasi_cim.hazszam}}</p>
+                        <p style="text-decoration: underline;"><b>Rendelt termékek: </b></p>
+                        <ul>
+                            <li v-for="termek in order.termek">
+                            <p><b>Termék neve: {{ termek.nevHu }}</b></p>
+                            <p>Rendelt mennyiség: {{ termek.pivot.mennyiseg }} db</p>
+                            <p>Termék színe: {{ termek.szin }}</p>
+                            <p>Termék egységára: {{ termek.ar }},-Ft/db</p>
+                            <p>Részösszesen: {{ termek.subTotal }},-Ft</p>
+                            </li>
+                        </ul>
+                        <p style="font-size: 70%; font-style: italic; margin-top: 5%;">A dokumetum nyomtatása a {{ app_name }} rendszeréből történt {{ timestamp }} {{time}} időpontban. </p>
+                    </div>
                 </div>
             </div> 
-            <div @click="printDiv()">Print</div> 
-            <div id="printable"><p class="visually-hidden">Szöveg</p></div>
+            
+           
+            
             </li>
     </ul>
 <div class="row example-six text-center" :key="reload">

@@ -25,11 +25,6 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 
 
-
-
-
-
-
 const vuetify = createVuetify({
     icons: {
         iconfont: 'md',
@@ -396,7 +391,8 @@ import {
     faChartSimple,
     faAngleLeft,
     faTag,
-    faCircleInfo
+    faCircleInfo,
+    faPrint,
 } from '@fortawesome/free-solid-svg-icons'
 
 import{
@@ -451,7 +447,8 @@ library.add(
     faChartSimple,
     faAngleLeft,
     faTag,
-    faCircleInfo
+    faCircleInfo,
+    faPrint
 )
 
 const pinia = createPinia();

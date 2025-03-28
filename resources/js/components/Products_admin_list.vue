@@ -6,8 +6,8 @@ import { Pagination, Navigation, Scrollbar } from 'swiper/modules';
 import { watch } from 'vue';
   const modules = [Pagination, Navigation, Scrollbar]
 
-const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete,  photoMessageNewProductGalleryPhoto, galleryPhotoCounter, temporaryGallery, hasImg1, hasImg2, hasImg3, hasImg4, hasImg5,name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription, input, totalProducts, currentPage, itemsPerPage, pagesShown,} = storeToRefs(ProductStore())
-const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto, deleteTemporaryProductImageFromGallery, inputChanged, handlePageChange} = ProductStore()
+const { products, addNewProduct, disableBtnAdd, photoMessage, showUp, showDown, modalStatus, message, modalStatusAccept, tags, loading, addAnewPhoto, defaultImage, addAnewPhotoToProductGallery, photoMessageProduct, reload, showDelete,  photoMessageNewProductGalleryPhoto, galleryPhotoCounter, temporaryGallery, hasImg1, hasImg2, hasImg3, hasImg4, hasImg5,name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription, input, totalProducts, currentPage, itemsPerPage, pagesShown, errorPublicityMessage, selectedOption, options } = storeToRefs(ProductStore())
+const { update, fetchProduct, addNewProductBtn, onChange, createProduct, deleteProduct, orderByProductsAz, orderByProductsZa, updateProduct, receiveEmit, removeProduct, tagsFunction, changeMainPhoto, updateProductImage, addAnewPhotoToProductGalleryBtn, addImageToGallery, changeStateBt, deleteImageAccepted, onChangeNewProductGalleryPhoto, deleteTemporaryProductImageFromGallery, inputChanged, handlePageChange, changePublicity} = ProductStore()
 fetchProduct();
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementsByClassName('swiper-button-prev').stlye.top = '20% !important';
@@ -63,7 +63,7 @@ function deleteImageFromGalleryProxy(ph_id, prod_id){
     <div class="addNewProduct p-2" v-if="addNewProduct">
   
     <!--show if Add New Product button clicked-->
-    <form method="POST" @submit.prevent="createProduct(name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription)" id="addNewproductForm" autocomplete="off">
+    <form method="POST" @submit.prevent="createProduct(name, color, egyseg, cikkszam, price, akciosar, stock, description, shortdescription, selectedOption)" id="addNewproductForm" autocomplete="off">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-4">
@@ -168,7 +168,21 @@ function deleteImageFromGalleryProxy(ph_id, prod_id){
                         <p v-if="galleryPhotoCounter == 5" class="text-muted s-6">Elérted az egy termékhez galériájához maximálisan feltölthető fotók számát!</p>
                         
                     </div>
-                </div><loader v-if="loading"></loader>
+                    <div class="row">
+                        <div class="col-3">
+                            <p class="mt-4 form-label form-label-top pt-2 mb-4">Termék megjelenítése</p>
+                            <select class="form-select fs-6 px-2" v-model="selectedOption" reqired>
+                                <option v-for="option in options" :value="option.value" :key="option.value">
+                                {{ option.text }}
+                            </option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <loader v-if="loading"></loader>
                     <div class="justify-content-center text-center">
                     <div class="d-inline-flex p-4 mt-2">
                         <button type="submit" class="btn m-1 secoundaryBtna" :disabled="disableBtn">+ Termék létrehozása</button>
@@ -209,23 +223,30 @@ function deleteImageFromGalleryProxy(ph_id, prod_id){
         <ul class="list" :key="reload">
             <li class="text-left" v-for="prod in slicedProducts" :key="prod.id">
                 <div class="row ">
-                    <div class="col-5 ">
+                    <div class="col-5">
                         <img :src="prod.img" class="image" @click="prod.edit = !prod.edit" style="cursor:pointer;">
                     </div>
-                    <div class="col-2 keszlet">
+                    <div class="keszlet">
                         <p v-if="prod.keszlet <= 0" class="elfogyott">Elfogyott</p>
                         <p v-else class="keszleten">Készleten: <br><b>{{ prod.keszlet }} {{ prod.egyseg }}</b></p>
                         <p v-if ="prod.keszlet > 1 && prod.keszlet <= 10" class=""> <span class="position-absolute translate-middle badge rounded-pill bg-danger figyelem">
                             A készlet hamarosan elfogy!</span></p>
                     </div>
-                    <div class="col-2 align-self-center">
+                    <div class="col-1 align-self-center">
                         <p class="name" @click="prod.edit = !prod.edit" style="cursor:pointer;">{{ prod.nevHu }}</p><br>
-                        <p class="color">{{ prod.szin }}</p>
+                        <p class="color">{{ prod.szin }}<br><span class="fs-6 text-muted fw-light align-start"></span>
+                            <p class="text-danger" v-if="errorPublicityMessage != ''">{{ errorPublicityMessage }}</p>
+                            <font-awesome-icon v-if="prod.kozzeteve == true" :icon="['fas', 'eye']" color="#64c916"/>
+                            <font-awesome-icon v-if="prod.kozzeteve == false || prod.kozzeteve == null" :icon="['fas', 'eye-slash']" color="#d41e1e"/></p>
+                        
+
                     </div>
                     <div class="col-2 align-self-center text-start">
                         {{ prod.ar }} Ft/{{ prod.egyseg }}
                     </div>
-                    <div class="col-2 align-self-center buttons">
+                    <div class="col-3 align-self-center buttons">
+                        <button v-if="prod.kozzeteve == true" type="button" class="btn secoundaryBtna btn-lg" @click="changePublicity(prod.id);" data-bs-toggle="tooltip" data-bs-placement="top" title="Vázlatra állítás" ><font-awesome-icon :icon="['fas', 'eye']" /></button>
+                        <button v-if="prod.kozzeteve == false || prod.kozzeteve == null" type="button" class="btn secoundaryBtna btn-lg" @click="changePublicity(prod.id);" data-bs-toggle="tooltip" data-bs-placement="top" title="Közzétesz" ><font-awesome-icon :icon="['fas', 'eye-slash']" /></button>
                         <button type="button" class="btn secoundaryBtna btn-lg m-4" @click="prod.edit = !prod.edit"  data-bs-toggle="tooltip" data-bs-placement="top" title="Termék szerkesztése" ><font-awesome-icon :icon="['fas', 'pen']" /></button>
                         <button type="button" class="btn secoundaryBtnb btn-lg" @click="removeProduct(prod.id)" data-bs-toggle="tooltip" data-bs-placement="top" title="Termék törlése"><font-awesome-icon :icon="['fas', 'trash']" /></button>
                     </div>
@@ -235,11 +256,15 @@ function deleteImageFromGalleryProxy(ph_id, prod_id){
                             <div class="container">
                                 <div class="row justify-content-center text-center">
                                     <div class="col-4">
-                                        <label for="name" class="p-1 col">Név</label>
+                                        <label for="name" class="p-1">Név</label>
                                         <input id="nameInput" type="text" class="form-control fw-light" required :placeholder=prod.nevHu v-model="prod.nevHu"/>
                                     </div>
-                                    
+                                        <!-- <div class="col-2">
+                                         <label for="publication">Közzétéve:  </label>
+                                         <input class="form-check-input" type="checkbox" id="bannerCheckbox" v-model="prod.kozzeteve" :checked="prod.kozzeteve" @click="prod.kozzeteve = !prod.kozzeteve">
+                                        </div> -->
                                 </div>
+                                
                                 <div class="row justify-content-center text-center mt-2">
                                     <div class="col-2">
                                         <div>

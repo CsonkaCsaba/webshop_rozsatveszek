@@ -7,10 +7,12 @@ export let reload = ref(0);
 export let elementsToWish = [];
 export let elementsToWishLoggedIn = [];
 export let slicedProducts =[];
+export let filteredProducts = [];
 export const ProductStore = defineStore("Product",{
     state: () => {
       return {
         products: [],
+        //filteredProd :[],
         wishlist: [],
         cimkek: [],
         temporaryGallery: [],
@@ -69,6 +71,7 @@ export const ProductStore = defineStore("Product",{
         stock: "",
         description: "",
         shortdescription: "",
+        kozzeteve: false,
         input: "",
         currentPage:1,
         itemsPerPage: 10,
@@ -77,6 +80,12 @@ export const ProductStore = defineStore("Product",{
         startIndex: 0,
         endIndex: 10,
         totalProducts: 0,
+        errorPublicityMessage : "",
+        options: [
+            { value: 'Közzétesz', text: 'Közzétesz' },
+            { value: 'Vázlat', text: 'Vázlat' },
+        ],
+        selectedOption: "",
        
         }
     },
@@ -86,6 +95,10 @@ export const ProductStore = defineStore("Product",{
             const endIndex = startIndex + this.itemsPerPage; 
             slicedProducts = this.products.slice(startIndex, endIndex)
         },
+        filteredProducts() {
+            console.log(this.products)
+            filteredProducts = this.products.filter(prod => prod.kozzeteve == true);
+          },
 
     },
     actions: {
@@ -199,8 +212,8 @@ export const ProductStore = defineStore("Product",{
                             }
                             
                             this.products.push(termek);
-                            
                         }
+                        filteredProducts = this.products.filter(prod => prod.kozzeteve == true);
                         this.totalProducts = this.products.length;
                         localStorage.setItem('products', JSON.stringify(this.products));
                         slicedProducts = this.products.slice(this.startIndex, this.endIndex)
@@ -341,11 +354,18 @@ export const ProductStore = defineStore("Product",{
             this.deletedIds.push(id);
             this.galleryPhotoCounter -= 1;
         },
-        createProduct(nev, szin, egyseg, cikkszam, ar, akciosar, keszlet, leiras, tagline){
+        createProduct(nev, szin, egyseg, cikkszam, ar, akciosar, keszlet, leiras, tagline, kozzeteve){
             this.loading = true;
             let formNewProduct = document.getElementById('addNewproductForm');
             if(cikkszam == null || cikkszam == ""){
                 cikkszam = 0;
+            }
+            if(kozzeteve == "Közzétesz"){
+                kozzeteve = true;
+                this.kozzeteve = true;
+            }else{
+                kozzeteve = false;
+                this.kozzeteve = false;
             }
             this.nev = nev,
             this.szin = szin,
@@ -356,6 +376,7 @@ export const ProductStore = defineStore("Product",{
             this.keszlet = keszlet,
             this.leiras = leiras,
             this.tagline = tagline
+            this.kozzeteve = kozzeteve
 
 
             const config = {
@@ -377,7 +398,8 @@ export const ProductStore = defineStore("Product",{
                     akciosar : this.akciosar,
                     keszlet: this.keszlet,
                     leiras: this.leiras,
-                    tagline: this.tagline
+                    tagline: this.tagline,
+                    kozzeteve: this.kozzeteve
                   });
 
                   formData.append('form_data', form_data)
@@ -413,6 +435,7 @@ export const ProductStore = defineStore("Product",{
                         leirasHu: this.leiras,
                         leiras: this.leiras,
                         tagline: this.tagline,
+                        kozzeteve: this.kozzeteve,
                         img: response.data.kepUtvonal,
                         galeria: this.newProductGallery,
                         addedToWishlist: false,
@@ -442,6 +465,7 @@ export const ProductStore = defineStore("Product",{
             this.stock= "";
             this.description= "";
             this.shortdescription = "";
+            this.kozzeteve = "",
             this.reload += 1;
             this.hasImg1 = false;
             this.hasImg2 = false;
@@ -848,6 +872,25 @@ export const ProductStore = defineStore("Product",{
                     slicedProducts = this.products.slice(startIndex, endIndex)
                 }
             
+        },changePublicity(id){
+            let newValue = "";
+            for(const prod of this.products){
+                if (prod.id === id){
+                    prod.kozzeteve = !prod.kozzeteve;
+                    newValue = prod.kozzeteve;
+                } 
+            }
+            this.edit_id = id;
+                let form_data = {
+                    id : id,
+                    value: newValue,
+                  };
+                    axios.post('api/termekadmin/updatePublicity',form_data).then((response)=>{
+                    if(response.status != 200){
+                    this.errorPublicityMessage = "A termék láthatóságának módosítása sikeretelen!Kérjük frissítsd az oldalt vagy fordulj a rendszergazdához!"
+                    console.log('ok');
+                    }
+                    }).catch(console.error)
         },
         
         

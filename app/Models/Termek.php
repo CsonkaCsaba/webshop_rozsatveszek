@@ -44,6 +44,7 @@ class Termek extends Model
         'created_at',
         'updated_at',
         'cimkeId',
-        'tagline'
+        'tagline',
+        'kozzeteve'
     ];
 }

@@ -1,11 +1,11 @@
 <script setup>
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref  } from 'vue';
 import { storeToRefs } from 'pinia';
-import { ProductStore, elementsToWish } from './store/Product';
+import { ProductStore, elementsToWish, filteredProducts } from './store/Product';
 
 
-const { products, modalStatusAccept, modalStatusProduct, message, modalStatus, add, loading, cimkek, prod, edit_prod} = storeToRefs(ProductStore())
+const { products, modalStatusAccept, modalStatusProduct, message, modalStatus, add, loading, cimkek, prod, edit_prod, filteredProd} = storeToRefs(ProductStore())
 const { update, editStore, fetchWishlist, fetchProduct, addToWishlist, removeFromWishList, receiveEmit, deleteWish, detailsModal, toCartFromModal} = ProductStore()
 fetchProduct();
 
@@ -74,15 +74,18 @@ export default {
             <loader v-if="loading"></loader>
             <hr class="cimalatt_hr mx-auto mt-0">
       </div>
-    <div class="container-fluid">
-        <div class="row justify-content-center mt-4">
-            <div data-aos="flip-left" class="col-lg-3 col-md-4 col-sm-5 col-8 m-5  position-relative" v-for="prod in products" key="prod.id" id="box">
+    <div class="container-fluid" >
+
+        <div class="row justify-content-center mt-4"  >
+            
+            <div v-for="prod in filteredProducts" :key="prod.id" id="box" class="col-lg-3 col-md-4 col-sm-5 col-8 m-5  position-relative" >
+                
                 <a href="#" class="">
                     <div v-if="prod.cimke !=null" class="cimke" :style="{'color': prod.cimke.betuszin, 'font-family': prod.cimke.betutipus, 'font-style': prod.cimke.betustilus, 'background': 'linear-gradient(to left bottom,'+prod.cimke.hatterszin+' 40%, transparent)'}">
                         <h3 class="text-center align-items-center justify-content-center pt-4 fw-bold" :style="{'font-size': prod.cimke.betumeret+'px'}"> {{ prod.cimke.szoveg }} </h3>
                     </div>
                 </a>
-                <v-card :loading="loading" class="">
+                <v-card  :loading="loading" class="" data-aos="flip-left">
                     <template slot="progress">
                         <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
                     </template>
@@ -132,8 +135,9 @@ export default {
                         </div>
                         </v-card>
                 </div>
+            </div>
         </div>
-    </div>
+
 
         <!-- Kosárba Modal -->
     <div class="modal fade" id="KosarbaModal" tabindex="-1" role="dialog" aria-labelledby="KosarbaModalLabel" aria-hidden="true">

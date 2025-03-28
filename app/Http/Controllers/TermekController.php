@@ -56,9 +56,6 @@ class TermekController extends Controller
                 $image->resize(1280, 710);
                 $encoded = $image->toWebp(60)->save('img/uploads/'.$file_name.'.webp');
 
-
-
-
                 $imgUrl = '../public/img/uploads/'.$file_name.'.webp';
                 $form_data = json_decode($request->form_data);
                 $product = Termek::create([
@@ -73,6 +70,7 @@ class TermekController extends Controller
                     'keszlet'=> $form_data->keszlet,
                     'img'=> $imgUrl,
                     'tagline'=> $form_data->tagline,
+                    'kozzeteve' =>$form_data->kozzeteve
                 ]);
                 $productId = $product->id;
 
@@ -324,6 +322,15 @@ public function updateimage(Request $request)
     {
         $galeriafoto = TermekGaleria::find($id);
         $galeriafoto->delete();
+    }
+    public function updatePublicity(Request $request)
+    {
+        $id = $request->id;
+        $publicity = $request->value;
+        $product = Termek::find($id);
+        $product->kozzeteve = $publicity;
+        $product->save(); 
+        return response()->json(array('message' => 'Sikeres módosítás!'),200);
     }
 
     

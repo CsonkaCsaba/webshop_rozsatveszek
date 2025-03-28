@@ -35,6 +35,7 @@ return new class extends Migration
             ->onUpdate('set null')
             ->onDelete('set null');
             $table->string('tagline');
+            $table->boolean('kozzeteve')->nullable();
         });
     }
 

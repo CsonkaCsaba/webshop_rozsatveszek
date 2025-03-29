@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 6.0.0-dev+20230508.a256228264
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 19. 16:25
--- Kiszolgáló verziója: 10.4.28-MariaDB
--- PHP verzió: 8.2.4
+-- Létrehozás ideje: 2025. Mar 29. 20:07
+-- Kiszolgáló verziója: 10.4.24-MariaDB
+-- PHP verzió: 8.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,7 +37,7 @@ CREATE TABLE `banners` (
   `betustilus` varchar(255) DEFAULT NULL,
   `betutipus` varchar(255) DEFAULT NULL,
   `betumeret` int(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- A tábla adatainak kiíratása `banners`
@@ -54,8 +54,8 @@ INSERT INTO `banners` (`id`, `szoveg`, `hatterszin`, `betuszin`, `aktiv`, `sebes
 
 CREATE TABLE `cegs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `cegnev` varchar(255) NOT NULL,
-  `adoszam` varchar(255) NOT NULL,
+  `cegnev` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `adoszam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cimId` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -98,7 +98,7 @@ CREATE TABLE `cimkes` (
   `betumeret` int(255) DEFAULT NULL,
   `akciosarFt` int(255) DEFAULT NULL,
   `akciosarSzazalek` int(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- A tábla adatainak kiíratása `cimkes`
@@ -115,10 +115,10 @@ INSERT INTO `cimkes` (`id`, `cim`, `szoveg`, `hatterszin`, `betuszin`, `betustil
 
 CREATE TABLE `cims` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `iranyitoszam` varchar(255) NOT NULL,
-  `telepules` varchar(255) NOT NULL,
-  `utca` varchar(255) NOT NULL,
-  `hazszam` varchar(255) NOT NULL
+  `iranyitoszam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telepules` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `utca` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hazszam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -154,11 +154,11 @@ CREATE TABLE `dolgozo` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -170,11 +170,11 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `felhasznalo` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `felhNev` varchar(255) NOT NULL,
-  `jelszo` varchar(255) NOT NULL,
-  `vezNev` varchar(255) NOT NULL,
-  `kerNev` varchar(255) NOT NULL,
-  `lakcim` varchar(255) NOT NULL,
+  `felhNev` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jelszo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vezNev` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kerNev` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lakcim` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `szulDatum` date NOT NULL,
   `utolsoBeDatum` date NOT NULL,
   `admin` tinyint(1) NOT NULL,
@@ -190,8 +190,8 @@ CREATE TABLE `felhasznalo` (
 
 CREATE TABLE `hireks` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `cim` varchar(255) NOT NULL,
-  `leiras` text NOT NULL,
+  `cim` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `leiras` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `datum` date DEFAULT NULL,
   `uzletId` bigint(20) UNSIGNED NOT NULL,
   `kepId` bigint(20) UNSIGNED NOT NULL
@@ -215,7 +215,7 @@ INSERT INTO `hireks` (`id`, `cim`, `leiras`, `datum`, `uzletId`, `kepId`) VALUES
 CREATE TABLE `karbantartas` (
   `id` bigint(20) NOT NULL,
   `aktiv` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- A tábla adatainak kiíratása `karbantartas`
@@ -232,11 +232,11 @@ INSERT INTO `karbantartas` (`id`, `aktiv`) VALUES
 
 CREATE TABLE `kategorias` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nevHu` varchar(255) NOT NULL,
-  `nevEn` varchar(255) NOT NULL,
-  `leirasHu` text NOT NULL,
-  `leirasEn` text NOT NULL,
-  `url` varchar(255) NOT NULL
+  `nevHu` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nevEn` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `leirasHu` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `leirasEn` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -259,9 +259,9 @@ CREATE TABLE `kategorizals` (
 
 CREATE TABLE `kepeks` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `kepNev` varchar(255) DEFAULT NULL,
-  `kepUtvonal` varchar(255) DEFAULT NULL,
-  `kepLeiras` varchar(255) DEFAULT NULL,
+  `kepNev` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kepUtvonal` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kepLeiras` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `termekId` bigint(20) UNSIGNED DEFAULT NULL,
   `kategoriaId` bigint(20) UNSIGNED DEFAULT NULL,
   `uzletId` bigint(20) UNSIGNED NOT NULL
@@ -289,7 +289,7 @@ INSERT INTO `kepeks` (`id`, `kepNev`, `kepUtvonal`, `kepLeiras`, `termekId`, `ka
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -325,8 +325,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -337,8 +337,8 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -350,11 +350,11 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -379,7 +379,7 @@ CREATE TABLE `popups` (
   `betustilus` varchar(255) DEFAULT NULL,
   `betutipus` varchar(255) DEFAULT NULL,
   `betumeret` int(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- A tábla adatainak kiíratása `popups`
@@ -396,13 +396,13 @@ INSERT INTO `popups` (`id`, `cim`, `szoveg`, `kepId`, `aktiv`, `hatterszin`, `be
 
 CREATE TABLE `rendeles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `megjegyzes` text DEFAULT NULL,
-  `fizetesiMod` varchar(255) NOT NULL,
+  `megjegyzes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fizetesiMod` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ceges` tinyint(1) NOT NULL,
-  `allapot` varchar(255) NOT NULL,
+  `allapot` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rogzitDatum` timestamp NULL DEFAULT NULL,
   `vegosszeg` int(11) NOT NULL,
-  `szallitas` varchar(255) NOT NULL,
+  `szallitas` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `fk_vasarloId` bigint(20) UNSIGNED NOT NULL,
   `fk_userId` bigint(20) UNSIGNED DEFAULT NULL,
   `fk_szamlazasiCim` bigint(20) UNSIGNED NOT NULL,
@@ -572,35 +572,36 @@ INSERT INTO `rendeles` (`id`, `megjegyzes`, `fizetesiMod`, `ceges`, `allapot`, `
 
 CREATE TABLE `termeks` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nevHu` varchar(255) NOT NULL,
-  `nevEn` varchar(255) DEFAULT NULL,
+  `nevHu` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nevEn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ar` int(11) NOT NULL,
   `akciosar` int(11) DEFAULT NULL,
-  `img` varchar(255) NOT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `leirasHu` text NOT NULL,
-  `leirasEn` text DEFAULT NULL,
-  `szin` varchar(255) NOT NULL,
-  `color` varchar(255) DEFAULT NULL,
+  `img` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `leirasHu` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `leirasEn` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `szin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `keszlet` int(11) NOT NULL,
-  `egyseg` varchar(255) DEFAULT NULL,
+  `egyseg` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cikkszam` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `cimkeId` bigint(20) UNSIGNED DEFAULT NULL,
-  `tagline` varchar(255) DEFAULT NULL
+  `tagline` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kozzeteve` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- A tábla adatainak kiíratása `termeks`
 --
 
-INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `akciosar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `egyseg`, `cikkszam`, `created_at`, `updated_at`, `cimkeId`, `tagline`) VALUES
-(1, 'Mr. Lincoln', 'Mr. Lincoln', 2500, 2250, '../resources/assets/kepek/lincolnresize.webp', '', 'A Mr. Lincoln egy ikonikus, mélyvörös színű magastörzsű rózsa, amely minden kert elegáns és romantikus éke lehet. Bársonyos szirmainak intenzív illata messziről érezhető, így ideális választás lehet olyan helyekre, ahol a látvány mellett az illat is fontos szerepet kap. A virágai nagyméretűek és tartósak, ezért vágott virágnak is kiválóak. Folyamatos virágzásának köszönhetően júniustól egészen az első fagyokig újra és újra gyönyörű szirmokat bont. Erőteljes növekedésű, ellenálló fajta, amely megfelelő gondozás mellett hosszú éveken át díszítheti kertedet vagy teraszodat.\r\nSzín: Mélyvörös, bársonyos szirmokkal\r\nIllat: Erőteljes, édes és fűszeres árnyalatokkal\r\nVirágzás: Júniustól a fagyokig folyamatos\r\nFényigény: Napos helyet kedvel, félárnyékban gyengébben virágzik\r\nTélállóság: Jól tűri a hideget, de a magastörzsű fajtáknál a gyökérzónát és a szemzés helyét érdemes védeni. Télen takarást igényel, amit vastag mulcsréteggel (pl. fenyőkéreg, komposzt vagy lomb) biztosíthatunk. A koronát is érdemes jutazsákkal, szalmával vagy speciális kertészeti fátyolfóliával védeni a fagykártól.', 'Red tea rose', 'Piros', 'RED', 88, 'db', 123456789, NULL, '2025-03-19 12:03:28', 257, 'minden kert elegáns és romantikus éke'),
-(2, 'Bianca', 'Bianca', 2000, 2000, '../resources/assets/kepek/biancaresize.webp\r\n', '', 'A Bianca egy klasszikusan elegáns fehér magastörzsű rózsa, amely finom, letisztult szépséget kölcsönöz minden kertnek vagy terasznak. Tiszta fehér virágai tökéletes kontrasztot alkotnak a mélyzöld levelekkel, így különösen jól mutat sötétebb hátterek előtt vagy színes virágágyásokba ültetve. Kellemesen lágy illata van, amely nem túl erős, így azok számára is ideális, akik az enyhébb illatú virágokat részesítik előnyben. Kiválóan alkalmas cserépben nevelésre is, így erkélyekre és teraszokra egyaránt ajánlott.\r\nSzín: Tiszta hófehér\r\nIllat: Enyhe, lágy\r\nVirágzás: Nyártól késő őszig folyamatosan\r\nFényigény: Napfényes vagy félárnyékos helyet igényel\r\nTélállóság: Jól bírja a hideget, de a magastörzsű rózsák általában érzékenyebbek a fagyokra. A gyökereket ajánlott takarni mulccsal vagy lombbal, míg a koronát jutazsákkal vagy kerti fátyolfóliával borítani. Különösen erős fagyok esetén a törzset is érdemes szalmával vagy zsákvászonnal védeni.', '', 'Fehér', 'White', 2869, 'db', NULL, NULL, '2025-03-17 06:21:36', 257, 'finom, letisztult külső'),
-(3, 'Monica', 'Monica', 2500, 2125, '../resources/assets/kepek/monicaresize.webp\r\n', '', 'A Monica egy igazán élénk, ragyogó narancssárga magastörzsű rózsa, amely garantáltan feldobja kerted hangulatát. Látványos, nagy méretű virágai napfényben különleges ragyogást kapnak, így ideális választás olyan kertekbe, ahol a vibráló színek dominálnak. Közepesen erős illata friss és energikus hatású, ami kellemes atmoszférát teremt a pihenéshez. Jó ellenállóképességű fajta, amely hosszan és bőségesen virágzik.\r\nSzín: Élénk narancssárga\r\nIllat: Közepesen erős, enyhén citrusos jegyekkel\r\nVirágzás: Májustól az első fagyokig\r\nFényigény: Napfényes helyen fejlődik a legszebben\r\nTélállóság: Mérsékelten télálló, ezért a gyökérzónát vastag mulccsal, szalmával vagy lombbal kell takarni, a koronát pedig ajánlott jutazsákba vagy fátyolfóliába burkolni. Erős fagyok esetén a törzs védelméről is gondoskodni kell.', '', 'Narancssárga', 'Orange', 53, 'db', NULL, NULL, '2025-03-17 06:21:44', NULL, 'látványos, vibráló színek'),
-(4, 'Caresse', 'Caresse', 2500, 2125, '../resources/assets/kepek/caresseresize.webp\r\n', '', 'A Caresse egy romantikus megjelenésű, lágy rózsaszín árnyalatú magastörzsű rózsa, amely a klasszikus kertek egyik legnépszerűbb fajtája. Nagyméretű, telt virágai csodálatosan illatoznak, így tökéletes választás olyan helyekre, ahol a látvány mellett az illat is fontos szerepet játszik. Gazdag és hosszan tartó virágzása miatt a kert folyamatos színpompában tündököl általa.\r\nSzín: Pasztell rózsaszín\r\nIllat: Kellemesen édes és virágos\r\nVirágzás: Késő tavasztól késő őszig\r\nFényigény: Napfényt kedveli\r\nTélállóság: Viszonylag jól bírja a hideget, de a magastörzsű fajták koronája érzékenyebb lehet. A gyökérzónát mulccsal vagy lombbal érdemes védeni, a koronát pedig kerti fátyolfóliával, jutazsákkal vagy szalmával kell beburkolni.', '', 'Rózsaszín', 'Pink', 95, 'db', NULL, NULL, '2025-03-17 06:21:54', NULL, 'lágy rózsaszín árnyalat, hosszan tartó virágzás'),
-(5, 'Golden Leader', 'Golden Leader', 2500, 1800, '../resources/assets/kepek/golden.webp\r\n', '', 'A Golden Leader igazi napfényt varázsol a kertbe élénk citromsárga virágaival. Nagy, látványos virágai nemcsak szépek, hanem kellemesen friss illatot is árasztanak. Folyamatosan virágzó fajta, amely hosszú időn át díszíti a kertet vagy a teraszt. Erős, egyenes szárának köszönhetően stabil és elegáns megjelenésű.\r\nSzín: Ragyogó citromsárga\r\nIllat: Frissítő, közepesen intenzív\r\nVirágzás: Nyár elejétől késő őszig folyamatos\r\nFényigény: Napos helyet igényel\r\nTélállóság: Mérsékelt télállóságú, ezért a gyökereket vastag mulccsal vagy lombbal kell védeni, a koronát pedig jutazsákkal vagy szalmával ajánlott betakarni. Erős hidegek esetén a törzs köré szigetelő réteget érdemes helyezni.', '', 'Citromsárga', 'Yellow', 90, 'db', NULL, NULL, '2025-03-17 06:22:06', NULL, 'stabil és elegáns megjelenés, napfényt varázsol a kertbe');
+INSERT INTO `termeks` (`id`, `nevHu`, `nevEn`, `ar`, `akciosar`, `img`, `url`, `leirasHu`, `leirasEn`, `szin`, `color`, `keszlet`, `egyseg`, `cikkszam`, `created_at`, `updated_at`, `cimkeId`, `tagline`, `kozzeteve`) VALUES
+(1, 'Mr. Lincoln', 'Mr. Lincoln', 2500, 2250, '../resources/assets/kepek/lincolnresize.webp', '', 'A Mr. Lincoln egy ikonikus, mélyvörös színű magastörzsű rózsa, amely minden kert elegáns és romantikus éke lehet. Bársonyos szirmainak intenzív illata messziről érezhető, így ideális választás lehet olyan helyekre, ahol a látvány mellett az illat is fontos szerepet kap. A virágai nagyméretűek és tartósak, ezért vágott virágnak is kiválóak. Folyamatos virágzásának köszönhetően júniustól egészen az első fagyokig újra és újra gyönyörű szirmokat bont. Erőteljes növekedésű, ellenálló fajta, amely megfelelő gondozás mellett hosszú éveken át díszítheti kertedet vagy teraszodat.\r\nSzín: Mélyvörös, bársonyos szirmokkal\r\nIllat: Erőteljes, édes és fűszeres árnyalatokkal\r\nVirágzás: Júniustól a fagyokig folyamatos\r\nFényigény: Napos helyet kedvel, félárnyékban gyengébben virágzik\r\nTélállóság: Jól tűri a hideget, de a magastörzsű fajtáknál a gyökérzónát és a szemzés helyét érdemes védeni. Télen takarást igényel, amit vastag mulcsréteggel (pl. fenyőkéreg, komposzt vagy lomb) biztosíthatunk. A koronát is érdemes jutazsákkal, szalmával vagy speciális kertészeti fátyolfóliával védeni a fagykártól.', 'Red tea rose', 'Piros', 'RED', 88, 'db', 123456789, NULL, '2025-03-29 18:07:33', 257, 'minden kert elegáns és romantikus éke', 1),
+(2, 'Bianca', 'Bianca', 2000, 2000, '../resources/assets/kepek/biancaresize.webp\r\n', '', 'A Bianca egy klasszikusan elegáns fehér magastörzsű rózsa, amely finom, letisztult szépséget kölcsönöz minden kertnek vagy terasznak. Tiszta fehér virágai tökéletes kontrasztot alkotnak a mélyzöld levelekkel, így különösen jól mutat sötétebb hátterek előtt vagy színes virágágyásokba ültetve. Kellemesen lágy illata van, amely nem túl erős, így azok számára is ideális, akik az enyhébb illatú virágokat részesítik előnyben. Kiválóan alkalmas cserépben nevelésre is, így erkélyekre és teraszokra egyaránt ajánlott.\r\nSzín: Tiszta hófehér\r\nIllat: Enyhe, lágy\r\nVirágzás: Nyártól késő őszig folyamatosan\r\nFényigény: Napfényes vagy félárnyékos helyet igényel\r\nTélállóság: Jól bírja a hideget, de a magastörzsű rózsák általában érzékenyebbek a fagyokra. A gyökereket ajánlott takarni mulccsal vagy lombbal, míg a koronát jutazsákkal vagy kerti fátyolfóliával borítani. Különösen erős fagyok esetén a törzset is érdemes szalmával vagy zsákvászonnal védeni.', '', 'Fehér', 'White', 2869, 'db', NULL, NULL, '2025-03-17 06:21:36', 257, 'finom, letisztult külső', 1),
+(3, 'Monica', 'Monica', 2500, 2125, '../resources/assets/kepek/monicaresize.webp\r\n', '', 'A Monica egy igazán élénk, ragyogó narancssárga magastörzsű rózsa, amely garantáltan feldobja kerted hangulatát. Látványos, nagy méretű virágai napfényben különleges ragyogást kapnak, így ideális választás olyan kertekbe, ahol a vibráló színek dominálnak. Közepesen erős illata friss és energikus hatású, ami kellemes atmoszférát teremt a pihenéshez. Jó ellenállóképességű fajta, amely hosszan és bőségesen virágzik.\r\nSzín: Élénk narancssárga\r\nIllat: Közepesen erős, enyhén citrusos jegyekkel\r\nVirágzás: Májustól az első fagyokig\r\nFényigény: Napfényes helyen fejlődik a legszebben\r\nTélállóság: Mérsékelten télálló, ezért a gyökérzónát vastag mulccsal, szalmával vagy lombbal kell takarni, a koronát pedig ajánlott jutazsákba vagy fátyolfóliába burkolni. Erős fagyok esetén a törzs védelméről is gondoskodni kell.', '', 'Narancssárga', 'Orange', 53, 'db', NULL, NULL, '2025-03-17 06:21:44', NULL, 'látványos, vibráló színek', 1),
+(4, 'Caresse', 'Caresse', 2500, 2125, '../resources/assets/kepek/caresseresize.webp\r\n', '', 'A Caresse egy romantikus megjelenésű, lágy rózsaszín árnyalatú magastörzsű rózsa, amely a klasszikus kertek egyik legnépszerűbb fajtája. Nagyméretű, telt virágai csodálatosan illatoznak, így tökéletes választás olyan helyekre, ahol a látvány mellett az illat is fontos szerepet játszik. Gazdag és hosszan tartó virágzása miatt a kert folyamatos színpompában tündököl általa.\r\nSzín: Pasztell rózsaszín\r\nIllat: Kellemesen édes és virágos\r\nVirágzás: Késő tavasztól késő őszig\r\nFényigény: Napfényt kedveli\r\nTélállóság: Viszonylag jól bírja a hideget, de a magastörzsű fajták koronája érzékenyebb lehet. A gyökérzónát mulccsal vagy lombbal érdemes védeni, a koronát pedig kerti fátyolfóliával, jutazsákkal vagy szalmával kell beburkolni.', '', 'Rózsaszín', 'Pink', 95, 'db', NULL, NULL, '2025-03-17 06:21:54', NULL, 'lágy rózsaszín árnyalat, hosszan tartó virágzás', 1),
+(5, 'Golden Leader', 'Golden Leader', 2500, 1800, '../resources/assets/kepek/golden.webp\r\n', '', 'A Golden Leader igazi napfényt varázsol a kertbe élénk citromsárga virágaival. Nagy, látványos virágai nemcsak szépek, hanem kellemesen friss illatot is árasztanak. Folyamatosan virágzó fajta, amely hosszú időn át díszíti a kertet vagy a teraszt. Erős, egyenes szárának köszönhetően stabil és elegáns megjelenésű.\r\nSzín: Ragyogó citromsárga\r\nIllat: Frissítő, közepesen intenzív\r\nVirágzás: Nyár elejétől késő őszig folyamatos\r\nFényigény: Napos helyet igényel\r\nTélállóság: Mérsékelt télállóságú, ezért a gyökereket vastag mulccsal vagy lombbal kell védeni, a koronát pedig jutazsákkal vagy szalmával ajánlott betakarni. Erős hidegek esetén a törzs köré szigetelő réteget érdemes helyezni.', '', 'Citromsárga', 'Yellow', 90, 'db', NULL, NULL, '2025-03-17 06:22:06', NULL, 'stabil és elegáns megjelenés, napfényt varázsol a kertbe', 1);
 
 -- --------------------------------------------------------
 
@@ -614,15 +615,29 @@ CREATE TABLE `termek_galerias` (
   `kepUtvonal` varchar(255) DEFAULT NULL,
   `kepLeiras` varchar(255) DEFAULT NULL,
   `termekid` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- A tábla adatainak kiíratása `termek_galerias`
 --
 
 INSERT INTO `termek_galerias` (`id`, `kepNev`, `kepUtvonal`, `kepLeiras`, `termekid`) VALUES
-(1, 'working', '../public/img/uploads/working.webp', 'working', 1),
-(2, 'working', '../public/img/uploads/kezdokep.webp', 'working', 1);
+(5, 'Mr_Lincoln_red_output3', '../public/img/uploads/Mr_Lincoln_red_output3.webp', 'Mr_Lincoln_red_output3', 1),
+(7, 'Bianca_white_output', '../public/img/uploads/Bianca_white_output.webp', 'Bianca_white_output', 2),
+(8, 'Bianca_white_output2', '../public/img/uploads/Bianca_white_output2.webp', 'Bianca_white_output2', 2),
+(9, 'Bianca_white_output3', '../public/img/uploads/Bianca_white_output3.webp', 'Bianca_white_output3', 2),
+(11, 'Monia_orange_output', '../public/img/uploads/Monia_orange_output.webp', 'Monia_orange_output', 3),
+(12, 'Monia_orange_output2', '../public/img/uploads/Monia_orange_output2.webp', 'Monia_orange_output2', 3),
+(15, 'Monia_orange_output3', '../public/img/uploads/Monia_orange_output3.webp', 'Monia_orange_output3', 3),
+(16, 'Monia_orange_output4', '../public/img/uploads/Monia_orange_output4.webp', 'Monia_orange_output4', 3),
+(17, 'Caresse_pink_output', '../public/img/uploads/Caresse_pink_output.webp', 'Caresse_pink_output', 4),
+(18, 'Caresse_pink_output2', '../public/img/uploads/Caresse_pink_output2.webp', 'Caresse_pink_output2', 4),
+(19, 'Caresse_pink_output3', '../public/img/uploads/Caresse_pink_output3.webp', 'Caresse_pink_output3', 4),
+(20, 'Caresse_pink_output4', '../public/img/uploads/Caresse_pink_output4.webp', 'Caresse_pink_output4', 4),
+(21, 'Golden_Leader_yellow_output', '../public/img/uploads/Golden_Leader_yellow_output.webp', 'Golden_Leader_yellow_output', 5),
+(22, 'Golden_Leader_yellow_output2', '../public/img/uploads/Golden_Leader_yellow_output2.webp', 'Golden_Leader_yellow_output2', 5),
+(23, 'Golden_Leader_yellow_output3', '../public/img/uploads/Golden_Leader_yellow_output3.webp', 'Golden_Leader_yellow_output3', 5),
+(24, 'Golden_Leader_yellow_output4', '../public/img/uploads/Golden_Leader_yellow_output4.webp', 'Golden_Leader_yellow_output4', 5);
 
 -- --------------------------------------------------------
 
@@ -632,17 +647,17 @@ INSERT INTO `termek_galerias` (`id`, `kepNev`, `kepUtvonal`, `kepLeiras`, `terme
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `userName` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `address` varchar(255) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userName` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `birthDate` date DEFAULT NULL,
   `lastLogin` date DEFAULT NULL,
-  `role` varchar(50) DEFAULT NULL,
+  `role` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subscriber` tinyint(1) DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `dolgozoId` bigint(20) UNSIGNED DEFAULT NULL,
@@ -668,21 +683,21 @@ INSERT INTO `users` (`id`, `name`, `userName`, `password`, `address`, `birthDate
 
 CREATE TABLE `uzlets` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nev` varchar(255) DEFAULT NULL,
-  `bemutatkozasHu` text DEFAULT NULL,
-  `bemutatkozasEn` text DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `tel` varchar(255) DEFAULT NULL,
-  `adoszam` varchar(255) DEFAULT NULL,
-  `cegjegyzekszam` varchar(255) DEFAULT NULL,
-  `iranyitoszam` varchar(255) DEFAULT NULL,
-  `telepules` varchar(255) DEFAULT NULL,
-  `hazszam` varchar(255) DEFAULT NULL,
-  `utca` varchar(255) DEFAULT NULL,
-  `bank` varchar(255) DEFAULT NULL,
-  `bankszamlaszam` varchar(255) DEFAULT NULL,
-  `iban` varchar(255) DEFAULT NULL,
-  `swiftbic` varchar(255) DEFAULT NULL
+  `nev` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bemutatkozasHu` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bemutatkozasEn` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `adoszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cegjegyzekszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `iranyitoszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telepules` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hazszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `utca` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bank` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bankszamlaszam` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `iban` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `swiftbic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -879,9 +894,9 @@ INSERT INTO `valaszts` (`mennyiseg`, `kedvezmeny`, `rendeles_id`, `termek_id`) V
 
 CREATE TABLE `vasarlos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nev` varchar(255) DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
-  `telefonszam` varchar(255) NOT NULL,
+  `nev` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefonszam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cegId` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -906,7 +921,7 @@ CREATE TABLE `wishlists` (
   `id` int(11) NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- A tábla adatainak kiíratása `wishlists`
@@ -1181,7 +1196,7 @@ ALTER TABLE `kategorizals`
 -- AUTO_INCREMENT a táblához `kepeks`
 --
 ALTER TABLE `kepeks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT a táblához `migrations`
@@ -1211,13 +1226,13 @@ ALTER TABLE `rendeles`
 -- AUTO_INCREMENT a táblához `termeks`
 --
 ALTER TABLE `termeks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT a táblához `termek_galerias`
 --
 ALTER TABLE `termek_galerias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT a táblához `users`
